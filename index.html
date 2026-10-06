@@ -39,62 +39,79 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    /* Hanging Light Switch Wire, Lever & Bulb Styling */
-    .bulb-container {
+    /* Realistic Hanging Lamp / Pull Lever Styling */
+    .lamp-container {
       position: relative;
       display: inline-block;
       cursor: pointer;
-      padding-top: 22px;
+      padding-top: 15px;
+      user-select: none;
     }
-    .bulb-wire {
+    .lamp-wire {
       position: absolute;
-      top: -18px;
+      top: -24px;
       left: 50%;
       transform: translateX(-50%);
       width: 2px;
-      height: 26px;
-      background-color: #64748b;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      height: 30px;
+      background-color: #334155;
     }
-    .dark .bulb-wire {
-      background-color: #f59e0b;
+    .dark .lamp-wire {
+      background-color: #cbd5e1;
     }
-    .bulb-container:active .bulb-wire {
-      height: 32px;
-    }
-    .bulb-cap {
-      width: 14px;
-      height: 6px;
-      background: #475569;
-      border-radius: 2px 2px 0 0;
+    .lamp-shade {
+      width: 44px;
+      height: 20px;
+      background: #1e293b;
+      border-radius: 22px 22px 2px 2px;
       margin: 0 auto;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      position: relative;
     }
-    .dark .bulb-cap {
-      background: #94a3b8;
-    }
-    .bulb-shade {
-      width: 28px;
-      height: 12px;
-      background: #334155;
-      border-radius: 14px 14px 2px 2px;
-      margin: -1px auto 0 auto;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .dark .bulb-shade {
+    .dark .lamp-shade {
       background: #e2e8f0;
     }
-    .bulb-glass {
-      width: 18px;
-      height: 18px;
-      background: #cbd5e1;
+    .lamp-bulb {
+      width: 14px;
+      height: 14px;
+      background: #94a3b8;
       border-radius: 50%;
       margin: -2px auto 0 auto;
       transition: all 0.3s ease;
-      box-shadow: inset -1px -1px 2px rgba(0,0,0,0.2);
+      box-shadow: inset -2px -2px 4px rgba(0,0,0,0.3);
     }
-    .dark .bulb-glass {
+    .dark .lamp-bulb {
       background: #fbbf24;
-      box-shadow: 0 0 16px #fbbf24, 0 0 28px #f59e0b;
+      box-shadow: 0 0 16px #fbbf24, 0 0 30px #f59e0b, inset -1px -1px 2px rgba(0,0,0,0.2);
+    }
+    /* Pull Cord & Lever */
+    .pull-cord {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 18px;
+      background: #94a3b8;
+      top: 31px;
+      transition: height 0.15s ease-in-out;
+    }
+    .pull-lever {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 14px;
+      background: #d97706;
+      border-radius: 50%;
+      top: 47px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      transition: top 0.15s ease-in-out;
+    }
+    .lamp-container:active .pull-cord {
+      height: 36px;
+    }
+    .lamp-container:active .pull-lever {
+      top: 65px;
     }
   </style>
 </head>
@@ -115,16 +132,17 @@
         </div>
       </div>
 
-      <!-- Hanging Bulb Theme Switcher & Live Counter -->
+      <!-- Hanging Lamp Switcher & Live Counter -->
       <div class="flex items-center space-x-6">
         
-        <!-- Pullable Hanging Bulb Switcher -->
-        <div class="flex items-center space-x-2" title="Pull lever bulb to switch Light / Dark theme">
-          <div onclick="toggleDarkMode()" class="bulb-container group" role="button" tabindex="0" aria-label="Toggle Dark Mode">
-            <div class="bulb-wire"></div>
-            <div class="bulb-cap"></div>
-            <div class="bulb-shade"></div>
-            <div class="bulb-glass group-hover:scale-110"></div>
+        <!-- Pullable Hanging Lamp Switcher -->
+        <div class="flex items-center space-x-2" title="Pull lever cord to switch Light / Dark theme">
+          <div onclick="toggleDarkMode()" class="lamp-container" role="button" tabindex="0" aria-label="Toggle Dark Mode">
+            <div class="lamp-wire"></div>
+            <div class="lamp-shade"></div>
+            <div class="lamp-bulb"></div>
+            <div class="pull-cord"></div>
+            <div class="pull-lever"></div>
           </div>
         </div>
 
@@ -174,7 +192,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 text-xs">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 text-xs pt-3">
         
         <div class="col-span-1 sm:col-span-2 lg:col-span-1">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Search Keyword</label>
@@ -192,6 +210,21 @@
         <div>
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">End Date</label>
           <input type="date" id="filter-date-to" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
+        </div>
+
+        <!-- Weekly & Monthly Filters -->
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Week</label>
+          <select id="filter-week" onchange="applyWeekFilter()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
+            <option value="ALL">All Weeks</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Month</label>
+          <select id="filter-month" onchange="applyMonthFilter()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
+            <option value="ALL">All Months</option>
+          </select>
         </div>
 
         <div>
@@ -216,9 +249,9 @@
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Hub Name</label>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Pickup Hub (PH)</label>
           <select id="filter-hub" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
-            <option value="ALL">All Hub Names</option>
+            <option value="ALL">All Pickup Hubs</option>
           </select>
         </div>
 
@@ -230,7 +263,7 @@
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Status Column</label>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Status</label>
           <select id="filter-status" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All Statuses</option>
           </select>
@@ -240,17 +273,6 @@
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">LIB</label>
           <select id="filter-lib" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All LIBs</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Hours in diff</label>
-          <select id="filter-hrs" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
-            <option value="ALL">All SLAs</option>
-            <option value="<24 hrs">&lt;24 hrs</option>
-            <option value=">=24 hrs">&gt;=24 hrs</option>
-            <option value="#VALUE!">#VALUE!</option>
-            <option value="UNRESOLVED">Unresolved / Blank</option>
           </select>
         </div>
 
@@ -281,7 +303,6 @@
         </div>
       </div>
 
-      <!-- Renamed from IN TRANSIT TO MH to DISPATCHED TO MH -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-amber-500 hover:ring-2 hover:ring-amber-400/30 transition duration-200">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched to MH</span>
@@ -293,7 +314,6 @@
         </div>
       </div>
 
-      <!-- Replaced SLA Compliance KPI with Dispatch Efficiency Rate -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-blue-500 hover:ring-2 hover:ring-blue-400/30 transition duration-200">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatch Efficiency Rate</span>
@@ -327,7 +347,6 @@
     <!-- OVERVIEW CHARTS TAB -->
     <section id="tab-overview" class="space-y-6">
       
-      <!-- 1 visual per row with vertical & horizontal scrolling support -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
@@ -340,7 +359,6 @@
         </div>
       </div>
 
-      <!-- Zone Split Visual (Positioned below Daily Volume Trend & above Status Share) -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
@@ -365,7 +383,6 @@
         </div>
       </div>
 
-      <!-- Seller Wise Visual (Bar / Column Visual) -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
@@ -402,13 +419,12 @@
         </div>
       </div>
 
-      <!-- Renamed from PH Name Wise Volume to Pickup Hub Wise Volume -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Volume</span>
           </h3>
-          <span class="text-xs text-slate-500 dark:text-slate-400">Primary Hub Columns</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Pickup Hub Columns</span>
         </div>
         <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
           <div class="min-w-[800px] h-72 relative"><canvas id="chart-ph-bar"></canvas></div>
@@ -429,10 +445,9 @@
 
     </section>
 
-    <!-- DAY-WISE AGING TAB (6 TABLES INCLUDING SELLER AGING) -->
+    <!-- DAY-WISE AGING TAB -->
     <section id="tab-matrix" class="hidden space-y-6">
       
-      <!-- Table 1: Zone Wise Aging -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
@@ -451,7 +466,6 @@
         </div>
       </div>
 
-      <!-- Table 2: Seller Wise Aging -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
@@ -470,7 +484,6 @@
         </div>
       </div>
 
-      <!-- Table 3: GM Wise Aging -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
@@ -489,7 +502,6 @@
         </div>
       </div>
 
-      <!-- Table 4: MH Wise Aging -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
@@ -508,11 +520,10 @@
         </div>
       </div>
 
-      <!-- Table 5: PH Wise Aging -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
-            <h3 class="text-base font-bold text-slate-900 dark:text-white">5. Primary Hub (PH) - Day-wise Aging Matrix</h3>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">5. Pickup Hub (PH) - Day-wise Aging Matrix</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Pickup Hub broken down by Date</p>
           </div>
           <button onclick="exportMatrixCSV('matrix-table-ph', 'PH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
@@ -527,7 +538,6 @@
         </div>
       </div>
 
-      <!-- Table 6: WM Wise Aging -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
@@ -548,10 +558,9 @@
 
     </section>
 
-    <!-- PERFORMANCE SUMMARY TABLES TAB (5 TABLES INCLUDING SELLER BREAKDOWN) -->
+    <!-- PERFORMANCE SUMMARY TABLES TAB -->
     <section id="tab-tables" class="hidden space-y-6">
       
-      <!-- Zone Wise Table -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="globe" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Zone Wise Breakdown</span>
@@ -566,7 +575,6 @@
         </div>
       </div>
 
-      <!-- Seller Wise Table -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="store" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Seller Wise Breakdown</span>
@@ -581,7 +589,6 @@
         </div>
       </div>
 
-      <!-- GM Wise Table -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="user-check" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>GM Wise Breakdown</span>
@@ -596,7 +603,6 @@
         </div>
       </div>
 
-      <!-- WM Wise Table -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM Wise Breakdown</span>
@@ -611,7 +617,6 @@
         </div>
       </div>
 
-      <!-- PH Name Wise Table -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="building" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Breakdown</span>
@@ -653,7 +658,6 @@
               <th class="p-3">Seller Name</th>
               <th class="p-3">LIB</th>
               <th class="p-3">RCA</th>
-              <th class="p-3">Hours in diff</th>
             </tr>
           </thead>
           <tbody id="shipments-tbody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
@@ -682,7 +686,7 @@
     Chart.register(ChartDataLabels);
 
     let masterData = [], filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
-    const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA', HRS: 'Hrs' };
+    const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA' };
 
     document.addEventListener('DOMContentLoaded', () => { 
       lucide.createIcons(); 
@@ -763,13 +767,13 @@
         MH: cleanVal(r[COLS.MH], 'Unassigned MH'),
         WM: cleanVal(r[COLS.WM], 'Unassigned WM'), 
         GM: cleanVal(r[COLS.GM], 'Unassigned GM'),
-        RCA: cleanVal(r[COLS.RCA], 'None'), 
-        Hrs: r[COLS.HRS] || 'UNRESOLVED'
+        RCA: cleanVal(r[COLS.RCA], 'None')
       };
     }
 
     function populateFilterDropdowns() {
-      const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), libs = new Set();
+      const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), libs = new Set(), weeks = new Set(), months = new Set();
+      
       masterData.forEach(r => {
         if (!isInvalid(r.GM)) gms.add(r.GM); 
         if (!isInvalid(r.SellerName)) sellers.add(r.SellerName);
@@ -778,10 +782,23 @@
         if (!isInvalid(r.WM)) wms.add(r.WM); 
         if (!isInvalid(r.Status)) statuses.add(r.Status);
         if (!isInvalid(r.LIB)) libs.add(r.LIB);
+
+        const dt = parseDateStr(r.Date);
+        if (dt) {
+          months.add(dt.toLocaleString('default', { month: 'long', year: 'numeric' }));
+          weeks.add(getWeekIdentifier(dt));
+        }
       });
-      fillSelect('filter-gm', gms); fillSelect('filter-seller', sellers);
-      fillSelect('filter-mh', mhs); fillSelect('filter-hub', hubs);
-      fillSelect('filter-wm', wms); fillSelect('filter-status', statuses); fillSelect('filter-lib', libs);
+
+      fillSelect('filter-gm', gms); 
+      fillSelect('filter-seller', sellers);
+      fillSelect('filter-mh', mhs); 
+      fillSelect('filter-hub', hubs);
+      fillSelect('filter-wm', wms); 
+      fillSelect('filter-status', statuses); 
+      fillSelect('filter-lib', libs);
+      fillSelect('filter-month', months);
+      fillSelect('filter-week', weeks);
     }
 
     function fillSelect(id, set) {
@@ -792,10 +809,41 @@
       sel.value = curr;
     }
 
+    function getWeekIdentifier(date) {
+      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      const dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+      const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+      return `Week ${weekNo}, ${d.getUTCFullYear()}`;
+    }
+
+    function applyWeekFilter() {
+      const wk = document.getElementById('filter-week').value;
+      if (wk !== 'ALL') {
+        document.getElementById('filter-month').value = 'ALL';
+        document.getElementById('filter-date-from').value = '';
+        document.getElementById('filter-date-to').value = '';
+      }
+      applyFilters();
+    }
+
+    function applyMonthFilter() {
+      const mo = document.getElementById('filter-month').value;
+      if (mo !== 'ALL') {
+        document.getElementById('filter-week').value = 'ALL';
+        document.getElementById('filter-date-from').value = '';
+        document.getElementById('filter-date-to').value = '';
+      }
+      applyFilters();
+    }
+
     function applyFilters() {
       const search = document.getElementById('filter-search').value.toLowerCase().trim();
       const df = document.getElementById('filter-date-from').value;
       const dt = document.getElementById('filter-date-to').value;
+      const wk = document.getElementById('filter-week').value;
+      const mo = document.getElementById('filter-month').value;
       const gm = document.getElementById('filter-gm').value;
       const seller = document.getElementById('filter-seller').value;
       const mh = document.getElementById('filter-mh').value;
@@ -803,7 +851,6 @@
       const wm = document.getElementById('filter-wm').value;
       const status = document.getElementById('filter-status').value;
       const lib = document.getElementById('filter-lib').value;
-      const hrs = document.getElementById('filter-hrs').value;
 
       filteredData = masterData.filter(r => {
         if (gm !== 'ALL' && r.GM !== gm) return false;
@@ -813,14 +860,17 @@
         if (wm !== 'ALL' && r.WM !== wm) return false;
         if (status !== 'ALL' && r.Status !== status) return false;
         if (lib !== 'ALL' && r.LIB !== lib) return false;
-        if (hrs !== 'ALL' && r.Hrs !== hrs) return false;
-        if (df || dt) {
-          const rd = parseDateStr(r.Date);
-          if (rd) {
-            if (df && rd < new Date(df)) return false;
-            if (dt && rd > new Date(dt)) return false;
-          }
+
+        const rd = parseDateStr(r.Date);
+        if (rd) {
+          if (wk !== 'ALL' && getWeekIdentifier(rd) !== wk) return false;
+          if (mo !== 'ALL' && rd.toLocaleString('default', { month: 'long', year: 'numeric' }) !== mo) return false;
+          if (df && rd < new Date(df)) return false;
+          if (dt && rd > new Date(dt)) return false;
+        } else if (wk !== 'ALL' || mo !== 'ALL' || df || dt) {
+          return false;
         }
+
         if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search)) return false;
         return true;
       });
@@ -844,23 +894,20 @@
       document.getElementById('record-count-badge').textContent = `${tot.toLocaleString()} Shipments Filtered`;
       const rec = filteredData.filter(r => r.Status === 'received_at_mh').length;
       const disp = filteredData.filter(r => r.Status === 'dispatched_to_mh').length;
-      const effCount = filteredData.filter(r => r.Hrs === '<24 hrs').length;
       
       document.getElementById('kpi-received-mh').textContent = rec.toLocaleString();
       document.getElementById('kpi-received-pct').textContent = `${tot ? ((rec/tot)*100).toFixed(1) : 0}% of total`;
       document.getElementById('kpi-dispatched-mh').textContent = disp.toLocaleString();
       document.getElementById('kpi-dispatched-pct').textContent = `${tot ? ((disp/tot)*100).toFixed(1) : 0}% dispatched`;
       
-      // Updated KPI from SLA Compliance to Dispatch Efficiency Rate
-      document.getElementById('kpi-dispatch-eff-pct').textContent = `${tot ? ((effCount/tot)*100).toFixed(1) : 0}%`;
-      document.getElementById('kpi-dispatch-eff-sub').textContent = `${effCount.toLocaleString()} processed <24 hrs`;
+      document.getElementById('kpi-dispatch-eff-pct').textContent = `${tot ? ((rec/tot)*100).toFixed(1) : 0}%`;
+      document.getElementById('kpi-dispatch-eff-sub').textContent = `${rec.toLocaleString()} processed received`;
     }
 
     function renderCharts() {
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#f8fafc' : '#0f172a';
 
-      // 1. Daily Volume Trend
       const dailyMap = {};
       filteredData.forEach(r => { if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1; });
       let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStr(a) || 0) - (parseDateStr(b) || 0));
@@ -884,7 +931,6 @@
         plugins: { datalabels: { align: 'top', color: '#6366f1', font: { weight: 'bold' } } }
       });
 
-      // 2. Zone Split Visual
       const zoneMap = {};
       filteredData.forEach(r => { if (!isInvalid(r.Zone)) zoneMap[r.Zone] = (zoneMap[r.Zone] || 0) + 1; });
       createChart('chart-zone', 'pie', {
@@ -892,7 +938,6 @@
         datasets: [{ data: Object.values(zoneMap), backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'] }]
       }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
 
-      // 3. Status Share
       const statusMap = {};
       filteredData.forEach(r => { if (!isInvalid(r.Status)) statusMap[r.Status] = (statusMap[r.Status] || 0) + 1; });
       createChart('chart-status-split', 'doughnut', {
@@ -900,7 +945,6 @@
         datasets: [{ data: Object.values(statusMap), backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444'] }]
       }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
 
-      // 4. Seller Wise Volume Visual (Bar / Column Chart)
       const sellerMap = {};
       filteredData.forEach(r => { if (!isInvalid(r.SellerName)) sellerMap[r.SellerName] = (sellerMap[r.SellerName] || 0) + 1; });
       const topSellers = Object.entries(sellerMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
@@ -912,7 +956,6 @@
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#f472b6' : '#9d174d', font: { weight: 'bold' } } } 
       });
 
-      // 5. GM Wise Volume
       const gmMap = {};
       filteredData.forEach(r => { if (!isInvalid(r.GM)) gmMap[r.GM] = (gmMap[r.GM] || 0) + 1; });
       const topGMs = Object.entries(gmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
@@ -924,7 +967,6 @@
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#a5b4fc' : '#312e81', font: { weight: 'bold' } } } 
       });
 
-      // 6. WM Wise Volume
       const wmMap = {};
       filteredData.forEach(r => { if (!isInvalid(r.WM)) wmMap[r.WM] = (wmMap[r.WM] || 0) + 1; });
       const topWMs = Object.entries(wmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
@@ -936,7 +978,6 @@
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#7dd3fc' : '#0369a1', font: { weight: 'bold' } } } 
       });
 
-      // 7. Pickup Hub Wise Volume
       const phMap = {};
       filteredData.forEach(r => { if (!isInvalid(r.HubName)) phMap[r.HubName] = (phMap[r.HubName] || 0) + 1; });
       const topPHs = Object.entries(phMap).sort((a,b) => b[1] - a[1]).slice(0, 8);
@@ -948,7 +989,6 @@
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#c084fc' : '#5b21b6', font: { weight: 'bold' } } } 
       });
 
-      // 8. Top Mother Hubs
       const mhMap = {};
       filteredData.forEach(r => { if (!isInvalid(r.MH)) mhMap[r.MH] = (mhMap[r.MH] || 0) + 1; });
       const topMH = Object.entries(mhMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
@@ -1075,7 +1115,6 @@
           <td class="p-3 truncate max-w-[150px]">${r.SellerName}</td>
           <td class="p-3">${r.LIB}</td>
           <td class="p-3">${r.RCA}</td>
-          <td class="p-3 font-medium ${r.Hrs === '<24 hrs' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-600 dark:text-slate-400'}">${r.Hrs}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -1100,6 +1139,8 @@
 
     function setPresetDate(p) {
       const f = document.getElementById('filter-date-from'), t = document.getElementById('filter-date-to'), today = new Date();
+      document.getElementById('filter-week').value = 'ALL';
+      document.getElementById('filter-month').value = 'ALL';
       if (p === 'all') { f.value = ''; t.value = ''; }
       else if (p === 'today') { f.value = today.toISOString().split('T')[0]; t.value = f.value; }
       else if (p === '7days') { const past = new Date(today); past.setDate(past.getDate() - 7); f.value = past.toISOString().split('T')[0]; t.value = today.toISOString().split('T')[0]; }
@@ -1108,7 +1149,7 @@
 
     function resetAllFilters() {
       ['filter-search', 'filter-date-from', 'filter-date-to'].forEach(id => document.getElementById(id).value = '');
-      ['filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-lib', 'filter-hrs'].forEach(id => document.getElementById(id).value = 'ALL');
+      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-lib'].forEach(id => document.getElementById(id).value = 'ALL');
       applyFilters();
     }
 
