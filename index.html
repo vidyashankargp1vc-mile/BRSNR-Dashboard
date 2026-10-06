@@ -80,11 +80,11 @@
         </div>
 
         <div class="flex items-center flex-wrap gap-2 text-xs">
-          <button onclick="setPresetDate('all')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded text-slate-600 font-medium transition">All Time</button>
-          <button onclick="setPresetDate('today')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded text-slate-600 font-medium transition">Today</button>
-          <button onclick="setPresetDate('7days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded text-slate-600 font-medium transition">Last 7 Days</button>
-          <button onclick="setPresetDate('30days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 rounded text-slate-600 font-medium transition">Last 30 Days</button>
-          <button onclick="resetAllFilters()" class="px-2.5 py-1 bg-rose-50 text-rose-600 hover:bg-rose-100 rounded font-medium transition flex items-center space-x-1">
+          <button onclick="setPresetDate('all')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded text-slate-600 font-medium transition shadow-sm">All Time</button>
+          <button onclick="setPresetDate('today')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded text-slate-600 font-medium transition shadow-sm">Today</button>
+          <button onclick="setPresetDate('7days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded text-slate-600 font-medium transition shadow-sm">Last 7 Days</button>
+          <button onclick="setPresetDate('30days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded text-slate-600 font-medium transition shadow-sm">Last 30 Days</button>
+          <button onclick="resetAllFilters()" class="px-2.5 py-1 bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white rounded font-medium transition flex items-center space-x-1 shadow-sm">
             <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
             <span>Reset All</span>
           </button>
@@ -176,7 +176,7 @@
 
     <!-- KEY PERFORMANCE INDICATORS -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-300 transition duration-200">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 uppercase">Total Volume</span>
           <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg"><i data-lucide="package" class="w-5 h-5"></i></div>
@@ -187,7 +187,7 @@
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-emerald-300 transition duration-200">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 uppercase">Received at MH</span>
           <div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
@@ -198,7 +198,7 @@
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-amber-300 transition duration-200">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 uppercase">In Transit to MH</span>
           <div class="p-2 bg-amber-50 text-amber-600 rounded-lg"><i data-lucide="truck" class="w-5 h-5"></i></div>
@@ -209,7 +209,7 @@
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-blue-300 transition duration-200">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 uppercase">SLA Compliance</span>
           <div class="p-2 bg-blue-50 text-blue-600 rounded-lg"><i data-lucide="clock" class="w-5 h-5"></i></div>
@@ -224,16 +224,16 @@
     <!-- NAVIGATION TABS -->
     <section class="border-b border-slate-200">
       <nav class="flex space-x-6 text-sm font-medium">
-        <button id="tab-btn-overview" onclick="switchTab('overview')" class="py-3 px-1 border-b-2 border-indigo-600 text-indigo-600 font-semibold flex items-center space-x-2">
+        <button id="tab-btn-overview" onclick="switchTab('overview')" class="py-3 px-1 border-b-2 border-indigo-600 text-indigo-600 font-semibold flex items-center space-x-2 transition hover:text-indigo-700">
           <i data-lucide="bar-chart-2" class="w-4 h-4"></i><span>Analytics Overview</span>
         </button>
-        <button id="tab-btn-matrix" onclick="switchTab('matrix')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+        <button id="tab-btn-matrix" onclick="switchTab('matrix')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2 transition">
           <i data-lucide="calendar-clock" class="w-4 h-4"></i><span>Day-wise Aging</span>
         </button>
-        <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+        <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2 transition">
           <i data-lucide="layout-grid" class="w-4 h-4"></i><span>Performance Summary Tables</span>
         </button>
-        <button id="tab-btn-table" onclick="switchTab('table')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+        <button id="tab-btn-table" onclick="switchTab('table')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2 transition">
           <i data-lucide="table" class="w-4 h-4"></i><span>Detailed Shipments Table</span>
         </button>
       </nav>
@@ -242,185 +242,266 @@
     <!-- OVERVIEW CHARTS TAB -->
     <section id="tab-overview" class="space-y-6">
       
-      <!-- Row 1: Centered Line Area + Status Doughnut -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600"></i><span>Daily Volume Trend</span>
-            </h3>
-            <span class="text-xs text-slate-500">Centered Date Scale</span>
-          </div>
-          <div class="h-64 relative"><canvas id="chart-daily-trend"></canvas></div>
+      <!-- 1 visual per row with horizontal scrollable inner wrapper -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600"></i><span>Daily Volume Trend</span>
+          </h3>
+          <span class="text-xs text-slate-500">Centered Date Scale</span>
         </div>
-
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i><span>Status Share</span>
-            </h3>
-            <span class="text-xs text-slate-500">Doughnut Share</span>
-          </div>
-          <div class="h-64 relative"><canvas id="chart-status-split"></canvas></div>
+        <div class="overflow-x-auto">
+          <div class="min-w-[700px] h-72 relative"><canvas id="chart-daily-trend"></canvas></div>
         </div>
       </div>
 
-      <!-- Row 2: GM Column Chart + WM Column Chart -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i><span>GM Wise Volume Distribution</span>
-            </h3>
-            <span class="text-xs text-slate-500">Vertical Column Visual</span>
-          </div>
-          <div class="h-72 relative"><canvas id="chart-gm-column"></canvas></div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i><span>Status Share</span>
+          </h3>
+          <span class="text-xs text-slate-500">Doughnut Share</span>
         </div>
-
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i><span>WM Wise Volume Distribution</span>
-            </h3>
-            <span class="text-xs text-slate-500">Vertical Column Visual</span>
-          </div>
-          <div class="h-72 relative"><canvas id="chart-wm-column"></canvas></div>
+        <div class="overflow-x-auto">
+          <div class="min-w-[700px] h-72 relative"><canvas id="chart-status-split"></canvas></div>
         </div>
       </div>
 
-      <!-- Row 3: PH Name Column Chart + Top MH Bar + Zone Pie -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600"></i><span>PH Name Wise Volume</span>
-            </h3>
-            <span class="text-xs text-slate-500">Primary Hub Columns</span>
-          </div>
-          <div class="h-72 relative"><canvas id="chart-ph-bar"></canvas></div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i><span>GM Wise Volume Distribution</span>
+          </h3>
+          <span class="text-xs text-slate-500">Vertical Column Visual</span>
         </div>
-
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="building-2" class="w-4 h-4 text-indigo-600"></i><span>Top Mother Hubs (MH)</span>
-            </h3>
-            <span class="text-xs text-slate-500">Horizontal Bars</span>
-          </div>
-          <div class="h-72 relative"><canvas id="chart-top-mh"></canvas></div>
+        <div class="overflow-x-auto">
+          <div class="min-w-[700px] h-72 relative"><canvas id="chart-gm-column"></canvas></div>
         </div>
+      </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i><span>Zone Split</span>
-            </h3>
-            <span class="text-xs text-slate-500">Pie Chart</span>
-          </div>
-          <div class="h-72 relative"><canvas id="chart-zone"></canvas></div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i><span>WM Wise Volume Distribution</span>
+          </h3>
+          <span class="text-xs text-slate-500">Vertical Column Visual</span>
+        </div>
+        <div class="overflow-x-auto">
+          <div class="min-w-[700px] h-72 relative"><canvas id="chart-wm-column"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600"></i><span>PH Name Wise Volume</span>
+          </h3>
+          <span class="text-xs text-slate-500">Primary Hub Columns</span>
+        </div>
+        <div class="overflow-x-auto">
+          <div class="min-w-[700px] h-72 relative"><canvas id="chart-ph-bar"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="building-2" class="w-4 h-4 text-indigo-600"></i><span>Top Mother Hubs (MH)</span>
+          </h3>
+          <span class="text-xs text-slate-500">Horizontal Bars</span>
+        </div>
+        <div class="overflow-x-auto">
+          <div class="min-w-[700px] h-72 relative"><canvas id="chart-top-mh"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i><span>Zone Split</span>
+          </h3>
+          <span class="text-xs text-slate-500">Pie Chart</span>
+        </div>
+        <div class="overflow-x-auto">
+          <div class="min-w-[700px] h-72 relative"><canvas id="chart-zone"></canvas></div>
         </div>
       </div>
 
     </section>
 
-    <!-- DAY-WISE AGING TAB -->
-    <section id="tab-matrix" class="hidden bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div>
-          <h3 class="text-base font-bold text-slate-900">Day-wise Aging Matrix</h3>
-          <p class="text-xs text-slate-500">Shipment aging volume per Mother Hub broken down by Date</p>
+    <!-- DAY-WISE AGING TAB (5 TABLES) -->
+    <section id="tab-matrix" class="hidden space-y-6">
+      
+      <!-- Table 1: MH Wise Aging -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">1. Mother Hub (MH) - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500">Shipment aging volume per Mother Hub broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-mh', 'MH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export MH Aging CSV</span>
+          </button>
         </div>
-        <button onclick="exportMatrixCSV()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition">
-          <i data-lucide="download" class="w-4 h-4"></i><span>Export Aging CSV</span>
-        </button>
+        <div class="overflow-x-auto">
+          <table id="matrix-table-mh" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-mh"></tr></thead>
+            <tbody id="matrix-tbody-mh" class="divide-y divide-slate-100 text-slate-800"></tbody>
+          </table>
+        </div>
       </div>
-      <div class="overflow-x-auto">
-        <table id="matrix-table" class="w-full text-xs text-left border-collapse">
-          <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-tr"></tr></thead>
-          <tbody id="matrix-tbody" class="divide-y divide-slate-100 text-slate-800"></tbody>
-        </table>
+
+      <!-- Table 2: Zone Wise Aging -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">2. Zone - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500">Shipment aging volume per Zone broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-zone', 'Zone_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export Zone Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table id="matrix-table-zone" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-zone"></tr></thead>
+            <tbody id="matrix-tbody-zone" class="divide-y divide-slate-100 text-slate-800"></tbody>
+          </table>
+        </div>
       </div>
+
+      <!-- Table 3: GM Wise Aging -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">3. General Manager (GM) - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500">Shipment aging volume per GM broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-gm', 'GM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export GM Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table id="matrix-table-gm" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-gm"></tr></thead>
+            <tbody id="matrix-tbody-gm" class="divide-y divide-slate-100 text-slate-800"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Table 4: PH Wise Aging -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">4. Primary Hub (PH) - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500">Shipment aging volume per Hub Name / PH broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-ph', 'PH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export PH Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table id="matrix-table-ph" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-ph"></tr></thead>
+            <tbody id="matrix-tbody-ph" class="divide-y divide-slate-100 text-slate-800"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Table 5: WM Wise Aging -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">5. Worker / WM - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500">Shipment aging volume per WM name broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-wm', 'WM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export WM Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table id="matrix-table-wm" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-wm"></tr></thead>
+            <tbody id="matrix-tbody-wm" class="divide-y divide-slate-100 text-slate-800"></tbody>
+          </table>
+        </div>
+      </div>
+
     </section>
 
-    <!-- PERFORMANCE SUMMARY TABLES TAB -->
+    <!-- PERFORMANCE SUMMARY TABLES TAB (1 per row) -->
     <section id="tab-tables" class="hidden space-y-6">
       
-      <!-- Row 1: Zone Wise & GM Wise Tables -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Zone Wise Table -->
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
-            <i data-lucide="globe" class="w-4 h-4 text-indigo-600"></i><span>Zone Wise Breakdown</span>
-          </h3>
-          <div class="overflow-x-auto max-h-64">
-            <table class="w-full text-xs text-left">
-              <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
-                <tr><th class="p-2">Zone</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
-              </thead>
-              <tbody id="tbl-zone-body" class="divide-y divide-slate-100"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- GM Wise Table -->
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
-            <i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i><span>GM Wise Breakdown</span>
-          </h3>
-          <div class="overflow-x-auto max-h-64">
-            <table class="w-full text-xs text-left">
-              <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
-                <tr><th class="p-2">GM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
-              </thead>
-              <tbody id="tbl-gm-body" class="divide-y divide-slate-100"></tbody>
-            </table>
-          </div>
+      <!-- Zone Wise Table -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
+          <i data-lucide="globe" class="w-4 h-4 text-indigo-600"></i><span>Zone Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto max-h-72">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+              <tr><th class="p-2">Zone</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-zone-body" class="divide-y divide-slate-100"></tbody>
+          </table>
         </div>
       </div>
 
-      <!-- Row 2: WM Wise & PH Name Wise Tables -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- WM Wise Table -->
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
-            <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i><span>WM Wise Breakdown</span>
-          </h3>
-          <div class="overflow-x-auto max-h-64">
-            <table class="w-full text-xs text-left">
-              <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
-                <tr><th class="p-2">WM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
-              </thead>
-              <tbody id="tbl-wm-body" class="divide-y divide-slate-100"></tbody>
-            </table>
-          </div>
+      <!-- GM Wise Table -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
+          <i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i><span>GM Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto max-h-72">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+              <tr><th class="p-2">GM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-gm-body" class="divide-y divide-slate-100"></tbody>
+          </table>
         </div>
+      </div>
 
-        <!-- PH Name Wise Table -->
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
-            <i data-lucide="building" class="w-4 h-4 text-indigo-600"></i><span>PH Name Wise Breakdown</span>
-          </h3>
-          <div class="overflow-x-auto max-h-64">
-            <table class="w-full text-xs text-left">
-              <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
-                <tr><th class="p-2">Primary Hub (PH)</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
-              </thead>
-              <tbody id="tbl-ph-body" class="divide-y divide-slate-100"></tbody>
-            </table>
-          </div>
+      <!-- WM Wise Table -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
+          <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i><span>WM Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto max-h-72">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+              <tr><th class="p-2">WM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-wm-body" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PH Name Wise Table -->
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
+          <i data-lucide="building" class="w-4 h-4 text-indigo-600"></i><span>PH Name Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto max-h-72">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+              <tr><th class="p-2">Primary Hub (PH)</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-ph-body" class="divide-y divide-slate-100"></tbody>
+          </table>
         </div>
       </div>
 
     </section>
 
     <!-- SHIPMENTS TABLE TAB -->
-    <section id="tab-table" class="hidden bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+    <section id="tab-table" class="hidden bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div>
           <h3 class="text-base font-bold text-slate-900">Shipment Records</h3>
           <p id="table-record-count" class="text-xs text-slate-500">Showing 0 records</p>
         </div>
-        <button onclick="exportFilteredCSV()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition">
+        <button onclick="exportFilteredCSV()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
           <i data-lucide="download" class="w-4 h-4"></i><span>Export Filtered CSV</span>
         </button>
       </div>
@@ -454,9 +535,9 @@
           </select>
         </div>
         <div class="flex items-center space-x-2">
-          <button id="btn-prev-page" onclick="prevPage()" class="p-1.5 border border-slate-300 rounded disabled:opacity-40"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+          <button id="btn-prev-page" onclick="prevPage()" class="p-1.5 border border-slate-300 rounded hover:bg-slate-100 transition disabled:opacity-40"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
           <span id="page-indicator" class="font-medium">Page 1 of 1</span>
-          <button id="btn-next-page" onclick="nextPage()" class="p-1.5 border border-slate-300 rounded disabled:opacity-40"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+          <button id="btn-next-page" onclick="nextPage()" class="p-1.5 border border-slate-300 rounded hover:bg-slate-100 transition disabled:opacity-40"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
         </div>
       </div>
     </section>
@@ -585,7 +666,7 @@
 
       updateKPIs(); 
       renderCharts(); 
-      renderMatrixTable(); 
+      renderAllAgingMatrices(); 
       renderSummaryTables();
       renderShipmentsTable();
     }
@@ -612,7 +693,6 @@
     }
 
     function renderCharts() {
-      // 1. Daily Volume Trend (Centered Dates if few entries)
       const dailyMap = {};
       filteredData.forEach(r => { if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1; });
       let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStr(a) || 0) - (parseDateStr(b) || 0));
@@ -620,7 +700,6 @@
       let displayLabels = [...sortedDates];
       let displayValues = sortedDates.map(d => dailyMap[d]);
 
-      // If few dates are selected, pad array left and right to keep line centered
       if (sortedDates.length > 0 && sortedDates.length <= 4) {
         displayLabels = ['', ...sortedDates, ''];
         displayValues = [null, ...sortedDates.map(d => dailyMap[d]), null];
@@ -637,7 +716,6 @@
         plugins: { datalabels: { align: 'top', color: '#4338ca', font: { weight: 'bold' } } }
       });
 
-      // 2. Status Split (Doughnut)
       const statusMap = {};
       filteredData.forEach(r => { statusMap[r.Status || 'Unknown'] = (statusMap[r.Status || 'Unknown'] || 0) + 1; });
       createChart('chart-status-split', 'doughnut', {
@@ -645,31 +723,22 @@
         datasets: [{ data: Object.values(statusMap), backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444'] }]
       }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
 
-      // 3. GM Volume (Vertical Column Chart)
       const gmMap = {};
       filteredData.forEach(r => { gmMap[r.GM || 'Unassigned'] = (gmMap[r.GM || 'Unassigned'] || 0) + 1; });
       const topGMs = Object.entries(gmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-gm-column', 'bar', {
         labels: topGMs.map(i => i[0]),
-        datasets: [{
-          label: 'Volume', data: topGMs.map(i => i[1]),
-          backgroundColor: '#4f46e5', borderRadius: 6
-        }]
+        datasets: [{ label: 'Volume', data: topGMs.map(i => i[1]), backgroundColor: '#4f46e5', borderRadius: 6 }]
       }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#312e81', font: { weight: 'bold' } } } });
 
-      // 4. WM Volume (Vertical Column Chart)
       const wmMap = {};
       filteredData.forEach(r => { wmMap[r.WM || 'Unassigned'] = (wmMap[r.WM || 'Unassigned'] || 0) + 1; });
       const topWMs = Object.entries(wmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-wm-column', 'bar', {
         labels: topWMs.map(i => i[0]),
-        datasets: [{
-          label: 'Volume', data: topWMs.map(i => i[1]),
-          backgroundColor: '#0ea5e9', borderRadius: 6
-        }]
+        datasets: [{ label: 'Volume', data: topWMs.map(i => i[1]), backgroundColor: '#0ea5e9', borderRadius: 6 }]
       }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#0369a1', font: { weight: 'bold' } } } });
 
-      // 5. PH Name Wise Volume (Vertical Bar / Column Chart)
       const phMap = {};
       filteredData.forEach(r => { phMap[r.HubName || 'Unassigned'] = (phMap[r.HubName || 'Unassigned'] || 0) + 1; });
       const topPHs = Object.entries(phMap).sort((a,b) => b[1] - a[1]).slice(0, 8);
@@ -678,7 +747,6 @@
         datasets: [{ label: 'Volume', data: topPHs.map(i => i[1]), backgroundColor: '#8b5cf6', borderRadius: 6 }]
       }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#5b21b6', font: { weight: 'bold' } } } });
 
-      // 6. Top Mother Hubs (Horizontal Bar)
       const mhMap = {};
       filteredData.forEach(r => { mhMap[r.MH] = (mhMap[r.MH] || 0) + 1; });
       const topMH = Object.entries(mhMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
@@ -687,7 +755,6 @@
         datasets: [{ label: 'Volume', data: topMH.map(i => i[1]), backgroundColor: '#3b82f6', borderRadius: 4 }]
       }, { indexAxis: 'y', plugins: { datalabels: { align: 'end', anchor: 'end', color: '#1e3a8a', font: { weight: 'bold' } } } });
 
-      // 7. Zone Split (Pie Chart)
       const zoneMap = {};
       filteredData.forEach(r => { zoneMap[r.Zone] = (zoneMap[r.Zone] || 0) + 1; });
       createChart('chart-zone', 'pie', {
@@ -709,24 +776,32 @@
       });
     }
 
-    function renderMatrixTable() {
+    function renderAllAgingMatrices() {
+      renderSingleMatrix('MH', 'matrix-thead-mh', 'matrix-tbody-mh', 'Mother Hub');
+      renderSingleMatrix('Zone', 'matrix-thead-zone', 'matrix-tbody-zone', 'Zone');
+      renderSingleMatrix('GM', 'matrix-thead-gm', 'matrix-tbody-gm', 'GM Name');
+      renderSingleMatrix('HubName', 'matrix-thead-ph', 'matrix-tbody-ph', 'Primary Hub');
+      renderSingleMatrix('WM', 'matrix-thead-wm', 'matrix-tbody-wm', 'Worker / WM');
+    }
+
+    function renderSingleMatrix(fieldKey, theadId, tbodyId, rowHeaderTitle) {
       const dates = Array.from(new Set(filteredData.map(r => r.Date || 'No Date'))).sort((a,b) => (parseDateStr(a)||0) - (parseDateStr(b)||0));
       const matrix = {};
       filteredData.forEach(r => {
-        const m = r.MH || 'Unassigned', d = r.Date || 'No Date';
-        if (!matrix[m]) matrix[m] = {};
-        matrix[m][d] = (matrix[m][d] || 0) + 1;
+        const cat = r[fieldKey] || 'Unassigned', d = r.Date || 'No Date';
+        if (!matrix[cat]) matrix[cat] = {};
+        matrix[cat][d] = (matrix[cat][d] || 0) + 1;
       });
 
-      const thead = document.getElementById('matrix-thead-tr');
-      thead.innerHTML = `<th class="p-3">Mother Hub</th>` + dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + `<th class="p-3 text-right bg-slate-100">Total</th>`;
+      const thead = document.getElementById(theadId);
+      thead.innerHTML = `<th class="p-3">${rowHeaderTitle}</th>` + dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + `<th class="p-3 text-right bg-slate-100">Total</th>`;
 
-      const tbody = document.getElementById('matrix-tbody');
+      const tbody = document.getElementById(tbodyId);
       tbody.innerHTML = '';
-      Object.keys(matrix).sort().forEach(mh => {
+      Object.keys(matrix).sort().forEach(cat => {
         let tot = 0;
-        let html = `<td class="p-3 font-semibold text-slate-900">${mh}</td>`;
-        dates.forEach(d => { const v = matrix[mh][d] || 0; tot += v; html += `<td class="p-3 text-center">${v ? v.toLocaleString() : '-'}</td>`; });
+        let html = `<td class="p-3 font-semibold text-slate-900">${cat}</td>`;
+        dates.forEach(d => { const v = matrix[cat][d] || 0; tot += v; html += `<td class="p-3 text-center">${v ? v.toLocaleString() : '-'}</td>`; });
         html += `<td class="p-3 text-right font-bold text-indigo-600 bg-slate-50">${tot.toLocaleString()}</td>`;
         const tr = document.createElement('tr'); tr.innerHTML = html; tbody.appendChild(tr);
       });
@@ -734,17 +809,9 @@
 
     function renderSummaryTables() {
       const tot = filteredData.length || 1;
-
-      // 1. Zone Summary Table
       populateSummaryTable('tbl-zone-body', 'Zone', tot);
-
-      // 2. GM Summary Table
       populateSummaryTable('tbl-gm-body', 'GM', tot);
-
-      // 3. WM Summary Table
       populateSummaryTable('tbl-wm-body', 'WM', tot);
-
-      // 4. PH Name Summary Table
       populateSummaryTable('tbl-ph-body', 'HubName', tot);
     }
 
@@ -829,12 +896,12 @@
     }
 
     function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `BRSNR_Export_${new Date().toISOString().split('T')[0]}.csv`); }
-    function exportMatrixCSV() {
+    function exportMatrixCSV(tableId, filenamePrefix) {
       const rows = [];
-      document.querySelectorAll('#matrix-table tr').forEach(tr => {
+      document.querySelectorAll(`#${tableId} tr`).forEach(tr => {
         const row = []; tr.querySelectorAll('th, td').forEach(td => row.push(`"${td.innerText.replace(/"/g, '""')}"`)); rows.push(row.join(','));
       });
-      downloadBlob(rows.join('\n'), `BRSNR_Aging_${new Date().toISOString().split('T')[0]}.csv`);
+      downloadBlob(rows.join('\n'), `BRSNR_${filenamePrefix}_${new Date().toISOString().split('T')[0]}.csv`);
     }
 
     function downloadBlob(content, name) {
