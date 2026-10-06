@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-slate-50 text-slate-800">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +22,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
     
+    /* Custom Scrollbars */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -41,26 +42,16 @@
         </div>
         <div>
           <h1 class="text-lg font-bold text-slate-900 leading-tight">BRSNR Logistics Analytics</h1>
-          <p class="text-xs text-slate-500 font-medium">Direct Folder Scanner & Auto-Aggregator</p>
+          <p class="text-xs text-slate-500 font-medium">Automated Multi-Source CSV Aggregator</p>
         </div>
       </div>
 
-      <!-- Action & Status Controls -->
+      <!-- Live Badge Counter -->
       <div class="flex items-center space-x-3">
-        <div class="hidden sm:flex items-center bg-slate-100 border border-slate-200 text-slate-700 text-xs px-3 py-1.5 rounded-md space-x-2">
+        <div class="flex items-center bg-slate-100 border border-slate-200 text-slate-700 text-xs px-3 py-1.5 rounded-md space-x-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span id="record-count-badge">0 Shipments Loaded</span>
         </div>
-
-        <button id="btn-sync" onclick="loadRepositoryData()" class="flex items-center space-x-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium text-xs px-3 py-2 rounded-lg border border-indigo-200 transition">
-          <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-          <span>Rescan /data</span>
-        </button>
-
-        <button onclick="toggleSetupModal(true)" class="flex items-center space-x-1.5 bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs px-3 py-2 rounded-lg transition shadow-sm">
-          <i data-lucide="github" class="w-4 h-4"></i>
-          <span>Setup Guide</span>
-        </button>
       </div>
 
     </div>
@@ -69,7 +60,7 @@
   <!-- MAIN CONTAINER -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-    <!-- SYNC & ALERT BANNER -->
+    <!-- STATUS BANNER -->
     <div id="status-banner" class="hidden bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-lg text-sm flex items-center justify-between shadow-sm">
       <div class="flex items-center space-x-2">
         <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 flex-shrink-0"></i>
@@ -237,7 +228,10 @@
           <i data-lucide="bar-chart-2" class="w-4 h-4"></i><span>Analytics Overview</span>
         </button>
         <button id="tab-btn-matrix" onclick="switchTab('matrix')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
-          <i data-lucide="grid" class="w-4 h-4"></i><span>Daily Hub Matrix</span>
+          <i data-lucide="calendar-clock" class="w-4 h-4"></i><span>Day-wise Aging</span>
+        </button>
+        <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
+          <i data-lucide="layout-grid" class="w-4 h-4"></i><span>Performance Summary Tables</span>
         </button>
         <button id="tab-btn-table" onclick="switchTab('table')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2">
           <i data-lucide="table" class="w-4 h-4"></i><span>Detailed Shipments Table</span>
@@ -248,14 +242,14 @@
     <!-- OVERVIEW CHARTS TAB -->
     <section id="tab-overview" class="space-y-6">
       
-      <!-- Row 1: Line Area + Status Doughnut -->
+      <!-- Row 1: Centered Line Area + Status Doughnut -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600"></i><span>Daily Volume Trend (Smooth Area)</span>
+              <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600"></i><span>Daily Volume Trend</span>
             </h3>
-            <span class="text-xs text-slate-500">Volume by Date</span>
+            <span class="text-xs text-slate-500">Centered Date Scale</span>
           </div>
           <div class="h-64 relative"><canvas id="chart-daily-trend"></canvas></div>
         </div>
@@ -265,41 +259,51 @@
             <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
               <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i><span>Status Share</span>
             </h3>
-            <span class="text-xs text-slate-500">Doughnut</span>
+            <span class="text-xs text-slate-500">Doughnut Share</span>
           </div>
           <div class="h-64 relative"><canvas id="chart-status-split"></canvas></div>
         </div>
       </div>
 
-      <!-- Row 2: GM Polar Area + WM Doughnut Ring -->
+      <!-- Row 2: GM Column Chart + WM Column Chart -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="compass" class="w-4 h-4 text-indigo-600"></i><span>GM Volume Share (Polar Area Chart)</span>
+              <i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i><span>GM Wise Volume Distribution</span>
             </h3>
-            <span class="text-xs text-slate-500">Manager Radial View</span>
+            <span class="text-xs text-slate-500">Vertical Column Visual</span>
           </div>
-          <div class="h-72 relative"><canvas id="chart-gm-polar"></canvas></div>
+          <div class="h-72 relative"><canvas id="chart-gm-column"></canvas></div>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i><span>Top WM Volume Share (Doughnut Ring)</span>
+              <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i><span>WM Wise Volume Distribution</span>
             </h3>
-            <span class="text-xs text-slate-500">Top Workers Share</span>
+            <span class="text-xs text-slate-500">Vertical Column Visual</span>
           </div>
-          <div class="h-72 relative"><canvas id="chart-wm-ring"></canvas></div>
+          <div class="h-72 relative"><canvas id="chart-wm-column"></canvas></div>
         </div>
       </div>
 
-      <!-- Row 3: Top MH Bar + RCA Pillar + Zone Pie -->
+      <!-- Row 3: PH Name Column Chart + Top MH Bar + Zone Pie -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="building-2" class="w-4 h-4 text-indigo-600"></i><span>Top Mother Hubs</span>
+              <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600"></i><span>PH Name Wise Volume</span>
+            </h3>
+            <span class="text-xs text-slate-500">Primary Hub Columns</span>
+          </div>
+          <div class="h-72 relative"><canvas id="chart-ph-bar"></canvas></div>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="building-2" class="w-4 h-4 text-indigo-600"></i><span>Top Mother Hubs (MH)</span>
             </h3>
             <span class="text-xs text-slate-500">Horizontal Bars</span>
           </div>
@@ -309,17 +313,7 @@
         <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="alert-triangle" class="w-4 h-4 text-indigo-600"></i><span>RCA Categories</span>
-            </h3>
-            <span class="text-xs text-slate-500">Vertical Columns</span>
-          </div>
-          <div class="h-72 relative"><canvas id="chart-rca"></canvas></div>
-        </div>
-
-        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-              <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600"></i><span>Zone Split</span>
+              <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i><span>Zone Split</span>
             </h3>
             <span class="text-xs text-slate-500">Pie Chart</span>
           </div>
@@ -329,15 +323,15 @@
 
     </section>
 
-    <!-- MATRIX TAB -->
+    <!-- DAY-WISE AGING TAB -->
     <section id="tab-matrix" class="hidden bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div>
-          <h3 class="text-base font-bold text-slate-900">Daily Hub Volume Matrix</h3>
-          <p class="text-xs text-slate-500">Shipment volume per Mother Hub broken down by Date</p>
+          <h3 class="text-base font-bold text-slate-900">Day-wise Aging Matrix</h3>
+          <p class="text-xs text-slate-500">Shipment aging volume per Mother Hub broken down by Date</p>
         </div>
         <button onclick="exportMatrixCSV()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition">
-          <i data-lucide="download" class="w-4 h-4"></i><span>Export Matrix CSV</span>
+          <i data-lucide="download" class="w-4 h-4"></i><span>Export Aging CSV</span>
         </button>
       </div>
       <div class="overflow-x-auto">
@@ -346,6 +340,77 @@
           <tbody id="matrix-tbody" class="divide-y divide-slate-100 text-slate-800"></tbody>
         </table>
       </div>
+    </section>
+
+    <!-- PERFORMANCE SUMMARY TABLES TAB -->
+    <section id="tab-tables" class="hidden space-y-6">
+      
+      <!-- Row 1: Zone Wise & GM Wise Tables -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Zone Wise Table -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
+            <i data-lucide="globe" class="w-4 h-4 text-indigo-600"></i><span>Zone Wise Breakdown</span>
+          </h3>
+          <div class="overflow-x-auto max-h-64">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+                <tr><th class="p-2">Zone</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+              </thead>
+              <tbody id="tbl-zone-body" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- GM Wise Table -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
+            <i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i><span>GM Wise Breakdown</span>
+          </h3>
+          <div class="overflow-x-auto max-h-64">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+                <tr><th class="p-2">GM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+              </thead>
+              <tbody id="tbl-gm-body" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: WM Wise & PH Name Wise Tables -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- WM Wise Table -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
+            <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i><span>WM Wise Breakdown</span>
+          </h3>
+          <div class="overflow-x-auto max-h-64">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+                <tr><th class="p-2">WM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+              </thead>
+              <tbody id="tbl-wm-body" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PH Name Wise Table -->
+        <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-3">
+          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
+            <i data-lucide="building" class="w-4 h-4 text-indigo-600"></i><span>PH Name Wise Breakdown</span>
+          </h3>
+          <div class="overflow-x-auto max-h-64">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+                <tr><th class="p-2">Primary Hub (PH)</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+              </thead>
+              <tbody id="tbl-ph-body" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- SHIPMENTS TABLE TAB -->
@@ -398,18 +463,6 @@
 
   </main>
 
-  <!-- SETUP MODAL -->
-  <div id="setup-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-xl border border-slate-200 max-w-2xl w-full p-6 shadow-xl space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div class="flex items-center space-x-2 font-bold text-lg"><i data-lucide="github" class="w-6 h-6 text-indigo-600"></i><span>GitHub Pages Setup</span></div>
-        <button onclick="toggleSetupModal(false)" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
-      </div>
-      <p class="text-xs text-slate-600">Upload your daily CSVs into the <code class="text-indigo-600 font-mono">/data</code> directory of your repository. Refreshing the dashboard link will auto-discover and merge all records!</p>
-      <div class="text-right"><button onclick="toggleSetupModal(false)" class="px-4 py-2 bg-indigo-600 text-white font-medium text-xs rounded-lg">Got it!</button></div>
-    </div>
-  </div>
-
   <script>
     Chart.register(ChartDataLabels);
 
@@ -417,7 +470,6 @@
     const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA', HRS: 'Hrs' };
 
     document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); loadRepositoryData(); });
-    function toggleSetupModal(s) { document.getElementById('setup-modal').classList.toggle('hidden', !s); }
 
     async function loadRepositoryData() {
       showStatusBanner("Scanning /data directory on GitHub...", "info");
@@ -469,7 +521,7 @@
     function normalizeRow(r) {
       return {
         Date: r[COLS.DATE] || '', ShipmentId: r[COLS.SHIPMENT_ID] || '',
-        HubName: r[COLS.HUB_NAME] || '', SellerName: r[COLS.SELLER_NAME] || '',
+        HubName: r[COLS.HUB_NAME] || r['PH Name'] || '', SellerName: r[COLS.SELLER_NAME] || '',
         Status: r[COLS.STATUS] || '', Zone: r[COLS.ZONE] || 'Unknown',
         LIB: r[COLS.LIB] || 'N/A', MH: r[COLS.MH] || 'Unassigned',
         WM: r[COLS.WM] || 'Unassigned', GM: r[COLS.GM] || 'Unassigned',
@@ -531,7 +583,11 @@
         return true;
       });
 
-      updateKPIs(); renderCharts(); renderMatrixTable(); renderShipmentsTable();
+      updateKPIs(); 
+      renderCharts(); 
+      renderMatrixTable(); 
+      renderSummaryTables();
+      renderShipmentsTable();
     }
 
     function parseDateStr(str) {
@@ -556,18 +612,30 @@
     }
 
     function renderCharts() {
-      // 1. Daily Volume Trend (Area Chart)
+      // 1. Daily Volume Trend (Centered Dates if few entries)
       const dailyMap = {};
       filteredData.forEach(r => { if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1; });
-      const sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStr(a) || 0) - (parseDateStr(b) || 0));
+      let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStr(a) || 0) - (parseDateStr(b) || 0));
+
+      let displayLabels = [...sortedDates];
+      let displayValues = sortedDates.map(d => dailyMap[d]);
+
+      // If few dates are selected, pad array left and right to keep line centered
+      if (sortedDates.length > 0 && sortedDates.length <= 4) {
+        displayLabels = ['', ...sortedDates, ''];
+        displayValues = [null, ...sortedDates.map(d => dailyMap[d]), null];
+      }
 
       createChart('chart-daily-trend', 'line', {
-        labels: sortedDates,
+        labels: displayLabels,
         datasets: [{
-          label: 'Shipments', data: sortedDates.map(d => dailyMap[d]),
-          borderColor: '#4f46e5', backgroundColor: 'rgba(79, 70, 229, 0.15)', fill: true, tension: 0.4
+          label: 'Shipments', data: displayValues,
+          borderColor: '#4f46e5', backgroundColor: 'rgba(79, 70, 229, 0.15)', fill: true, tension: 0.3, pointRadius: 5
         }]
-      }, { plugins: { datalabels: { align: 'top', color: '#4338ca', font: { weight: 'bold' } } } });
+      }, {
+        scales: { x: { bounds: 'ticks' } },
+        plugins: { datalabels: { align: 'top', color: '#4338ca', font: { weight: 'bold' } } }
+      });
 
       // 2. Status Split (Doughnut)
       const statusMap = {};
@@ -577,31 +645,40 @@
         datasets: [{ data: Object.values(statusMap), backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444'] }]
       }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
 
-      // 3. GM Volume (Polar Area Chart)
+      // 3. GM Volume (Vertical Column Chart)
       const gmMap = {};
       filteredData.forEach(r => { gmMap[r.GM || 'Unassigned'] = (gmMap[r.GM || 'Unassigned'] || 0) + 1; });
-      const topGMs = Object.entries(gmMap).sort((a,b) => b[1] - a[1]).slice(0, 7);
-      createChart('chart-gm-polar', 'polarArea', {
+      const topGMs = Object.entries(gmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
+      createChart('chart-gm-column', 'bar', {
         labels: topGMs.map(i => i[0]),
         datasets: [{
-          data: topGMs.map(i => i[1]),
-          backgroundColor: ['rgba(99, 102, 241, 0.7)', 'rgba(16, 185, 129, 0.7)', 'rgba(245, 158, 11, 0.7)', 'rgba(236, 72, 153, 0.7)', 'rgba(14, 165, 233, 0.7)', 'rgba(139, 92, 246, 0.7)']
+          label: 'Volume', data: topGMs.map(i => i[1]),
+          backgroundColor: '#4f46e5', borderRadius: 6
         }]
-      }, { plugins: { datalabels: { color: '#1e293b', font: { weight: 'bold' } } } });
+      }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#312e81', font: { weight: 'bold' } } } });
 
-      // 4. WM Volume (Doughnut Ring Chart)
+      // 4. WM Volume (Vertical Column Chart)
       const wmMap = {};
       filteredData.forEach(r => { wmMap[r.WM || 'Unassigned'] = (wmMap[r.WM || 'Unassigned'] || 0) + 1; });
-      const topWMs = Object.entries(wmMap).sort((a,b) => b[1] - a[1]).slice(0, 8);
-      createChart('chart-wm-ring', 'doughnut', {
+      const topWMs = Object.entries(wmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
+      createChart('chart-wm-column', 'bar', {
         labels: topWMs.map(i => i[0]),
         datasets: [{
-          data: topWMs.map(i => i[1]),
-          backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#0ea5e9', '#8b5cf6', '#64748b', '#f43f5e']
+          label: 'Volume', data: topWMs.map(i => i[1]),
+          backgroundColor: '#0ea5e9', borderRadius: 6
         }]
-      }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold', size: 10 } } } });
+      }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#0369a1', font: { weight: 'bold' } } } });
 
-      // 5. Top Mother Hubs (Horizontal Bar)
+      // 5. PH Name Wise Volume (Vertical Bar / Column Chart)
+      const phMap = {};
+      filteredData.forEach(r => { phMap[r.HubName || 'Unassigned'] = (phMap[r.HubName || 'Unassigned'] || 0) + 1; });
+      const topPHs = Object.entries(phMap).sort((a,b) => b[1] - a[1]).slice(0, 8);
+      createChart('chart-ph-bar', 'bar', {
+        labels: topPHs.map(i => i[0]),
+        datasets: [{ label: 'Volume', data: topPHs.map(i => i[1]), backgroundColor: '#8b5cf6', borderRadius: 6 }]
+      }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#5b21b6', font: { weight: 'bold' } } } });
+
+      // 6. Top Mother Hubs (Horizontal Bar)
       const mhMap = {};
       filteredData.forEach(r => { mhMap[r.MH] = (mhMap[r.MH] || 0) + 1; });
       const topMH = Object.entries(mhMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
@@ -609,14 +686,6 @@
         labels: topMH.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topMH.map(i => i[1]), backgroundColor: '#3b82f6', borderRadius: 4 }]
       }, { indexAxis: 'y', plugins: { datalabels: { align: 'end', anchor: 'end', color: '#1e3a8a', font: { weight: 'bold' } } } });
-
-      // 6. RCA Breakdown (Vertical Column)
-      const rcaMap = {};
-      filteredData.forEach(r => { rcaMap[r.RCA] = (rcaMap[r.RCA] || 0) + 1; });
-      createChart('chart-rca', 'bar', {
-        labels: Object.keys(rcaMap),
-        datasets: [{ label: 'Incidents', data: Object.values(rcaMap), backgroundColor: ['#f43f5e', '#fb923c', '#a855f7'], borderRadius: 6 }]
-      }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#881337', font: { weight: 'bold' } } } });
 
       // 7. Zone Split (Pie Chart)
       const zoneMap = {};
@@ -663,6 +732,46 @@
       });
     }
 
+    function renderSummaryTables() {
+      const tot = filteredData.length || 1;
+
+      // 1. Zone Summary Table
+      populateSummaryTable('tbl-zone-body', 'Zone', tot);
+
+      // 2. GM Summary Table
+      populateSummaryTable('tbl-gm-body', 'GM', tot);
+
+      // 3. WM Summary Table
+      populateSummaryTable('tbl-wm-body', 'WM', tot);
+
+      // 4. PH Name Summary Table
+      populateSummaryTable('tbl-ph-body', 'HubName', tot);
+    }
+
+    function populateSummaryTable(elementId, fieldKey, totalCount) {
+      const map = {};
+      filteredData.forEach(r => {
+        const k = r[fieldKey] || 'Unassigned';
+        map[k] = (map[k] || 0) + 1;
+      });
+
+      const sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
+      const tbody = document.getElementById(elementId);
+      tbody.innerHTML = '';
+
+      sorted.forEach(([key, count]) => {
+        const pct = ((count / totalCount) * 100).toFixed(1);
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition";
+        tr.innerHTML = `
+          <td class="p-2 font-medium text-slate-800">${key}</td>
+          <td class="p-2 text-right font-mono text-slate-900 font-semibold">${count.toLocaleString()}</td>
+          <td class="p-2 text-right font-mono text-indigo-600 font-semibold">${pct}%</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
     function renderShipmentsTable() {
       const tbody = document.getElementById('shipments-tbody');
       tbody.innerHTML = '';
@@ -697,7 +806,7 @@
     function changePageSize() { pageSize = parseInt(document.getElementById('table-page-size').value); currentPage = 1; renderShipmentsTable(); }
 
     function switchTab(t) {
-      ['overview', 'matrix', 'table'].forEach(tab => {
+      ['overview', 'matrix', 'tables', 'table'].forEach(tab => {
         document.getElementById(`tab-${tab}`).classList.add('hidden');
         document.getElementById(`tab-btn-${tab}`).classList.remove('border-indigo-600', 'text-indigo-600', 'font-semibold');
       });
@@ -725,7 +834,7 @@
       document.querySelectorAll('#matrix-table tr').forEach(tr => {
         const row = []; tr.querySelectorAll('th, td').forEach(td => row.push(`"${td.innerText.replace(/"/g, '""')}"`)); rows.push(row.join(','));
       });
-      downloadBlob(rows.join('\n'), `BRSNR_Matrix_${new Date().toISOString().split('T')[0]}.csv`);
+      downloadBlob(rows.join('\n'), `BRSNR_Aging_${new Date().toISOString().split('T')[0]}.csv`);
     }
 
     function downloadBlob(content, name) {
