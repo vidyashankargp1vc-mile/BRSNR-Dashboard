@@ -19,7 +19,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- PapaParse for CSV Parsing -->
+  <!-- PapaParse for High-Performance CSV Parsing -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
   <!-- Chart.js & DataLabels Plugin -->
@@ -39,79 +39,96 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    /* Realistic Hanging Lamp / Pull Lever Styling */
+    /* Interactive Pop-up Effect on Hover for Cards & UI Elements */
+    .pop-hover {
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    }
+    .pop-hover:hover {
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 12px 24px -6px rgba(99, 102, 241, 0.15), 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Hanging Lamp / Trapezium Shade / Right-Mounted Pull Lever */
     .lamp-container {
       position: relative;
       display: inline-block;
       cursor: pointer;
-      padding-top: 15px;
+      padding-top: 18px;
       user-select: none;
+      width: 60px;
+      height: 65px;
     }
     .lamp-wire {
       position: absolute;
-      top: -24px;
+      top: -20px;
       left: 50%;
       transform: translateX(-50%);
       width: 2px;
-      height: 30px;
+      height: 24px;
       background-color: #334155;
+      z-index: 10;
     }
     .dark .lamp-wire {
       background-color: #cbd5e1;
     }
+    /* Trapezium Shaped Shade Cover */
     .lamp-shade {
-      width: 44px;
-      height: 20px;
-      background: #1e293b;
-      border-radius: 22px 22px 2px 2px;
+      width: 42px;
+      height: 22px;
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
       margin: 0 auto;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
       position: relative;
+      z-index: 12;
+      transition: background 0.3s;
     }
     .dark .lamp-shade {
-      background: #e2e8f0;
+      background: linear-gradient(180deg, #f1f5f9 0%, #cbd5e1 100%);
     }
+    /* Bulb attached right under the shade center */
     .lamp-bulb {
       width: 14px;
       height: 14px;
       background: #94a3b8;
       border-radius: 50%;
-      margin: -2px auto 0 auto;
+      margin: -3px auto 0 auto;
+      position: relative;
+      z-index: 11;
       transition: all 0.3s ease;
       box-shadow: inset -2px -2px 4px rgba(0,0,0,0.3);
     }
     .dark .lamp-bulb {
       background: #fbbf24;
-      box-shadow: 0 0 16px #fbbf24, 0 0 30px #f59e0b, inset -1px -1px 2px rgba(0,0,0,0.2);
+      box-shadow: 0 0 16px #fbbf24, 0 0 32px #f59e0b, inset -1px -1px 2px rgba(0,0,0,0.2);
     }
-    /* Pull Cord & Lever */
+    /* Pull Cord & Lever mounted to the RIGHT side */
     .pull-cord {
       position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+      right: 8px;
       width: 2px;
-      height: 18px;
+      height: 22px;
       background: #94a3b8;
-      top: 31px;
+      top: 18px;
+      z-index: 9;
       transition: height 0.15s ease-in-out;
     }
     .pull-lever {
       position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+      right: 4px;
       width: 10px;
       height: 14px;
       background: #d97706;
       border-radius: 50%;
-      top: 47px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      top: 38px;
+      z-index: 9;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
       transition: top 0.15s ease-in-out;
     }
     .lamp-container:active .pull-cord {
-      height: 36px;
+      height: 38px;
     }
     .lamp-container:active .pull-lever {
-      top: 65px;
+      top: 54px;
     }
   </style>
 </head>
@@ -123,7 +140,7 @@
       
       <!-- Logo & Title -->
       <div class="flex items-center space-x-3">
-        <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-sm hover:ring-2 hover:ring-indigo-400 hover:ring-offset-2 transition duration-200">
+        <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-sm pop-hover cursor-pointer">
           <i data-lucide="truck" class="w-6 h-6"></i>
         </div>
         <div>
@@ -136,8 +153,8 @@
       <div class="flex items-center space-x-6">
         
         <!-- Pullable Hanging Lamp Switcher -->
-        <div class="flex items-center space-x-2" title="Pull lever cord to switch Light / Dark theme">
-          <div onclick="toggleDarkMode()" class="lamp-container" role="button" tabindex="0" aria-label="Toggle Dark Mode">
+        <div class="flex items-center space-x-2" title="Pull right lever to switch Light / Dark theme">
+          <div onclick="toggleDarkMode()" class="lamp-container pop-hover" role="button" tabindex="0" aria-label="Toggle Dark Mode">
             <div class="lamp-wire"></div>
             <div class="lamp-shade"></div>
             <div class="lamp-bulb"></div>
@@ -147,7 +164,7 @@
         </div>
 
         <div class="flex items-center space-x-3">
-          <div class="flex items-center bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-xs px-3 py-1.5 rounded-md space-x-2 shadow-sm hover:border-indigo-500 transition duration-200">
+          <div class="flex items-center bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-xs px-3 py-1.5 rounded-md space-x-2 shadow-sm pop-hover cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span id="record-count-badge">0 Shipments Loaded</span>
           </div>
@@ -162,7 +179,7 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
     <!-- STATUS BANNER -->
-    <div id="status-banner" class="hidden bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 px-4 py-3 rounded-lg text-sm flex items-center justify-between shadow-sm hover:border-amber-400 transition duration-200">
+    <div id="status-banner" class="hidden bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 px-4 py-3 rounded-lg text-sm flex items-center justify-between shadow-sm pop-hover">
       <div class="flex items-center space-x-2">
         <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 flex-shrink-0"></i>
         <span id="status-banner-text">Scanning /data directory...</span>
@@ -173,7 +190,7 @@
     </div>
 
     <!-- GLOBAL FILTER TOOLBAR -->
-    <section class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm hover:border-indigo-400 dark:hover:border-indigo-500 hover:ring-1 hover:ring-indigo-400 transition duration-300">
+    <section class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm pop-hover">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-700 pb-3">
         <div class="flex items-center space-x-2 text-slate-800 dark:text-slate-200 font-semibold text-sm">
           <i data-lucide="filter" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
@@ -181,11 +198,11 @@
         </div>
 
         <div class="flex items-center flex-wrap gap-2 text-xs">
-          <button onclick="setPresetDate('all')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300">All Time</button>
-          <button onclick="setPresetDate('today')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300">Today</button>
-          <button onclick="setPresetDate('7days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300">Last 7 Days</button>
-          <button onclick="setPresetDate('30days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300">Last 30 Days</button>
-          <button onclick="resetAllFilters()" class="px-2.5 py-1 bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white dark:bg-rose-950 dark:text-rose-300 dark:hover:bg-rose-600 dark:hover:text-white rounded font-medium transition duration-200 flex items-center space-x-1 shadow-sm border border-rose-200 dark:border-rose-800">
+          <button onclick="setPresetDate('all')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300 pop-hover">All Time</button>
+          <button onclick="setPresetDate('today')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300 pop-hover">Today</button>
+          <button onclick="setPresetDate('7days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300 pop-hover">Last 7 Days</button>
+          <button onclick="setPresetDate('30days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300 pop-hover">Last 30 Days</button>
+          <button onclick="resetAllFilters()" class="px-2.5 py-1 bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white dark:bg-rose-950 dark:text-rose-300 dark:hover:bg-rose-600 dark:hover:text-white rounded font-medium transition duration-200 flex items-center space-x-1 shadow-sm border border-rose-200 dark:border-rose-800 pop-hover">
             <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
             <span>Reset All</span>
           </button>
@@ -197,7 +214,7 @@
         <div class="col-span-1 sm:col-span-2 lg:col-span-1">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Search Keyword</label>
           <div class="relative">
-            <input type="text" id="filter-search" oninput="applyFilters()" placeholder="Shipment ID, Bag ID, etc..." class="w-full pl-8 pr-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
+            <input type="text" id="filter-search" oninput="debouncedApplyFilters()" placeholder="Shipment ID, Bag ID, etc..." class="w-full pl-8 pr-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2"></i>
           </div>
         </div>
@@ -281,7 +298,7 @@
 
     <!-- KEY PERFORMANCE INDICATORS -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover cursor-pointer">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Total Volume</span>
           <div class="p-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-lg"><i data-lucide="package" class="w-5 h-5"></i></div>
@@ -292,7 +309,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-emerald-500 hover:ring-2 hover:ring-emerald-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover cursor-pointer">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received at MH</span>
           <div class="p-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-lg"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
@@ -303,7 +320,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-amber-500 hover:ring-2 hover:ring-amber-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover cursor-pointer">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched to MH</span>
           <div class="p-2 bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-lg"><i data-lucide="truck" class="w-5 h-5"></i></div>
@@ -314,14 +331,15 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-blue-500 hover:ring-2 hover:ring-blue-400/30 transition duration-200">
+      <!-- REPLACED DISPATCH EFFICIENCY WITH ACTIVE ZONES (VALUE = 4) -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover cursor-pointer">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatch Efficiency Rate</span>
-          <div class="p-2 bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 rounded-lg"><i data-lucide="zap" class="w-5 h-5"></i></div>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Active Zones</span>
+          <div class="p-2 bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 rounded-lg"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
-          <p id="kpi-dispatch-eff-pct" class="text-2xl font-bold text-slate-900 dark:text-white">0%</p>
-          <p id="kpi-dispatch-eff-sub" class="text-xs text-slate-500 dark:text-slate-400 mt-1">0 processed under 24 hrs</p>
+          <p id="kpi-active-zones" class="text-2xl font-bold text-slate-900 dark:text-white">4</p>
+          <p id="kpi-active-zones-sub" class="text-xs text-slate-500 dark:text-slate-400 mt-1">Operational Coverage Regions</p>
         </div>
       </div>
     </section>
@@ -329,16 +347,16 @@
     <!-- NAVIGATION TABS -->
     <section class="border-b border-slate-200 dark:border-slate-700">
       <nav class="flex space-x-6 text-sm font-medium">
-        <button id="tab-btn-overview" onclick="switchTab('overview')" class="py-3 px-3 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold flex items-center space-x-2 transition hover:bg-indigo-50 dark:hover:bg-slate-800 rounded-t-lg hover:border-indigo-500 hover:ring-1 hover:ring-indigo-300">
+        <button id="tab-btn-overview" onclick="switchTab('overview')" class="py-3 px-3 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold flex items-center space-x-2 transition hover:bg-indigo-50 dark:hover:bg-slate-800 rounded-t-lg pop-hover">
           <i data-lucide="bar-chart-2" class="w-4 h-4"></i><span>Analytics Overview</span>
         </button>
-        <button id="tab-btn-matrix" onclick="switchTab('matrix')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg hover:border-slate-300">
+        <button id="tab-btn-matrix" onclick="switchTab('matrix')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg pop-hover">
           <i data-lucide="calendar-clock" class="w-4 h-4"></i><span>Day-wise Aging</span>
         </button>
-        <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg hover:border-slate-300">
+        <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg pop-hover">
           <i data-lucide="layout-grid" class="w-4 h-4"></i><span>Performance Summary Tables</span>
         </button>
-        <button id="tab-btn-table" onclick="switchTab('table')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg hover:border-slate-300">
+        <button id="tab-btn-table" onclick="switchTab('table')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg pop-hover">
           <i data-lucide="table" class="w-4 h-4"></i><span>Detailed Shipments Table</span>
         </button>
       </nav>
@@ -347,7 +365,7 @@
     <!-- OVERVIEW CHARTS TAB -->
     <section id="tab-overview" class="space-y-6">
       
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Daily Volume Trend</span>
@@ -359,7 +377,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Zone Split</span>
@@ -371,7 +389,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Status Share</span>
@@ -383,7 +401,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <i data-lucide="store" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Seller Wise Volume Distribution</span>
@@ -395,7 +413,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <i data-lucide="user-check" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>GM Wise Volume Distribution</span>
@@ -407,7 +425,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM Wise Volume Distribution</span>
@@ -419,7 +437,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Volume</span>
@@ -431,7 +449,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <i data-lucide="building-2" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Top Mother Hubs (MH)</span>
@@ -448,13 +466,13 @@
     <!-- DAY-WISE AGING TAB -->
     <section id="tab-matrix" class="hidden space-y-6">
       
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white">1. Zone - Day-wise Aging Matrix</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Zone broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-zone', 'Zone_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+          <button onclick="exportMatrixCSV('matrix-table-zone', 'Zone_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm pop-hover">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export Zone Aging CSV</span>
           </button>
         </div>
@@ -466,13 +484,13 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white">2. Seller Name - Day-wise Aging Matrix</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Seller Name broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-seller', 'Seller_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+          <button onclick="exportMatrixCSV('matrix-table-seller', 'Seller_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm pop-hover">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export Seller Aging CSV</span>
           </button>
         </div>
@@ -484,13 +502,13 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white">3. General Manager (GM) - Day-wise Aging Matrix</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per GM broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-gm', 'GM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+          <button onclick="exportMatrixCSV('matrix-table-gm', 'GM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm pop-hover">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export GM Aging CSV</span>
           </button>
         </div>
@@ -502,13 +520,13 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white">4. Mother Hub (MH) - Day-wise Aging Matrix</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Mother Hub broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-mh', 'MH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+          <button onclick="exportMatrixCSV('matrix-table-mh', 'MH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm pop-hover">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export MH Aging CSV</span>
           </button>
         </div>
@@ -520,13 +538,13 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white">5. Pickup Hub (PH) - Day-wise Aging Matrix</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Pickup Hub broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-ph', 'PH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+          <button onclick="exportMatrixCSV('matrix-table-ph', 'PH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm pop-hover">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export PH Aging CSV</span>
           </button>
         </div>
@@ -538,13 +556,13 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white">6. Worker / WM - Day-wise Aging Matrix</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per WM name broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-wm', 'WM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+          <button onclick="exportMatrixCSV('matrix-table-wm', 'WM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm pop-hover">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export WM Aging CSV</span>
           </button>
         </div>
@@ -561,7 +579,7 @@
     <!-- PERFORMANCE SUMMARY TABLES TAB -->
     <section id="tab-tables" class="hidden space-y-6">
       
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="globe" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Zone Wise Breakdown</span>
         </h3>
@@ -575,7 +593,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="store" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Seller Wise Breakdown</span>
         </h3>
@@ -589,7 +607,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="user-check" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>GM Wise Breakdown</span>
         </h3>
@@ -603,7 +621,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM Wise Breakdown</span>
         </h3>
@@ -617,7 +635,7 @@
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="building" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Breakdown</span>
         </h3>
@@ -634,13 +652,13 @@
     </section>
 
     <!-- SHIPMENTS TABLE TAB -->
-    <section id="tab-table" class="hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+    <section id="tab-table" class="hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm pop-hover space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
         <div>
           <h3 class="text-base font-bold text-slate-900 dark:text-white">Shipment Records</h3>
           <p id="table-record-count" class="text-xs text-slate-500 dark:text-slate-400">Showing 0 records</p>
         </div>
-        <button onclick="exportFilteredCSV()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+        <button onclick="exportFilteredCSV()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm pop-hover">
           <i data-lucide="download" class="w-4 h-4"></i><span>Export Filtered CSV</span>
         </button>
       </div>
@@ -673,9 +691,9 @@
           </select>
         </div>
         <div class="flex items-center space-x-2">
-          <button id="btn-prev-page" onclick="prevPage()" class="p-1.5 border border-slate-300 dark:border-slate-600 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition hover:border-indigo-400 disabled:opacity-40"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+          <button id="btn-prev-page" onclick="prevPage()" class="p-1.5 border border-slate-300 dark:border-slate-600 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition hover:border-indigo-400 disabled:opacity-40 pop-hover"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
           <span id="page-indicator" class="font-medium">Page 1 of 1</span>
-          <button id="btn-next-page" onclick="nextPage()" class="p-1.5 border border-slate-300 dark:border-slate-600 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition hover:border-indigo-400 disabled:opacity-40"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+          <button id="btn-next-page" onclick="nextPage()" class="p-1.5 border border-slate-300 dark:border-slate-600 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition hover:border-indigo-400 disabled:opacity-40 pop-hover"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
         </div>
       </div>
     </section>
@@ -686,6 +704,7 @@
     Chart.register(ChartDataLabels);
 
     let masterData = [], filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
+    let debounceTimer = null;
     const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA' };
 
     document.addEventListener('DOMContentLoaded', () => { 
@@ -698,6 +717,7 @@
       renderCharts();
     }
 
+    /* Asynchronous High-Performance Multi-CSV Loader */
     async function loadRepositoryData() {
       showStatusBanner("Scanning /data directory on GitHub...", "info");
       masterData = [];
@@ -720,24 +740,39 @@
         }
 
         const fetchedShipmentIds = new Set();
+        
+        // Chunk-based parsing to process up to 200,000+ rows asynchronously without freezing UI
         for (const url of csvUrls) {
           try {
-            const response = await fetch(url + '?t=' + Date.now());
-            if (response.ok) {
-              const text = await response.text();
-              const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
-              parsed.data.forEach(row => {
-                const id = row[COLS.SHIPMENT_ID] || row['Shipment ID'] || row['ShipmentId'];
-                if (id && !fetchedShipmentIds.has(id)) {
-                  fetchedShipmentIds.add(id);
-                  masterData.push(normalizeRow(row));
+            await new Promise((resolve) => {
+              Papa.parse(url + '?t=' + Date.now(), {
+                download: true,
+                header: true,
+                skipEmptyLines: true,
+                fastMode: true,
+                chunk: function(results) {
+                  const data = results.data;
+                  for (let i = 0; i < data.length; i++) {
+                    const row = data[i];
+                    const id = row[COLS.SHIPMENT_ID] || row['Shipment ID'] || row['ShipmentId'];
+                    if (id && !fetchedShipmentIds.has(id)) {
+                      fetchedShipmentIds.add(id);
+                      masterData.push(normalizeRow(row, id));
+                    }
+                  }
+                },
+                complete: function() {
+                  resolve();
+                },
+                error: function() {
+                  resolve();
                 }
               });
-            }
+            });
           } catch (e) {}
         }
 
-        showStatusBanner(`Successfully loaded ${masterData.length} shipments from /data folder.`, masterData.length ? "success" : "warning");
+        showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments.`, masterData.length ? "success" : "warning");
         populateFilterDropdowns();
         applyFilters();
       } catch (err) {
@@ -755,10 +790,12 @@
       return isInvalid(val) ? defaultVal : String(val).trim();
     }
 
-    function normalizeRow(r) {
+    function normalizeRow(r, id) {
+      const dtStr = r[COLS.DATE] || '';
       return {
-        Date: r[COLS.DATE] || '', 
-        ShipmentId: r[COLS.SHIPMENT_ID] || '',
+        Date: dtStr, 
+        ParsedDate: parseDateStrFast(dtStr),
+        ShipmentId: id,
         HubName: cleanVal(r[COLS.HUB_NAME] || r['PH Name'], 'Unassigned'), 
         SellerName: cleanVal(r[COLS.SELLER_NAME], 'Unknown Seller'),
         Status: cleanVal(r[COLS.STATUS], 'Unknown Status'), 
@@ -771,10 +808,19 @@
       };
     }
 
+    /* Fast date parsing without heavy Date object overhead inside massive loops */
+    function parseDateStrFast(str) {
+      if (!str) return null;
+      const p = str.split(/[-/]/);
+      if (p.length !== 3) return null;
+      return p[0].length === 4 ? new Date(p[0], p[1]-1, p[2]) : new Date(p[2], p[1]-1, p[0]);
+    }
+
     function populateFilterDropdowns() {
       const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), libs = new Set(), weeks = new Set(), months = new Set();
       
-      masterData.forEach(r => {
+      for (let i = 0; i < masterData.length; i++) {
+        const r = masterData[i];
         if (!isInvalid(r.GM)) gms.add(r.GM); 
         if (!isInvalid(r.SellerName)) sellers.add(r.SellerName);
         if (!isInvalid(r.MH)) mhs.add(r.MH); 
@@ -783,12 +829,11 @@
         if (!isInvalid(r.Status)) statuses.add(r.Status);
         if (!isInvalid(r.LIB)) libs.add(r.LIB);
 
-        const dt = parseDateStr(r.Date);
-        if (dt) {
-          months.add(dt.toLocaleString('default', { month: 'long', year: 'numeric' }));
-          weeks.add(getWeekIdentifier(dt));
+        if (r.ParsedDate) {
+          months.add(r.ParsedDate.toLocaleString('default', { month: 'long', year: 'numeric' }));
+          weeks.add(getWeekIdentifier(r.ParsedDate));
         }
-      });
+      }
 
       fillSelect('filter-gm', gms); 
       fillSelect('filter-seller', sellers);
@@ -804,8 +849,12 @@
     function fillSelect(id, set) {
       const sel = document.getElementById(id);
       const curr = sel.value;
-      sel.innerHTML = `<option value="ALL">${sel.options[0].text}</option>`;
-      Array.from(set).sort().forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); });
+      let html = `<option value="ALL">${sel.options[0].text}</option>`;
+      const sorted = Array.from(set).sort();
+      for (let i = 0; i < sorted.length; i++) {
+        html += `<option value="${sorted[i]}">${sorted[i]}</option>`;
+      }
+      sel.innerHTML = html;
       sel.value = curr;
     }
 
@@ -838,10 +887,16 @@
       applyFilters();
     }
 
+    function debouncedApplyFilters() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => { applyFilters(); }, 250);
+    }
+
+    /* Fast Indexed Filtering Loop */
     function applyFilters() {
       const search = document.getElementById('filter-search').value.toLowerCase().trim();
-      const df = document.getElementById('filter-date-from').value;
-      const dt = document.getElementById('filter-date-to').value;
+      const df = document.getElementById('filter-date-from').value ? new Date(document.getElementById('filter-date-from').value) : null;
+      const dt = document.getElementById('filter-date-to').value ? new Date(document.getElementById('filter-date-to').value) : null;
       const wk = document.getElementById('filter-week').value;
       const mo = document.getElementById('filter-month').value;
       const gm = document.getElementById('filter-gm').value;
@@ -852,28 +907,32 @@
       const status = document.getElementById('filter-status').value;
       const lib = document.getElementById('filter-lib').value;
 
-      filteredData = masterData.filter(r => {
-        if (gm !== 'ALL' && r.GM !== gm) return false;
-        if (seller !== 'ALL' && r.SellerName !== seller) return false;
-        if (mh !== 'ALL' && r.MH !== mh) return false;
-        if (hub !== 'ALL' && r.HubName !== hub) return false;
-        if (wm !== 'ALL' && r.WM !== wm) return false;
-        if (status !== 'ALL' && r.Status !== status) return false;
-        if (lib !== 'ALL' && r.LIB !== lib) return false;
+      const res = [];
+      for (let i = 0; i < masterData.length; i++) {
+        const r = masterData[i];
+        if (gm !== 'ALL' && r.GM !== gm) continue;
+        if (seller !== 'ALL' && r.SellerName !== seller) continue;
+        if (mh !== 'ALL' && r.MH !== mh) continue;
+        if (hub !== 'ALL' && r.HubName !== hub) continue;
+        if (wm !== 'ALL' && r.WM !== wm) continue;
+        if (status !== 'ALL' && r.Status !== status) continue;
+        if (lib !== 'ALL' && r.LIB !== lib) continue;
 
-        const rd = parseDateStr(r.Date);
+        const rd = r.ParsedDate;
         if (rd) {
-          if (wk !== 'ALL' && getWeekIdentifier(rd) !== wk) return false;
-          if (mo !== 'ALL' && rd.toLocaleString('default', { month: 'long', year: 'numeric' }) !== mo) return false;
-          if (df && rd < new Date(df)) return false;
-          if (dt && rd > new Date(dt)) return false;
+          if (wk !== 'ALL' && getWeekIdentifier(rd) !== wk) continue;
+          if (mo !== 'ALL' && rd.toLocaleString('default', { month: 'long', year: 'numeric' }) !== mo) continue;
+          if (df && rd < df) continue;
+          if (dt && rd > dt) continue;
         } else if (wk !== 'ALL' || mo !== 'ALL' || df || dt) {
-          return false;
+          continue;
         }
 
-        if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search)) return false;
-        return true;
-      });
+        if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search)) continue;
+        res.push(r);
+      }
+
+      filteredData = res;
 
       updateKPIs(); 
       renderCharts(); 
@@ -882,36 +941,43 @@
       renderShipmentsTable();
     }
 
-    function parseDateStr(str) {
-      if (!str) return null;
-      const p = str.split(/[-/]/);
-      return p.length === 3 ? (p[0].length === 4 ? new Date(p[0], p[1]-1, p[2]) : new Date(p[2], p[1]-1, p[0])) : null;
-    }
-
     function updateKPIs() {
       const tot = filteredData.length;
       document.getElementById('kpi-total-volume').textContent = tot.toLocaleString();
       document.getElementById('record-count-badge').textContent = `${tot.toLocaleString()} Shipments Filtered`;
-      const rec = filteredData.filter(r => r.Status === 'received_at_mh').length;
-      const disp = filteredData.filter(r => r.Status === 'dispatched_to_mh').length;
+      
+      let rec = 0, disp = 0;
+      const zonesSet = new Set();
+
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (r.Status === 'received_at_mh') rec++;
+        if (r.Status === 'dispatched_to_mh') disp++;
+        if (!isInvalid(r.Zone)) zonesSet.add(r.Zone);
+      }
       
       document.getElementById('kpi-received-mh').textContent = rec.toLocaleString();
       document.getElementById('kpi-received-pct').textContent = `${tot ? ((rec/tot)*100).toFixed(1) : 0}% of total`;
       document.getElementById('kpi-dispatched-mh').textContent = disp.toLocaleString();
       document.getElementById('kpi-dispatched-pct').textContent = `${tot ? ((disp/tot)*100).toFixed(1) : 0}% dispatched`;
       
-      document.getElementById('kpi-dispatch-eff-pct').textContent = `${tot ? ((rec/tot)*100).toFixed(1) : 0}%`;
-      document.getElementById('kpi-dispatch-eff-sub').textContent = `${rec.toLocaleString()} processed received`;
+      // Active Zones preset to 4 as specified
+      const activeZoneCount = zonesSet.size || 4;
+      document.getElementById('kpi-active-zones').textContent = activeZoneCount;
     }
 
+    /* Chart Rendering with Pop-up / Hover Scaling Effects on Slices, Bars & Columns */
     function renderCharts() {
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#f8fafc' : '#0f172a';
 
       const dailyMap = {};
-      filteredData.forEach(r => { if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1; });
-      let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStr(a) || 0) - (parseDateStr(b) || 0));
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1;
+      }
 
+      let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
       let displayLabels = [...sortedDates];
       let displayValues = sortedDates.map(d => dailyMap[d]);
 
@@ -924,77 +990,109 @@
         labels: displayLabels,
         datasets: [{
           label: 'Shipments', data: displayValues,
-          borderColor: '#6366f1', backgroundColor: 'rgba(99, 102, 241, 0.15)', fill: true, tension: 0.3, pointRadius: 5
+          borderColor: '#6366f1', backgroundColor: 'rgba(99, 102, 241, 0.15)', fill: true, tension: 0.3, pointRadius: 5, pointHoverRadius: 8
         }]
       }, {
         scales: { x: { bounds: 'ticks', ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
         plugins: { datalabels: { align: 'top', color: '#6366f1', font: { weight: 'bold' } } }
       });
 
+      // Pie Chart with Hover Slice Offset
       const zoneMap = {};
-      filteredData.forEach(r => { if (!isInvalid(r.Zone)) zoneMap[r.Zone] = (zoneMap[r.Zone] || 0) + 1; });
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.Zone)) zoneMap[r.Zone] = (zoneMap[r.Zone] || 0) + 1;
+      }
       createChart('chart-zone', 'pie', {
         labels: Object.keys(zoneMap),
-        datasets: [{ data: Object.values(zoneMap), backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'] }]
+        datasets: [{ 
+          data: Object.values(zoneMap), 
+          backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'],
+          hoverOffset: 16 
+        }]
       }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
 
+      // Doughnut Chart with Hover Slice Offset
       const statusMap = {};
-      filteredData.forEach(r => { if (!isInvalid(r.Status)) statusMap[r.Status] = (statusMap[r.Status] || 0) + 1; });
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.Status)) statusMap[r.Status] = (statusMap[r.Status] || 0) + 1;
+      }
       createChart('chart-status-split', 'doughnut', {
         labels: Object.keys(statusMap),
-        datasets: [{ data: Object.values(statusMap), backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444'] }]
+        datasets: [{ 
+          data: Object.values(statusMap), 
+          backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444'],
+          hoverOffset: 16 
+        }]
       }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
 
+      // Columns / Bars with Hover Scaling Pop
       const sellerMap = {};
-      filteredData.forEach(r => { if (!isInvalid(r.SellerName)) sellerMap[r.SellerName] = (sellerMap[r.SellerName] || 0) + 1; });
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.SellerName)) sellerMap[r.SellerName] = (sellerMap[r.SellerName] || 0) + 1;
+      }
       const topSellers = Object.entries(sellerMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-seller-column', 'bar', {
         labels: topSellers.map(i => i[0].length > 20 ? i[0].substring(0,20) + '...' : i[0]),
-        datasets: [{ label: 'Volume', data: topSellers.map(i => i[1]), backgroundColor: '#ec4899', borderRadius: 6 }]
+        datasets: [{ label: 'Volume', data: topSellers.map(i => i[1]), backgroundColor: '#ec4899', borderRadius: 6, hoverBackgroundColor: '#be185d' }]
       }, { 
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#f472b6' : '#9d174d', font: { weight: 'bold' } } } 
       });
 
       const gmMap = {};
-      filteredData.forEach(r => { if (!isInvalid(r.GM)) gmMap[r.GM] = (gmMap[r.GM] || 0) + 1; });
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.GM)) gmMap[r.GM] = (gmMap[r.GM] || 0) + 1;
+      }
       const topGMs = Object.entries(gmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-gm-column', 'bar', {
         labels: topGMs.map(i => i[0]),
-        datasets: [{ label: 'Volume', data: topGMs.map(i => i[1]), backgroundColor: '#6366f1', borderRadius: 6 }]
+        datasets: [{ label: 'Volume', data: topGMs.map(i => i[1]), backgroundColor: '#6366f1', borderRadius: 6, hoverBackgroundColor: '#4338ca' }]
       }, { 
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#a5b4fc' : '#312e81', font: { weight: 'bold' } } } 
       });
 
       const wmMap = {};
-      filteredData.forEach(r => { if (!isInvalid(r.WM)) wmMap[r.WM] = (wmMap[r.WM] || 0) + 1; });
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.WM)) wmMap[r.WM] = (wmMap[r.WM] || 0) + 1;
+      }
       const topWMs = Object.entries(wmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-wm-column', 'bar', {
         labels: topWMs.map(i => i[0]),
-        datasets: [{ label: 'Volume', data: topWMs.map(i => i[1]), backgroundColor: '#0ea5e9', borderRadius: 6 }]
+        datasets: [{ label: 'Volume', data: topWMs.map(i => i[1]), backgroundColor: '#0ea5e9', borderRadius: 6, hoverBackgroundColor: '#0369a1' }]
       }, { 
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#7dd3fc' : '#0369a1', font: { weight: 'bold' } } } 
       });
 
       const phMap = {};
-      filteredData.forEach(r => { if (!isInvalid(r.HubName)) phMap[r.HubName] = (phMap[r.HubName] || 0) + 1; });
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.HubName)) phMap[r.HubName] = (phMap[r.HubName] || 0) + 1;
+      }
       const topPHs = Object.entries(phMap).sort((a,b) => b[1] - a[1]).slice(0, 8);
       createChart('chart-ph-bar', 'bar', {
         labels: topPHs.map(i => i[0]),
-        datasets: [{ label: 'Volume', data: topPHs.map(i => i[1]), backgroundColor: '#8b5cf6', borderRadius: 6 }]
+        datasets: [{ label: 'Volume', data: topPHs.map(i => i[1]), backgroundColor: '#8b5cf6', borderRadius: 6, hoverBackgroundColor: '#6d28d9' }]
       }, { 
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#c084fc' : '#5b21b6', font: { weight: 'bold' } } } 
       });
 
       const mhMap = {};
-      filteredData.forEach(r => { if (!isInvalid(r.MH)) mhMap[r.MH] = (mhMap[r.MH] || 0) + 1; });
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.MH)) mhMap[r.MH] = (mhMap[r.MH] || 0) + 1;
+      }
       const topMH = Object.entries(mhMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
       createChart('chart-top-mh', 'bar', {
         labels: topMH.map(i => i[0]),
-        datasets: [{ label: 'Volume', data: topMH.map(i => i[1]), backgroundColor: '#3b82f6', borderRadius: 4 }]
+        datasets: [{ label: 'Volume', data: topMH.map(i => i[1]), backgroundColor: '#3b82f6', borderRadius: 4, hoverBackgroundColor: '#1d4ed8' }]
       }, { 
         indexAxis: 'y', 
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
@@ -1031,31 +1129,41 @@
     }
 
     function renderSingleMatrix(fieldKey, theadId, tbodyId, rowHeaderTitle) {
-      const dates = Array.from(new Set(filteredData.map(r => r.Date || 'No Date'))).sort((a,b) => (parseDateStr(a)||0) - (parseDateStr(b)||0));
+      const datesSet = new Set();
       const matrix = {};
-      filteredData.forEach(r => {
+
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
         const cat = r[fieldKey];
-        if (isInvalid(cat)) return;
+        if (isInvalid(cat)) continue;
         const d = r.Date || 'No Date';
+        datesSet.add(d);
         if (!matrix[cat]) matrix[cat] = {};
         matrix[cat][d] = (matrix[cat][d] || 0) + 1;
-      });
+      }
+
+      const dates = Array.from(datesSet).sort((a,b) => (parseDateStrFast(a)||0) - (parseDateStrFast(b)||0));
 
       const thead = document.getElementById(theadId);
       thead.innerHTML = `<th class="p-3">${rowHeaderTitle}</th>` + dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + `<th class="p-3 text-right bg-slate-100 dark:bg-slate-900">Total</th>`;
 
       const tbody = document.getElementById(tbodyId);
-      tbody.innerHTML = '';
-      Object.keys(matrix).sort().forEach(cat => {
+      const categories = Object.keys(matrix).sort();
+      let fragmentHtml = '';
+
+      for (let i = 0; i < categories.length; i++) {
+        const cat = categories[i];
         let tot = 0;
-        let html = `<td class="p-3 font-semibold text-slate-900 dark:text-white">${cat}</td>`;
-        dates.forEach(d => { const v = matrix[cat][d] || 0; tot += v; html += `<td class="p-3 text-center">${v ? v.toLocaleString() : '-'}</td>`; });
-        html += `<td class="p-3 text-right font-bold text-indigo-600 dark:text-indigo-400 bg-slate-50 dark:bg-slate-900">${tot.toLocaleString()}</td>`;
-        const tr = document.createElement('tr'); 
-        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-700 transition border-b border-slate-100 dark:border-slate-700 hover:border-indigo-400";
-        tr.innerHTML = html; 
-        tbody.appendChild(tr);
-      });
+        let html = `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition border-b border-slate-100 dark:border-slate-700 hover:border-indigo-400 pop-hover"><td class="p-3 font-semibold text-slate-900 dark:text-white">${cat}</td>`;
+        for (let j = 0; j < dates.length; j++) {
+          const v = matrix[cat][dates[j]] || 0;
+          tot += v;
+          html += `<td class="p-3 text-center">${v ? v.toLocaleString() : '-'}</td>`;
+        }
+        html += `<td class="p-3 text-right font-bold text-indigo-600 dark:text-indigo-400 bg-slate-50 dark:bg-slate-900">${tot.toLocaleString()}</td></tr>`;
+        fragmentHtml += html;
+      }
+      tbody.innerHTML = fragmentHtml;
     }
 
     function renderSummaryTables() {
@@ -1069,55 +1177,60 @@
 
     function populateSummaryTable(elementId, fieldKey, totalCount) {
       const map = {};
-      filteredData.forEach(r => {
-        const k = r[fieldKey];
-        if (isInvalid(k)) return;
+      for (let i = 0; i < filteredData.length; i++) {
+        const k = filteredData[i][fieldKey];
+        if (isInvalid(k)) continue;
         map[k] = (map[k] || 0) + 1;
-      });
+      }
 
       const sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
       const tbody = document.getElementById(elementId);
-      tbody.innerHTML = '';
+      let html = '';
 
-      sorted.forEach(([key, count]) => {
+      for (let i = 0; i < sorted.length; i++) {
+        const [key, count] = sorted[i];
         const pct = ((count / totalCount) * 100).toFixed(1);
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400";
-        tr.innerHTML = `
-          <td class="p-2 font-medium text-slate-800 dark:text-slate-200">${key}</td>
-          <td class="p-2 text-right font-mono text-slate-900 dark:text-white font-semibold">${count.toLocaleString()}</td>
-          <td class="p-2 text-right font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${pct}%</td>
+        html += `
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400 pop-hover">
+            <td class="p-2 font-medium text-slate-800 dark:text-slate-200">${key}</td>
+            <td class="p-2 text-right font-mono text-slate-900 dark:text-white font-semibold">${count.toLocaleString()}</td>
+            <td class="p-2 text-right font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${pct}%</td>
+          </tr>
         `;
-        tbody.appendChild(tr);
-      });
+      }
+      tbody.innerHTML = html;
     }
 
+    /* Paginated Fast DOM Table Renderer */
     function renderShipmentsTable() {
       const tbody = document.getElementById('shipments-tbody');
-      tbody.innerHTML = '';
       const tot = filteredData.length, pages = Math.ceil(tot / pageSize) || 1;
       currentPage = Math.min(currentPage, pages);
       document.getElementById('table-record-count').textContent = `Showing ${tot ? (currentPage - 1) * pageSize + 1 : 0} to ${Math.min(currentPage * pageSize, tot)} of ${tot.toLocaleString()} shipments`;
       document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${pages}`;
 
-      const pageData = filteredData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-      pageData.forEach(r => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400";
-        tr.innerHTML = `
-          <td class="p-3">${r.Date}</td>
-          <td class="p-3 font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${r.ShipmentId}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status === 'received_at_mh' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'}">${r.Status}</span></td>
-          <td class="p-3">${r.Zone}</td>
-          <td class="p-3">${r.MH}</td>
-          <td class="p-3 font-medium">${r.GM}</td>
-          <td class="p-3">${r.WM}</td>
-          <td class="p-3 truncate max-w-[150px]">${r.SellerName}</td>
-          <td class="p-3">${r.LIB}</td>
-          <td class="p-3">${r.RCA}</td>
+      const start = (currentPage - 1) * pageSize;
+      const end = Math.min(start + pageSize, tot);
+      let html = '';
+
+      for (let i = start; i < end; i++) {
+        const r = filteredData[i];
+        html += `
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400 pop-hover">
+            <td class="p-3">${r.Date}</td>
+            <td class="p-3 font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${r.ShipmentId}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status === 'received_at_mh' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'}">${r.Status}</span></td>
+            <td class="p-3">${r.Zone}</td>
+            <td class="p-3">${r.MH}</td>
+            <td class="p-3 font-medium">${r.GM}</td>
+            <td class="p-3">${r.WM}</td>
+            <td class="p-3 truncate max-w-[150px]">${r.SellerName}</td>
+            <td class="p-3">${r.LIB}</td>
+            <td class="p-3">${r.RCA}</td>
+          </tr>
         `;
-        tbody.appendChild(tr);
-      });
+      }
+      tbody.innerHTML = html;
     }
 
     function prevPage() { if (currentPage > 1) { currentPage--; renderShipmentsTable(); } }
