@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-50 text-slate-800">
+<html lang="en" class="h-full bg-slate-50 text-slate-800 transition-colors duration-300">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,14 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {}
+      }
+    }
+  </script>
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -25,33 +33,108 @@
     /* Custom Scrollbars */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; }
+    .dark ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    /* Hanging Light Switch Wire, Lever & Bulb Styling */
+    .bulb-container {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      padding-top: 22px;
+    }
+    .bulb-wire {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 26px;
+      background-color: #64748b;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .dark .bulb-wire {
+      background-color: #f59e0b;
+    }
+    .bulb-container:active .bulb-wire {
+      height: 32px;
+    }
+    .bulb-cap {
+      width: 14px;
+      height: 6px;
+      background: #475569;
+      border-radius: 2px 2px 0 0;
+      margin: 0 auto;
+    }
+    .dark .bulb-cap {
+      background: #94a3b8;
+    }
+    .bulb-shade {
+      width: 28px;
+      height: 12px;
+      background: #334155;
+      border-radius: 14px 14px 2px 2px;
+      margin: -1px auto 0 auto;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .dark .bulb-shade {
+      background: #e2e8f0;
+    }
+    .bulb-glass {
+      width: 18px;
+      height: 18px;
+      background: #cbd5e1;
+      border-radius: 50%;
+      margin: -2px auto 0 auto;
+      transition: all 0.3s ease;
+      box-shadow: inset -1px -1px 2px rgba(0,0,0,0.2);
+    }
+    .dark .bulb-glass {
+      background: #fbbf24;
+      box-shadow: 0 0 16px #fbbf24, 0 0 28px #f59e0b;
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-300">
 
   <!-- TOP HEADER / NAVBAR -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+  <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
       <!-- Logo & Title -->
       <div class="flex items-center space-x-3">
-        <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-sm">
+        <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-sm hover:ring-2 hover:ring-indigo-400 hover:ring-offset-2 transition duration-200">
           <i data-lucide="truck" class="w-6 h-6"></i>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-slate-900 leading-tight">BRSNR Logistics Analytics</h1>
-          <p class="text-xs text-slate-500 font-medium">Automated Multi-Source CSV Aggregator</p>
+          <h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">BRSNR Logistics Analytics</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Automated Multi-Source CSV Aggregator</p>
         </div>
       </div>
 
-      <!-- Live Badge Counter -->
-      <div class="flex items-center space-x-3">
-        <div class="flex items-center bg-slate-100 border border-slate-200 text-slate-700 text-xs px-3 py-1.5 rounded-md space-x-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span id="record-count-badge">0 Shipments Loaded</span>
+      <!-- Hanging Bulb Theme Switcher & Live Counter -->
+      <div class="flex items-center space-x-6">
+        
+        <!-- Pullable Hanging Bulb Switcher -->
+        <div class="flex items-center space-x-2" title="Pull lever bulb to switch Light / Dark theme">
+          <div onclick="toggleDarkMode()" class="bulb-container group" role="button" tabindex="0" aria-label="Toggle Dark Mode">
+            <div class="bulb-wire"></div>
+            <div class="bulb-cap"></div>
+            <div class="bulb-shade"></div>
+            <div class="bulb-glass group-hover:scale-110"></div>
+          </div>
         </div>
+
+        <div class="flex items-center space-x-3">
+          <div class="flex items-center bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-xs px-3 py-1.5 rounded-md space-x-2 shadow-sm hover:border-indigo-500 transition duration-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="record-count-badge">0 Shipments Loaded</span>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -61,30 +144,30 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
     <!-- STATUS BANNER -->
-    <div id="status-banner" class="hidden bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-lg text-sm flex items-center justify-between shadow-sm">
+    <div id="status-banner" class="hidden bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 px-4 py-3 rounded-lg text-sm flex items-center justify-between shadow-sm hover:border-amber-400 transition duration-200">
       <div class="flex items-center space-x-2">
         <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 flex-shrink-0"></i>
         <span id="status-banner-text">Scanning /data directory...</span>
       </div>
-      <button onclick="document.getElementById('status-banner').classList.add('hidden')" class="text-amber-600 hover:text-amber-800">
+      <button onclick="document.getElementById('status-banner').classList.add('hidden')" class="text-amber-600 dark:text-amber-400 hover:scale-110 transition">
         <i data-lucide="x" class="w-4 h-4"></i>
       </button>
     </div>
 
     <!-- GLOBAL FILTER TOOLBAR -->
-    <section class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm space-y-4">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-3">
-        <div class="flex items-center space-x-2 text-slate-800 font-semibold text-sm">
-          <i data-lucide="filter" class="w-4 h-4 text-indigo-600"></i>
+    <section class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm hover:border-indigo-400 dark:hover:border-indigo-500 hover:ring-1 hover:ring-indigo-400 transition duration-300">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-700 pb-3">
+        <div class="flex items-center space-x-2 text-slate-800 dark:text-slate-200 font-semibold text-sm">
+          <i data-lucide="filter" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
           <span>Filters & Range Selection</span>
         </div>
 
         <div class="flex items-center flex-wrap gap-2 text-xs">
-          <button onclick="setPresetDate('all')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded text-slate-600 font-medium transition shadow-sm">All Time</button>
-          <button onclick="setPresetDate('today')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded text-slate-600 font-medium transition shadow-sm">Today</button>
-          <button onclick="setPresetDate('7days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded text-slate-600 font-medium transition shadow-sm">Last 7 Days</button>
-          <button onclick="setPresetDate('30days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white rounded text-slate-600 font-medium transition shadow-sm">Last 30 Days</button>
-          <button onclick="resetAllFilters()" class="px-2.5 py-1 bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white rounded font-medium transition flex items-center space-x-1 shadow-sm">
+          <button onclick="setPresetDate('all')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300">All Time</button>
+          <button onclick="setPresetDate('today')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300">Today</button>
+          <button onclick="setPresetDate('7days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300">Last 7 Days</button>
+          <button onclick="setPresetDate('30days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:border-indigo-300">Last 30 Days</button>
+          <button onclick="resetAllFilters()" class="px-2.5 py-1 bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white dark:bg-rose-950 dark:text-rose-300 dark:hover:bg-rose-600 dark:hover:text-white rounded font-medium transition duration-200 flex items-center space-x-1 shadow-sm border border-rose-200 dark:border-rose-800">
             <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
             <span>Reset All</span>
           </button>
@@ -94,75 +177,75 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 text-xs">
         
         <div class="col-span-1 sm:col-span-2 lg:col-span-1">
-          <label class="block font-medium text-slate-600 mb-1">Search Keyword</label>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Search Keyword</label>
           <div class="relative">
-            <input type="text" id="filter-search" oninput="applyFilters()" placeholder="Shipment ID, Bag ID, etc..." class="w-full pl-8 pr-3 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+            <input type="text" id="filter-search" oninput="applyFilters()" placeholder="Shipment ID, Bag ID, etc..." class="w-full pl-8 pr-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2"></i>
           </div>
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">Start Date</label>
-          <input type="date" id="filter-date-from" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Start Date</label>
+          <input type="date" id="filter-date-from" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">End Date</label>
-          <input type="date" id="filter-date-to" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">End Date</label>
+          <input type="date" id="filter-date-to" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">General Manager (GM)</label>
-          <select id="filter-gm" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">General Manager (GM)</label>
+          <select id="filter-gm" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All GMs</option>
           </select>
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">Seller Name</label>
-          <select id="filter-seller" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Seller Name</label>
+          <select id="filter-seller" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All Sellers</option>
           </select>
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">Mother Hub (MH)</label>
-          <select id="filter-mh" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Mother Hub (MH)</label>
+          <select id="filter-mh" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All Mother Hubs</option>
           </select>
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">Hub Name</label>
-          <select id="filter-hub" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Hub Name</label>
+          <select id="filter-hub" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All Hub Names</option>
           </select>
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">WM Name</label>
-          <select id="filter-wm" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">WM Name</label>
+          <select id="filter-wm" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All Workers / WMs</option>
           </select>
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">Status Column</label>
-          <select id="filter-status" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Status Column</label>
+          <select id="filter-status" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All Statuses</option>
           </select>
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">LIB</label>
-          <select id="filter-lib" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">LIB</label>
+          <select id="filter-lib" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All LIBs</option>
           </select>
         </div>
 
         <div>
-          <label class="block font-medium text-slate-600 mb-1">Hours in diff</label>
-          <select id="filter-hrs" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Hours in diff</label>
+          <select id="filter-hrs" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <option value="ALL">All SLAs</option>
             <option value="<24 hrs">&lt;24 hrs</option>
             <option value=">=24 hrs">&gt;=24 hrs</option>
@@ -176,64 +259,66 @@
 
     <!-- KEY PERFORMANCE INDICATORS -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-300 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 uppercase">Total Volume</span>
-          <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg"><i data-lucide="package" class="w-5 h-5"></i></div>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Total Volume</span>
+          <div class="p-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-lg"><i data-lucide="package" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
-          <p id="kpi-total-volume" class="text-2xl font-bold text-slate-900">0</p>
-          <p class="text-xs text-slate-500 mt-1">Filtered shipments</p>
+          <p id="kpi-total-volume" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Filtered shipments</p>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-emerald-300 transition duration-200">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-emerald-500 hover:ring-2 hover:ring-emerald-400/30 transition duration-200">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 uppercase">Received at MH</span>
-          <div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received at MH</span>
+          <div class="p-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-lg"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
-          <p id="kpi-received-mh" class="text-2xl font-bold text-slate-900">0</p>
-          <p id="kpi-received-pct" class="text-xs text-emerald-600 font-medium mt-1">0% of total</p>
+          <p id="kpi-received-mh" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
+          <p id="kpi-received-pct" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium mt-1">0% of total</p>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-amber-300 transition duration-200">
+      <!-- Renamed from IN TRANSIT TO MH to DISPATCHED TO MH -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-amber-500 hover:ring-2 hover:ring-amber-400/30 transition duration-200">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 uppercase">In Transit to MH</span>
-          <div class="p-2 bg-amber-50 text-amber-600 rounded-lg"><i data-lucide="truck" class="w-5 h-5"></i></div>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched to MH</span>
+          <div class="p-2 bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-lg"><i data-lucide="truck" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
-          <p id="kpi-dispatched-mh" class="text-2xl font-bold text-slate-900">0</p>
-          <p id="kpi-dispatched-pct" class="text-xs text-amber-600 font-medium mt-1">0% in transit</p>
+          <p id="kpi-dispatched-mh" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
+          <p id="kpi-dispatched-pct" class="text-xs text-amber-600 dark:text-amber-400 font-medium mt-1">0% dispatched</p>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-blue-300 transition duration-200">
+      <!-- Replaced SLA Compliance KPI with Dispatch Efficiency Rate -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-blue-500 hover:ring-2 hover:ring-blue-400/30 transition duration-200">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 uppercase">SLA Compliance</span>
-          <div class="p-2 bg-blue-50 text-blue-600 rounded-lg"><i data-lucide="clock" class="w-5 h-5"></i></div>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatch Efficiency Rate</span>
+          <div class="p-2 bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 rounded-lg"><i data-lucide="zap" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
-          <p id="kpi-sla-pct" class="text-2xl font-bold text-slate-900">0%</p>
-          <p id="kpi-sla-sub" class="text-xs text-slate-500 mt-1">0 under 24 hrs</p>
+          <p id="kpi-dispatch-eff-pct" class="text-2xl font-bold text-slate-900 dark:text-white">0%</p>
+          <p id="kpi-dispatch-eff-sub" class="text-xs text-slate-500 dark:text-slate-400 mt-1">0 processed under 24 hrs</p>
         </div>
       </div>
     </section>
 
     <!-- NAVIGATION TABS -->
-    <section class="border-b border-slate-200">
+    <section class="border-b border-slate-200 dark:border-slate-700">
       <nav class="flex space-x-6 text-sm font-medium">
-        <button id="tab-btn-overview" onclick="switchTab('overview')" class="py-3 px-1 border-b-2 border-indigo-600 text-indigo-600 font-semibold flex items-center space-x-2 transition hover:text-indigo-700">
+        <button id="tab-btn-overview" onclick="switchTab('overview')" class="py-3 px-3 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold flex items-center space-x-2 transition hover:bg-indigo-50 dark:hover:bg-slate-800 rounded-t-lg hover:border-indigo-500 hover:ring-1 hover:ring-indigo-300">
           <i data-lucide="bar-chart-2" class="w-4 h-4"></i><span>Analytics Overview</span>
         </button>
-        <button id="tab-btn-matrix" onclick="switchTab('matrix')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2 transition">
+        <button id="tab-btn-matrix" onclick="switchTab('matrix')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg hover:border-slate-300">
           <i data-lucide="calendar-clock" class="w-4 h-4"></i><span>Day-wise Aging</span>
         </button>
-        <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2 transition">
+        <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg hover:border-slate-300">
           <i data-lucide="layout-grid" class="w-4 h-4"></i><span>Performance Summary Tables</span>
         </button>
-        <button id="tab-btn-table" onclick="switchTab('table')" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center space-x-2 transition">
+        <button id="tab-btn-table" onclick="switchTab('table')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg hover:border-slate-300">
           <i data-lucide="table" class="w-4 h-4"></i><span>Detailed Shipments Table</span>
         </button>
       </nav>
@@ -242,252 +327,301 @@
     <!-- OVERVIEW CHARTS TAB -->
     <section id="tab-overview" class="space-y-6">
       
-      <!-- 1 visual per row with horizontal scrollable inner wrapper -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+      <!-- 1 visual per row with vertical & horizontal scrolling support -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-            <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600"></i><span>Daily Volume Trend</span>
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Daily Volume Trend</span>
           </h3>
-          <span class="text-xs text-slate-500">Centered Date Scale</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Centered Date Scale</span>
         </div>
-        <div class="overflow-x-auto">
-          <div class="min-w-[700px] h-72 relative"><canvas id="chart-daily-trend"></canvas></div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-daily-trend"></canvas></div>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+      <!-- Zone Split Visual (Positioned below Daily Volume Trend & above Status Share) -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i><span>Status Share</span>
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Zone Split</span>
           </h3>
-          <span class="text-xs text-slate-500">Doughnut Share</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Pie Visual</span>
         </div>
-        <div class="overflow-x-auto">
-          <div class="min-w-[700px] h-72 relative"><canvas id="chart-status-split"></canvas></div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-zone"></canvas></div>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-            <i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i><span>GM Wise Volume Distribution</span>
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Status Share</span>
           </h3>
-          <span class="text-xs text-slate-500">Vertical Column Visual</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Doughnut Share</span>
         </div>
-        <div class="overflow-x-auto">
-          <div class="min-w-[700px] h-72 relative"><canvas id="chart-gm-column"></canvas></div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-status-split"></canvas></div>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+      <!-- Seller Wise Visual (Bar / Column Visual) -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-            <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i><span>WM Wise Volume Distribution</span>
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="store" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Seller Wise Volume Distribution</span>
           </h3>
-          <span class="text-xs text-slate-500">Vertical Column Visual</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Top Sellers Column Visual</span>
         </div>
-        <div class="overflow-x-auto">
-          <div class="min-w-[700px] h-72 relative"><canvas id="chart-wm-column"></canvas></div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-seller-column"></canvas></div>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-            <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600"></i><span>PH Name Wise Volume</span>
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="user-check" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>GM Wise Volume Distribution</span>
           </h3>
-          <span class="text-xs text-slate-500">Primary Hub Columns</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Vertical Column Visual</span>
         </div>
-        <div class="overflow-x-auto">
-          <div class="min-w-[700px] h-72 relative"><canvas id="chart-ph-bar"></canvas></div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-gm-column"></canvas></div>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-            <i data-lucide="building-2" class="w-4 h-4 text-indigo-600"></i><span>Top Mother Hubs (MH)</span>
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM Wise Volume Distribution</span>
           </h3>
-          <span class="text-xs text-slate-500">Horizontal Bars</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Vertical Column Visual</span>
         </div>
-        <div class="overflow-x-auto">
-          <div class="min-w-[700px] h-72 relative"><canvas id="chart-top-mh"></canvas></div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-wm-column"></canvas></div>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition">
+      <!-- Renamed from PH Name Wise Volume to Pickup Hub Wise Volume -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
-            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600"></i><span>Zone Split</span>
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Volume</span>
           </h3>
-          <span class="text-xs text-slate-500">Pie Chart</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Primary Hub Columns</span>
         </div>
-        <div class="overflow-x-auto">
-          <div class="min-w-[700px] h-72 relative"><canvas id="chart-zone"></canvas></div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-ph-bar"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="building-2" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Top Mother Hubs (MH)</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Horizontal Bars</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-top-mh"></canvas></div>
         </div>
       </div>
 
     </section>
 
-    <!-- DAY-WISE AGING TAB (5 TABLES) -->
+    <!-- DAY-WISE AGING TAB (6 TABLES INCLUDING SELLER AGING) -->
     <section id="tab-matrix" class="hidden space-y-6">
       
-      <!-- Table 1: MH Wise Aging -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+      <!-- Table 1: Zone Wise Aging -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
-            <h3 class="text-base font-bold text-slate-900">1. Mother Hub (MH) - Day-wise Aging Matrix</h3>
-            <p class="text-xs text-slate-500">Shipment aging volume per Mother Hub broken down by Date</p>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">1. Zone - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Zone broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-mh', 'MH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
-            <i data-lucide="download" class="w-4 h-4"></i><span>Export MH Aging CSV</span>
+          <button onclick="exportMatrixCSV('matrix-table-zone', 'Zone_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export Zone Aging CSV</span>
           </button>
         </div>
-        <div class="overflow-x-auto">
-          <table id="matrix-table-mh" class="w-full text-xs text-left border-collapse">
-            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-mh"></tr></thead>
-            <tbody id="matrix-tbody-mh" class="divide-y divide-slate-100 text-slate-800"></tbody>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
+          <table id="matrix-table-zone" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-zone"></tr></thead>
+            <tbody id="matrix-tbody-zone" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Table 2: Zone Wise Aging -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+      <!-- Table 2: Seller Wise Aging -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
-            <h3 class="text-base font-bold text-slate-900">2. Zone - Day-wise Aging Matrix</h3>
-            <p class="text-xs text-slate-500">Shipment aging volume per Zone broken down by Date</p>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">2. Seller Name - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Seller Name broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-zone', 'Zone_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
-            <i data-lucide="download" class="w-4 h-4"></i><span>Export Zone Aging CSV</span>
+          <button onclick="exportMatrixCSV('matrix-table-seller', 'Seller_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export Seller Aging CSV</span>
           </button>
         </div>
-        <div class="overflow-x-auto">
-          <table id="matrix-table-zone" class="w-full text-xs text-left border-collapse">
-            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-zone"></tr></thead>
-            <tbody id="matrix-tbody-zone" class="divide-y divide-slate-100 text-slate-800"></tbody>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
+          <table id="matrix-table-seller" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-seller"></tr></thead>
+            <tbody id="matrix-tbody-seller" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
 
       <!-- Table 3: GM Wise Aging -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
-            <h3 class="text-base font-bold text-slate-900">3. General Manager (GM) - Day-wise Aging Matrix</h3>
-            <p class="text-xs text-slate-500">Shipment aging volume per GM broken down by Date</p>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">3. General Manager (GM) - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per GM broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-gm', 'GM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+          <button onclick="exportMatrixCSV('matrix-table-gm', 'GM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export GM Aging CSV</span>
           </button>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
           <table id="matrix-table-gm" class="w-full text-xs text-left border-collapse">
-            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-gm"></tr></thead>
-            <tbody id="matrix-tbody-gm" class="divide-y divide-slate-100 text-slate-800"></tbody>
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-gm"></tr></thead>
+            <tbody id="matrix-tbody-gm" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Table 4: PH Wise Aging -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+      <!-- Table 4: MH Wise Aging -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
-            <h3 class="text-base font-bold text-slate-900">4. Primary Hub (PH) - Day-wise Aging Matrix</h3>
-            <p class="text-xs text-slate-500">Shipment aging volume per Hub Name / PH broken down by Date</p>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">4. Mother Hub (MH) - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Mother Hub broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-ph', 'PH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+          <button onclick="exportMatrixCSV('matrix-table-mh', 'MH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export MH Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
+          <table id="matrix-table-mh" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-mh"></tr></thead>
+            <tbody id="matrix-tbody-mh" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Table 5: PH Wise Aging -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">5. Primary Hub (PH) - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Pickup Hub broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-ph', 'PH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export PH Aging CSV</span>
           </button>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
           <table id="matrix-table-ph" class="w-full text-xs text-left border-collapse">
-            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-ph"></tr></thead>
-            <tbody id="matrix-tbody-ph" class="divide-y divide-slate-100 text-slate-800"></tbody>
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-ph"></tr></thead>
+            <tbody id="matrix-tbody-ph" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Table 5: WM Wise Aging -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+      <!-- Table 6: WM Wise Aging -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
-            <h3 class="text-base font-bold text-slate-900">5. Worker / WM - Day-wise Aging Matrix</h3>
-            <p class="text-xs text-slate-500">Shipment aging volume per WM name broken down by Date</p>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">6. Worker / WM - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per WM name broken down by Date</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-wm', 'WM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+          <button onclick="exportMatrixCSV('matrix-table-wm', 'WM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export WM Aging CSV</span>
           </button>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
           <table id="matrix-table-wm" class="w-full text-xs text-left border-collapse">
-            <thead><tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-semibold" id="matrix-thead-wm"></tr></thead>
-            <tbody id="matrix-tbody-wm" class="divide-y divide-slate-100 text-slate-800"></tbody>
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-wm"></tr></thead>
+            <tbody id="matrix-tbody-wm" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
 
     </section>
 
-    <!-- PERFORMANCE SUMMARY TABLES TAB (1 per row) -->
+    <!-- PERFORMANCE SUMMARY TABLES TAB (5 TABLES INCLUDING SELLER BREAKDOWN) -->
     <section id="tab-tables" class="hidden space-y-6">
       
       <!-- Zone Wise Table -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-3">
-        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
-          <i data-lucide="globe" class="w-4 h-4 text-indigo-600"></i><span>Zone Wise Breakdown</span>
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="globe" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Zone Wise Breakdown</span>
         </h3>
-        <div class="overflow-x-auto max-h-72">
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
           <table class="w-full text-xs text-left">
-            <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
               <tr><th class="p-2">Zone</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
             </thead>
-            <tbody id="tbl-zone-body" class="divide-y divide-slate-100"></tbody>
+            <tbody id="tbl-zone-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Seller Wise Table -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="store" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Seller Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
+              <tr><th class="p-2">Seller Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-seller-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
 
       <!-- GM Wise Table -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-3">
-        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
-          <i data-lucide="user-check" class="w-4 h-4 text-indigo-600"></i><span>GM Wise Breakdown</span>
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="user-check" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>GM Wise Breakdown</span>
         </h3>
-        <div class="overflow-x-auto max-h-72">
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
           <table class="w-full text-xs text-left">
-            <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
               <tr><th class="p-2">GM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
             </thead>
-            <tbody id="tbl-gm-body" class="divide-y divide-slate-100"></tbody>
+            <tbody id="tbl-gm-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
 
       <!-- WM Wise Table -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-3">
-        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
-          <i data-lucide="users" class="w-4 h-4 text-indigo-600"></i><span>WM Wise Breakdown</span>
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM Wise Breakdown</span>
         </h3>
-        <div class="overflow-x-auto max-h-72">
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
           <table class="w-full text-xs text-left">
-            <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
               <tr><th class="p-2">WM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
             </thead>
-            <tbody id="tbl-wm-body" class="divide-y divide-slate-100"></tbody>
+            <tbody id="tbl-wm-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
 
       <!-- PH Name Wise Table -->
-      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-3">
-        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2 border-b border-slate-100 pb-2">
-          <i data-lucide="building" class="w-4 h-4 text-indigo-600"></i><span>PH Name Wise Breakdown</span>
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="building" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Breakdown</span>
         </h3>
-        <div class="overflow-x-auto max-h-72">
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
           <table class="w-full text-xs text-left">
-            <thead class="bg-slate-50 text-slate-700 sticky top-0 font-semibold">
-              <tr><th class="p-2">Primary Hub (PH)</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
+              <tr><th class="p-2">Pickup Hub (PH)</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
             </thead>
-            <tbody id="tbl-ph-body" class="divide-y divide-slate-100"></tbody>
+            <tbody id="tbl-ph-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
@@ -495,19 +629,19 @@
     </section>
 
     <!-- SHIPMENTS TABLE TAB -->
-    <section id="tab-table" class="hidden bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:shadow-md transition space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+    <section id="tab-table" class="hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-indigo-500 hover:ring-2 hover:ring-indigo-400/30 transition duration-200 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
         <div>
-          <h3 class="text-base font-bold text-slate-900">Shipment Records</h3>
-          <p id="table-record-count" class="text-xs text-slate-500">Showing 0 records</p>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Shipment Records</h3>
+          <p id="table-record-count" class="text-xs text-slate-500 dark:text-slate-400">Showing 0 records</p>
         </div>
-        <button onclick="exportFilteredCSV()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+        <button onclick="exportFilteredCSV()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:border-indigo-300 border border-transparent">
           <i data-lucide="download" class="w-4 h-4"></i><span>Export Filtered CSV</span>
         </button>
       </div>
-      <div class="overflow-x-auto border border-slate-200 rounded-lg max-h-[550px]">
-        <table class="w-full text-xs text-left text-slate-700 border-collapse">
-          <thead class="bg-slate-100 text-slate-800 font-semibold sticky top-0 border-b border-slate-200">
+      <div class="overflow-x-auto overflow-y-auto border border-slate-200 dark:border-slate-700 rounded-lg max-h-[550px]">
+        <table class="w-full text-xs text-left text-slate-700 dark:text-slate-200 border-collapse">
+          <thead class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-semibold sticky top-0 border-b border-slate-200 dark:border-slate-700">
             <tr>
               <th class="p-3">Date</th>
               <th class="p-3">Shipment ID</th>
@@ -522,22 +656,22 @@
               <th class="p-3">Hours in diff</th>
             </tr>
           </thead>
-          <tbody id="shipments-tbody" class="divide-y divide-slate-100"></tbody>
+          <tbody id="shipments-tbody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
         </table>
       </div>
-      <div class="flex items-center justify-between pt-2 text-xs text-slate-600">
+      <div class="flex items-center justify-between pt-2 text-xs text-slate-600 dark:text-slate-400">
         <div class="flex items-center space-x-2">
           <span>Rows per page:</span>
-          <select id="table-page-size" onchange="changePageSize()" class="px-2 py-1 border border-slate-300 rounded">
+          <select id="table-page-size" onchange="changePageSize()" class="px-2 py-1 border border-slate-300 dark:border-slate-600 rounded dark:bg-slate-900 dark:text-slate-200 hover:border-indigo-400">
             <option value="25">25</option>
             <option value="50" selected>50</option>
             <option value="100">100</option>
           </select>
         </div>
         <div class="flex items-center space-x-2">
-          <button id="btn-prev-page" onclick="prevPage()" class="p-1.5 border border-slate-300 rounded hover:bg-slate-100 transition disabled:opacity-40"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+          <button id="btn-prev-page" onclick="prevPage()" class="p-1.5 border border-slate-300 dark:border-slate-600 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition hover:border-indigo-400 disabled:opacity-40"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
           <span id="page-indicator" class="font-medium">Page 1 of 1</span>
-          <button id="btn-next-page" onclick="nextPage()" class="p-1.5 border border-slate-300 rounded hover:bg-slate-100 transition disabled:opacity-40"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+          <button id="btn-next-page" onclick="nextPage()" class="p-1.5 border border-slate-300 dark:border-slate-600 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition hover:border-indigo-400 disabled:opacity-40"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
         </div>
       </div>
     </section>
@@ -550,7 +684,15 @@
     let masterData = [], filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
     const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA', HRS: 'Hrs' };
 
-    document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); loadRepositoryData(); });
+    document.addEventListener('DOMContentLoaded', () => { 
+      lucide.createIcons(); 
+      loadRepositoryData(); 
+    });
+
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      renderCharts();
+    }
 
     async function loadRepositoryData() {
       showStatusBanner("Scanning /data directory on GitHub...", "info");
@@ -599,24 +741,43 @@
       }
     }
 
+    function isInvalid(val) {
+      if (!val) return true;
+      const clean = String(val).trim().toUpperCase();
+      return clean === '#N/A' || clean === 'N/A' || clean === 'NA' || clean === '#VALUE!';
+    }
+
+    function cleanVal(val, defaultVal = 'Unassigned') {
+      return isInvalid(val) ? defaultVal : String(val).trim();
+    }
+
     function normalizeRow(r) {
       return {
-        Date: r[COLS.DATE] || '', ShipmentId: r[COLS.SHIPMENT_ID] || '',
-        HubName: r[COLS.HUB_NAME] || r['PH Name'] || '', SellerName: r[COLS.SELLER_NAME] || '',
-        Status: r[COLS.STATUS] || '', Zone: r[COLS.ZONE] || 'Unknown',
-        LIB: r[COLS.LIB] || 'N/A', MH: r[COLS.MH] || 'Unassigned',
-        WM: r[COLS.WM] || 'Unassigned', GM: r[COLS.GM] || 'Unassigned',
-        RCA: r[COLS.RCA] || 'None', Hrs: r[COLS.HRS] || 'UNRESOLVED'
+        Date: r[COLS.DATE] || '', 
+        ShipmentId: r[COLS.SHIPMENT_ID] || '',
+        HubName: cleanVal(r[COLS.HUB_NAME] || r['PH Name'], 'Unassigned'), 
+        SellerName: cleanVal(r[COLS.SELLER_NAME], 'Unknown Seller'),
+        Status: cleanVal(r[COLS.STATUS], 'Unknown Status'), 
+        Zone: cleanVal(r[COLS.ZONE], 'Unknown Zone'),
+        LIB: cleanVal(r[COLS.LIB], 'Unassigned'), 
+        MH: cleanVal(r[COLS.MH], 'Unassigned MH'),
+        WM: cleanVal(r[COLS.WM], 'Unassigned WM'), 
+        GM: cleanVal(r[COLS.GM], 'Unassigned GM'),
+        RCA: cleanVal(r[COLS.RCA], 'None'), 
+        Hrs: r[COLS.HRS] || 'UNRESOLVED'
       };
     }
 
     function populateFilterDropdowns() {
       const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), libs = new Set();
       masterData.forEach(r => {
-        if (r.GM) gms.add(r.GM); if (r.SellerName) sellers.add(r.SellerName);
-        if (r.MH) mhs.add(r.MH); if (r.HubName) hubs.add(r.HubName);
-        if (r.WM) wms.add(r.WM); if (r.Status) statuses.add(r.Status);
-        if (r.LIB) libs.add(r.LIB);
+        if (!isInvalid(r.GM)) gms.add(r.GM); 
+        if (!isInvalid(r.SellerName)) sellers.add(r.SellerName);
+        if (!isInvalid(r.MH)) mhs.add(r.MH); 
+        if (!isInvalid(r.HubName)) hubs.add(r.HubName);
+        if (!isInvalid(r.WM)) wms.add(r.WM); 
+        if (!isInvalid(r.Status)) statuses.add(r.Status);
+        if (!isInvalid(r.LIB)) libs.add(r.LIB);
       });
       fillSelect('filter-gm', gms); fillSelect('filter-seller', sellers);
       fillSelect('filter-mh', mhs); fillSelect('filter-hub', hubs);
@@ -660,7 +821,7 @@
             if (dt && rd > new Date(dt)) return false;
           }
         }
-        if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search)) return false;
+        if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search)) return false;
         return true;
       });
 
@@ -683,16 +844,23 @@
       document.getElementById('record-count-badge').textContent = `${tot.toLocaleString()} Shipments Filtered`;
       const rec = filteredData.filter(r => r.Status === 'received_at_mh').length;
       const disp = filteredData.filter(r => r.Status === 'dispatched_to_mh').length;
-      const sla = filteredData.filter(r => r.Hrs === '<24 hrs').length;
+      const effCount = filteredData.filter(r => r.Hrs === '<24 hrs').length;
+      
       document.getElementById('kpi-received-mh').textContent = rec.toLocaleString();
       document.getElementById('kpi-received-pct').textContent = `${tot ? ((rec/tot)*100).toFixed(1) : 0}% of total`;
       document.getElementById('kpi-dispatched-mh').textContent = disp.toLocaleString();
-      document.getElementById('kpi-dispatched-pct').textContent = `${tot ? ((disp/tot)*100).toFixed(1) : 0}% in transit`;
-      document.getElementById('kpi-sla-pct').textContent = `${tot ? ((sla/tot)*100).toFixed(1) : 0}%`;
-      document.getElementById('kpi-sla-sub').textContent = `${sla.toLocaleString()} resolved <24 hrs`;
+      document.getElementById('kpi-dispatched-pct').textContent = `${tot ? ((disp/tot)*100).toFixed(1) : 0}% dispatched`;
+      
+      // Updated KPI from SLA Compliance to Dispatch Efficiency Rate
+      document.getElementById('kpi-dispatch-eff-pct').textContent = `${tot ? ((effCount/tot)*100).toFixed(1) : 0}%`;
+      document.getElementById('kpi-dispatch-eff-sub').textContent = `${effCount.toLocaleString()} processed <24 hrs`;
     }
 
     function renderCharts() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#f8fafc' : '#0f172a';
+
+      // 1. Daily Volume Trend
       const dailyMap = {};
       filteredData.forEach(r => { if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1; });
       let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStr(a) || 0) - (parseDateStr(b) || 0));
@@ -709,58 +877,89 @@
         labels: displayLabels,
         datasets: [{
           label: 'Shipments', data: displayValues,
-          borderColor: '#4f46e5', backgroundColor: 'rgba(79, 70, 229, 0.15)', fill: true, tension: 0.3, pointRadius: 5
+          borderColor: '#6366f1', backgroundColor: 'rgba(99, 102, 241, 0.15)', fill: true, tension: 0.3, pointRadius: 5
         }]
       }, {
-        scales: { x: { bounds: 'ticks' } },
-        plugins: { datalabels: { align: 'top', color: '#4338ca', font: { weight: 'bold' } } }
+        scales: { x: { bounds: 'ticks', ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
+        plugins: { datalabels: { align: 'top', color: '#6366f1', font: { weight: 'bold' } } }
       });
 
+      // 2. Zone Split Visual
+      const zoneMap = {};
+      filteredData.forEach(r => { if (!isInvalid(r.Zone)) zoneMap[r.Zone] = (zoneMap[r.Zone] || 0) + 1; });
+      createChart('chart-zone', 'pie', {
+        labels: Object.keys(zoneMap),
+        datasets: [{ data: Object.values(zoneMap), backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'] }]
+      }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
+
+      // 3. Status Share
       const statusMap = {};
-      filteredData.forEach(r => { statusMap[r.Status || 'Unknown'] = (statusMap[r.Status || 'Unknown'] || 0) + 1; });
+      filteredData.forEach(r => { if (!isInvalid(r.Status)) statusMap[r.Status] = (statusMap[r.Status] || 0) + 1; });
       createChart('chart-status-split', 'doughnut', {
         labels: Object.keys(statusMap),
         datasets: [{ data: Object.values(statusMap), backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444'] }]
       }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
 
+      // 4. Seller Wise Volume Visual (Bar / Column Chart)
+      const sellerMap = {};
+      filteredData.forEach(r => { if (!isInvalid(r.SellerName)) sellerMap[r.SellerName] = (sellerMap[r.SellerName] || 0) + 1; });
+      const topSellers = Object.entries(sellerMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
+      createChart('chart-seller-column', 'bar', {
+        labels: topSellers.map(i => i[0].length > 20 ? i[0].substring(0,20) + '...' : i[0]),
+        datasets: [{ label: 'Volume', data: topSellers.map(i => i[1]), backgroundColor: '#ec4899', borderRadius: 6 }]
+      }, { 
+        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#f472b6' : '#9d174d', font: { weight: 'bold' } } } 
+      });
+
+      // 5. GM Wise Volume
       const gmMap = {};
-      filteredData.forEach(r => { gmMap[r.GM || 'Unassigned'] = (gmMap[r.GM || 'Unassigned'] || 0) + 1; });
+      filteredData.forEach(r => { if (!isInvalid(r.GM)) gmMap[r.GM] = (gmMap[r.GM] || 0) + 1; });
       const topGMs = Object.entries(gmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-gm-column', 'bar', {
         labels: topGMs.map(i => i[0]),
-        datasets: [{ label: 'Volume', data: topGMs.map(i => i[1]), backgroundColor: '#4f46e5', borderRadius: 6 }]
-      }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#312e81', font: { weight: 'bold' } } } });
+        datasets: [{ label: 'Volume', data: topGMs.map(i => i[1]), backgroundColor: '#6366f1', borderRadius: 6 }]
+      }, { 
+        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#a5b4fc' : '#312e81', font: { weight: 'bold' } } } 
+      });
 
+      // 6. WM Wise Volume
       const wmMap = {};
-      filteredData.forEach(r => { wmMap[r.WM || 'Unassigned'] = (wmMap[r.WM || 'Unassigned'] || 0) + 1; });
+      filteredData.forEach(r => { if (!isInvalid(r.WM)) wmMap[r.WM] = (wmMap[r.WM] || 0) + 1; });
       const topWMs = Object.entries(wmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-wm-column', 'bar', {
         labels: topWMs.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topWMs.map(i => i[1]), backgroundColor: '#0ea5e9', borderRadius: 6 }]
-      }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#0369a1', font: { weight: 'bold' } } } });
+      }, { 
+        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#7dd3fc' : '#0369a1', font: { weight: 'bold' } } } 
+      });
 
+      // 7. Pickup Hub Wise Volume
       const phMap = {};
-      filteredData.forEach(r => { phMap[r.HubName || 'Unassigned'] = (phMap[r.HubName || 'Unassigned'] || 0) + 1; });
+      filteredData.forEach(r => { if (!isInvalid(r.HubName)) phMap[r.HubName] = (phMap[r.HubName] || 0) + 1; });
       const topPHs = Object.entries(phMap).sort((a,b) => b[1] - a[1]).slice(0, 8);
       createChart('chart-ph-bar', 'bar', {
         labels: topPHs.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topPHs.map(i => i[1]), backgroundColor: '#8b5cf6', borderRadius: 6 }]
-      }, { plugins: { datalabels: { align: 'end', anchor: 'end', color: '#5b21b6', font: { weight: 'bold' } } } });
+      }, { 
+        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#c084fc' : '#5b21b6', font: { weight: 'bold' } } } 
+      });
 
+      // 8. Top Mother Hubs
       const mhMap = {};
-      filteredData.forEach(r => { mhMap[r.MH] = (mhMap[r.MH] || 0) + 1; });
+      filteredData.forEach(r => { if (!isInvalid(r.MH)) mhMap[r.MH] = (mhMap[r.MH] || 0) + 1; });
       const topMH = Object.entries(mhMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
       createChart('chart-top-mh', 'bar', {
         labels: topMH.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topMH.map(i => i[1]), backgroundColor: '#3b82f6', borderRadius: 4 }]
-      }, { indexAxis: 'y', plugins: { datalabels: { align: 'end', anchor: 'end', color: '#1e3a8a', font: { weight: 'bold' } } } });
-
-      const zoneMap = {};
-      filteredData.forEach(r => { zoneMap[r.Zone] = (zoneMap[r.Zone] || 0) + 1; });
-      createChart('chart-zone', 'pie', {
-        labels: Object.keys(zoneMap),
-        datasets: [{ data: Object.values(zoneMap), backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ec4899'] }]
-      }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
+      }, { 
+        indexAxis: 'y', 
+        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#93c5fd' : '#1e3a8a', font: { weight: 'bold' } } } 
+      });
     }
 
     function createChart(id, type, data, options = {}) {
@@ -770,17 +969,24 @@
         type: type, data: data,
         options: {
           responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } }, ...options.plugins },
+          plugins: { 
+            legend: { 
+              position: 'bottom', 
+              labels: { boxWidth: 10, font: { size: 10 }, color: document.documentElement.classList.contains('dark') ? '#f8fafc' : '#0f172a' } 
+            }, 
+            ...options.plugins 
+          },
           ...options
         }
       });
     }
 
     function renderAllAgingMatrices() {
-      renderSingleMatrix('MH', 'matrix-thead-mh', 'matrix-tbody-mh', 'Mother Hub');
       renderSingleMatrix('Zone', 'matrix-thead-zone', 'matrix-tbody-zone', 'Zone');
+      renderSingleMatrix('SellerName', 'matrix-thead-seller', 'matrix-tbody-seller', 'Seller Name');
       renderSingleMatrix('GM', 'matrix-thead-gm', 'matrix-tbody-gm', 'GM Name');
-      renderSingleMatrix('HubName', 'matrix-thead-ph', 'matrix-tbody-ph', 'Primary Hub');
+      renderSingleMatrix('MH', 'matrix-thead-mh', 'matrix-tbody-mh', 'Mother Hub');
+      renderSingleMatrix('HubName', 'matrix-thead-ph', 'matrix-tbody-ph', 'Pickup Hub');
       renderSingleMatrix('WM', 'matrix-thead-wm', 'matrix-tbody-wm', 'Worker / WM');
     }
 
@@ -788,28 +994,34 @@
       const dates = Array.from(new Set(filteredData.map(r => r.Date || 'No Date'))).sort((a,b) => (parseDateStr(a)||0) - (parseDateStr(b)||0));
       const matrix = {};
       filteredData.forEach(r => {
-        const cat = r[fieldKey] || 'Unassigned', d = r.Date || 'No Date';
+        const cat = r[fieldKey];
+        if (isInvalid(cat)) return;
+        const d = r.Date || 'No Date';
         if (!matrix[cat]) matrix[cat] = {};
         matrix[cat][d] = (matrix[cat][d] || 0) + 1;
       });
 
       const thead = document.getElementById(theadId);
-      thead.innerHTML = `<th class="p-3">${rowHeaderTitle}</th>` + dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + `<th class="p-3 text-right bg-slate-100">Total</th>`;
+      thead.innerHTML = `<th class="p-3">${rowHeaderTitle}</th>` + dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + `<th class="p-3 text-right bg-slate-100 dark:bg-slate-900">Total</th>`;
 
       const tbody = document.getElementById(tbodyId);
       tbody.innerHTML = '';
       Object.keys(matrix).sort().forEach(cat => {
         let tot = 0;
-        let html = `<td class="p-3 font-semibold text-slate-900">${cat}</td>`;
+        let html = `<td class="p-3 font-semibold text-slate-900 dark:text-white">${cat}</td>`;
         dates.forEach(d => { const v = matrix[cat][d] || 0; tot += v; html += `<td class="p-3 text-center">${v ? v.toLocaleString() : '-'}</td>`; });
-        html += `<td class="p-3 text-right font-bold text-indigo-600 bg-slate-50">${tot.toLocaleString()}</td>`;
-        const tr = document.createElement('tr'); tr.innerHTML = html; tbody.appendChild(tr);
+        html += `<td class="p-3 text-right font-bold text-indigo-600 dark:text-indigo-400 bg-slate-50 dark:bg-slate-900">${tot.toLocaleString()}</td>`;
+        const tr = document.createElement('tr'); 
+        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-700 transition border-b border-slate-100 dark:border-slate-700 hover:border-indigo-400";
+        tr.innerHTML = html; 
+        tbody.appendChild(tr);
       });
     }
 
     function renderSummaryTables() {
       const tot = filteredData.length || 1;
       populateSummaryTable('tbl-zone-body', 'Zone', tot);
+      populateSummaryTable('tbl-seller-body', 'SellerName', tot);
       populateSummaryTable('tbl-gm-body', 'GM', tot);
       populateSummaryTable('tbl-wm-body', 'WM', tot);
       populateSummaryTable('tbl-ph-body', 'HubName', tot);
@@ -818,7 +1030,8 @@
     function populateSummaryTable(elementId, fieldKey, totalCount) {
       const map = {};
       filteredData.forEach(r => {
-        const k = r[fieldKey] || 'Unassigned';
+        const k = r[fieldKey];
+        if (isInvalid(k)) return;
         map[k] = (map[k] || 0) + 1;
       });
 
@@ -829,11 +1042,11 @@
       sorted.forEach(([key, count]) => {
         const pct = ((count / totalCount) * 100).toFixed(1);
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50 transition";
+        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400";
         tr.innerHTML = `
-          <td class="p-2 font-medium text-slate-800">${key}</td>
-          <td class="p-2 text-right font-mono text-slate-900 font-semibold">${count.toLocaleString()}</td>
-          <td class="p-2 text-right font-mono text-indigo-600 font-semibold">${pct}%</td>
+          <td class="p-2 font-medium text-slate-800 dark:text-slate-200">${key}</td>
+          <td class="p-2 text-right font-mono text-slate-900 dark:text-white font-semibold">${count.toLocaleString()}</td>
+          <td class="p-2 text-right font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${pct}%</td>
         `;
         tbody.appendChild(tr);
       });
@@ -850,11 +1063,11 @@
       const pageData = filteredData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
       pageData.forEach(r => {
         const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50 transition";
+        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400";
         tr.innerHTML = `
           <td class="p-3">${r.Date}</td>
-          <td class="p-3 font-mono text-indigo-600 font-semibold">${r.ShipmentId}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status === 'received_at_mh' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${r.Status}</span></td>
+          <td class="p-3 font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${r.ShipmentId}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status === 'received_at_mh' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'}">${r.Status}</span></td>
           <td class="p-3">${r.Zone}</td>
           <td class="p-3">${r.MH}</td>
           <td class="p-3 font-medium">${r.GM}</td>
@@ -862,7 +1075,7 @@
           <td class="p-3 truncate max-w-[150px]">${r.SellerName}</td>
           <td class="p-3">${r.LIB}</td>
           <td class="p-3">${r.RCA}</td>
-          <td class="p-3 font-medium ${r.Hrs === '<24 hrs' ? 'text-emerald-600' : 'text-slate-600'}">${r.Hrs}</td>
+          <td class="p-3 font-medium ${r.Hrs === '<24 hrs' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-600 dark:text-slate-400'}">${r.Hrs}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -875,10 +1088,14 @@
     function switchTab(t) {
       ['overview', 'matrix', 'tables', 'table'].forEach(tab => {
         document.getElementById(`tab-${tab}`).classList.add('hidden');
-        document.getElementById(`tab-btn-${tab}`).classList.remove('border-indigo-600', 'text-indigo-600', 'font-semibold');
+        document.getElementById(`tab-btn-${tab}`).classList.remove('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
+        document.getElementById(`tab-btn-${tab}`).classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
       });
+      
       document.getElementById(`tab-${t}`).classList.remove('hidden');
-      document.getElementById(`tab-btn-${t}`).classList.add('border-indigo-600', 'text-indigo-600', 'font-semibold');
+      const activeBtn = document.getElementById(`tab-btn-${t}`);
+      activeBtn.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+      activeBtn.classList.add('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
     }
 
     function setPresetDate(p) {
