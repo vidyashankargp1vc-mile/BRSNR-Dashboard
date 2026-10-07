@@ -1,4 +1,682 @@
-<script>
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50 text-slate-800 transition-colors duration-300">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRSNR Logistics Dashboard</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          keyframes: {
+            pullLever: {
+              '0%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(75px)' },
+              '100%': { transform: 'translateY(0)' }
+            }
+          },
+          animation: {
+            'pull-lever': 'pullLever 0.4s ease-in-out'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- PapaParse for High-Performance CSV Parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+  <!-- Chart.js & DataLabels Plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    .dark ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    /* Trapezium Lamp Cover with Internal Glow Only */
+    .lamp-container {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      padding-top: 18px;
+      user-select: none;
+      width: 65px;
+      height: 65px;
+    }
+    .lamp-wire {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 24px;
+      background-color: #334155;
+      z-index: 10;
+    }
+    .dark .lamp-wire {
+      background-color: #cbd5e1;
+    }
+    
+    /* Enclosed Trapezium Cover */
+    .lamp-cover {
+      width: 44px;
+      height: 24px;
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+      margin: 0 auto;
+      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+      position: relative;
+      z-index: 12;
+      transition: background 0.3s, box-shadow 0.3s;
+      box-shadow: none;
+    }
+    .dark .lamp-cover {
+      background: linear-gradient(180deg, #f1f5f9 0%, #cbd5e1 100%);
+      box-shadow: 0 10px 25px rgba(251, 191, 36, 0.8), 0 20px 40px rgba(245, 158, 11, 0.5);
+    }
+
+    /* Attached Pull Cord & Lever */
+    .pull-cord {
+      position: absolute;
+      right: 8px;
+      width: 2px;
+      height: 20px;
+      background: #94a3b8;
+      top: 18px;
+      z-index: 9;
+      transform-origin: top;
+    }
+    .pull-lever {
+      position: absolute;
+      right: 4px;
+      width: 10px;
+      height: 14px;
+      background: #d97706;
+      border-radius: 50%;
+      top: 38px;
+      z-index: 9;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    /* Detached & Pull animation class */
+    .animating .pull-lever, .animating .pull-cord {
+      animation: pullLever 0.4s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-300">
+
+  <!-- TOP HEADER / NAVBAR -->
+  <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo & Title -->
+      <div class="flex items-center space-x-3">
+        <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-sm">
+          <i data-lucide="truck" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">BRSNR Logistics Analytics</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Automated Multi-Source CSV Aggregator</p>
+        </div>
+      </div>
+
+      <!-- Hanging Lamp Switcher & Developed By Badge -->
+      <div class="flex items-center space-x-6">
+        <div class="flex items-center space-x-2" title="Click lever to toggle theme">
+          <div id="lamp-switcher" onclick="triggerLampToggle()" class="lamp-container" role="button" tabindex="0" aria-label="Toggle Dark Mode">
+            <div class="lamp-wire"></div>
+            <div class="lamp-cover"></div>
+            <div class="pull-cord"></div>
+            <div id="lever-handle" class="pull-lever"></div>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <div class="flex items-center bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-xs px-3 py-1.5 rounded-md space-x-2 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="record-count-badge">Developed by Vidya Shankar 💻</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- STATUS BANNER -->
+    <div id="status-banner" class="hidden bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 px-4 py-3 rounded-lg text-sm flex items-center justify-between shadow-sm">
+      <div class="flex items-center space-x-2">
+        <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 flex-shrink-0"></i>
+        <span id="status-banner-text">Scanning /data directory...</span>
+      </div>
+      <button onclick="document.getElementById('status-banner').classList.add('hidden')" class="text-amber-600 dark:text-amber-400">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- GLOBAL FILTER TOOLBAR -->
+    <section class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-700 pb-3">
+        <div class="flex items-center space-x-2 text-slate-800 dark:text-slate-200 font-semibold text-sm">
+          <i data-lucide="filter" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
+          <span>Filters & Range Selection</span>
+        </div>
+
+        <div class="flex items-center flex-wrap gap-2 text-xs">
+          <button onclick="setPresetDate('all')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent">All Time</button>
+          <button onclick="setPresetDate('today')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent">Today</button>
+          <button onclick="setPresetDate('7days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent">Last 7 Days</button>
+          <button onclick="setPresetDate('30days')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent">Last 30 Days</button>
+          <button onclick="resetAllFilters()" class="px-2.5 py-1 bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white dark:bg-rose-950 dark:text-rose-300 dark:hover:bg-rose-600 dark:hover:text-white rounded font-medium transition duration-200 flex items-center space-x-1 shadow-sm border border-rose-200 dark:border-rose-800">
+            <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+            <span>Reset All</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 text-xs pt-3">
+        
+        <div class="col-span-1 sm:col-span-2 lg:col-span-1">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Search Keyword</label>
+          <div class="relative">
+            <input type="text" id="filter-search" oninput="debouncedApplyFilters()" placeholder="Shipment ID, Bag ID, etc..." class="w-full pl-8 pr-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2"></i>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Start Date</label>
+          <input type="date" id="filter-date-from" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">End Date</label>
+          <input type="date" id="filter-date-to" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Week</label>
+          <select id="filter-week" onchange="applyWeekFilter()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <option value="ALL">All Weeks</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Month</label>
+          <select id="filter-month" onchange="applyMonthFilter()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <option value="ALL">All Months</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">General Manager (GM)</label>
+          <select id="filter-gm" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <option value="ALL">All GMs</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Seller Name</label>
+          <select id="filter-seller" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <option value="ALL">All Sellers</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Mother Hub (MH)</label>
+          <select id="filter-mh" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <option value="ALL">All Mother Hubs</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Pickup Hub (PH)</label>
+          <select id="filter-hub" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <option value="ALL">All Pickup Hubs</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">WM Name</label>
+          <select id="filter-wm" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <option value="ALL">All Workers / WMs</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Status</label>
+          <select id="filter-status" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <option value="ALL">All Statuses</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">LIB</label>
+          <select id="filter-lib" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
+            <option value="ALL">All LIBs</option>
+          </select>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- KEY PERFORMANCE INDICATORS -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Total Volume</span>
+          <div class="p-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-lg"><i data-lucide="package" class="w-5 h-5"></i></div>
+        </div>
+        <div class="mt-3">
+          <p id="kpi-total-volume" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Filtered shipments</p>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received at MH</span>
+          <div class="p-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-lg"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
+        </div>
+        <div class="mt-3">
+          <p id="kpi-received-mh" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
+          <p id="kpi-received-pct" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium mt-1">0% of total</p>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched to MH</span>
+          <div class="p-2 bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-lg"><i data-lucide="truck" class="w-5 h-5"></i></div>
+        </div>
+        <div class="mt-3">
+          <p id="kpi-dispatched-mh" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
+          <p id="kpi-dispatched-pct" class="text-xs text-amber-600 dark:text-amber-400 font-medium mt-1">0% dispatched</p>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Active Zones</span>
+          <div class="p-2 bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 rounded-lg"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+        </div>
+        <div class="mt-3">
+          <p id="kpi-active-zones" class="text-2xl font-bold text-slate-900 dark:text-white">4</p>
+          <p id="kpi-active-zones-sub" class="text-xs text-slate-500 dark:text-slate-400 mt-1">Active Coverage Regions</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAVIGATION TABS -->
+    <section class="border-b border-slate-200 dark:border-slate-700">
+      <nav class="flex space-x-6 text-sm font-medium">
+        <button id="tab-btn-overview" onclick="switchTab('overview')" class="py-3 px-3 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold flex items-center space-x-2 transition hover:bg-indigo-50 dark:hover:bg-slate-800 rounded-t-lg">
+          <i data-lucide="bar-chart-2" class="w-4 h-4"></i><span>Analytics Overview</span>
+        </button>
+        <button id="tab-btn-matrix" onclick="switchTab('matrix')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg">
+          <i data-lucide="calendar-clock" class="w-4 h-4"></i><span>Day-wise Aging</span>
+        </button>
+        <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg">
+          <i data-lucide="layout-grid" class="w-4 h-4"></i><span>Performance Summary Tables</span>
+        </button>
+        <button id="tab-btn-table" onclick="switchTab('table')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg">
+          <i data-lucide="table" class="w-4 h-4"></i><span>Detailed Shipments Table</span>
+        </button>
+      </nav>
+    </section>
+
+    <!-- OVERVIEW CHARTS TAB -->
+    <section id="tab-overview" class="space-y-6">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Daily Volume Trend</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Centered Date Scale</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-daily-trend"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Zone Split</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Pie Visual</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-zone"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Status Share</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Doughnut Share</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-status-split"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="store" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Seller Wise Volume Distribution</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Top Sellers Column Visual</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-seller-column"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="user-check" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>GM Wise Volume Distribution</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Vertical Column Visual</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-gm-column"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM Wise Volume Distribution</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Vertical Column Visual</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-wm-column"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Volume</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Pickup Hub Columns</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-ph-bar"></canvas></div>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="building-2" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Top Mother Hubs (MH)</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Horizontal Bars</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-top-mh"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DAY-WISE AGING TAB -->
+    <section id="tab-matrix" class="hidden space-y-6">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">1. Zone - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Zone broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-zone', 'Zone_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export Zone Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
+          <table id="matrix-table-zone" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-zone"></tr></thead>
+            <tbody id="matrix-tbody-zone" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">2. Seller Name - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Seller Name broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-seller', 'Seller_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export Seller Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
+          <table id="matrix-table-seller" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-seller"></tr></thead>
+            <tbody id="matrix-tbody-seller" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">3. General Manager (GM) - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per GM broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-gm', 'GM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export GM Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
+          <table id="matrix-table-gm" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-gm"></tr></thead>
+            <tbody id="matrix-tbody-gm" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">4. Mother Hub (MH) - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Mother Hub broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-mh', 'MH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export MH Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
+          <table id="matrix-table-mh" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-mh"></tr></thead>
+            <tbody id="matrix-tbody-mh" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">5. Pickup Hub (PH) - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Pickup Hub broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-ph', 'PH_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export PH Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
+          <table id="matrix-table-ph" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-ph"></tr></thead>
+            <tbody id="matrix-tbody-ph" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">6. Worker / WM - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per WM name broken down by Date</p>
+          </div>
+          <button onclick="exportMatrixCSV('matrix-table-wm', 'WM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export WM Aging CSV</span>
+          </button>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
+          <table id="matrix-table-wm" class="w-full text-xs text-left border-collapse">
+            <thead><tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold" id="matrix-thead-wm"></tr></thead>
+            <tbody id="matrix-tbody-wm" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFORMANCE SUMMARY TABLES TAB -->
+    <section id="tab-tables" class="hidden space-y-6">
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="globe" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Zone Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
+              <tr><th class="p-2">Zone</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-zone-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="store" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Seller Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
+              <tr><th class="p-2">Seller Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-seller-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="user-check" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>GM Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
+              <tr><th class="p-2">GM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-gm-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
+              <tr><th class="p-2">WM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-wm-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-3">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+          <i data-lucide="building" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Breakdown</span>
+        </h3>
+        <div class="overflow-x-auto overflow-y-auto max-h-80">
+          <table class="w-full text-xs text-left">
+            <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
+              <tr><th class="p-2">Pickup Hub (PH)</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+            </thead>
+            <tbody id="tbl-ph-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHIPMENTS TABLE TAB -->
+    <section id="tab-table" class="hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Shipment Records</h3>
+          <p id="table-record-count" class="text-xs text-slate-500 dark:text-slate-400">Showing 0 records</p>
+        </div>
+        <button onclick="exportFilteredCSV()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
+          <i data-lucide="download" class="w-4 h-4"></i><span>Export Filtered CSV</span>
+        </button>
+      </div>
+      <div class="overflow-x-auto overflow-y-auto border border-slate-200 dark:border-slate-700 rounded-lg max-h-[550px]">
+        <table class="w-full text-xs text-left text-slate-700 dark:text-slate-200 border-collapse">
+          <thead class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-semibold sticky top-0 border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="p-3">Date</th>
+              <th class="p-3">Shipment ID</th>
+              <th class="p-3">Status</th>
+              <th class="p-3">Zone</th>
+              <th class="p-3">Mother Hub</th>
+              <th class="p-3">GM</th>
+              <th class="p-3">WM Name</th>
+              <th class="p-3">Seller Name</th>
+              <th class="p-3">LIB</th>
+              <th class="p-3">RCA</th>
+            </tr>
+          </thead>
+          <tbody id="shipments-tbody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+        </table>
+      </div>
+      <div class="flex items-center justify-between pt-2 text-xs text-slate-600 dark:text-slate-400">
+        <div class="flex items-center space-x-2">
+          <span>Rows per page:</span>
+          <select id="table-page-size" onchange="changePageSize()" class="px-2 py-1 border border-slate-300 dark:border-slate-600 rounded dark:bg-slate-900 dark:text-slate-200 hover:border-indigo-400">
+            <option value="25">25</option>
+            <option value="50" selected>50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button id="btn-prev-page" onclick="prevPage()" class="p-1.5 border border-slate-300 dark:border-slate-600 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition hover:border-indigo-400 disabled:opacity-40"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+          <span id="page-indicator" class="font-medium">Page 1 of 1</span>
+          <button id="btn-next-page" onclick="nextPage()" class="p-1.5 border border-slate-300 dark:border-slate-600 rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition hover:border-indigo-400 disabled:opacity-40"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
     Chart.register(ChartDataLabels);
 
     let masterData = [], filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
@@ -40,21 +718,18 @@
           }
         }
 
-        // Auto-generate fallback candidates for YYYY-MM-DD.csv format (e.g., 2026-10-05.csv)
+        // Auto-generate date-based fallback candidates in YYYY-MM-DD.csv format
         if (csvUrls.length === 0) {
-          const years = [2025, 2026, 2027];
-          
-          years.forEach(yr => {
-            for (let mo = 1; mo <= 12; mo++) {
-              const monthStr = String(mo).padStart(2, '0');
-              for (let day = 1; day <= 31; day++) {
-                const dayStr = String(day).padStart(2, '0');
-                csvUrls.push(`data/${yr}-${monthStr}-${dayStr}.csv`);
-              }
-            }
-          });
-          
-          csvUrls.push('data/BRSNR Sept-Dec - 05-10-2026.csv', 'data/sample-2026-10-05.csv', 'data/2026-10-05.csv');
+          const today = new Date();
+          // Generate last 60 days of date filenames dynamically (e.g., data/2026-10-04.csv)
+          for (let i = 0; i < 60; i++) {
+            const d = new Date(today);
+            d.setDate(d.getDate() - i);
+            const isoDate = d.toISOString().split('T')[0];
+            csvUrls.push(`data/${isoDate}.csv`);
+          }
+          // Additional custom fallbacks
+          csvUrls.push('data/BRSNR Sept-Dec - 05-10-2026.csv', 'data/sample-2026-10-05.csv');
         }
 
         const fetchedShipmentIds = new Set();
@@ -106,11 +781,12 @@
     function normalizeRow(r, id, sourceUrl = '') {
       let dtStr = r[COLS.DATE] || r['Date'] || r['date'] || '';
       
-      // Fallback: If row level date is missing, parse YYYY-MM-DD from filename
+      // Fallback: If row level date is missing, parse YYYY-MM-DD directly from the CSV filename (e.g. 2026-10-04.csv)
       if (!dtStr && sourceUrl) {
         const filename = sourceUrl.split('/').pop().replace('.csv', '');
-        if (/^\d{4}-\d{2}-\d{2}$/.test(filename)) {
-          dtStr = filename;
+        const dateMatch = filename.match(/\d{4}-\d{2}-\d{2}/);
+        if (dateMatch) {
+          dtStr = dateMatch[0];
         }
       }
 
@@ -133,16 +809,18 @@
     function parseDateStrFast(str) {
       if (!str) return null;
       
-      const nativeDate = Date.parse(str);
-      if (!isNaN(nativeDate)) {
-        return new Date(nativeDate);
-      }
-
+      // Handle standard YYYY-MM-DD or DD-MM-YYYY / MM-DD-YYYY
       const p = str.split(/[-/]/);
       if (p.length === 3) {
         return p[0].length === 4 
           ? new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2])) 
           : new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
+      }
+
+      // Native fallback
+      const nativeDate = Date.parse(str);
+      if (!isNaN(nativeDate)) {
+        return new Date(nativeDate);
       }
 
       return null;
@@ -605,3 +1283,5 @@
       b.classList.remove('hidden');
     }
   </script>
+</body>
+</html>
