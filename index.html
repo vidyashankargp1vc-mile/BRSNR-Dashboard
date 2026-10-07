@@ -15,7 +15,7 @@
           keyframes: {
             pullLever: {
               '0%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(75px)' }, /* ~2cm detachment transition */
+              '50%': { transform: 'translateY(75px)' },
               '100%': { transform: 'translateY(0)' }
             }
           },
@@ -50,7 +50,7 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    /* Trapezium Lamp Cover with Internal Glow Only (Bulb Hidden) */
+    /* Trapezium Lamp Cover with Internal Glow Only */
     .lamp-container {
       position: relative;
       display: inline-block;
@@ -84,7 +84,6 @@
       position: relative;
       z-index: 12;
       transition: background 0.3s, box-shadow 0.3s;
-      /* Soft downward ambient beam when light is ON (Dark mode) */
       box-shadow: none;
     }
     .dark .lamp-cover {
@@ -115,7 +114,7 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
-    /* Detached & Pull animation class applied via JS click */
+    /* Detached & Pull animation class */
     .animating .pull-lever, .animating .pull-cord {
       animation: pullLever 0.4s ease-in-out;
     }
@@ -140,8 +139,6 @@
 
       <!-- Hanging Lamp Switcher & Developed By Badge -->
       <div class="flex items-center space-x-6">
-        
-        <!-- Pullable Lamp Switcher (Trapezium Cover + Internal Light) -->
         <div class="flex items-center space-x-2" title="Click lever to toggle theme">
           <div id="lamp-switcher" onclick="triggerLampToggle()" class="lamp-container" role="button" tabindex="0" aria-label="Toggle Dark Mode">
             <div class="lamp-wire"></div>
@@ -157,7 +154,6 @@
             <span id="record-count-badge">Developed by Vidya Shankar 💻</span>
           </div>
         </div>
-
       </div>
 
     </div>
@@ -318,7 +314,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE ZONES KPI (EXCLUSIVELY SHOWS 4) -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Active Zones</span>
@@ -351,7 +346,6 @@
 
     <!-- OVERVIEW CHARTS TAB -->
     <section id="tab-overview" class="space-y-6">
-      
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
@@ -447,12 +441,10 @@
           <div class="min-w-[800px] h-72 relative"><canvas id="chart-top-mh"></canvas></div>
         </div>
       </div>
-
     </section>
 
     <!-- DAY-WISE AGING TAB -->
     <section id="tab-matrix" class="hidden space-y-6">
-      
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
@@ -560,12 +552,10 @@
           </table>
         </div>
       </div>
-
     </section>
 
     <!-- PERFORMANCE SUMMARY TABLES TAB -->
     <section id="tab-tables" class="hidden space-y-6">
-      
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
           <i data-lucide="globe" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Zone Wise Breakdown</span>
@@ -635,7 +625,6 @@
           </table>
         </div>
       </div>
-
     </section>
 
     <!-- SHIPMENTS TABLE TAB -->
@@ -729,8 +718,17 @@
           }
         }
 
+        // Auto-generate fallback candidates for Month_Year.csv format
         if (csvUrls.length === 0) {
-          csvUrls = ['data/BRSNR Sept-Dec - 05-10-2026.csv', 'data/sample-2026-10-05.csv', 'data/2026-10-05.csv'];
+          const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+          const years = [2025, 2026, 2027];
+          
+          years.forEach(yr => {
+            months.forEach(mo => {
+              csvUrls.push(`data/${mo}_${yr}.csv`);
+            });
+          });
+          csvUrls.push('data/BRSNR Sept-Dec - 05-10-2026.csv', 'data/sample-2026-10-05.csv', 'data/2026-10-05.csv');
         }
 
         const fetchedShipmentIds = new Set();
@@ -750,7 +748,7 @@
                     const id = row[COLS.SHIPMENT_ID] || row['Shipment ID'] || row['ShipmentId'];
                     if (id && !fetchedShipmentIds.has(id)) {
                       fetchedShipmentIds.add(id);
-                      masterData.push(normalizeRow(row, id));
+                      masterData.push(normalizeRow(row, id, url));
                     }
                   }
                 },
@@ -779,10 +777,20 @@
       return isInvalid(val) ? defaultVal : String(val).trim();
     }
 
-    function normalizeRow(r, id) {
-      const dtStr = r[COLS.DATE] || '';
+    function normalizeRow(r, id, sourceUrl = '') {
+      let dtStr = r[COLS.DATE] || r['Date'] || r['date'] || '';
+      
+      // Fallback: If row level date is missing, parse month and year from Month_Year.csv filename
+      if (!dtStr && sourceUrl) {
+        const filename = sourceUrl.split('/').pop().replace('.csv', '');
+        const parts = filename.split('_');
+        if (parts.length === 2) {
+          dtStr = `${parts[0]} 1, ${parts[1]}`;
+        }
+      }
+
       return {
-        Date: dtStr, 
+        Date: dtStr || 'Unassigned Date', 
         ParsedDate: parseDateStrFast(dtStr),
         ShipmentId: id,
         HubName: cleanVal(r[COLS.HUB_NAME] || r['PH Name'], 'Unassigned'), 
@@ -799,9 +807,22 @@
 
     function parseDateStrFast(str) {
       if (!str) return null;
+      
+      // Handle native string parsing ("September 2026", "September 1, 2026", etc.)
+      const nativeDate = Date.parse(str);
+      if (!isNaN(nativeDate)) {
+        return new Date(nativeDate);
+      }
+
+      // Handle standard DD-MM-YYYY or YYYY-MM-DD
       const p = str.split(/[-/]/);
-      if (p.length !== 3) return null;
-      return p[0].length === 4 ? new Date(p[0], p[1]-1, p[2]) : new Date(p[2], p[1]-1, p[0]);
+      if (p.length === 3) {
+        return p[0].length === 4 
+          ? new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2])) 
+          : new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
+      }
+
+      return null;
     }
 
     function populateFilterDropdowns() {
@@ -945,7 +966,6 @@
       document.getElementById('kpi-dispatched-mh').textContent = disp.toLocaleString();
       document.getElementById('kpi-dispatched-pct').textContent = `${tot ? ((disp/tot)*100).toFixed(1) : 0}% dispatched`;
       
-      /* Active Zones fixed strictly to 4 zones */
       document.getElementById('kpi-active-zones').textContent = '4';
     }
 
@@ -979,7 +999,6 @@
         plugins: { datalabels: { align: 'top', color: '#6366f1', font: { weight: 'bold' } } }
       });
 
-      /* Zone Map filtering out Unknown Zones to present strictly valid 4 zones */
       const zoneMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
