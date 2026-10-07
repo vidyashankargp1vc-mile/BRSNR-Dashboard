@@ -8,29 +8,13 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          keyframes: {
-            pullLever: {
-              '0%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(75px)' },
-              '100%': { transform: 'translateY(0)' }
-            }
-          },
-          animation: {
-            'pull-lever': 'pullLever 0.4s ease-in-out'
-          }
-        }
-      }
-    }
+    tailwind.config = { darkMode: 'class' }
   </script>
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- PapaParse for High-Performance CSV Parsing -->
+  <!-- PapaParse for CSV Parsing -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
   <!-- Chart.js & DataLabels Plugin -->
@@ -40,7 +24,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
-    
+
     /* Custom Scrollbars */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #f1f5f9; }
@@ -49,75 +33,6 @@
     .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
-
-    /* Trapezium Lamp Cover with Internal Glow Only */
-    .lamp-container {
-      position: relative;
-      display: inline-block;
-      cursor: pointer;
-      padding-top: 18px;
-      user-select: none;
-      width: 65px;
-      height: 65px;
-    }
-    .lamp-wire {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 24px;
-      background-color: #334155;
-      z-index: 10;
-    }
-    .dark .lamp-wire {
-      background-color: #cbd5e1;
-    }
-    
-    /* Enclosed Trapezium Cover */
-    .lamp-cover {
-      width: 44px;
-      height: 24px;
-      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
-      margin: 0 auto;
-      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-      position: relative;
-      z-index: 12;
-      transition: background 0.3s, box-shadow 0.3s;
-      box-shadow: none;
-    }
-    .dark .lamp-cover {
-      background: linear-gradient(180deg, #f1f5f9 0%, #cbd5e1 100%);
-      box-shadow: 0 10px 25px rgba(251, 191, 36, 0.8), 0 20px 40px rgba(245, 158, 11, 0.5);
-    }
-
-    /* Attached Pull Cord & Lever */
-    .pull-cord {
-      position: absolute;
-      right: 8px;
-      width: 2px;
-      height: 20px;
-      background: #94a3b8;
-      top: 18px;
-      z-index: 9;
-      transform-origin: top;
-    }
-    .pull-lever {
-      position: absolute;
-      right: 4px;
-      width: 10px;
-      height: 14px;
-      background: #d97706;
-      border-radius: 50%;
-      top: 38px;
-      z-index: 9;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-
-    /* Detached & Pull animation class */
-    .animating .pull-lever, .animating .pull-cord {
-      animation: pullLever 0.4s ease-in-out;
-    }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-300">
@@ -125,8 +40,6 @@
   <!-- TOP HEADER / NAVBAR -->
   <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30 shadow-sm transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      
-      <!-- Logo & Title -->
       <div class="flex items-center space-x-3">
         <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-sm">
           <i data-lucide="truck" class="w-6 h-6"></i>
@@ -136,26 +49,6 @@
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Automated Multi-Source CSV Aggregator</p>
         </div>
       </div>
-
-      <!-- Hanging Lamp Switcher & Developed By Badge -->
-      <div class="flex items-center space-x-6">
-        <div class="flex items-center space-x-2" title="Click lever to toggle theme">
-          <div id="lamp-switcher" onclick="triggerLampToggle()" class="lamp-container" role="button" tabindex="0" aria-label="Toggle Dark Mode">
-            <div class="lamp-wire"></div>
-            <div class="lamp-cover"></div>
-            <div class="pull-cord"></div>
-            <div id="lever-handle" class="pull-lever"></div>
-          </div>
-        </div>
-
-        <div class="flex items-center space-x-3">
-          <div class="flex items-center bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-xs px-3 py-1.5 rounded-md space-x-2 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span id="record-count-badge">Developed by Vidya Shankar 💻</span>
-          </div>
-        </div>
-      </div>
-
     </div>
   </header>
 
@@ -194,7 +87,7 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 text-xs pt-3">
-        
+
         <div class="col-span-1 sm:col-span-2 lg:col-span-1">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Search Keyword</label>
           <div class="relative">
@@ -258,7 +151,7 @@
         <div>
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">WM Name</label>
           <select id="filter-wm" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All Workers / WMs</option>
+            <option value="ALL">All Wish Masters / WMs</option>
           </select>
         </div>
 
@@ -294,7 +187,7 @@
 
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received at MH</span>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received at TC</span>
           <div class="p-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-lg"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
@@ -305,7 +198,7 @@
 
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched to MH</span>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched to TC</span>
           <div class="p-2 bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-lg"><i data-lucide="truck" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
@@ -367,18 +260,6 @@
         </div>
         <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
           <div class="min-w-[800px] h-72 relative"><canvas id="chart-zone"></canvas></div>
-        </div>
-      </div>
-
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <i data-lucide="pie-chart" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Status Share</span>
-          </h3>
-          <span class="text-xs text-slate-500 dark:text-slate-400">Doughnut Share</span>
-        </div>
-        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
-          <div class="min-w-[800px] h-72 relative"><canvas id="chart-status-split"></canvas></div>
         </div>
       </div>
 
@@ -538,8 +419,8 @@
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
-            <h3 class="text-base font-bold text-slate-900 dark:text-white">6. Worker / WM - Day-wise Aging Matrix</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per WM name broken down by Date</p>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">6. Wish Master / WM - Day-wise Aging Matrix</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Shipment aging volume per Wish Master / WM broken down by Date</p>
           </div>
           <button onclick="exportMatrixCSV('matrix-table-wm', 'WM_Aging')" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-600 hover:text-white dark:bg-slate-700 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export WM Aging CSV</span>
@@ -683,22 +564,27 @@
     let debounceTimer = null;
     const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA' };
 
-    document.addEventListener('DOMContentLoaded', () => { 
-      lucide.createIcons(); 
-      loadRepositoryData(); 
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      loadRepositoryData();
     });
 
-    /* Lever Detach & Theme Toggle Animation */
-    function triggerLampToggle() {
-      const container = document.getElementById('lamp-switcher');
-      container.classList.add('animating');
-      setTimeout(() => {
-        document.documentElement.classList.toggle('dark');
-        renderCharts();
-      }, 200);
-      setTimeout(() => {
-        container.classList.remove('animating');
-      }, 400);
+    /* ---------- Data loading ---------- */
+    async function fetchCsv(url) {
+      try {
+        const r = await fetch(url, { cache: 'no-cache' });
+        if (!r.ok) return null;
+        const t = await r.text();
+        return t.trimStart().startsWith('<') ? null : t;
+      } catch { return null; }
+    }
+
+    async function pool(items, limit, fn) {
+      const out = new Array(items.length); let i = 0;
+      await Promise.all(Array.from({ length: Math.min(limit, items.length) }, async () => {
+        while (i < items.length) { const k = i++; out[k] = await fn(items[k]); }
+      }));
+      return out;
     }
 
     async function loadRepositoryData() {
@@ -718,47 +604,26 @@
           }
         }
 
-        // Auto-generate date-based fallback candidates in YYYY-MM-DD.csv format
+        // Fallback: last 60 days of YYYY-MM-DD.csv candidates
         if (csvUrls.length === 0) {
           const today = new Date();
-          // Generate last 60 days of date filenames dynamically (e.g., data/2026-10-04.csv)
           for (let i = 0; i < 60; i++) {
             const d = new Date(today);
             d.setDate(d.getDate() - i);
-            const isoDate = d.toISOString().split('T')[0];
-            csvUrls.push(`data/${isoDate}.csv`);
+            csvUrls.push(`data/${d.toISOString().split('T')[0]}.csv`);
           }
-          // Additional custom fallbacks
           csvUrls.push('data/BRSNR Sept-Dec - 05-10-2026.csv', 'data/sample-2026-10-05.csv');
         }
 
-        const fetchedShipmentIds = new Set();
-        
-        for (const url of csvUrls) {
-          try {
-            await new Promise((resolve) => {
-              Papa.parse(url + '?t=' + Date.now(), {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                fastMode: true,
-                chunk: function(results) {
-                  const data = results.data;
-                  for (let i = 0; i < data.length; i++) {
-                    const row = data[i];
-                    const id = row[COLS.SHIPMENT_ID] || row['Shipment ID'] || row['ShipmentId'];
-                    if (id && !fetchedShipmentIds.has(id)) {
-                      fetchedShipmentIds.add(id);
-                      masterData.push(normalizeRow(row, id, url));
-                    }
-                  }
-                },
-                complete: function() { resolve(); },
-                error: function() { resolve(); }
-              });
-            });
-          } catch (e) {}
-        }
+        const texts = await pool(csvUrls, 8, fetchCsv);
+        const seen = new Set();
+        texts.forEach((t, i) => {
+          if (!t) return;
+          for (const row of Papa.parse(t, { header: true, skipEmptyLines: true }).data) {
+            const id = row[COLS.SHIPMENT_ID] || row['Shipment ID'];
+            if (id && !seen.has(id)) { seen.add(id); masterData.push(normalizeRow(row, id, csvUrls[i])); }
+          }
+        });
 
         showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments.`, masterData.length ? "success" : "warning");
         populateFilterDropdowns();
@@ -768,89 +633,88 @@
       }
     }
 
+    /* ---------- Cleaning / normalization ---------- */
     function isInvalid(val) {
       if (!val) return true;
       const clean = String(val).trim().toUpperCase();
-      return clean === '#N/A' || clean === 'N/A' || clean === 'NA' || clean === '#VALUE!' || clean === 'UNKNOWN ZONE' || clean === 'UNASSIGNED';
+      return clean === '#N/A' || clean === 'N/A' || clean === 'NA' || clean === '#VALUE!' || clean === 'UNKNOWN ZONE' || clean === 'UNASSIGNED' || clean.startsWith('UNASSIGNED');
     }
 
     function cleanVal(val, defaultVal = 'Unassigned') {
       return isInvalid(val) ? defaultVal : String(val).trim();
     }
 
-    function normalizeRow(r, id, sourceUrl = '') {
-      let dtStr = r[COLS.DATE] || r['Date'] || r['date'] || '';
-      
-      // Fallback: If row level date is missing, parse YYYY-MM-DD directly from the CSV filename (e.g. 2026-10-04.csv)
-      if (!dtStr && sourceUrl) {
-        const filename = sourceUrl.split('/').pop().replace('.csv', '');
-        const dateMatch = filename.match(/\d{4}-\d{2}-\d{2}/);
-        if (dateMatch) {
-          dtStr = dateMatch[0];
-        }
-      }
+    const NUMLIKE = /^[\d.,\s]+(E[+-]?\d+)?$/, DATELIKE = /\d{1,4}[-/]\d{1,2}[-/]\d{2,4}/;
+    const BLOCK = { GM: ['OPENED', 'EXPECTED'], MH: ['TRUEFLEX', 'RAHULROUTH', 'ADITYAKUMAR'], WM: [] };
+    function cleanField(f, val, def) {
+      const v = cleanVal(val, def); if (v === def) return def;
+      const u = v.toUpperCase();
+      if (f === 'Zone') { const m = u.match(/^(NORTH|SOUTH|EAST|WEST)(\s+ZONE)?$/); return m ? m[1][0] + m[1].slice(1).toLowerCase() : def; }
+      if (NUMLIKE.test(u) || DATELIKE.test(u) || BLOCK[f].includes(u.replace(/\s/g, ''))) return def;
+      return v;
+    }
 
+    function normalizeRow(r, id, sourceUrl = '') {
+      let dtStr = r[COLS.DATE] || r['date'] || '';
+      if (!dtStr && sourceUrl) { const m = sourceUrl.match(/\d{4}-\d{2}-\d{2}/); if (m) dtStr = m[0]; }
+      const pd = parseDateStrFast(dtStr);
       return {
-        Date: dtStr || 'Unassigned Date', 
-        ParsedDate: parseDateStrFast(dtStr),
+        Date: dtStr || 'Unassigned Date', ParsedDate: pd, ts: pd ? pd.getTime() : 0,
+        Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
+        Week: pd ? getWeekIdentifier(pd) : null,
         ShipmentId: id,
-        HubName: cleanVal(r[COLS.HUB_NAME] || r['PH Name'], 'Unassigned'), 
+        HubName: cleanVal(r[COLS.HUB_NAME] || r['PH Name'], 'Unassigned'),
         SellerName: cleanVal(r[COLS.SELLER_NAME], 'Unknown Seller'),
-        Status: cleanVal(r[COLS.STATUS], 'Unknown Status'), 
-        Zone: cleanVal(r[COLS.ZONE], 'Unknown Zone'),
-        LIB: cleanVal(r[COLS.LIB], 'Unassigned'), 
-        MH: cleanVal(r[COLS.MH], 'Unassigned MH'),
-        WM: cleanVal(r[COLS.WM], 'Unassigned WM'), 
-        GM: cleanVal(r[COLS.GM], 'Unassigned GM'),
+        Status: cleanVal(r[COLS.STATUS], 'Unknown Status'),
+        Zone: cleanField('Zone', r[COLS.ZONE], 'Unknown Zone'),
+        LIB: cleanVal(r[COLS.LIB], 'Unassigned'),
+        MH: cleanField('MH', r[COLS.MH], 'Unassigned MH'),
+        WM: cleanField('WM', r[COLS.WM], 'Unassigned WM'),
+        GM: cleanField('GM', r[COLS.GM], 'Unassigned GM'),
         RCA: cleanVal(r[COLS.RCA], 'None')
       };
     }
 
     function parseDateStrFast(str) {
       if (!str) return null;
-      
-      // Handle standard YYYY-MM-DD or DD-MM-YYYY / MM-DD-YYYY
+
+      // Handle standard YYYY-MM-DD or DD-MM-YYYY
       const p = str.split(/[-/]/);
       if (p.length === 3) {
-        return p[0].length === 4 
-          ? new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2])) 
+        return p[0].length === 4
+          ? new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]))
           : new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
       }
 
       // Native fallback
       const nativeDate = Date.parse(str);
-      if (!isNaN(nativeDate)) {
-        return new Date(nativeDate);
-      }
+      if (!isNaN(nativeDate)) return new Date(nativeDate);
 
       return null;
     }
 
+    /* ---------- Filters ---------- */
     function populateFilterDropdowns() {
       const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), libs = new Set(), weeks = new Set(), months = new Set();
-      
+
       for (let i = 0; i < masterData.length; i++) {
         const r = masterData[i];
-        if (!isInvalid(r.GM)) gms.add(r.GM); 
+        if (!isInvalid(r.GM)) gms.add(r.GM);
         if (!isInvalid(r.SellerName)) sellers.add(r.SellerName);
-        if (!isInvalid(r.MH)) mhs.add(r.MH); 
+        if (!isInvalid(r.MH)) mhs.add(r.MH);
         if (!isInvalid(r.HubName)) hubs.add(r.HubName);
-        if (!isInvalid(r.WM)) wms.add(r.WM); 
+        if (!isInvalid(r.WM)) wms.add(r.WM);
         if (!isInvalid(r.Status)) statuses.add(r.Status);
         if (!isInvalid(r.LIB)) libs.add(r.LIB);
-
-        if (r.ParsedDate) {
-          months.add(r.ParsedDate.toLocaleString('default', { month: 'long', year: 'numeric' }));
-          weeks.add(getWeekIdentifier(r.ParsedDate));
-        }
+        if (r.Month) { months.add(r.Month); weeks.add(r.Week); }
       }
 
-      fillSelect('filter-gm', gms); 
+      fillSelect('filter-gm', gms);
       fillSelect('filter-seller', sellers);
-      fillSelect('filter-mh', mhs); 
+      fillSelect('filter-mh', mhs);
       fillSelect('filter-hub', hubs);
-      fillSelect('filter-wm', wms); 
-      fillSelect('filter-status', statuses); 
+      fillSelect('filter-wm', wms);
+      fillSelect('filter-status', statuses);
       fillSelect('filter-lib', libs);
       fillSelect('filter-month', months);
       fillSelect('filter-week', weeks);
@@ -872,7 +736,7 @@
       const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
       const dayNum = d.getUTCDay() || 7;
       d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-      const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
       const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
       return `Week ${weekNo}, ${d.getUTCFullYear()}`;
     }
@@ -904,8 +768,8 @@
 
     function applyFilters() {
       const search = document.getElementById('filter-search').value.toLowerCase().trim();
-      const df = document.getElementById('filter-date-from').value ? new Date(document.getElementById('filter-date-from').value) : null;
-      const dt = document.getElementById('filter-date-to').value ? new Date(document.getElementById('filter-date-to').value) : null;
+      const df = document.getElementById('filter-date-from').value ? parseDateStrFast(document.getElementById('filter-date-from').value) : null;
+      const dt = document.getElementById('filter-date-to').value ? parseDateStrFast(document.getElementById('filter-date-to').value) : null;
       const wk = document.getElementById('filter-week').value;
       const mo = document.getElementById('filter-month').value;
       const gm = document.getElementById('filter-gm').value;
@@ -929,8 +793,8 @@
 
         const rd = r.ParsedDate;
         if (rd) {
-          if (wk !== 'ALL' && getWeekIdentifier(rd) !== wk) continue;
-          if (mo !== 'ALL' && rd.toLocaleString('default', { month: 'long', year: 'numeric' }) !== mo) continue;
+          if (wk !== 'ALL' && r.Week !== wk) continue;
+          if (mo !== 'ALL' && r.Month !== mo) continue;
           if (df && rd < df) continue;
           if (dt && rd > dt) continue;
         } else if (wk !== 'ALL' || mo !== 'ALL' || df || dt) {
@@ -943,9 +807,9 @@
 
       filteredData = res;
 
-      updateKPIs(); 
-      renderCharts(); 
-      renderAllAgingMatrices(); 
+      updateKPIs();
+      renderCharts();
+      renderAllAgingMatrices();
       renderSummaryTables();
       renderShipmentsTable();
     }
@@ -953,7 +817,7 @@
     function updateKPIs() {
       const tot = filteredData.length;
       document.getElementById('kpi-total-volume').textContent = tot.toLocaleString();
-      
+
       let rec = 0, disp = 0;
 
       for (let i = 0; i < filteredData.length; i++) {
@@ -961,15 +825,16 @@
         if (r.Status === 'received_at_mh') rec++;
         if (r.Status === 'dispatched_to_mh') disp++;
       }
-      
+
       document.getElementById('kpi-received-mh').textContent = rec.toLocaleString();
-      document.getElementById('kpi-received-pct').textContent = `${tot ? ((rec/tot)*100).toFixed(1) : 0}% of total`;
+      document.getElementById('kpi-received-pct').textContent = `${tot ? ((rec / tot) * 100).toFixed(1) : 0}% of total`;
       document.getElementById('kpi-dispatched-mh').textContent = disp.toLocaleString();
-      document.getElementById('kpi-dispatched-pct').textContent = `${tot ? ((disp/tot)*100).toFixed(1) : 0}% dispatched`;
-      
+      document.getElementById('kpi-dispatched-pct').textContent = `${tot ? ((disp / tot) * 100).toFixed(1) : 0}% dispatched`;
+
       document.getElementById('kpi-active-zones').textContent = '4';
     }
 
+    /* ---------- Charts ---------- */
     function renderCharts() {
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#f8fafc' : '#0f172a';
@@ -1007,22 +872,9 @@
       }
       createChart('chart-zone', 'pie', {
         labels: Object.keys(zoneMap).slice(0, 4),
-        datasets: [{ 
-          data: Object.values(zoneMap).slice(0, 4), 
+        datasets: [{
+          data: Object.values(zoneMap).slice(0, 4),
           backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899']
-        }]
-      }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
-
-      const statusMap = {};
-      for (let i = 0; i < filteredData.length; i++) {
-        const r = filteredData[i];
-        if (!isInvalid(r.Status)) statusMap[r.Status] = (statusMap[r.Status] || 0) + 1;
-      }
-      createChart('chart-status-split', 'doughnut', {
-        labels: Object.keys(statusMap),
-        datasets: [{ 
-          data: Object.values(statusMap), 
-          backgroundColor: ['#10b981', '#f59e0b', '#3b82f6', '#ef4444']
         }]
       }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
 
@@ -1031,13 +883,13 @@
         const r = filteredData[i];
         if (!isInvalid(r.SellerName)) sellerMap[r.SellerName] = (sellerMap[r.SellerName] || 0) + 1;
       }
-      const topSellers = Object.entries(sellerMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
+      const topSellers = Object.entries(sellerMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-seller-column', 'bar', {
-        labels: topSellers.map(i => i[0].length > 20 ? i[0].substring(0,20) + '...' : i[0]),
+        labels: topSellers.map(i => i[0].length > 20 ? i[0].substring(0, 20) + '...' : i[0]),
         datasets: [{ label: 'Volume', data: topSellers.map(i => i[1]), backgroundColor: '#ec4899', borderRadius: 6 }]
-      }, { 
+      }, {
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#f472b6' : '#9d174d', font: { weight: 'bold' } } } 
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#f472b6' : '#9d174d', font: { weight: 'bold' } } }
       });
 
       const gmMap = {};
@@ -1045,13 +897,13 @@
         const r = filteredData[i];
         if (!isInvalid(r.GM)) gmMap[r.GM] = (gmMap[r.GM] || 0) + 1;
       }
-      const topGMs = Object.entries(gmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
+      const topGMs = Object.entries(gmMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-gm-column', 'bar', {
         labels: topGMs.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topGMs.map(i => i[1]), backgroundColor: '#6366f1', borderRadius: 6 }]
-      }, { 
+      }, {
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#a5b4fc' : '#312e81', font: { weight: 'bold' } } } 
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#a5b4fc' : '#312e81', font: { weight: 'bold' } } }
       });
 
       const wmMap = {};
@@ -1059,13 +911,13 @@
         const r = filteredData[i];
         if (!isInvalid(r.WM)) wmMap[r.WM] = (wmMap[r.WM] || 0) + 1;
       }
-      const topWMs = Object.entries(wmMap).sort((a,b) => b[1] - a[1]).slice(0, 10);
+      const topWMs = Object.entries(wmMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
       createChart('chart-wm-column', 'bar', {
         labels: topWMs.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topWMs.map(i => i[1]), backgroundColor: '#0ea5e9', borderRadius: 6 }]
-      }, { 
+      }, {
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#7dd3fc' : '#0369a1', font: { weight: 'bold' } } } 
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#7dd3fc' : '#0369a1', font: { weight: 'bold' } } }
       });
 
       const phMap = {};
@@ -1073,13 +925,13 @@
         const r = filteredData[i];
         if (!isInvalid(r.HubName)) phMap[r.HubName] = (phMap[r.HubName] || 0) + 1;
       }
-      const topPHs = Object.entries(phMap).sort((a,b) => b[1] - a[1]).slice(0, 8);
+      const topPHs = Object.entries(phMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
       createChart('chart-ph-bar', 'bar', {
         labels: topPHs.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topPHs.map(i => i[1]), backgroundColor: '#8b5cf6', borderRadius: 6 }]
-      }, { 
+      }, {
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#c084fc' : '#5b21b6', font: { weight: 'bold' } } } 
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#c084fc' : '#5b21b6', font: { weight: 'bold' } } }
       });
 
       const mhMap = {};
@@ -1091,10 +943,10 @@
       createChart('chart-top-mh', 'bar', {
         labels: topMH.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topMH.map(i => i[1]), backgroundColor: '#3b82f6', borderRadius: 4 }]
-      }, { 
-        indexAxis: 'y', 
+      }, {
+        indexAxis: 'y',
         scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#93c5fd' : '#1e3a8a', font: { weight: 'bold' } } } 
+        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#93c5fd' : '#1e3a8a', font: { weight: 'bold' } } }
       });
     }
 
@@ -1105,25 +957,26 @@
         type: type, data: data,
         options: {
           responsive: true, maintainAspectRatio: false,
-          plugins: { 
-            legend: { 
-              position: 'bottom', 
-              labels: { boxWidth: 10, font: { size: 10 }, color: document.documentElement.classList.contains('dark') ? '#f8fafc' : '#0f172a' } 
-            }, 
-            ...options.plugins 
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { boxWidth: 10, font: { size: 10 }, color: document.documentElement.classList.contains('dark') ? '#f8fafc' : '#0f172a' }
+            },
+            ...options.plugins
           },
           ...options
         }
       });
     }
 
+    /* ---------- Aging matrices ---------- */
     function renderAllAgingMatrices() {
       renderSingleMatrix('Zone', 'matrix-thead-zone', 'matrix-tbody-zone', 'Zone');
       renderSingleMatrix('SellerName', 'matrix-thead-seller', 'matrix-tbody-seller', 'Seller Name');
       renderSingleMatrix('GM', 'matrix-thead-gm', 'matrix-tbody-gm', 'GM Name');
       renderSingleMatrix('MH', 'matrix-thead-mh', 'matrix-tbody-mh', 'Mother Hub');
       renderSingleMatrix('HubName', 'matrix-thead-ph', 'matrix-tbody-ph', 'Pickup Hub');
-      renderSingleMatrix('WM', 'matrix-thead-wm', 'matrix-tbody-wm', 'Worker / WM');
+      renderSingleMatrix('WM', 'matrix-thead-wm', 'matrix-tbody-wm', 'Wish Master / WM');
     }
 
     function renderSingleMatrix(fieldKey, theadId, tbodyId, rowHeaderTitle) {
@@ -1140,7 +993,7 @@
         matrix[cat][d] = (matrix[cat][d] || 0) + 1;
       }
 
-      const dates = Array.from(datesSet).sort((a,b) => (parseDateStrFast(a)||0) - (parseDateStrFast(b)||0));
+      const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
 
       const thead = document.getElementById(theadId);
       thead.innerHTML = `<th class="p-3">${rowHeaderTitle}</th>` + dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + `<th class="p-3 text-right bg-slate-100 dark:bg-slate-900">Total</th>`;
@@ -1164,6 +1017,7 @@
       tbody.innerHTML = fragmentHtml;
     }
 
+    /* ---------- Summary tables ---------- */
     function renderSummaryTables() {
       const tot = filteredData.length || 1;
       populateSummaryTable('tbl-zone-body', 'Zone', tot);
@@ -1199,6 +1053,7 @@
       tbody.innerHTML = html;
     }
 
+    /* ---------- Shipments table ---------- */
     function renderShipmentsTable() {
       const tbody = document.getElementById('shipments-tbody');
       const tot = filteredData.length, pages = Math.ceil(tot / pageSize) || 1;
@@ -1240,7 +1095,7 @@
         document.getElementById(`tab-btn-${tab}`).classList.remove('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
         document.getElementById(`tab-btn-${tab}`).classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
       });
-      
+
       document.getElementById(`tab-${t}`).classList.remove('hidden');
       const activeBtn = document.getElementById(`tab-btn-${t}`);
       activeBtn.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
@@ -1249,11 +1104,15 @@
 
     function setPresetDate(p) {
       const f = document.getElementById('filter-date-from'), t = document.getElementById('filter-date-to'), today = new Date();
+      const iso = d => d.toISOString().split('T')[0];
       document.getElementById('filter-week').value = 'ALL';
       document.getElementById('filter-month').value = 'ALL';
       if (p === 'all') { f.value = ''; t.value = ''; }
-      else if (p === 'today') { f.value = today.toISOString().split('T')[0]; t.value = f.value; }
-      else if (p === '7days') { const past = new Date(today); past.setDate(past.getDate() - 7); f.value = past.toISOString().split('T')[0]; t.value = today.toISOString().split('T')[0]; }
+      else if (p === 'today') { f.value = iso(today); t.value = f.value; }
+      else if (p === '7days' || p === '30days') {
+        const past = new Date(today); past.setDate(past.getDate() - (p === '7days' ? 7 : 30));
+        f.value = iso(past); t.value = iso(today);
+      }
       applyFilters();
     }
 
