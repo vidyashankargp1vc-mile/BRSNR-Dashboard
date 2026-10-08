@@ -34,37 +34,19 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    /* Extended Hanging Bulb Cord Line (~3.5cm) */
+    /* 2X Length Hanging Bulb Wire Hanging Below Header */
     .hanging-bulb-cord {
       position: absolute;
-      top: -34px;
+      top: -70px;
       left: 50%;
       transform: translateX(-50%);
       width: 2px;
-      height: 34px;
+      height: 70px;
       background-color: #cbd5e1;
       transition: background-color 0.3s;
     }
     .dark .hanging-bulb-cord {
       background-color: #f59e0b;
-    }
-
-    /* Bulb Detach Animation Class */
-    .bulb-detached #theme-bulb-icon {
-      transform: translateY(12px) rotate(15deg) scale(0.9);
-      opacity: 0.6;
-    }
-    .bulb-detached .hanging-bulb-cord {
-      height: 22px;
-    }
-
-    /* Interactive Hover Outline Pop Effects */
-    .interactive-btn {
-      transition: all 0.2s ease-in-out;
-    }
-    .interactive-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4), 0 4px 12px rgba(0, 0, 0, 0.05);
     }
   </style>
 </head>
@@ -86,20 +68,20 @@
       <!-- RIGHT HEADER ACTION BAR -->
       <div class="flex items-center space-x-3 sm:space-x-5">
         
-        <!-- HANGING THEME BULB TOGGLE BUTTON (EXTENDED CORD & DETACHABLE) -->
-        <div class="relative flex items-center pt-3" id="bulb-container">
-          <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Light/Dark Theme & Detach Bulb" class="relative group p-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm hover:ring-2 hover:ring-amber-400">
+        <!-- HANGING THEME BULB TOGGLE BUTTON (WIRE 2X & HANGS BELOW TOP TITLE BAR) -->
+        <div class="relative flex items-center pt-10 z-40">
+          <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Light/Dark Theme" class="relative group p-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:scale-110 active:scale-95 transition-all duration-300 shadow-md hover:ring-2 hover:ring-amber-400">
             <span class="hanging-bulb-cord"></span>
             <i id="theme-bulb-icon" data-lucide="lightbulb" class="w-5 h-5 text-slate-400 dark:text-amber-400 fill-transparent dark:fill-amber-400 transition-all duration-300 group-hover:rotate-12"></i>
           </button>
         </div>
 
-        <!-- DEVELOPER CREDIT BADGE -->
+        <!-- DEVELOPER CREDIT BADGE (- First Mile under Name) -->
         <div class="group relative px-3.5 py-1.5 rounded-full border border-indigo-200 dark:border-indigo-500/30 bg-gradient-to-r from-indigo-50 via-slate-50 to-purple-50 dark:from-slate-800 dark:via-indigo-950/40 dark:to-slate-800 text-xs font-semibold text-indigo-700 dark:text-indigo-300 shadow-sm hover:shadow-md hover:border-indigo-400 dark:hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/50 transition-all duration-300 cursor-default flex items-center space-x-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <div class="flex flex-col text-right sm:text-left">
+          <div class="flex flex-col text-left">
             <span>Developed by <strong class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Vidya Shankar</strong> <span class="text-sm transform group-hover:scale-125 inline-block transition-transform duration-200">💻</span></span>
-            <span class="text-[10px] text-indigo-500 dark:text-indigo-400 font-normal leading-none">- First Mile</span>
+            <span class="text-[10px] text-indigo-500 dark:text-indigo-400 font-normal leading-tight pl-0.5">- First Mile</span>
           </div>
         </div>
 
@@ -155,7 +137,7 @@
           <span>Dynamic Filters & Range Selection</span>
         </div>
 
-        <!-- PRESET DATE BUTTONS WITH ACTIVE HIGHLIGHT -->
+        <!-- PRESET DATE BUTTONS -->
         <div class="flex items-center flex-wrap gap-2 text-xs">
           <button onclick="setPresetDate('all')" id="preset-all" class="preset-btn px-2.5 py-1 bg-indigo-600 text-white font-semibold rounded transition duration-200 shadow-sm border border-transparent hover:ring-2 hover:ring-indigo-400">All Time</button>
           <button onclick="setPresetDate('today')" id="preset-today" class="preset-btn px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded font-medium transition duration-200 shadow-sm border border-transparent hover:bg-indigo-600 hover:text-white hover:ring-2 hover:ring-indigo-400">Today</button>
@@ -188,11 +170,11 @@
           <input type="date" id="filter-date-to" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
         </div>
 
-        <!-- Multi-select Filter Dropdowns with Search & Dynamic Cascading -->
+        <!-- Multi-select Filter Dropdowns displaying Selected Values Directly -->
         <div class="relative multi-select-container" id="ms-container-filter-week">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Week</label>
           <button type="button" onclick="toggleMultiSelect('filter-week')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-week" class="truncate">All Weeks</span>
+            <span id="label-filter-week" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Weeks</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
           </button>
           <div id="dropdown-filter-week" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
@@ -204,7 +186,7 @@
         <div class="relative multi-select-container" id="ms-container-filter-month">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Month</label>
           <button type="button" onclick="toggleMultiSelect('filter-month')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-month" class="truncate">All Months</span>
+            <span id="label-filter-month" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Months</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
           </button>
           <div id="dropdown-filter-month" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
@@ -216,7 +198,7 @@
         <div class="relative multi-select-container" id="ms-container-filter-gm">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">General Manager (GM)</label>
           <button type="button" onclick="toggleMultiSelect('filter-gm')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-gm" class="truncate">All GMs</span>
+            <span id="label-filter-gm" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All GMs</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
           </button>
           <div id="dropdown-filter-gm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
@@ -228,7 +210,7 @@
         <div class="relative multi-select-container" id="ms-container-filter-seller">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Seller Name</label>
           <button type="button" onclick="toggleMultiSelect('filter-seller')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-seller" class="truncate">All Sellers</span>
+            <span id="label-filter-seller" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Sellers</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
           </button>
           <div id="dropdown-filter-seller" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
@@ -240,7 +222,7 @@
         <div class="relative multi-select-container" id="ms-container-filter-mh">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Mother Hub (MH)</label>
           <button type="button" onclick="toggleMultiSelect('filter-mh')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-mh" class="truncate">All Mother Hubs</span>
+            <span id="label-filter-mh" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Mother Hubs</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
           </button>
           <div id="dropdown-filter-mh" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
@@ -252,7 +234,7 @@
         <div class="relative multi-select-container" id="ms-container-filter-hub">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Pickup Hub (PH)</label>
           <button type="button" onclick="toggleMultiSelect('filter-hub')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-hub" class="truncate">All Pickup Hubs</span>
+            <span id="label-filter-hub" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Pickup Hubs</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
           </button>
           <div id="dropdown-filter-hub" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
@@ -264,7 +246,7 @@
         <div class="relative multi-select-container" id="ms-container-filter-wm">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">WM Name</label>
           <button type="button" onclick="toggleMultiSelect('filter-wm')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-wm" class="truncate">All Wish Masters / WMs</span>
+            <span id="label-filter-wm" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Wish Masters / WMs</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
           </button>
           <div id="dropdown-filter-wm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
@@ -276,7 +258,7 @@
         <div class="relative multi-select-container" id="ms-container-filter-status">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Status</label>
           <button type="button" onclick="toggleMultiSelect('filter-status')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-status" class="truncate">All Status</span>
+            <span id="label-filter-status" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Status</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
           </button>
           <div id="dropdown-filter-status" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
@@ -285,11 +267,11 @@
           </div>
         </div>
 
-        <!-- ZONE MULTI-SELECT FILTER (INSERTED BETWEEN STATUS & LOB) -->
+        <!-- ZONE MULTI-SELECT FILTER (BETWEEN STATUS & LOB) -->
         <div class="relative multi-select-container" id="ms-container-filter-zone">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Zone</label>
           <button type="button" onclick="toggleMultiSelect('filter-zone')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-zone" class="truncate">All Zones</span>
+            <span id="label-filter-zone" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Zones</span>
             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
           </button>
           <div id="dropdown-filter-zone" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
@@ -389,27 +371,27 @@
       </nav>
     </section>
 
-    <!-- DAY-WISE AGING TAB (SINGLE HIERARCHICAL MATRIX VISUAL: Zone > GM > Pickup Hub > Wish Master) -->
+    <!-- DAY-WISE AGING TAB (TABLE VISUAL: Pickup Hub > Wish Master, SORTED DESCENDING BY TOTAL) -->
     <section id="tab-matrix" class="space-y-6">
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
               <i data-lucide="layers" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
-              <span>Hierarchical Day-wise Aging Matrix</span>
+              <span>Pickup Hub &gt; Wish Master Day-wise Aging Matrix</span>
             </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Drilldown aging breakdown: <strong>Zone &gt; GM &gt; Pickup Hub &gt; Wish Master</strong> v/s Date</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Sorted in <strong>descending order</strong> of total volume per Pickup Hub and Wish Master</p>
           </div>
-          <button onclick="exportMatrixCSV('matrix-table-hierarchical', 'BRSNR_Hierarchical_Aging')" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:ring-2 hover:ring-indigo-400">
-            <i data-lucide="download" class="w-4 h-4"></i><span>Export Hierarchical Aging CSV</span>
+          <button onclick="exportMatrixCSV('matrix-table-ph-wm', 'BRSNR_PH_WM_Aging')" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:ring-2 hover:ring-indigo-400">
+            <i data-lucide="download" class="w-4 h-4"></i><span>Export PH &gt; WM Aging CSV</span>
           </button>
         </div>
         <div class="overflow-x-auto overflow-y-auto max-h-[500px]">
-          <table id="matrix-table-hierarchical" class="w-full text-xs text-left border-collapse">
+          <table id="matrix-table-ph-wm" class="w-full text-xs text-left border-collapse">
             <thead>
-              <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold sticky top-0" id="matrix-thead-hierarchical"></tr>
+              <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold sticky top-0" id="matrix-thead-ph-wm"></tr>
             </thead>
-            <tbody id="matrix-tbody-hierarchical" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+            <tbody id="matrix-tbody-ph-wm" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
         </div>
       </div>
@@ -489,7 +471,7 @@
         </div>
       </div>
 
-      <!-- SELLER WISE VOLUME DISTRIBUTION (PLACED AT BOTTOM) -->
+      <!-- SELLER WISE VOLUME DISTRIBUTION (BOTTOM OF OVERVIEW) -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
@@ -631,7 +613,7 @@
     let masterData = [], filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
     let debounceTimer = null;
     let selectedLobFilter = 'ALL';
-    let isBulbDetached = false;
+    let currentTab = 'matrix'; // Active Tab defaulting to Day-wise Aging
 
     const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh'];
     const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
@@ -673,7 +655,7 @@
       });
     });
 
-    /* ---------- Top Mode Switcher (Past Analytics vs Realtime) ---------- */
+    /* ---------- Mode Switcher ---------- */
     function switchMode(mode) {
       const pastView = document.getElementById('view-past-analytics');
       const realtimeView = document.getElementById('view-realtime-wm');
@@ -693,23 +675,13 @@
       }
     }
 
-    /* ---------- Theme Toggle & Bulb Detach ---------- */
+    /* ---------- Theme Toggle ---------- */
     function toggleTheme() {
-      const htmlEl = document.documentElement;
-      const container = document.getElementById('bulb-container');
-      
-      htmlEl.classList.toggle('dark');
-      isBulbDetached = !isBulbDetached;
-      
-      if (isBulbDetached) {
-        container.classList.add('bulb-detached');
-      } else {
-        container.classList.remove('bulb-detached');
-      }
-      renderCharts();
+      document.documentElement.classList.toggle('dark');
+      if (currentTab === 'overview') renderCharts();
     }
 
-    /* ---------- LOB Toggle Switch (Ekart, Trueflex, APM) ---------- */
+    /* ---------- LOB Toggle Switch ---------- */
     function setLobToggle(lobVal) {
       selectedLobFilter = lobVal;
       ['ALL', 'Ekart', 'Trueflex', 'APM'].forEach(val => {
@@ -748,7 +720,7 @@
       applyFilters();
     }
 
-    /* ---------- Multi-Select Dropdowns with Search & Dynamic Options ---------- */
+    /* ---------- Multi-Select Dropdowns displaying Selected Values ---------- */
     function toggleMultiSelect(id) {
       const dropdown = document.getElementById(`dropdown-${id}`);
       const isHidden = dropdown.classList.contains('hidden');
@@ -797,14 +769,8 @@
 
     function handleSelectAll(id, isChecked) {
       const checkboxes = document.querySelectorAll(`.cb-${id}`);
-      checkboxes.forEach(cb => {
-        cb.checked = isChecked;
-      });
-      if (isChecked) {
-        selectedFilters[id] = Array.from(checkboxes).map(cb => cb.value);
-      } else {
-        selectedFilters[id] = [];
-      }
+      checkboxes.forEach(cb => { cb.checked = isChecked; });
+      selectedFilters[id] = isChecked ? Array.from(checkboxes).map(cb => cb.value) : [];
       updateMultiSelectLabel(id, checkboxes.length);
       applyFilters();
     }
@@ -835,19 +801,20 @@
       updateMultiSelectLabel(id, total);
     }
 
+    /* Shows Actual Selected Filter Values in Field Header instead of Generic Placeholder */
     function updateMultiSelectLabel(id, totalCount) {
       const labelEl = document.getElementById(`label-${id}`);
       const count = selectedFilters[id].length;
       if (count === 0 || count === totalCount) {
         labelEl.textContent = filterLabels[id];
-      } else if (count === 1) {
-        labelEl.textContent = selectedFilters[id][0];
+      } else if (count <= 2) {
+        labelEl.textContent = selectedFilters[id].join(', ');
       } else {
-        labelEl.textContent = `${count} Selected`;
+        labelEl.textContent = `${count} Selected (${selectedFilters[id][0]}, ...)`;
       }
     }
 
-    /* ---------- Data Loading & Dynamic Cascading Filters ---------- */
+    /* ---------- Optimised Data Loading & Speed Pipeline ---------- */
     async function fetchCsv(url) {
       try {
         const r = await fetch(url, { cache: 'no-cache' });
@@ -980,10 +947,9 @@
 
     function debouncedApplyFilters() {
       clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => { applyFilters(); }, 250);
+      debounceTimer = setTimeout(() => { applyFilters(); }, 150);
     }
 
-    /* Dynamic Cross-Filtering: Populates Filter Options Based On Filtered Subset */
     function updateDynamicFilterOptions(dataset) {
       const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), zones = new Set(), weeks = new Set(), months = new Set();
 
@@ -1058,10 +1024,12 @@
 
       updateDynamicFilterOptions(filteredData.length > 0 ? filteredData : masterData);
       updateKPIs();
-      renderCharts();
-      renderHierarchicalAgingMatrix();
-      renderSummaryTables();
-      renderShipmentsTable();
+      
+      // Lazy render only active tab for ultra fast response
+      if (currentTab === 'matrix') renderPHWMAgingMatrix();
+      else if (currentTab === 'overview') renderCharts();
+      else if (currentTab === 'tables') renderSummaryTables();
+      else if (currentTab === 'table') renderShipmentsTable();
     }
 
     function updateKPIs() {
@@ -1069,7 +1037,6 @@
       document.getElementById('kpi-total-volume').textContent = tot.toLocaleString();
 
       let rec = 0, disp = 0;
-
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
         if (r.Status === 'received_at_mh') rec++;
@@ -1080,16 +1047,14 @@
       document.getElementById('kpi-received-pct').textContent = `${tot ? ((rec / tot) * 100).toFixed(1) : 0}% of total`;
       document.getElementById('kpi-dispatched-mh').textContent = disp.toLocaleString();
       document.getElementById('kpi-dispatched-pct').textContent = `${tot ? ((disp / tot) * 100).toFixed(1) : 0}% dispatched`;
-
       document.getElementById('kpi-active-zones').textContent = '4';
     }
 
-    /* ---------- Charts (Descending Sorting Order) ---------- */
+    /* ---------- Charts (Descending Order) ---------- */
     function renderCharts() {
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#f8fafc' : '#0f172a';
 
-      // 1. Daily Volume Trend
       const dailyMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
@@ -1116,7 +1081,6 @@
         plugins: { datalabels: { align: 'top', color: '#6366f1', font: { weight: 'bold' } } }
       });
 
-      // 2. Zone Split (Sorted Descending)
       const zoneMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
@@ -1131,7 +1095,6 @@
         }]
       }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
 
-      // 3. GM Wise Volume (Sorted Descending)
       const gmMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
@@ -1146,7 +1109,6 @@
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#a5b4fc' : '#312e81', font: { weight: 'bold' } } }
       });
 
-      // 4. WM Wise Volume (Sorted Descending)
       const wmMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
@@ -1161,7 +1123,6 @@
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#7dd3fc' : '#0369a1', font: { weight: 'bold' } } }
       });
 
-      // 5. Pickup Hub Wise Volume (Sorted Descending)
       const phMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
@@ -1176,7 +1137,6 @@
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#c084fc' : '#5b21b6', font: { weight: 'bold' } } }
       });
 
-      // 6. Top Mother Hubs (Sorted Descending)
       const mhMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
@@ -1192,7 +1152,6 @@
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#93c5fd' : '#1e3a8a', font: { weight: 'bold' } } }
       });
 
-      // 7. Seller Wise Volume (At Bottom, Sorted Descending)
       const sellerMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
@@ -1227,96 +1186,68 @@
       });
     }
 
-    /* ---------- Single Hierarchical Day-wise Aging Matrix (Zone > GM > PH > WM) ---------- */
-    function renderHierarchicalAgingMatrix() {
+    /* ---------- Pickup Hub > Wish Master Matrix Table (Sorted Descending by Total) ---------- */
+    function renderPHWMAgingMatrix() {
       const datesSet = new Set();
-      const tree = {};
+      const phMap = {};
 
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
-        const z = r.Zone || 'Unassigned Zone';
-        const gm = r.GM || 'Unassigned GM';
         const ph = r.HubName || 'Unassigned PH';
         const wm = r.WM || 'Unassigned WM';
         const d = r.Date || 'No Date';
 
         datesSet.add(d);
 
-        if (!tree[z]) tree[z] = { totals: {}, gms: {} };
-        tree[z].totals[d] = (tree[z].totals[d] || 0) + 1;
+        if (!phMap[ph]) phMap[ph] = { grandTotal: 0, dates: {}, wms: {} };
+        phMap[ph].grandTotal++;
+        phMap[ph].dates[d] = (phMap[ph].dates[d] || 0) + 1;
 
-        if (!tree[z].gms[gm]) tree[z].gms[gm] = { totals: {}, phs: {} };
-        tree[z].gms[gm].totals[d] = (tree[z].gms[gm].totals[d] || 0) + 1;
-
-        if (!tree[z].gms[gm].phs[ph]) tree[z].gms[gm].phs[ph] = { totals: {}, wms: {} };
-        tree[z].gms[gm].phs[ph].totals[d] = (tree[z].gms[gm].phs[ph].totals[d] || 0) + 1;
-
-        if (!tree[z].gms[gm].phs[ph].wms[wm]) tree[z].gms[gm].phs[ph].wms[wm] = {};
-        tree[z].gms[gm].phs[ph].wms[wm][d] = (tree[z].gms[gm].phs[ph].wms[wm][d] || 0) + 1;
+        if (!phMap[ph].wms[wm]) phMap[ph].wms[wm] = { grandTotal: 0, dates: {} };
+        phMap[ph].wms[wm].grandTotal++;
+        phMap[ph].wms[wm].dates[d] = (phMap[ph].wms[wm].dates[d] || 0) + 1;
       }
 
       const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
 
-      const thead = document.getElementById('matrix-thead-hierarchical');
-      thead.innerHTML = `<th class="p-3">Zone &gt; GM &gt; Pickup Hub &gt; Wish Master</th>` + 
+      const thead = document.getElementById('matrix-thead-ph-wm');
+      thead.innerHTML = `<th class="p-3">Pickup Hub &gt; Wish Master</th>` + 
                         dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + 
                         `<th class="p-3 text-right bg-slate-100 dark:bg-slate-900">Total</th>`;
 
-      const tbody = document.getElementById('matrix-tbody-hierarchical');
+      const tbody = document.getElementById('matrix-tbody-ph-wm');
       let html = '';
 
-      Object.keys(tree).sort().forEach(z => {
-        let zTot = 0;
-        let zRow = `<tr class="bg-indigo-50/60 dark:bg-indigo-950/40 font-bold border-b border-indigo-100 dark:border-slate-700 text-indigo-900 dark:text-indigo-200"><td class="p-3">📍 ${z}</td>`;
+      // Sort Pickup Hubs Descending by Total Volume
+      const sortedPHs = Object.entries(phMap).sort((a, b) => b[1].grandTotal - a[1].grandTotal);
+
+      sortedPHs.forEach(([ph, phData]) => {
+        let phRow = `<tr class="bg-indigo-50/70 dark:bg-indigo-950/40 font-bold border-b border-indigo-100 dark:border-slate-700 text-indigo-900 dark:text-indigo-200"><td class="p-3">🏢 ${ph}</td>`;
         dates.forEach(d => {
-          const v = tree[z].totals[d] || 0;
-          zTot += v;
-          zRow += `<td class="p-3 text-center">${v ? v.toLocaleString() : '-'}</td>`;
+          const v = phData.dates[d] || 0;
+          phRow += `<td class="p-3 text-center">${v ? v.toLocaleString() : '-'}</td>`;
         });
-        zRow += `<td class="p-3 text-right text-indigo-600 dark:text-indigo-400 font-extrabold">${zTot.toLocaleString()}</td></tr>`;
-        html += zRow;
+        phRow += `<td class="p-3 text-right text-indigo-600 dark:text-indigo-400 font-extrabold">${phData.grandTotal.toLocaleString()}</td></tr>`;
+        html += phRow;
 
-        Object.keys(tree[z].gms).sort().forEach(gm => {
-          let gmTot = 0;
-          let gmRow = `<tr class="bg-slate-50 dark:bg-slate-800/80 font-semibold border-b border-slate-100 dark:border-slate-700"><td class="p-2.5 pl-6 text-slate-800 dark:text-slate-200">👤 GM: ${gm}</td>`;
+        // Sort Wish Masters Descending by Total Volume
+        const sortedWMs = Object.entries(phData.wms).sort((a, b) => b[1].grandTotal - a[1].grandTotal);
+
+        sortedWMs.forEach(([wm, wmData]) => {
+          let wmRow = `<tr class="hover:bg-slate-100/50 dark:hover:bg-slate-700/30 text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800"><td class="p-2 pl-8 font-mono">🚚 WM: ${wm}</td>`;
           dates.forEach(d => {
-            const v = tree[z].gms[gm].totals[d] || 0;
-            gmTot += v;
-            gmRow += `<td class="p-2.5 text-center">${v ? v.toLocaleString() : '-'}</td>`;
+            const v = wmData.dates[d] || 0;
+            wmRow += `<td class="p-2 text-center">${v ? v.toLocaleString() : '-'}</td>`;
           });
-          gmRow += `<td class="p-2.5 text-right font-bold text-slate-900 dark:text-white">${gmTot.toLocaleString()}</td></tr>`;
-          html += gmRow;
-
-          Object.keys(tree[z].gms[gm].phs).sort().forEach(ph => {
-            let phTot = 0;
-            let phRow = `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 border-b border-slate-100 dark:border-slate-700"><td class="p-2 pl-10 text-slate-700 dark:text-slate-300">🏢 PH: ${ph}</td>`;
-            dates.forEach(d => {
-              const v = tree[z].gms[gm].phs[ph].totals[d] || 0;
-              phTot += v;
-              phRow += `<td class="p-2 text-center text-slate-600 dark:text-slate-400">${v ? v.toLocaleString() : '-'}</td>`;
-            });
-            phRow += `<td class="p-2 text-right font-semibold text-slate-800 dark:text-slate-200">${phTot.toLocaleString()}</td></tr>`;
-            html += phRow;
-
-            Object.keys(tree[z].gms[gm].phs[ph].wms).sort().forEach(wm => {
-              let wmTot = 0;
-              let wmRow = `<tr class="hover:bg-slate-100/50 dark:hover:bg-slate-700/30 text-[11px] text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800"><td class="p-1.5 pl-14 font-mono">🚚 WM: ${wm}</td>`;
-              dates.forEach(d => {
-                const v = tree[z].gms[gm].phs[ph].wms[wm][d] || 0;
-                wmTot += v;
-                wmRow += `<td class="p-1.5 text-center">${v ? v.toLocaleString() : '-'}</td>`;
-              });
-              wmRow += `<td class="p-1.5 text-right font-mono font-medium text-slate-700 dark:text-slate-300">${wmTot.toLocaleString()}</td></tr>`;
-              html += wmRow;
-            });
-          });
+          wmRow += `<td class="p-2 text-right font-semibold text-slate-900 dark:text-white">${wmData.grandTotal.toLocaleString()}</td></tr>`;
+          html += wmRow;
         });
       });
 
       tbody.innerHTML = html;
     }
 
-    /* ---------- Performance Summary Tables ---------- */
+    /* ---------- Summary Tables ---------- */
     function renderSummaryTables() {
       const tot = filteredData.length || 1;
       populateSummaryTable('tbl-zone-body', 'Zone', tot);
@@ -1389,6 +1320,7 @@
     function changePageSize() { pageSize = parseInt(document.getElementById('table-page-size').value); currentPage = 1; renderShipmentsTable(); }
 
     function switchTab(t) {
+      currentTab = t;
       ['overview', 'matrix', 'tables', 'table'].forEach(tab => {
         document.getElementById(`tab-${tab}`).classList.add('hidden');
         document.getElementById(`tab-btn-${tab}`).classList.remove('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
@@ -1399,6 +1331,11 @@
       const activeBtn = document.getElementById(`tab-btn-${t}`);
       activeBtn.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
       activeBtn.classList.add('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
+
+      if (t === 'matrix') renderPHWMAgingMatrix();
+      else if (t === 'overview') renderCharts();
+      else if (t === 'tables') renderSummaryTables();
+      else if (t === 'table') renderShipmentsTable();
     }
 
     function resetAllFilters() {
