@@ -1085,98 +1085,117 @@
       debounceTimer = setTimeout(() => { applyFilters(true); }, 150);
     }
 
-    function updateDynamicFilterOptions(dataset) {
-      const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), zones = new Set(), weeks = new Set(), months = new Set();
+    /* ---------- Dynamic Cascading Filter Options ---------- */
+function updateDynamicFilterOptions() {
+  const filterConfigs = [
+    { id: 'filter-week', field: 'Week' },
+    { id: 'filter-month', field: 'Month' },
+    { id: 'filter-gm', field: 'GM' },
+    { id: 'filter-seller', field: 'SellerName' },
+    { id: 'filter-mh', field: 'MH' },
+    { id: 'filter-hub', field: 'HubName' },
+    { id: 'filter-wm', field: 'WM' },
+    { id: 'filter-status', field: 'Status' },
+    { id: 'filter-zone', field: 'Zone' }
+  ];
 
-      for (let i = 0; i < dataset.length; i++) {
-        const r = dataset[i];
-        if (!isInvalid(r.GM)) gms.add(r.GM);
-        if (!isInvalid(r.SellerName)) sellers.add(r.SellerName);
-        if (!isInvalid(r.MH)) mhs.add(r.MH);
-        if (!isInvalid(r.HubName)) hubs.add(r.HubName);
-        if (!isInvalid(r.WM)) wms.add(r.WM);
-        if (!isInvalid(r.Zone)) zones.add(r.Zone);
-        if (!isInvalid(r.Status) && !IGNORED_STATUSES.includes(r.Status)) statuses.add(r.Status);
-        if (r.Month) { months.add(r.Month); weeks.add(r.Week); }
+  filterConfigs.forEach(config => {
+    // Get dataset filtered by ALL other active filters, EXCLUDING current filter field
+    const scopedDataset = getFilteredDataExcluding(config.id);
+    const availableSet = new Set();
+
+    for (let i = 0; i < scopedDataset.length; i++) {
+      const val = scopedDataset[i][config.field];
+      if (!isInvalid(val)) {
+        if (config.id === 'filter-status' && IGNORED_STATUSES.includes(val)) continue;
+        availableSet.add(val);
       }
-
-      fillMultiSelect('filter-gm', gms);
-      fillMultiSelect('filter-seller', sellers);
-      fillMultiSelect('filter-mh', mhs);
-      fillMultiSelect('filter-hub', hubs);
-      fillMultiSelect('filter-wm', wms);
-      fillMultiSelect('filter-status', statuses);
-      fillMultiSelect('filter-zone', zones);
-      fillMultiSelect('filter-month', months);
-      fillMultiSelect('filter-week', weeks);
     }
 
-    function applyFilters(rebuildOptions = false) {
-      const search = document.getElementById('filter-search').value.toLowerCase().trim();
-      const df = document.getElementById('filter-date-from').value ? parseDateStrFast(document.getElementById('filter-date-from').value) : null;
-      const dt = document.getElementById('filter-date-to').value ? parseDateStrFast(document.getElementById('filter-date-to').value) : null;
-      
-      const selWk = selectedFilters['filter-week'];
-      const selMo = selectedFilters['filter-month'];
-      const selGm = selectedFilters['filter-gm'];
-      const selSeller = selectedFilters['filter-seller'];
-      const selMh = selectedFilters['filter-mh'];
-      const selHub = selectedFilters['filter-hub'];
-      const selWm = selectedFilters['filter-wm'];
-      const selStatus = selectedFilters['filter-status'];
-      const selZone = selectedFilters['filter-zone'];
+    // Retain only currently selected options that remain valid in the available set
+    selectedFilters[config.id] = selectedFilters[config.id].filter(val => availableSet.has(val));
 
-      const targetStatuses = selStatus.length > 0 ? selStatus : ALLOWED_STATUSES;
+    // Re-render dropdown list with valid context-aware options
+    fillMultiSelect(config.id, availableSet);
+  });
+}
 
-      const res = [];
-      for (let i = 0; i < masterData.length; i++) {
-        const r = masterData[i];
-        
-        if (selGm.length > 0 && !selGm.includes(r.GM)) continue;
-        if (selSeller.length > 0 && !selSeller.includes(r.SellerName)) continue;
-        if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
-        if (selHub.length > 0 && !selHub.includes(r.HubName)) continue;
-        if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
-        if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
-        if (!targetStatuses.includes(r.Status)) continue;
+/* Helper: Filter master dataset applying all filters EXCEPT target filter ID */
+function getFilteredDataExcluding(excludedFilterId) {
+  const search = document.getElementById('filter-search').value.toLowerCase().trim();
+  const df = document.getElementById('filter-date-from').value ? parseDateStrFast(document.getElementById('filter-date-from').value) : null;
+  const dt = document.getElementById('filter-date-to').value ? parseDateStrFast(document.getElementById('filter-date-to').value) : null;
 
-        if (selectedLobFilter !== 'ALL') {
-          const rLob = r.LOB.toLowerCase();
-          if (selectedLobFilter === 'APM') {
-            if (rLob !== 'apm' && rLob !== 'lma') continue;
-          } else if (rLob !== selectedLobFilter.toLowerCase()) {
-            continue;
-          }
-        }
+  const selWk = excludedFilterId === 'filter-week' ? [] : selectedFilters['filter-week'];
+  const selMo = excludedFilterId === 'filter-month' ? [] : selectedFilters['filter-month'];
+  const selGm = excludedFilterId === 'filter-gm' ? [] : selectedFilters['filter-gm'];
+  const selSeller = excludedFilterId === 'filter-seller' ? [] : selectedFilters['filter-seller'];
+  const selMh = excludedFilterId === 'filter-mh' ? [] : selectedFilters['filter-mh'];
+  const selHub = excludedFilterId === 'filter-hub' ? [] : selectedFilters['filter-hub'];
+  const selWm = excludedFilterId === 'filter-wm' ? [] : selectedFilters['filter-wm'];
+  const selStatus = excludedFilterId === 'filter-status' ? [] : selectedFilters['filter-status'];
+  const selZone = excludedFilterId === 'filter-zone' ? [] : selectedFilters['filter-zone'];
 
-        const rd = r.ParsedDate;
-        if (rd) {
-          if (selWk.length > 0 && !selWk.includes(r.Week)) continue;
-          if (selMo.length > 0 && !selMo.includes(r.Month)) continue;
-          if (df && rd < df) continue;
-          if (dt && rd > dt) continue;
-        } else if (selWk.length > 0 || selMo.length > 0 || df || dt) {
-          continue;
-        }
+  const targetStatuses = selStatus.length > 0 ? selStatus : ALLOWED_STATUSES;
 
-        if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search) && !r.BagId.toLowerCase().includes(search)) continue;
-        res.push(r);
+  const res = [];
+  for (let i = 0; i < masterData.length; i++) {
+    const r = masterData[i];
+
+    if (selGm.length > 0 && !selGm.includes(r.GM)) continue;
+    if (selSeller.length > 0 && !selSeller.includes(r.SellerName)) continue;
+    if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
+    if (selHub.length > 0 && !selHub.includes(r.HubName)) continue;
+    if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
+    if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
+    if (!targetStatuses.includes(r.Status)) continue;
+
+    if (selectedLobFilter !== 'ALL') {
+      const rLob = r.LOB.toLowerCase();
+      if (selectedLobFilter === 'APM') {
+        if (rLob !== 'apm' && rLob !== 'lma') continue;
+      } else if (rLob !== selectedLobFilter.toLowerCase()) {
+        continue;
       }
-
-      filteredData = res;
-
-      if (rebuildOptions) {
-        updateDynamicFilterOptions(masterData);
-      }
-      
-      updateKPIs();
-      
-      if (currentTab === 'matrix') renderPHWMAgingMatrix();
-      else if (currentTab === 'overview') renderCharts();
-      else if (currentTab === 'tables') renderSummaryTables();
-      else if (currentTab === 'table') renderShipmentsTable();
     }
 
+    const rd = r.ParsedDate;
+    if (rd) {
+      if (selWk.length > 0 && !selWk.includes(r.Week)) continue;
+      if (selMo.length > 0 && !selMo.includes(r.Month)) continue;
+      if (df && rd < df) continue;
+      if (dt && rd > dt) continue;
+    } else if (selWk.length > 0 || selMo.length > 0 || df || dt) {
+      continue;
+    }
+
+    if (search && !r.ShipmentId.toLowerCase().includes(search) && 
+        !r.WM.toLowerCase().includes(search) && 
+        !r.SellerName.toLowerCase().includes(search) && 
+        !r.BagId.toLowerCase().includes(search)) continue;
+
+    res.push(r);
+  }
+  return res;
+}
+
+/* ---------- Updated applyFilters Function ---------- */
+function applyFilters(rebuildOptions = true) {
+  // Always update options dynamically to maintain strict cross-filter dependency
+  if (rebuildOptions) {
+    updateDynamicFilterOptions();
+  }
+
+  // Obtain current fully filtered result set
+  filteredData = getFilteredDataExcluding(null);
+
+  updateKPIs();
+
+  if (currentTab === 'matrix') renderPHWMAgingMatrix();
+  else if (currentTab === 'overview') renderCharts();
+  else if (currentTab === 'tables') renderSummaryTables();
+  else if (currentTab === 'table') renderShipmentsTable();
+}
     function updateKPIs() {
       const tot = filteredData.length;
       document.getElementById('kpi-total-volume').textContent = tot.toLocaleString();
