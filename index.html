@@ -34,7 +34,7 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    /* 2X Length Hanging Bulb Wire Hanging Below Header */
+    /* 2X Length Hanging Bulb Wire */
     .hanging-bulb-cord {
       position: absolute;
       top: -70px;
@@ -68,8 +68,8 @@
       <!-- RIGHT HEADER ACTION BAR -->
       <div class="flex items-center space-x-3 sm:space-x-5">
         
-        <!-- HANGING THEME BULB TOGGLE BUTTON (WIRE 2X & HANGS BELOW TOP TITLE BAR) -->
-        <div class="relative flex items-center pt-10 z-40">
+        <!-- HANGING THEME BULB TOGGLE BUTTON -->
+        <div class="relative flex items-center pt-10 z-40" id="bulb-container">
           <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Light/Dark Theme" class="relative group p-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:scale-110 active:scale-95 transition-all duration-300 shadow-md hover:ring-2 hover:ring-amber-400">
             <span class="hanging-bulb-cord"></span>
             <i id="theme-bulb-icon" data-lucide="lightbulb" class="w-5 h-5 text-slate-400 dark:text-amber-400 fill-transparent dark:fill-amber-400 transition-all duration-300 group-hover:rotate-12"></i>
@@ -81,7 +81,7 @@
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <div class="flex flex-col text-left">
             <span>Developed by <strong class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Vidya Shankar</strong> <span class="text-sm transform group-hover:scale-125 inline-block transition-transform duration-200">💻</span></span>
-            <span class="text-[10px] text-indigo-500 dark:text-indigo-400 font-normal leading-tight pl-0.5">- First Mile</span>
+            <span class="text-[10px] text-indigo-500 dark:text-indigo-400 font-normal leading-tight pl-0.5">              - First Mile</span>
           </div>
         </div>
 
@@ -103,7 +103,7 @@
     </div>
   </section>
 
-  <!-- REAL-TIME TRACKING (UNDER DEVELOPMENT) VIEW -->
+  <!-- REAL-TIME TRACKING VIEW -->
   <div id="view-realtime-wm" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center justify-center text-center">
     <div class="p-6 bg-indigo-50 dark:bg-slate-800 border border-indigo-100 dark:border-slate-700 rounded-3xl shadow-xl max-w-md w-full space-y-4">
       <div class="w-16 h-16 bg-indigo-600/10 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mx-auto ring-4 ring-indigo-500/20">
@@ -152,6 +152,7 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 text-xs pt-3">
 
+        <!-- KEYWORD SEARCH -->
         <div class="col-span-1 sm:col-span-2 lg:col-span-1">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Search Keyword</label>
           <div class="relative">
@@ -170,120 +171,138 @@
           <input type="date" id="filter-date-to" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
         </div>
 
-        <!-- Multi-select Filter Dropdowns displaying Selected Values Directly -->
-        <div class="relative multi-select-container" id="ms-container-filter-week">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Week</label>
-          <button type="button" onclick="toggleMultiSelect('filter-week')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-week" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Weeks</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-week" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
-            <input type="text" oninput="filterDropdownOptions('filter-week', this.value)" placeholder="Search weeks..." class="w-full px-2 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs dark:bg-slate-900 dark:text-slate-200">
+        <!-- DIRECT SEARCH + VALUE DISPLAY MULTI-SELECT FILTERS -->
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-week">
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-700 dark:text-slate-300">Filter by Week</label>
+            <span id="label-filter-week" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Weeks</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-week')" oninput="filterDropdownOptions('filter-week', this.value)" placeholder="Search weeks..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-week" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-week" class="max-h-48 overflow-y-auto space-y-1"></div>
           </div>
         </div>
 
-        <div class="relative multi-select-container" id="ms-container-filter-month">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Month</label>
-          <button type="button" onclick="toggleMultiSelect('filter-month')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-month" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Months</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-month" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
-            <input type="text" oninput="filterDropdownOptions('filter-month', this.value)" placeholder="Search months..." class="w-full px-2 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs dark:bg-slate-900 dark:text-slate-200">
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-month">
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-700 dark:text-slate-300">Filter by Month</label>
+            <span id="label-filter-month" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Months</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-month')" oninput="filterDropdownOptions('filter-month', this.value)" placeholder="Search months..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-month" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-month" class="max-h-48 overflow-y-auto space-y-1"></div>
           </div>
         </div>
 
-        <div class="relative multi-select-container" id="ms-container-filter-gm">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">General Manager (GM)</label>
-          <button type="button" onclick="toggleMultiSelect('filter-gm')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-gm" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All GMs</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-gm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
-            <input type="text" oninput="filterDropdownOptions('filter-gm', this.value)" placeholder="Search GMs..." class="w-full px-2 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs dark:bg-slate-900 dark:text-slate-200">
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-gm">
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-700 dark:text-slate-300">General Manager (GM)</label>
+            <span id="label-filter-gm" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All GMs</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-gm')" oninput="filterDropdownOptions('filter-gm', this.value)" placeholder="Search GMs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-gm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-gm" class="max-h-48 overflow-y-auto space-y-1"></div>
           </div>
         </div>
 
-        <div class="relative multi-select-container" id="ms-container-filter-seller">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Seller Name</label>
-          <button type="button" onclick="toggleMultiSelect('filter-seller')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-seller" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Sellers</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-seller" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
-            <input type="text" oninput="filterDropdownOptions('filter-seller', this.value)" placeholder="Search sellers..." class="w-full px-2 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs dark:bg-slate-900 dark:text-slate-200">
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-seller">
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-700 dark:text-slate-300">Seller Name</label>
+            <span id="label-filter-seller" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Sellers</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-seller')" oninput="filterDropdownOptions('filter-seller', this.value)" placeholder="Search sellers..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-seller" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-seller" class="max-h-48 overflow-y-auto space-y-1"></div>
           </div>
         </div>
 
-        <div class="relative multi-select-container" id="ms-container-filter-mh">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Mother Hub (MH)</label>
-          <button type="button" onclick="toggleMultiSelect('filter-mh')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-mh" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Mother Hubs</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-mh" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
-            <input type="text" oninput="filterDropdownOptions('filter-mh', this.value)" placeholder="Search MH..." class="w-full px-2 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs dark:bg-slate-900 dark:text-slate-200">
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-mh">
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-700 dark:text-slate-300">Mother Hub (MH)</label>
+            <span id="label-filter-mh" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Mother Hubs</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-mh')" oninput="filterDropdownOptions('filter-mh', this.value)" placeholder="Search MH..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-mh" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-mh" class="max-h-48 overflow-y-auto space-y-1"></div>
           </div>
         </div>
 
-        <div class="relative multi-select-container" id="ms-container-filter-hub">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Pickup Hub (PH)</label>
-          <button type="button" onclick="toggleMultiSelect('filter-hub')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-hub" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Pickup Hubs</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-hub" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
-            <input type="text" oninput="filterDropdownOptions('filter-hub', this.value)" placeholder="Search PH..." class="w-full px-2 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs dark:bg-slate-900 dark:text-slate-200">
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-hub">
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-700 dark:text-slate-300">Pickup Hub (PH)</label>
+            <span id="label-filter-hub" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Pickup Hubs</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-hub')" oninput="filterDropdownOptions('filter-hub', this.value)" placeholder="Search PH..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-hub" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-hub" class="max-h-48 overflow-y-auto space-y-1"></div>
           </div>
         </div>
 
-        <div class="relative multi-select-container" id="ms-container-filter-wm">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">WM Name</label>
-          <button type="button" onclick="toggleMultiSelect('filter-wm')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-wm" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Wish Masters / WMs</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-wm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
-            <input type="text" oninput="filterDropdownOptions('filter-wm', this.value)" placeholder="Search WMs..." class="w-full px-2 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs dark:bg-slate-900 dark:text-slate-200">
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-wm">
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-700 dark:text-slate-300">WM Name</label>
+            <span id="label-filter-wm" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Wish Masters / WMs</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-wm')" oninput="filterDropdownOptions('filter-wm', this.value)" placeholder="Search WMs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-wm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-wm" class="max-h-48 overflow-y-auto space-y-1"></div>
           </div>
         </div>
 
-        <div class="relative multi-select-container" id="ms-container-filter-status">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Status</label>
-          <button type="button" onclick="toggleMultiSelect('filter-status')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-status" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Status</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-status" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
-            <input type="text" oninput="filterDropdownOptions('filter-status', this.value)" placeholder="Search status..." class="w-full px-2 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs dark:bg-slate-900 dark:text-slate-200">
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-status">
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-700 dark:text-slate-300">Status</label>
+            <span id="label-filter-status" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Status</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-status')" oninput="filterDropdownOptions('filter-status', this.value)" placeholder="Search status..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-status" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-status" class="max-h-48 overflow-y-auto space-y-1"></div>
           </div>
         </div>
 
-        <!-- ZONE MULTI-SELECT FILTER (BETWEEN STATUS & LOB) -->
-        <div class="relative multi-select-container" id="ms-container-filter-zone">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Zone</label>
-          <button type="button" onclick="toggleMultiSelect('filter-zone')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/20">
-            <span id="label-filter-zone" class="truncate font-semibold text-indigo-600 dark:text-indigo-400">All Zones</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-zone" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-2">
-            <input type="text" oninput="filterDropdownOptions('filter-zone', this.value)" placeholder="Search zones..." class="w-full px-2 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs dark:bg-slate-900 dark:text-slate-200">
+        <!-- ZONE MULTI-SELECT FILTER -->
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-zone">
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-medium text-slate-700 dark:text-slate-300">Zone</label>
+            <span id="label-filter-zone" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Zones</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-zone')" oninput="filterDropdownOptions('filter-zone', this.value)" placeholder="Search zones..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-zone" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-zone" class="max-h-48 overflow-y-auto space-y-1"></div>
           </div>
         </div>
 
         <!-- SEGMENTED TOGGLE SWITCH FOR LOB (Ekart, Trueflex, APM) -->
-        <div class="col-span-1 sm:col-span-2 lg:col-span-1">
+        <div class="col-span-1 sm:col-span-2 lg:col-span-1 flex flex-col justify-end">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Line of Business (LOB)</label>
-          <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-300 dark:border-slate-700 w-full justify-between gap-1 text-[11px] font-medium">
+          <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-300 dark:border-slate-700 w-full justify-between gap-1 text-[11px] font-medium h-8 items-center">
             <button type="button" onclick="setLobToggle('ALL')" id="lob-btn-ALL" class="lob-toggle-btn flex-1 py-1 px-1 rounded-md transition text-center bg-indigo-600 text-white font-semibold shadow-sm hover:ring-2 hover:ring-indigo-400">ALL</button>
             <button type="button" onclick="setLobToggle('Ekart')" id="lob-btn-Ekart" class="lob-toggle-btn flex-1 py-1 px-1 rounded-md transition text-center text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:ring-2 hover:ring-indigo-400/30">Ekart</button>
             <button type="button" onclick="setLobToggle('Trueflex')" id="lob-btn-Trueflex" class="lob-toggle-btn flex-1 py-1 px-1 rounded-md transition text-center text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:ring-2 hover:ring-indigo-400/30">Trueflex</button>
@@ -721,6 +740,12 @@
     }
 
     /* ---------- Multi-Select Dropdowns displaying Selected Values ---------- */
+    function openMultiSelect(id) {
+      closeAllMultiSelects();
+      const dropdown = document.getElementById(`dropdown-${id}`);
+      dropdown.classList.remove('hidden');
+    }
+
     function toggleMultiSelect(id) {
       const dropdown = document.getElementById(`dropdown-${id}`);
       const isHidden = dropdown.classList.contains('hidden');
@@ -735,6 +760,7 @@
     }
 
     function filterDropdownOptions(id, query) {
+      openMultiSelect(id);
       const q = query.toLowerCase().trim();
       const labels = document.querySelectorAll(`#options-${id} label.option-item`);
       labels.forEach(lbl => {
@@ -1025,7 +1051,7 @@
       updateDynamicFilterOptions(filteredData.length > 0 ? filteredData : masterData);
       updateKPIs();
       
-      // Lazy render only active tab for ultra fast response
+      // Lazy render active tab
       if (currentTab === 'matrix') renderPHWMAgingMatrix();
       else if (currentTab === 'overview') renderCharts();
       else if (currentTab === 'tables') renderSummaryTables();
@@ -1345,11 +1371,18 @@
       setPresetDate('all');
     }
 
+    /* Clean CSV Export - Strips Emojis and Visual Formatting */
     function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `BRSNR_Export_${new Date().toISOString().split('T')[0]}.csv`); }
     function exportMatrixCSV(tableId, filenamePrefix) {
       const rows = [];
       document.querySelectorAll(`#${tableId} tr`).forEach(tr => {
-        const row = []; tr.querySelectorAll('th, td').forEach(td => row.push(`"${td.innerText.replace(/"/g, '""')}"`)); rows.push(row.join(','));
+        const row = []; 
+        tr.querySelectorAll('th, td').forEach(td => {
+          // Clean text: strip emojis and HTML formatting
+          let cleanText = td.innerText.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/gu, '').replace(/🏢|🚚|📍|👤/g, '').trim();
+          row.push(`"${cleanText.replace(/"/g, '""')}"`);
+        }); 
+        rows.push(row.join(','));
       });
       downloadBlob(rows.join('\n'), `${filenamePrefix}_${new Date().toISOString().split('T')[0]}.csv`);
     }
