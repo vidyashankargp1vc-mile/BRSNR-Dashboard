@@ -61,7 +61,7 @@
         </div>
         <div>
           <h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">BRSNR Logistics Analytics</h1>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Automated Multi-Source CSV Aggregator</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Automated Multi-Source Aggregator</p>
         </div>
       </div>
 
@@ -76,7 +76,7 @@
           </button>
         </div>
 
-        <!-- DEVELOPER CREDIT BADGE (- First Mile precisely under Vidya Shankar G P 💻) -->
+        <!-- DEVELOPER CREDIT BADGE -->
         <div class="group relative px-3.5 py-1.5 rounded-full border border-indigo-200 dark:border-indigo-500/30 bg-gradient-to-r from-indigo-50 via-slate-50 to-purple-50 dark:from-slate-800 dark:via-indigo-950/40 dark:to-slate-800 text-xs font-semibold text-indigo-700 dark:text-indigo-300 shadow-sm hover:shadow-md hover:border-indigo-400 dark:hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/50 transition-all duration-300 cursor-default flex items-center space-x-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <div class="text-left leading-tight">
@@ -127,7 +127,7 @@
     <div id="status-banner" class="hidden bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 px-4 py-3 rounded-lg text-sm flex items-center justify-between shadow-sm">
       <div class="flex items-center space-x-2">
         <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 flex-shrink-0"></i>
-        <span id="status-banner-text">Scanning /data directory...</span>
+        <span id="status-banner-text">Loading dataset...</span>
       </div>
       <button onclick="document.getElementById('status-banner').classList.add('hidden')" class="text-amber-600 dark:text-amber-400">
         <i data-lucide="x" class="w-4 h-4"></i>
@@ -179,7 +179,7 @@
           <input type="date" id="filter-date-to" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
         </div>
 
-        <!-- DIRECT SEARCH + VALUE DISPLAY MULTI-SELECT FILTERS -->
+        <!-- DIRECT SEARCH MULTI-SELECT FILTERS -->
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-week">
           <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-week')">
             <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Filter by Week</label>
@@ -389,7 +389,7 @@
       </div>
     </section>
 
-    <!-- NAVIGATION TABS (DAY-WISE AGING APPEARS FIRST) -->
+    <!-- NAVIGATION TABS -->
     <section class="border-b border-slate-200 dark:border-slate-700">
       <nav class="flex space-x-6 text-sm font-medium">
         <button id="tab-btn-matrix" onclick="switchTab('matrix')" class="py-3 px-3 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold flex items-center space-x-2 transition hover:bg-indigo-50 dark:hover:bg-slate-800 rounded-t-lg">
@@ -407,7 +407,7 @@
       </nav>
     </section>
 
-    <!-- DAY-WISE AGING TAB (TABLE VISUAL: Pickup Hub > Wish Master, SORTED DESCENDING BY TOTAL) -->
+    <!-- DAY-WISE AGING TAB -->
     <section id="tab-matrix" class="space-y-6">
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
@@ -433,7 +433,7 @@
       </div>
     </section>
 
-    <!-- OVERVIEW CHARTS TAB (SORTED DESCENDING & SELLER WISE AT BOTTOM) -->
+    <!-- OVERVIEW CHARTS TAB -->
     <section id="tab-overview" class="hidden space-y-6">
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4">
@@ -507,7 +507,6 @@
         </div>
       </div>
 
-      <!-- SELLER WISE VOLUME DISTRIBUTION (BOTTOM OF OVERVIEW) -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
@@ -649,12 +648,36 @@
     let masterData = [], filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
     let debounceTimer = null;
     let selectedLobFilter = 'ALL';
-    let currentTab = 'matrix'; // Active Tab defaulting to Day-wise Aging
+    let currentTab = 'matrix';
 
     const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh'];
     const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
 
-    const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LOB: 'LOB', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA' };
+    const COLS = { 
+      DATE: 'Date', 
+      SHIPMENT_ID: 'ShipmentId', 
+      HUB_NAME: 'Hub Name', 
+      SELLER_NAME: 'Seller name', 
+      SELLER_ID: 'seller id',
+      STATUS: 'Status', 
+      SHIPMENT_STATUS: 'Shipment Status',
+      ZONE: 'Zone', 
+      LIB: 'LIB', 
+      CASPER_ID: 'Casper id',
+      PARTNER_NAME: 'Partner Name',
+      WM: 'WM name', 
+      MH: 'MH', 
+      RCA: 'RCA',
+      PH_NAME: 'PH Name',
+      BAG_ID: 'BagId',
+      BAG_STATUS: 'Bag status',
+      BAG_RECEIVE_TIME: 'Bag Receive time',
+      GM: 'GM',
+      DISPATCH_TO_MH: 'Dispatch to MH',
+      RECEIVED_AT_MH: 'Received at MH',
+      DIFF: 'Diff',
+      HRS: 'Hrs'
+    };
 
     const selectedFilters = {
       'filter-week': [],
@@ -729,7 +752,7 @@
       if (currentTab === 'overview') renderCharts();
     }
 
-    /* ---------- LOB Toggle Switch (APM mapped to APM or LMA) ---------- */
+    /* ---------- LOB Toggle Switch ---------- */
     function setLobToggle(lobVal) {
       selectedLobFilter = lobVal;
       ['ALL', 'Ekart', 'Trueflex', 'APM'].forEach(val => {
@@ -768,7 +791,7 @@
       applyFilters();
     }
 
-    /* ---------- Multi-Select Dropdowns displaying Selected Values ---------- */
+    /* ---------- Multi-Select Dropdowns ---------- */
     function openMultiSelect(id) {
       closeAllMultiSelects();
       const dropdown = document.getElementById(`dropdown-${id}`);
@@ -862,7 +885,6 @@
       applyFilters(true);
     }
 
-    /* Shows Selected Filter Values Header + Render Selected Badges Bar */
     function updateMultiSelectLabel(id, totalCount) {
       const labelEl = document.getElementById(`label-${id}`);
       const count = selectedFilters[id].length;
@@ -907,27 +929,31 @@
       container.innerHTML = badgesHtml;
     }
 
-    /* ---------- Data Loading & Processing Pipeline ---------- */
-    async function fetchCsv(url) {
-      try {
-        const r = await fetch(url, { cache: 'no-cache' });
-        if (!r.ok) return null;
-        const t = await r.text();
-        return t.trimStart().startsWith('<') ? null : t;
-      } catch { return null; }
-    }
-
-    async function pool(items, limit, fn) {
-      const out = new Array(items.length); let i = 0;
-      await Promise.all(Array.from({ length: Math.min(limit, items.length) }, async () => {
-        while (i < items.length) { const k = i++; out[k] = await fn(items[k]); }
-      }));
-      return out;
-    }
-
+    /* ---------- Fast Data Loading (JSON Primary with CSV Fallback) ---------- */
     async function loadRepositoryData() {
-      showStatusBanner("Scanning /data directory on GitHub...", "info");
+      showStatusBanner("Loading master dataset...", "info");
       masterData = [];
+      try {
+        const resp = await fetch('data/master-data.json', { cache: 'no-cache' });
+        if (!resp.ok) throw new Error("JSON not found");
+        
+        const raw = await resp.json();
+        masterData = raw.map(r => ({
+          ...r,
+          ParsedDate: r.ParsedDate ? new Date(r.ParsedDate) : null
+        }));
+
+        showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from master JSON.`, "success");
+        updateDynamicFilterOptions(masterData);
+        applyFilters(true);
+      } catch (err) {
+        console.warn("JSON fetch failed, falling back to legacy CSV parsing...", err);
+        loadLegacyCsvData();
+      }
+    }
+
+    async function loadLegacyCsvData() {
+      showStatusBanner("Parsing CSV files...", "info");
       try {
         const pathSegments = window.location.pathname.split('/').filter(Boolean);
         const repoName = pathSegments.length > 0 ? pathSegments[0] : null;
@@ -949,7 +975,6 @@
             d.setDate(d.getDate() - i);
             csvUrls.push(`data/${d.toISOString().split('T')[0]}.csv`);
           }
-          csvUrls.push('data/BRSNR Sept-Dec - 05-10-2026.csv', 'data/sample-2026-10-05.csv');
         }
 
         const texts = await pool(csvUrls, 8, fetchCsv);
@@ -968,12 +993,29 @@
           }
         });
 
-        showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments.`, masterData.length ? "success" : "warning");
+        showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from CSVs.`, masterData.length ? "success" : "warning");
         updateDynamicFilterOptions(masterData);
         applyFilters(true);
-      } catch (err) {
-        showStatusBanner("Error scanning /data folder.", "error");
+      } catch (e) {
+        showStatusBanner("Error loading data.", "error");
       }
+    }
+
+    async function fetchCsv(url) {
+      try {
+        const r = await fetch(url, { cache: 'no-cache' });
+        if (!r.ok) return null;
+        const t = await r.text();
+        return t.trimStart().startsWith('<') ? null : t;
+      } catch { return null; }
+    }
+
+    async function pool(items, limit, fn) {
+      const out = new Array(items.length); let i = 0;
+      await Promise.all(Array.from({ length: Math.min(limit, items.length) }, async () => {
+        while (i < items.length) { const k = i++; out[k] = await fn(items[k]); }
+      }));
+      return out;
     }
 
     function isInvalid(val) {
@@ -986,16 +1028,6 @@
       return isInvalid(val) ? defaultVal : String(val).trim();
     }
 
-    const NUMLIKE = /^[\d.,\s]+(E[+-]?\d+)?$/, DATELIKE = /\d{1,4}[-/]\d{1,2}[-/]\d{2,4}/;
-    const BLOCK = { GM: ['OPENED', 'EXPECTED'], MH: ['TRUEFLEX', 'RAHULROUTH', 'ADITYAKUMAR'], WM: [] };
-    function cleanField(f, val, def) {
-      const v = cleanVal(val, def); if (v === def) return def;
-      const u = v.toUpperCase();
-      if (f === 'Zone') { const m = u.match(/^(NORTH|SOUTH|EAST|WEST)(\s+ZONE)?$/); return m ? m[1][0] + m[1].slice(1).toLowerCase() : def; }
-      if (NUMLIKE.test(u) || DATELIKE.test(u) || BLOCK[f].includes(u.replace(/\s/g, ''))) return def;
-      return v;
-    }
-
     function normalizeRow(r, id, sourceUrl = '') {
       let dtStr = r[COLS.DATE] || r['date'] || '';
       if (!dtStr && sourceUrl) { const m = sourceUrl.match(/\d{4}-\d{2}-\d{2}/); if (m) dtStr = m[0]; }
@@ -1005,15 +1037,25 @@
         Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
         Week: pd ? getWeekIdentifier(pd) : null,
         ShipmentId: id,
-        HubName: cleanVal(r[COLS.HUB_NAME] || r['PH Name'], 'Unassigned'),
+        HubName: cleanVal(r[COLS.HUB_NAME] || r[COLS.PH_NAME], 'Unassigned'),
         SellerName: cleanVal(r[COLS.SELLER_NAME], 'Unknown Seller'),
-        Status: cleanVal(r[COLS.STATUS], 'Unknown Status'),
-        Zone: cleanField('Zone', r[COLS.ZONE], 'Unknown Zone'),
-        LOB: cleanVal(r[COLS.LOB] || r[COLS.LIB], 'Unassigned'),
-        MH: cleanField('MH', r[COLS.MH], 'Unassigned MH'),
-        WM: cleanField('WM', r[COLS.WM], 'Unassigned WM'),
-        GM: cleanField('GM', r[COLS.GM], 'Unassigned GM'),
-        RCA: cleanVal(r[COLS.RCA], 'None')
+        SellerId: cleanVal(r[COLS.SELLER_ID], 'None'),
+        Status: cleanVal(r[COLS.STATUS] || r[COLS.SHIPMENT_STATUS], 'Unknown Status'),
+        Zone: cleanVal(r[COLS.ZONE], 'Unknown Zone'),
+        LOB: cleanVal(r[COLS.LIB] || r['LOB'], 'Unassigned'),
+        CasperId: cleanVal(r[COLS.CASPER_ID], 'None'),
+        PartnerName: cleanVal(r[COLS.PARTNER_NAME], 'None'),
+        WM: cleanVal(r[COLS.WM], 'Unassigned WM'),
+        MH: cleanVal(r[COLS.MH], 'Unassigned MH'),
+        RCA: cleanVal(r[COLS.RCA], 'None'),
+        BagId: cleanVal(r[COLS.BAG_ID], 'None'),
+        BagStatus: cleanVal(r[COLS.BAG_STATUS], 'None'),
+        BagReceiveTime: cleanVal(r[COLS.BAG_RECEIVE_TIME], 'None'),
+        GM: cleanVal(r[COLS.GM], 'Unassigned GM'),
+        DispatchToMH: cleanVal(r[COLS.DISPATCH_TO_MH], 'None'),
+        ReceivedAtMH: cleanVal(r[COLS.RECEIVED_AT_MH], 'None'),
+        Diff: cleanVal(r[COLS.DIFF], '0'),
+        Hrs: cleanVal(r[COLS.HRS], '0')
       };
     }
 
@@ -1026,8 +1068,7 @@
           : new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
       }
       const nativeDate = Date.parse(str);
-      if (!isNaN(nativeDate)) return new Date(nativeDate);
-      return null;
+      return !isNaN(nativeDate) ? new Date(nativeDate) : null;
     }
 
     function getWeekIdentifier(date) {
@@ -1099,7 +1140,6 @@
         if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
         if (!targetStatuses.includes(r.Status)) continue;
 
-        // LOB Filtering Logic (Maps APM selection to APM or LMA data rows)
         if (selectedLobFilter !== 'ALL') {
           const rLob = r.LOB.toLowerCase();
           if (selectedLobFilter === 'APM') {
@@ -1119,7 +1159,7 @@
           continue;
         }
 
-        if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search)) continue;
+        if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search) && !r.BagId.toLowerCase().includes(search)) continue;
         res.push(r);
       }
 
@@ -1131,7 +1171,6 @@
       
       updateKPIs();
       
-      // Lazy render active tab
       if (currentTab === 'matrix') renderPHWMAgingMatrix();
       else if (currentTab === 'overview') renderCharts();
       else if (currentTab === 'tables') renderSummaryTables();
@@ -1156,7 +1195,7 @@
       document.getElementById('kpi-active-zones').textContent = '4';
     }
 
-    /* ---------- Charts (Descending Order) ---------- */
+    /* ---------- Charts ---------- */
     function renderCharts() {
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#f8fafc' : '#0f172a';
@@ -1292,7 +1331,7 @@
       });
     }
 
-    /* ---------- Pickup Hub > Wish Master Matrix Table (Sorted Descending by Total) ---------- */
+    /* ---------- Pickup Hub > Wish Master Matrix Table ---------- */
     function renderPHWMAgingMatrix() {
       const datesSet = new Set();
       const phMap = {};
@@ -1324,7 +1363,6 @@
       const tbody = document.getElementById('matrix-tbody-ph-wm');
       let html = '';
 
-      // Sort Pickup Hubs Descending by Total Volume
       const sortedPHs = Object.entries(phMap).sort((a, b) => b[1].grandTotal - a[1].grandTotal);
 
       sortedPHs.forEach(([ph, phData]) => {
@@ -1336,7 +1374,6 @@
         phRow += `<td class="p-3 text-right text-indigo-600 dark:text-indigo-400 font-extrabold">${phData.grandTotal.toLocaleString()}</td></tr>`;
         html += phRow;
 
-        // Sort Wish Masters Descending by Total Volume
         const sortedWMs = Object.entries(phData.wms).sort((a, b) => b[1].grandTotal - a[1].grandTotal);
 
         sortedWMs.forEach(([wm, wmData]) => {
@@ -1451,14 +1488,13 @@
       setPresetDate('all');
     }
 
-    /* Clean CSV Export - Strips Emojis and Visual Formatting */
+    /* Clean CSV Export */
     function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `BRSNR_Export_${new Date().toISOString().split('T')[0]}.csv`); }
     function exportMatrixCSV(tableId, filenamePrefix) {
       const rows = [];
       document.querySelectorAll(`#${tableId} tr`).forEach(tr => {
         const row = []; 
         tr.querySelectorAll('th, td').forEach(td => {
-          // Clean text: strip emojis and HTML formatting
           let cleanText = td.innerText.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]/gu, '').replace(/🏢|🚚|📍|👤/g, '').trim();
           row.push(`"${cleanText.replace(/"/g, '""')}"`);
         }); 
