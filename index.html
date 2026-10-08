@@ -76,7 +76,7 @@
           </button>
         </div>
 
-        <!-- DEVELOPER CREDIT BADGE (- First Mile under Name) -->
+        <!-- DEVELOPER CREDIT BADGE -->
         <div class="group relative px-3.5 py-1.5 rounded-full border border-indigo-200 dark:border-indigo-500/30 bg-gradient-to-r from-indigo-50 via-slate-50 to-purple-50 dark:from-slate-800 dark:via-indigo-950/40 dark:to-slate-800 text-xs font-semibold text-indigo-700 dark:text-indigo-300 shadow-sm hover:shadow-md hover:border-indigo-400 dark:hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/50 transition-all duration-300 cursor-default flex items-center space-x-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <div class="flex flex-col text-left">
@@ -150,6 +150,9 @@
         </div>
       </div>
 
+      <!-- ACTIVE SELECTED FILTER BADGES DISPLAY AREA -->
+      <div id="active-filter-badges" class="flex flex-wrap gap-1.5 pt-3 border-b border-slate-100 dark:border-slate-700/60 pb-2 text-xs empty:hidden"></div>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 text-xs pt-3">
 
         <!-- KEYWORD SEARCH -->
@@ -173,8 +176,8 @@
 
         <!-- DIRECT SEARCH + VALUE DISPLAY MULTI-SELECT FILTERS -->
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-week">
-          <div class="flex items-center justify-between mb-1">
-            <label class="font-medium text-slate-700 dark:text-slate-300">Filter by Week</label>
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-week')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Filter by Week</label>
             <span id="label-filter-week" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Weeks</span>
           </div>
           <div class="relative">
@@ -183,12 +186,13 @@
           </div>
           <div id="dropdown-filter-week" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-week" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-month">
-          <div class="flex items-center justify-between mb-1">
-            <label class="font-medium text-slate-700 dark:text-slate-300">Filter by Month</label>
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-month')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Filter by Month</label>
             <span id="label-filter-month" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Months</span>
           </div>
           <div class="relative">
@@ -197,12 +201,13 @@
           </div>
           <div id="dropdown-filter-month" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-month" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-gm">
-          <div class="flex items-center justify-between mb-1">
-            <label class="font-medium text-slate-700 dark:text-slate-300">General Manager (GM)</label>
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-gm')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">General Manager (GM)</label>
             <span id="label-filter-gm" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All GMs</span>
           </div>
           <div class="relative">
@@ -211,12 +216,13 @@
           </div>
           <div id="dropdown-filter-gm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-gm" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-seller">
-          <div class="flex items-center justify-between mb-1">
-            <label class="font-medium text-slate-700 dark:text-slate-300">Seller Name</label>
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-seller')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Seller Name</label>
             <span id="label-filter-seller" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Sellers</span>
           </div>
           <div class="relative">
@@ -225,12 +231,13 @@
           </div>
           <div id="dropdown-filter-seller" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-seller" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-mh">
-          <div class="flex items-center justify-between mb-1">
-            <label class="font-medium text-slate-700 dark:text-slate-300">Mother Hub (MH)</label>
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-mh')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Mother Hub (MH)</label>
             <span id="label-filter-mh" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Mother Hubs</span>
           </div>
           <div class="relative">
@@ -239,12 +246,13 @@
           </div>
           <div id="dropdown-filter-mh" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-mh" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-hub">
-          <div class="flex items-center justify-between mb-1">
-            <label class="font-medium text-slate-700 dark:text-slate-300">Pickup Hub (PH)</label>
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-hub')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Pickup Hub (PH)</label>
             <span id="label-filter-hub" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Pickup Hubs</span>
           </div>
           <div class="relative">
@@ -253,12 +261,13 @@
           </div>
           <div id="dropdown-filter-hub" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-hub" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-wm">
-          <div class="flex items-center justify-between mb-1">
-            <label class="font-medium text-slate-700 dark:text-slate-300">WM Name</label>
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-wm')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">WM Name</label>
             <span id="label-filter-wm" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Wish Masters / WMs</span>
           </div>
           <div class="relative">
@@ -267,12 +276,13 @@
           </div>
           <div id="dropdown-filter-wm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-wm" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-status">
-          <div class="flex items-center justify-between mb-1">
-            <label class="font-medium text-slate-700 dark:text-slate-300">Status</label>
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-status')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Status</label>
             <span id="label-filter-status" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Status</span>
           </div>
           <div class="relative">
@@ -281,13 +291,14 @@
           </div>
           <div id="dropdown-filter-status" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-status" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
 
         <!-- ZONE MULTI-SELECT FILTER -->
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-zone">
-          <div class="flex items-center justify-between mb-1">
-            <label class="font-medium text-slate-700 dark:text-slate-300">Zone</label>
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-zone')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Zone</label>
             <span id="label-filter-zone" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Zones</span>
           </div>
           <div class="relative">
@@ -296,6 +307,7 @@
           </div>
           <div id="dropdown-filter-zone" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-zone" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
 
@@ -663,6 +675,18 @@
       'filter-zone': 'All Zones'
     };
 
+    const filterFriendlyNames = {
+      'filter-week': 'Week',
+      'filter-month': 'Month',
+      'filter-gm': 'GM',
+      'filter-seller': 'Seller',
+      'filter-mh': 'Mother Hub',
+      'filter-hub': 'Pickup Hub',
+      'filter-wm': 'WM',
+      'filter-status': 'Status',
+      'filter-zone': 'Zone'
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       loadRepositoryData();
@@ -700,7 +724,7 @@
       if (currentTab === 'overview') renderCharts();
     }
 
-    /* ---------- LOB Toggle Switch ---------- */
+    /* ---------- LOB Toggle Switch (APM mapped to APM or LMA) ---------- */
     function setLobToggle(lobVal) {
       selectedLobFilter = lobVal;
       ['ALL', 'Ekart', 'Trueflex', 'APM'].forEach(val => {
@@ -773,7 +797,7 @@
       const optionsContainer = document.getElementById(`options-${id}`);
       const sorted = Array.from(set).sort();
       let html = `
-        <label class="flex items-center space-x-2 px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer font-semibold text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 mb-1">
+        <label class="flex items-center space-x-2 px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer font-semibold text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 mb-1" onclick="event.stopPropagation()">
           <input type="checkbox" onchange="handleSelectAll('${id}', this.checked)" id="selectAll-${id}" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
           <span>Select All</span>
         </label>
@@ -781,9 +805,10 @@
 
       sorted.forEach(val => {
         const checked = selectedFilters[id].includes(val) ? 'checked' : '';
+        const escapedVal = val.replace(/'/g, "\\'");
         html += `
-          <label class="option-item flex items-center space-x-2 px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer text-slate-800 dark:text-slate-200">
-            <input type="checkbox" value="${val}" ${checked} onchange="handleOptionToggle('${id}', '${val.replace(/'/g, "\\'")}', this.checked)" class="cb-${id} rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+          <label class="option-item flex items-center space-x-2 px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer text-slate-800 dark:text-slate-200" onclick="event.stopPropagation()">
+            <input type="checkbox" value="${val}" ${checked} onchange="handleOptionToggle('${id}', '${escapedVal}', this.checked)" class="cb-${id} rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
             <span class="truncate">${val}</span>
           </label>
         `;
@@ -827,7 +852,11 @@
       updateMultiSelectLabel(id, total);
     }
 
-    /* Shows Actual Selected Filter Values in Field Header instead of Generic Placeholder */
+    function removeSingleFilterValue(id, val) {
+      handleOptionToggle(id, val, false);
+    }
+
+    /* Shows Selected Filter Values Header + Render Selected Badges Bar */
     function updateMultiSelectLabel(id, totalCount) {
       const labelEl = document.getElementById(`label-${id}`);
       const count = selectedFilters[id].length;
@@ -838,9 +867,41 @@
       } else {
         labelEl.textContent = `${count} Selected (${selectedFilters[id][0]}, ...)`;
       }
+      renderActiveFilterBadges();
     }
 
-    /* ---------- Optimised Data Loading & Speed Pipeline ---------- */
+    function renderActiveFilterBadges() {
+      const container = document.getElementById('active-filter-badges');
+      let badgesHtml = '';
+
+      Object.keys(selectedFilters).forEach(id => {
+        const arr = selectedFilters[id];
+        if (arr.length > 0) {
+          arr.forEach(val => {
+            const escapedVal = val.replace(/'/g, "\\'");
+            badgesHtml += `
+              <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800 font-medium">
+                <span class="text-indigo-500 font-bold mr-1">${filterFriendlyNames[id]}:</span>${val}
+                <button type="button" onclick="removeSingleFilterValue('${id}', '${escapedVal}')" class="ml-1 text-indigo-600 dark:text-indigo-400 hover:text-rose-600 dark:hover:text-rose-400 font-bold focus:outline-none">&times;</button>
+              </span>
+            `;
+          });
+        }
+      });
+
+      if (selectedLobFilter !== 'ALL') {
+        badgesHtml += `
+          <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800 font-medium">
+            <span class="text-indigo-500 font-bold mr-1">LOB:</span>${selectedLobFilter}
+            <button type="button" onclick="setLobToggle('ALL')" class="ml-1 text-indigo-600 dark:text-indigo-400 hover:text-rose-600 dark:hover:text-rose-400 font-bold focus:outline-none">&times;</button>
+          </span>
+        `;
+      }
+
+      container.innerHTML = badgesHtml;
+    }
+
+    /* ---------- Data Loading & Processing Pipeline ---------- */
     async function fetchCsv(url) {
       try {
         const r = await fetch(url, { cache: 'no-cache' });
@@ -1030,7 +1091,16 @@
         if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
         if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
         if (!targetStatuses.includes(r.Status)) continue;
-        if (selectedLobFilter !== 'ALL' && r.LOB.toLowerCase() !== selectedLobFilter.toLowerCase()) continue;
+
+        // LOB Filtering Logic (Maps APM selection to APM or LMA data rows)
+        if (selectedLobFilter !== 'ALL') {
+          const rLob = r.LOB.toLowerCase();
+          if (selectedLobFilter === 'APM') {
+            if (rLob !== 'apm' && rLob !== 'lma') continue;
+          } else if (rLob !== selectedLobFilter.toLowerCase()) {
+            continue;
+          }
+        }
 
         const rd = r.ParsedDate;
         if (rd) {
