@@ -76,12 +76,17 @@
           </button>
         </div>
 
-        <!-- DEVELOPER CREDIT BADGE -->
+        <!-- DEVELOPER CREDIT BADGE (- First Mile precisely under Vidya Shankar G P 💻) -->
         <div class="group relative px-3.5 py-1.5 rounded-full border border-indigo-200 dark:border-indigo-500/30 bg-gradient-to-r from-indigo-50 via-slate-50 to-purple-50 dark:from-slate-800 dark:via-indigo-950/40 dark:to-slate-800 text-xs font-semibold text-indigo-700 dark:text-indigo-300 shadow-sm hover:shadow-md hover:border-indigo-400 dark:hover:border-indigo-400 hover:ring-2 hover:ring-indigo-400/50 transition-all duration-300 cursor-default flex items-center space-x-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <div class="flex flex-col text-left">
-            <span>Developed by <strong class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Vidya Shankar</strong> <span class="text-sm transform group-hover:scale-125 inline-block transition-transform duration-200">💻</span></span>
-            <span class="text-[10px] text-indigo-500 dark:text-indigo-400 font-normal leading-tight pl-0.5">              - First Mile</span>
+          <div class="text-left leading-tight">
+            <span>Developed by </span>
+            <div class="inline-flex flex-col align-top">
+              <span class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                Vidya Shankar G P <span class="text-xs transform group-hover:scale-125 inline-block transition-transform duration-200">💻</span>
+              </span>
+              <span class="text-[10px] text-indigo-500 dark:text-indigo-400 font-normal leading-tight">- First Mile</span>
+            </div>
           </div>
         </div>
 
@@ -823,7 +828,7 @@
       checkboxes.forEach(cb => { cb.checked = isChecked; });
       selectedFilters[id] = isChecked ? Array.from(checkboxes).map(cb => cb.value) : [];
       updateMultiSelectLabel(id, checkboxes.length);
-      applyFilters();
+      applyFilters(false);
     }
 
     function handleOptionToggle(id, val, isChecked) {
@@ -840,7 +845,7 @@
       }
 
       updateMultiSelectLabel(id, totalBoxes);
-      applyFilters();
+      applyFilters(false);
     }
 
     function resetMultiSelect(id) {
@@ -854,6 +859,7 @@
 
     function removeSingleFilterValue(id, val) {
       handleOptionToggle(id, val, false);
+      applyFilters(true);
     }
 
     /* Shows Selected Filter Values Header + Render Selected Badges Bar */
@@ -963,7 +969,8 @@
         });
 
         showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments.`, masterData.length ? "success" : "warning");
-        applyFilters();
+        updateDynamicFilterOptions(masterData);
+        applyFilters(true);
       } catch (err) {
         showStatusBanner("Error scanning /data folder.", "error");
       }
@@ -1034,7 +1041,7 @@
 
     function debouncedApplyFilters() {
       clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => { applyFilters(); }, 150);
+      debounceTimer = setTimeout(() => { applyFilters(true); }, 150);
     }
 
     function updateDynamicFilterOptions(dataset) {
@@ -1063,7 +1070,7 @@
       fillMultiSelect('filter-week', weeks);
     }
 
-    function applyFilters() {
+    function applyFilters(rebuildOptions = false) {
       const search = document.getElementById('filter-search').value.toLowerCase().trim();
       const df = document.getElementById('filter-date-from').value ? parseDateStrFast(document.getElementById('filter-date-from').value) : null;
       const dt = document.getElementById('filter-date-to').value ? parseDateStrFast(document.getElementById('filter-date-to').value) : null;
@@ -1118,7 +1125,10 @@
 
       filteredData = res;
 
-      updateDynamicFilterOptions(filteredData.length > 0 ? filteredData : masterData);
+      if (rebuildOptions) {
+        updateDynamicFilterOptions(masterData);
+      }
+      
       updateKPIs();
       
       // Lazy render active tab
