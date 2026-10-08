@@ -33,6 +33,21 @@
     .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    /* Hanging Bulb Cord Line */
+    .hanging-bulb-cord {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 16px;
+      background-color: #cbd5e1;
+      transition: background-color 0.3s;
+    }
+    .dark .hanging-bulb-cord {
+      background-color: #f59e0b;
+    }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-300">
@@ -48,6 +63,26 @@
           <h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">BRSNR Logistics Analytics</h1>
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Automated Multi-Source CSV Aggregator</p>
         </div>
+      </div>
+
+      <!-- RIGHT HEADER ACTION BAR -->
+      <div class="flex items-center space-x-3 sm:space-x-4">
+        
+        <!-- HANGING THEME BULB TOGGLE BUTTON -->
+        <div class="relative flex items-center">
+          <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Light/Dark Theme" class="relative group p-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm">
+            <span class="hanging-bulb-cord"></span>
+            <i id="theme-bulb-icon" data-lucide="lightbulb" class="w-5 h-5 text-slate-400 dark:text-amber-400 fill-transparent dark:fill-amber-400 transition-all duration-300 group-hover:rotate-12"></i>
+          </button>
+        </div>
+
+        <!-- DEVELOPER CREDIT BADGE -->
+        <div class="group relative px-3 py-1.5 rounded-full border border-indigo-200 dark:border-indigo-500/30 bg-gradient-to-r from-indigo-50 via-slate-50 to-purple-50 dark:from-slate-800 dark:via-indigo-950/40 dark:to-slate-800 text-xs font-semibold text-indigo-700 dark:text-indigo-300 shadow-sm hover:shadow-indigo-500/10 hover:border-indigo-400 dark:hover:border-indigo-400 transition-all duration-300 cursor-default flex items-center space-x-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Developed by <strong class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Vidya Shankar</strong></span>
+          <span class="text-sm transform group-hover:scale-125 transition-transform duration-200">💻</span>
+        </div>
+
       </div>
     </div>
   </header>
@@ -195,14 +230,14 @@
           </div>
         </div>
 
-        <div class="relative multi-select-container" id="ms-container-filter-lob">
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">LOB</label>
-          <button type="button" onclick="toggleMultiSelect('filter-lob')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
-            <span id="label-filter-lob" class="truncate">All LOBs</span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
-          </button>
-          <div id="dropdown-filter-lob" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
-            <div id="options-filter-lob" class="space-y-1"></div>
+        <!-- SEGMENTED TOGGLE SWITCH FOR LOB (Ekart, Trueflex, LMA) -->
+        <div class="col-span-1 sm:col-span-2 lg:col-span-1">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Line of Business (LOB)</label>
+          <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-300 dark:border-slate-700 w-full justify-between gap-1 text-[11px] font-medium">
+            <button type="button" onclick="setLobToggle('ALL')" id="lob-btn-ALL" class="lob-toggle-btn flex-1 py-1 px-1.5 rounded-md transition text-center bg-indigo-600 text-white font-semibold shadow-sm">ALL</button>
+            <button type="button" onclick="setLobToggle('Ekart')" id="lob-btn-Ekart" class="lob-toggle-btn flex-1 py-1 px-1.5 rounded-md transition text-center text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400">Ekart</button>
+            <button type="button" onclick="setLobToggle('Trueflex')" id="lob-btn-Trueflex" class="lob-toggle-btn flex-1 py-1 px-1.5 rounded-md transition text-center text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400">Trueflex</button>
+            <button type="button" onclick="setLobToggle('LMA')" id="lob-btn-LMA" class="lob-toggle-btn flex-1 py-1 px-1.5 rounded-md transition text-center text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400">LMA</button>
           </div>
         </div>
 
@@ -599,6 +634,12 @@
 
     let masterData = [], filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
     let debounceTimer = null;
+    let selectedLobFilter = 'ALL'; // Active LOB segment toggle state
+
+    // Allowed statuses for "All Status" default selection
+    const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh'];
+    const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
+
     const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LOB: 'LOB', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA' };
 
     // State for multi-select selections
@@ -610,8 +651,7 @@
       'filter-mh': [],
       'filter-hub': [],
       'filter-wm': [],
-      'filter-status': [],
-      'filter-lob': []
+      'filter-status': []
     };
 
     const filterLabels = {
@@ -622,8 +662,7 @@
       'filter-mh': 'All Mother Hubs',
       'filter-hub': 'All Pickup Hubs',
       'filter-wm': 'All Wish Masters / WMs',
-      'filter-status': 'All Status',
-      'filter-lob': 'All LOBs'
+      'filter-status': 'All Status'
     };
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -637,6 +676,27 @@
         }
       });
     });
+
+    /* ---------- Theme Toggle Handler (Hanging Bulb) ---------- */
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      htmlEl.classList.toggle('dark');
+      renderCharts();
+    }
+
+    /* ---------- LOB Segment Toggle Handler ---------- */
+    function setLobToggle(lobVal) {
+      selectedLobFilter = lobVal;
+      ['ALL', 'Ekart', 'Trueflex', 'LMA'].forEach(val => {
+        const btn = document.getElementById(`lob-btn-${val}`);
+        if (val === lobVal) {
+          btn.className = 'lob-toggle-btn flex-1 py-1 px-1.5 rounded-md transition text-center bg-indigo-600 text-white font-semibold shadow-sm';
+        } else {
+          btn.className = 'lob-toggle-btn flex-1 py-1 px-1.5 rounded-md transition text-center text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400';
+        }
+      });
+      applyFilters();
+    }
 
     /* ---------- Multi-Select Dropdown Handlers ---------- */
     function toggleMultiSelect(id) {
@@ -802,7 +862,14 @@
           if (!t) return;
           for (const row of Papa.parse(t, { header: true, skipEmptyLines: true }).data) {
             const id = row[COLS.SHIPMENT_ID] || row['Shipment ID'];
-            if (id && !seen.has(id)) { seen.add(id); masterData.push(normalizeRow(row, id, csvUrls[i])); }
+            if (id && !seen.has(id)) {
+              const normalized = normalizeRow(row, id, csvUrls[i]);
+              // Exclude records with ignored statuses
+              if (normalized && !IGNORED_STATUSES.includes(normalized.Status)) {
+                seen.add(id);
+                masterData.push(normalized);
+              }
+            }
           }
         });
 
@@ -876,7 +943,7 @@
 
     /* ---------- Filters ---------- */
     function populateFilterDropdowns() {
-      const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), lobs = new Set(), weeks = new Set(), months = new Set();
+      const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), weeks = new Set(), months = new Set();
 
       for (let i = 0; i < masterData.length; i++) {
         const r = masterData[i];
@@ -885,8 +952,7 @@
         if (!isInvalid(r.MH)) mhs.add(r.MH);
         if (!isInvalid(r.HubName)) hubs.add(r.HubName);
         if (!isInvalid(r.WM)) wms.add(r.WM);
-        if (!isInvalid(r.Status)) statuses.add(r.Status);
-        if (!isInvalid(r.LOB)) lobs.add(r.LOB);
+        if (!isInvalid(r.Status) && !IGNORED_STATUSES.includes(r.Status)) statuses.add(r.Status);
         if (r.Month) { months.add(r.Month); weeks.add(r.Week); }
       }
 
@@ -896,7 +962,6 @@
       fillMultiSelect('filter-hub', hubs);
       fillMultiSelect('filter-wm', wms);
       fillMultiSelect('filter-status', statuses);
-      fillMultiSelect('filter-lob', lobs);
       fillMultiSelect('filter-month', months);
       fillMultiSelect('filter-week', weeks);
     }
@@ -928,7 +993,9 @@
       const selHub = selectedFilters['filter-hub'];
       const selWm = selectedFilters['filter-wm'];
       const selStatus = selectedFilters['filter-status'];
-      const selLob = selectedFilters['filter-lob'];
+
+      // When "All Status" is active (no explicit filter checked), restrict to received_at_mh and dispatched_to_mh
+      const targetStatuses = selStatus.length > 0 ? selStatus : ALLOWED_STATUSES;
 
       const res = [];
       for (let i = 0; i < masterData.length; i++) {
@@ -939,8 +1006,8 @@
         if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
         if (selHub.length > 0 && !selHub.includes(r.HubName)) continue;
         if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
-        if (selStatus.length > 0 && !selStatus.includes(r.Status)) continue;
-        if (selLob.length > 0 && !selLob.includes(r.LOB)) continue;
+        if (!targetStatuses.includes(r.Status)) continue;
+        if (selectedLobFilter !== 'ALL' && r.LOB.toLowerCase() !== selectedLobFilter.toLowerCase()) continue;
 
         const rd = r.ParsedDate;
         if (rd) {
@@ -1269,7 +1336,8 @@
 
     function resetAllFilters() {
       ['filter-search', 'filter-date-from', 'filter-date-to'].forEach(id => document.getElementById(id).value = '');
-      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-lob'].forEach(id => resetMultiSelect(id));
+      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status'].forEach(id => resetMultiSelect(id));
+      setLobToggle('ALL');
       applyFilters();
     }
 
