@@ -34,7 +34,7 @@
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    /* 2X Length Hanging Bulb Wire */
+    /* Hanging Bulb Wire */
     .hanging-bulb-cord {
       position: absolute;
       top: -70px;
@@ -67,7 +67,6 @@
 
       <!-- RIGHT HEADER ACTION BAR -->
       <div class="flex items-center space-x-3 sm:space-x-5">
-        
         <!-- HANGING THEME BULB TOGGLE BUTTON -->
         <div class="relative flex items-center pt-10 z-40" id="bulb-container">
           <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Light/Dark Theme" class="relative group p-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:scale-110 active:scale-95 transition-all duration-300 shadow-md hover:ring-2 hover:ring-amber-400">
@@ -89,7 +88,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </header>
@@ -780,8 +778,8 @@
         }
       });
 
-      resetMultiSelect('filter-week');
-      resetMultiSelect('filter-month');
+      resetMultiSelect('filter-week', false);
+      resetMultiSelect('filter-month', false);
       if (p === 'all') { f.value = ''; t.value = ''; }
       else if (p === 'today') { f.value = iso(today); t.value = f.value; }
       else if (p === '7days' || p === '30days') {
@@ -823,6 +821,7 @@
 
     function fillMultiSelect(id, set) {
       const optionsContainer = document.getElementById(`options-${id}`);
+      if (!optionsContainer) return;
       const sorted = Array.from(set).sort();
       let html = `
         <label class="flex items-center space-x-2 px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer font-semibold text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 mb-1" onclick="event.stopPropagation()">
@@ -851,7 +850,7 @@
       checkboxes.forEach(cb => { cb.checked = isChecked; });
       selectedFilters[id] = isChecked ? Array.from(checkboxes).map(cb => cb.value) : [];
       updateMultiSelectLabel(id, checkboxes.length);
-      applyFilters(false);
+      applyFilters(true);
     }
 
     function handleOptionToggle(id, val, isChecked) {
@@ -868,25 +867,26 @@
       }
 
       updateMultiSelectLabel(id, totalBoxes);
-      applyFilters(false);
+      applyFilters(true);
     }
 
-    function resetMultiSelect(id) {
+    function resetMultiSelect(id, triggerApply = true) {
       selectedFilters[id] = [];
       document.querySelectorAll(`.cb-${id}`).forEach(cb => cb.checked = false);
       const selectAll = document.getElementById(`selectAll-${id}`);
       if (selectAll) selectAll.checked = false;
       const total = document.querySelectorAll(`.cb-${id}`).length;
       updateMultiSelectLabel(id, total);
+      if (triggerApply) applyFilters(true);
     }
 
     function removeSingleFilterValue(id, val) {
       handleOptionToggle(id, val, false);
-      applyFilters(true);
     }
 
     function updateMultiSelectLabel(id, totalCount) {
       const labelEl = document.getElementById(`label-${id}`);
+      if (!labelEl) return;
       const count = selectedFilters[id].length;
       if (count === 0 || count === totalCount) {
         labelEl.textContent = filterLabels[id];
@@ -944,7 +944,6 @@
         }));
 
         showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from master JSON.`, "success");
-        updateDynamicFilterOptions(masterData);
         applyFilters(true);
       } catch (err) {
         console.warn("JSON fetch failed, falling back to legacy CSV parsing...", err);
@@ -994,7 +993,6 @@
         });
 
         showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from CSVs.`, masterData.length ? "success" : "warning");
-        updateDynamicFilterOptions(masterData);
         applyFilters(true);
       } catch (e) {
         showStatusBanner("Error loading data.", "error");
@@ -1085,117 +1083,110 @@
       debounceTimer = setTimeout(() => { applyFilters(true); }, 150);
     }
 
-    /* ---------- Dynamic Cascading Filter Options ---------- */
-function updateDynamicFilterOptions() {
-  const filterConfigs = [
-    { id: 'filter-week', field: 'Week' },
-    { id: 'filter-month', field: 'Month' },
-    { id: 'filter-gm', field: 'GM' },
-    { id: 'filter-seller', field: 'SellerName' },
-    { id: 'filter-mh', field: 'MH' },
-    { id: 'filter-hub', field: 'HubName' },
-    { id: 'filter-wm', field: 'WM' },
-    { id: 'filter-status', field: 'Status' },
-    { id: 'filter-zone', field: 'Zone' }
-  ];
+    /* ---------- Cascading Filter Options Engine ---------- */
+    function updateDynamicFilterOptions() {
+      const filterConfigs = [
+        { id: 'filter-week', field: 'Week' },
+        { id: 'filter-month', field: 'Month' },
+        { id: 'filter-gm', field: 'GM' },
+        { id: 'filter-seller', field: 'SellerName' },
+        { id: 'filter-mh', field: 'MH' },
+        { id: 'filter-hub', field: 'HubName' },
+        { id: 'filter-wm', field: 'WM' },
+        { id: 'filter-status', field: 'Status' },
+        { id: 'filter-zone', field: 'Zone' }
+      ];
 
-  filterConfigs.forEach(config => {
-    // Get dataset filtered by ALL other active filters, EXCLUDING current filter field
-    const scopedDataset = getFilteredDataExcluding(config.id);
-    const availableSet = new Set();
+      filterConfigs.forEach(config => {
+        const scopedDataset = getFilteredDataExcluding(config.id);
+        const availableSet = new Set();
 
-    for (let i = 0; i < scopedDataset.length; i++) {
-      const val = scopedDataset[i][config.field];
-      if (!isInvalid(val)) {
-        if (config.id === 'filter-status' && IGNORED_STATUSES.includes(val)) continue;
-        availableSet.add(val);
+        for (let i = 0; i < scopedDataset.length; i++) {
+          const val = scopedDataset[i][config.field];
+          if (!isInvalid(val)) {
+            if (config.id === 'filter-status' && IGNORED_STATUSES.includes(val)) continue;
+            availableSet.add(val);
+          }
+        }
+
+        selectedFilters[config.id] = selectedFilters[config.id].filter(val => availableSet.has(val));
+        fillMultiSelect(config.id, availableSet);
+      });
+    }
+
+    function getFilteredDataExcluding(excludedFilterId) {
+      const searchInput = document.getElementById('filter-search');
+      const search = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      const dateFromInput = document.getElementById('filter-date-from');
+      const dateToInput = document.getElementById('filter-date-to');
+      const df = dateFromInput && dateFromInput.value ? parseDateStrFast(dateFromInput.value) : null;
+      const dt = dateToInput && dateToInput.value ? parseDateStrFast(dateToInput.value) : null;
+
+      const selWk = excludedFilterId === 'filter-week' ? [] : selectedFilters['filter-week'];
+      const selMo = excludedFilterId === 'filter-month' ? [] : selectedFilters['filter-month'];
+      const selGm = excludedFilterId === 'filter-gm' ? [] : selectedFilters['filter-gm'];
+      const selSeller = excludedFilterId === 'filter-seller' ? [] : selectedFilters['filter-seller'];
+      const selMh = excludedFilterId === 'filter-mh' ? [] : selectedFilters['filter-mh'];
+      const selHub = excludedFilterId === 'filter-hub' ? [] : selectedFilters['filter-hub'];
+      const selWm = excludedFilterId === 'filter-wm' ? [] : selectedFilters['filter-wm'];
+      const selStatus = excludedFilterId === 'filter-status' ? [] : selectedFilters['filter-status'];
+      const selZone = excludedFilterId === 'filter-zone' ? [] : selectedFilters['filter-zone'];
+
+      const targetStatuses = selStatus.length > 0 ? selStatus : ALLOWED_STATUSES;
+
+      const res = [];
+      for (let i = 0; i < masterData.length; i++) {
+        const r = masterData[i];
+
+        if (selGm.length > 0 && !selGm.includes(r.GM)) continue;
+        if (selSeller.length > 0 && !selSeller.includes(r.SellerName)) continue;
+        if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
+        if (selHub.length > 0 && !selHub.includes(r.HubName)) continue;
+        if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
+        if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
+        if (!targetStatuses.includes(r.Status)) continue;
+
+        if (selectedLobFilter !== 'ALL') {
+          const rLob = r.LOB.toLowerCase();
+          if (selectedLobFilter === 'APM') {
+            if (rLob !== 'apm' && rLob !== 'lma') continue;
+          } else if (rLob !== selectedLobFilter.toLowerCase()) {
+            continue;
+          }
+        }
+
+        const rd = r.ParsedDate;
+        if (rd) {
+          if (selWk.length > 0 && !selWk.includes(r.Week)) continue;
+          if (selMo.length > 0 && !selMo.includes(r.Month)) continue;
+          if (df && rd < df) continue;
+          if (dt && rd > dt) continue;
+        } else if (selWk.length > 0 || selMo.length > 0 || df || dt) {
+          continue;
+        }
+
+        if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search) && !r.BagId.toLowerCase().includes(search)) continue;
+
+        res.push(r);
       }
+      return res;
     }
 
-    // Retain only currently selected options that remain valid in the available set
-    selectedFilters[config.id] = selectedFilters[config.id].filter(val => availableSet.has(val));
-
-    // Re-render dropdown list with valid context-aware options
-    fillMultiSelect(config.id, availableSet);
-  });
-}
-
-/* Helper: Filter master dataset applying all filters EXCEPT target filter ID */
-function getFilteredDataExcluding(excludedFilterId) {
-  const search = document.getElementById('filter-search').value.toLowerCase().trim();
-  const df = document.getElementById('filter-date-from').value ? parseDateStrFast(document.getElementById('filter-date-from').value) : null;
-  const dt = document.getElementById('filter-date-to').value ? parseDateStrFast(document.getElementById('filter-date-to').value) : null;
-
-  const selWk = excludedFilterId === 'filter-week' ? [] : selectedFilters['filter-week'];
-  const selMo = excludedFilterId === 'filter-month' ? [] : selectedFilters['filter-month'];
-  const selGm = excludedFilterId === 'filter-gm' ? [] : selectedFilters['filter-gm'];
-  const selSeller = excludedFilterId === 'filter-seller' ? [] : selectedFilters['filter-seller'];
-  const selMh = excludedFilterId === 'filter-mh' ? [] : selectedFilters['filter-mh'];
-  const selHub = excludedFilterId === 'filter-hub' ? [] : selectedFilters['filter-hub'];
-  const selWm = excludedFilterId === 'filter-wm' ? [] : selectedFilters['filter-wm'];
-  const selStatus = excludedFilterId === 'filter-status' ? [] : selectedFilters['filter-status'];
-  const selZone = excludedFilterId === 'filter-zone' ? [] : selectedFilters['filter-zone'];
-
-  const targetStatuses = selStatus.length > 0 ? selStatus : ALLOWED_STATUSES;
-
-  const res = [];
-  for (let i = 0; i < masterData.length; i++) {
-    const r = masterData[i];
-
-    if (selGm.length > 0 && !selGm.includes(r.GM)) continue;
-    if (selSeller.length > 0 && !selSeller.includes(r.SellerName)) continue;
-    if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
-    if (selHub.length > 0 && !selHub.includes(r.HubName)) continue;
-    if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
-    if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
-    if (!targetStatuses.includes(r.Status)) continue;
-
-    if (selectedLobFilter !== 'ALL') {
-      const rLob = r.LOB.toLowerCase();
-      if (selectedLobFilter === 'APM') {
-        if (rLob !== 'apm' && rLob !== 'lma') continue;
-      } else if (rLob !== selectedLobFilter.toLowerCase()) {
-        continue;
+    function applyFilters(rebuildOptions = true) {
+      if (rebuildOptions) {
+        updateDynamicFilterOptions();
       }
+
+      filteredData = getFilteredDataExcluding(null);
+
+      updateKPIs();
+
+      if (currentTab === 'matrix') renderPHWMAgingMatrix();
+      else if (currentTab === 'overview') renderCharts();
+      else if (currentTab === 'tables') renderSummaryTables();
+      else if (currentTab === 'table') renderShipmentsTable();
     }
 
-    const rd = r.ParsedDate;
-    if (rd) {
-      if (selWk.length > 0 && !selWk.includes(r.Week)) continue;
-      if (selMo.length > 0 && !selMo.includes(r.Month)) continue;
-      if (df && rd < df) continue;
-      if (dt && rd > dt) continue;
-    } else if (selWk.length > 0 || selMo.length > 0 || df || dt) {
-      continue;
-    }
-
-    if (search && !r.ShipmentId.toLowerCase().includes(search) && 
-        !r.WM.toLowerCase().includes(search) && 
-        !r.SellerName.toLowerCase().includes(search) && 
-        !r.BagId.toLowerCase().includes(search)) continue;
-
-    res.push(r);
-  }
-  return res;
-}
-
-/* ---------- Updated applyFilters Function ---------- */
-function applyFilters(rebuildOptions = true) {
-  // Always update options dynamically to maintain strict cross-filter dependency
-  if (rebuildOptions) {
-    updateDynamicFilterOptions();
-  }
-
-  // Obtain current fully filtered result set
-  filteredData = getFilteredDataExcluding(null);
-
-  updateKPIs();
-
-  if (currentTab === 'matrix') renderPHWMAgingMatrix();
-  else if (currentTab === 'overview') renderCharts();
-  else if (currentTab === 'tables') renderSummaryTables();
-  else if (currentTab === 'table') renderShipmentsTable();
-}
     function updateKPIs() {
       const tot = filteredData.length;
       document.getElementById('kpi-total-volume').textContent = tot.toLocaleString();
@@ -1501,8 +1492,11 @@ function applyFilters(rebuildOptions = true) {
     }
 
     function resetAllFilters() {
-      ['filter-search', 'filter-date-from', 'filter-date-to'].forEach(id => document.getElementById(id).value = '');
-      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-zone'].forEach(id => resetMultiSelect(id));
+      ['filter-search', 'filter-date-from', 'filter-date-to'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-zone'].forEach(id => resetMultiSelect(id, false));
       setLobToggle('ALL');
       setPresetDate('all');
     }
