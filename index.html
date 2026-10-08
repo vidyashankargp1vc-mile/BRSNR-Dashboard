@@ -106,67 +106,104 @@
           <input type="date" id="filter-date-to" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
         </div>
 
-        <div>
+        <!-- Multi-select Filter Dropdowns -->
+        <div class="relative multi-select-container" id="ms-container-filter-week">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Week</label>
-          <select id="filter-week" onchange="applyWeekFilter()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All Weeks</option>
-          </select>
+          <button type="button" onclick="toggleMultiSelect('filter-week')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
+            <span id="label-filter-week" class="truncate">All Weeks</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
+          </button>
+          <div id="dropdown-filter-week" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
+            <div id="options-filter-week" class="space-y-1"></div>
+          </div>
         </div>
 
-        <div>
+        <div class="relative multi-select-container" id="ms-container-filter-month">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Filter by Month</label>
-          <select id="filter-month" onchange="applyMonthFilter()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All Months</option>
-          </select>
+          <button type="button" onclick="toggleMultiSelect('filter-month')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
+            <span id="label-filter-month" class="truncate">All Months</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
+          </button>
+          <div id="dropdown-filter-month" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
+            <div id="options-filter-month" class="space-y-1"></div>
+          </div>
         </div>
 
-        <div>
+        <div class="relative multi-select-container" id="ms-container-filter-gm">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">General Manager (GM)</label>
-          <select id="filter-gm" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All GMs</option>
-          </select>
+          <button type="button" onclick="toggleMultiSelect('filter-gm')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
+            <span id="label-filter-gm" class="truncate">All GMs</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
+          </button>
+          <div id="dropdown-filter-gm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
+            <div id="options-filter-gm" class="space-y-1"></div>
+          </div>
         </div>
 
-        <div>
+        <div class="relative multi-select-container" id="ms-container-filter-seller">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Seller Name</label>
-          <select id="filter-seller" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All Sellers</option>
-          </select>
+          <button type="button" onclick="toggleMultiSelect('filter-seller')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
+            <span id="label-filter-seller" class="truncate">All Sellers</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
+          </button>
+          <div id="dropdown-filter-seller" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
+            <div id="options-filter-seller" class="space-y-1"></div>
+          </div>
         </div>
 
-        <div>
+        <div class="relative multi-select-container" id="ms-container-filter-mh">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Mother Hub (MH)</label>
-          <select id="filter-mh" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All Mother Hubs</option>
-          </select>
+          <button type="button" onclick="toggleMultiSelect('filter-mh')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
+            <span id="label-filter-mh" class="truncate">All Mother Hubs</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
+          </button>
+          <div id="dropdown-filter-mh" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
+            <div id="options-filter-mh" class="space-y-1"></div>
+          </div>
         </div>
 
-        <div>
+        <div class="relative multi-select-container" id="ms-container-filter-hub">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Pickup Hub (PH)</label>
-          <select id="filter-hub" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All Pickup Hubs</option>
-          </select>
+          <button type="button" onclick="toggleMultiSelect('filter-hub')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
+            <span id="label-filter-hub" class="truncate">All Pickup Hubs</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
+          </button>
+          <div id="dropdown-filter-hub" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
+            <div id="options-filter-hub" class="space-y-1"></div>
+          </div>
         </div>
 
-        <div>
+        <div class="relative multi-select-container" id="ms-container-filter-wm">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">WM Name</label>
-          <select id="filter-wm" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All Wish Masters / WMs</option>
-          </select>
+          <button type="button" onclick="toggleMultiSelect('filter-wm')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
+            <span id="label-filter-wm" class="truncate">All Wish Masters / WMs</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
+          </button>
+          <div id="dropdown-filter-wm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
+            <div id="options-filter-wm" class="space-y-1"></div>
+          </div>
         </div>
 
-        <div>
+        <div class="relative multi-select-container" id="ms-container-filter-status">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Status</label>
-          <select id="filter-status" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All Statuses</option>
-          </select>
+          <button type="button" onclick="toggleMultiSelect('filter-status')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
+            <span id="label-filter-status" class="truncate">All Status</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
+          </button>
+          <div id="dropdown-filter-status" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
+            <div id="options-filter-status" class="space-y-1"></div>
+          </div>
         </div>
 
-        <div>
-          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">LIB</label>
-          <select id="filter-lib" onchange="applyFilters()" class="w-full px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition">
-            <option value="ALL">All LIBs</option>
-          </select>
+        <div class="relative multi-select-container" id="ms-container-filter-lob">
+          <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">LOB</label>
+          <button type="button" onclick="toggleMultiSelect('filter-lob')" class="w-full text-left px-2.5 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-100 dark:bg-slate-900 flex justify-between items-center transition">
+            <span id="label-filter-lob" class="truncate">All LOBs</span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 ml-1 flex-shrink-0"></i>
+          </button>
+          <div id="dropdown-filter-lob" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-50 p-2 max-h-56 overflow-y-auto space-y-1">
+            <div id="options-filter-lob" class="space-y-1"></div>
+          </div>
         </div>
 
       </div>
@@ -187,7 +224,7 @@
 
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received at TC</span>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received at MH</span>
           <div class="p-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-lg"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
@@ -198,7 +235,7 @@
 
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched to TC</span>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched to MH</span>
           <div class="p-2 bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-lg"><i data-lucide="truck" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
@@ -531,7 +568,7 @@
               <th class="p-3">GM</th>
               <th class="p-3">WM Name</th>
               <th class="p-3">Seller Name</th>
-              <th class="p-3">LIB</th>
+              <th class="p-3">LOB</th>
               <th class="p-3">RCA</th>
             </tr>
           </thead>
@@ -562,12 +599,156 @@
 
     let masterData = [], filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
     let debounceTimer = null;
-    const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA' };
+    const COLS = { DATE: 'Date', SHIPMENT_ID: 'ShipmentId', HUB_NAME: 'Hub Name', SELLER_NAME: 'Seller name', STATUS: 'Status', ZONE: 'Zone', LOB: 'LOB', LIB: 'LIB', MH: 'MH', WM: 'WM name', GM: 'GM', RCA: 'RCA' };
+
+    // State for multi-select selections
+    const selectedFilters = {
+      'filter-week': [],
+      'filter-month': [],
+      'filter-gm': [],
+      'filter-seller': [],
+      'filter-mh': [],
+      'filter-hub': [],
+      'filter-wm': [],
+      'filter-status': [],
+      'filter-lob': []
+    };
+
+    const filterLabels = {
+      'filter-week': 'All Weeks',
+      'filter-month': 'All Months',
+      'filter-gm': 'All GMs',
+      'filter-seller': 'All Sellers',
+      'filter-mh': 'All Mother Hubs',
+      'filter-hub': 'All Pickup Hubs',
+      'filter-wm': 'All Wish Masters / WMs',
+      'filter-status': 'All Status',
+      'filter-lob': 'All LOBs'
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       loadRepositoryData();
+
+      // Close multi-select dropdowns when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.multi-select-container')) {
+          closeAllMultiSelects();
+        }
+      });
     });
+
+    /* ---------- Multi-Select Dropdown Handlers ---------- */
+    function toggleMultiSelect(id) {
+      const dropdown = document.getElementById(`dropdown-${id}`);
+      const isHidden = dropdown.classList.contains('hidden');
+      closeAllMultiSelects();
+      if (isHidden) {
+        dropdown.classList.remove('hidden');
+      }
+    }
+
+    function closeAllMultiSelects() {
+      document.querySelectorAll('.multi-select-container [id^="dropdown-"]').forEach(el => el.classList.add('hidden'));
+    }
+
+    function fillMultiSelect(id, set) {
+      const optionsContainer = document.getElementById(`options-${id}`);
+      const sorted = Array.from(set).sort();
+      let html = `
+        <label class="flex items-center space-x-2 px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer font-semibold text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 mb-1">
+          <input type="checkbox" onchange="handleSelectAll('${id}', this.checked)" id="selectAll-${id}" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+          <span>Select All</span>
+        </label>
+      `;
+
+      sorted.forEach(val => {
+        const checked = selectedFilters[id].includes(val) ? 'checked' : '';
+        html += `
+          <label class="flex items-center space-x-2 px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer text-slate-800 dark:text-slate-200">
+            <input type="checkbox" value="${val}" ${checked} onchange="handleOptionToggle('${id}', '${val.replace(/'/g, "\\'")}', this.checked)" class="cb-${id} rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+            <span class="truncate">${val}</span>
+          </label>
+        `;
+      });
+
+      optionsContainer.innerHTML = html;
+      updateMultiSelectLabel(id, sorted.length);
+    }
+
+    function handleSelectAll(id, isChecked) {
+      const checkboxes = document.querySelectorAll(`.cb-${id}`);
+      checkboxes.forEach(cb => {
+        cb.checked = isChecked;
+      });
+      if (isChecked) {
+        selectedFilters[id] = Array.from(checkboxes).map(cb => cb.value);
+      } else {
+        selectedFilters[id] = [];
+      }
+      updateMultiSelectLabel(id, checkboxes.length);
+
+      if (id === 'filter-week' && selectedFilters['filter-week'].length > 0) {
+        resetMultiSelect('filter-month');
+        document.getElementById('filter-date-from').value = '';
+        document.getElementById('filter-date-to').value = '';
+      } else if (id === 'filter-month' && selectedFilters['filter-month'].length > 0) {
+        resetMultiSelect('filter-week');
+        document.getElementById('filter-date-from').value = '';
+        document.getElementById('filter-date-to').value = '';
+      }
+
+      applyFilters();
+    }
+
+    function handleOptionToggle(id, val, isChecked) {
+      if (isChecked) {
+        if (!selectedFilters[id].includes(val)) selectedFilters[id].push(val);
+      } else {
+        selectedFilters[id] = selectedFilters[id].filter(item => item !== val);
+      }
+
+      const totalBoxes = document.querySelectorAll(`.cb-${id}`).length;
+      const selectAllCb = document.getElementById(`selectAll-${id}`);
+      if (selectAllCb) {
+        selectAllCb.checked = selectedFilters[id].length === totalBoxes && totalBoxes > 0;
+      }
+
+      updateMultiSelectLabel(id, totalBoxes);
+
+      if (id === 'filter-week' && selectedFilters['filter-week'].length > 0) {
+        resetMultiSelect('filter-month');
+        document.getElementById('filter-date-from').value = '';
+        document.getElementById('filter-date-to').value = '';
+      } else if (id === 'filter-month' && selectedFilters['filter-month'].length > 0) {
+        resetMultiSelect('filter-week');
+        document.getElementById('filter-date-from').value = '';
+        document.getElementById('filter-date-to').value = '';
+      }
+
+      applyFilters();
+    }
+
+    function resetMultiSelect(id) {
+      selectedFilters[id] = [];
+      document.querySelectorAll(`.cb-${id}`).forEach(cb => cb.checked = false);
+      const selectAll = document.getElementById(`selectAll-${id}`);
+      if (selectAll) selectAll.checked = false;
+      const total = document.querySelectorAll(`.cb-${id}`).length;
+      updateMultiSelectLabel(id, total);
+    }
+
+    function updateMultiSelectLabel(id, totalCount) {
+      const labelEl = document.getElementById(`label-${id}`);
+      const count = selectedFilters[id].length;
+      if (count === 0 || count === totalCount) {
+        labelEl.textContent = filterLabels[id];
+      } else if (count === 1) {
+        labelEl.textContent = selectedFilters[id][0];
+      } else {
+        labelEl.textContent = `${count} Selected`;
+      }
+    }
 
     /* ---------- Data loading ---------- */
     async function fetchCsv(url) {
@@ -667,7 +848,7 @@
         SellerName: cleanVal(r[COLS.SELLER_NAME], 'Unknown Seller'),
         Status: cleanVal(r[COLS.STATUS], 'Unknown Status'),
         Zone: cleanField('Zone', r[COLS.ZONE], 'Unknown Zone'),
-        LIB: cleanVal(r[COLS.LIB], 'Unassigned'),
+        LOB: cleanVal(r[COLS.LOB] || r[COLS.LIB], 'Unassigned'),
         MH: cleanField('MH', r[COLS.MH], 'Unassigned MH'),
         WM: cleanField('WM', r[COLS.WM], 'Unassigned WM'),
         GM: cleanField('GM', r[COLS.GM], 'Unassigned GM'),
@@ -695,7 +876,7 @@
 
     /* ---------- Filters ---------- */
     function populateFilterDropdowns() {
-      const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), libs = new Set(), weeks = new Set(), months = new Set();
+      const gms = new Set(), sellers = new Set(), mhs = new Set(), hubs = new Set(), wms = new Set(), statuses = new Set(), lobs = new Set(), weeks = new Set(), months = new Set();
 
       for (let i = 0; i < masterData.length; i++) {
         const r = masterData[i];
@@ -705,31 +886,19 @@
         if (!isInvalid(r.HubName)) hubs.add(r.HubName);
         if (!isInvalid(r.WM)) wms.add(r.WM);
         if (!isInvalid(r.Status)) statuses.add(r.Status);
-        if (!isInvalid(r.LIB)) libs.add(r.LIB);
+        if (!isInvalid(r.LOB)) lobs.add(r.LOB);
         if (r.Month) { months.add(r.Month); weeks.add(r.Week); }
       }
 
-      fillSelect('filter-gm', gms);
-      fillSelect('filter-seller', sellers);
-      fillSelect('filter-mh', mhs);
-      fillSelect('filter-hub', hubs);
-      fillSelect('filter-wm', wms);
-      fillSelect('filter-status', statuses);
-      fillSelect('filter-lib', libs);
-      fillSelect('filter-month', months);
-      fillSelect('filter-week', weeks);
-    }
-
-    function fillSelect(id, set) {
-      const sel = document.getElementById(id);
-      const curr = sel.value;
-      let html = `<option value="ALL">${sel.options[0].text}</option>`;
-      const sorted = Array.from(set).sort();
-      for (let i = 0; i < sorted.length; i++) {
-        html += `<option value="${sorted[i]}">${sorted[i]}</option>`;
-      }
-      sel.innerHTML = html;
-      sel.value = curr;
+      fillMultiSelect('filter-gm', gms);
+      fillMultiSelect('filter-seller', sellers);
+      fillMultiSelect('filter-mh', mhs);
+      fillMultiSelect('filter-hub', hubs);
+      fillMultiSelect('filter-wm', wms);
+      fillMultiSelect('filter-status', statuses);
+      fillMultiSelect('filter-lob', lobs);
+      fillMultiSelect('filter-month', months);
+      fillMultiSelect('filter-week', weeks);
     }
 
     function getWeekIdentifier(date) {
@@ -741,26 +910,6 @@
       return `Week ${weekNo}, ${d.getUTCFullYear()}`;
     }
 
-    function applyWeekFilter() {
-      const wk = document.getElementById('filter-week').value;
-      if (wk !== 'ALL') {
-        document.getElementById('filter-month').value = 'ALL';
-        document.getElementById('filter-date-from').value = '';
-        document.getElementById('filter-date-to').value = '';
-      }
-      applyFilters();
-    }
-
-    function applyMonthFilter() {
-      const mo = document.getElementById('filter-month').value;
-      if (mo !== 'ALL') {
-        document.getElementById('filter-week').value = 'ALL';
-        document.getElementById('filter-date-from').value = '';
-        document.getElementById('filter-date-to').value = '';
-      }
-      applyFilters();
-    }
-
     function debouncedApplyFilters() {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => { applyFilters(); }, 250);
@@ -770,34 +919,36 @@
       const search = document.getElementById('filter-search').value.toLowerCase().trim();
       const df = document.getElementById('filter-date-from').value ? parseDateStrFast(document.getElementById('filter-date-from').value) : null;
       const dt = document.getElementById('filter-date-to').value ? parseDateStrFast(document.getElementById('filter-date-to').value) : null;
-      const wk = document.getElementById('filter-week').value;
-      const mo = document.getElementById('filter-month').value;
-      const gm = document.getElementById('filter-gm').value;
-      const seller = document.getElementById('filter-seller').value;
-      const mh = document.getElementById('filter-mh').value;
-      const hub = document.getElementById('filter-hub').value;
-      const wm = document.getElementById('filter-wm').value;
-      const status = document.getElementById('filter-status').value;
-      const lib = document.getElementById('filter-lib').value;
+      
+      const selWk = selectedFilters['filter-week'];
+      const selMo = selectedFilters['filter-month'];
+      const selGm = selectedFilters['filter-gm'];
+      const selSeller = selectedFilters['filter-seller'];
+      const selMh = selectedFilters['filter-mh'];
+      const selHub = selectedFilters['filter-hub'];
+      const selWm = selectedFilters['filter-wm'];
+      const selStatus = selectedFilters['filter-status'];
+      const selLob = selectedFilters['filter-lob'];
 
       const res = [];
       for (let i = 0; i < masterData.length; i++) {
         const r = masterData[i];
-        if (gm !== 'ALL' && r.GM !== gm) continue;
-        if (seller !== 'ALL' && r.SellerName !== seller) continue;
-        if (mh !== 'ALL' && r.MH !== mh) continue;
-        if (hub !== 'ALL' && r.HubName !== hub) continue;
-        if (wm !== 'ALL' && r.WM !== wm) continue;
-        if (status !== 'ALL' && r.Status !== status) continue;
-        if (lib !== 'ALL' && r.LIB !== lib) continue;
+        
+        if (selGm.length > 0 && !selGm.includes(r.GM)) continue;
+        if (selSeller.length > 0 && !selSeller.includes(r.SellerName)) continue;
+        if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
+        if (selHub.length > 0 && !selHub.includes(r.HubName)) continue;
+        if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
+        if (selStatus.length > 0 && !selStatus.includes(r.Status)) continue;
+        if (selLob.length > 0 && !selLob.includes(r.LOB)) continue;
 
         const rd = r.ParsedDate;
         if (rd) {
-          if (wk !== 'ALL' && r.Week !== wk) continue;
-          if (mo !== 'ALL' && r.Month !== mo) continue;
+          if (selWk.length > 0 && !selWk.includes(r.Week)) continue;
+          if (selMo.length > 0 && !selMo.includes(r.Month)) continue;
           if (df && rd < df) continue;
           if (dt && rd > dt) continue;
-        } else if (wk !== 'ALL' || mo !== 'ALL' || df || dt) {
+        } else if (selWk.length > 0 || selMo.length > 0 || df || dt) {
           continue;
         }
 
@@ -1077,7 +1228,7 @@
             <td class="p-3 font-medium">${r.GM}</td>
             <td class="p-3">${r.WM}</td>
             <td class="p-3 truncate max-w-[150px]">${r.SellerName}</td>
-            <td class="p-3">${r.LIB}</td>
+            <td class="p-3">${r.LOB}</td>
             <td class="p-3">${r.RCA}</td>
           </tr>
         `;
@@ -1105,8 +1256,8 @@
     function setPresetDate(p) {
       const f = document.getElementById('filter-date-from'), t = document.getElementById('filter-date-to'), today = new Date();
       const iso = d => d.toISOString().split('T')[0];
-      document.getElementById('filter-week').value = 'ALL';
-      document.getElementById('filter-month').value = 'ALL';
+      resetMultiSelect('filter-week');
+      resetMultiSelect('filter-month');
       if (p === 'all') { f.value = ''; t.value = ''; }
       else if (p === 'today') { f.value = iso(today); t.value = f.value; }
       else if (p === '7days' || p === '30days') {
@@ -1118,7 +1269,7 @@
 
     function resetAllFilters() {
       ['filter-search', 'filter-date-from', 'filter-date-to'].forEach(id => document.getElementById(id).value = '');
-      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-lib'].forEach(id => document.getElementById(id).value = 'ALL');
+      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-lob'].forEach(id => resetMultiSelect(id));
       applyFilters();
     }
 
