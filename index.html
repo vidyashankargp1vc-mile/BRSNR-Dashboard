@@ -1127,7 +1127,12 @@
       const dateFromInput = document.getElementById('filter-date-from');
       const dateToInput = document.getElementById('filter-date-to');
       const df = dateFromInput && dateFromInput.value ? parseDateStrFast(dateFromInput.value) : null;
-      const dt = dateToInput && dateToInput.value ? parseDateStrFast(dateToInput.value) : null;
+      let dt = dateToInput && dateToInput.value ? parseDateStrFast(dateToInput.value) : null;
+
+       // Ensure the end date covers the entire day up to 23:59:59.999
+      if (dt) {
+          dt.setHours(23, 59, 59, 999);
+      }
 
       const selWk = excludedFilterId === 'filter-week' ? [] : selectedFilters['filter-week'];
       const selMo = excludedFilterId === 'filter-month' ? [] : selectedFilters['filter-month'];
