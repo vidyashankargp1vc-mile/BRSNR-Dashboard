@@ -1159,93 +1159,115 @@
       debounceTimer = setTimeout(() => { applyFilters(true); }, 150);
     }
 
-    /* ---------- Render GM View Tables (Total Counts & % View for Past 5 Days) ---------- */
-    function renderGMViewTables() {
-      const countHeaderRow = document.getElementById('gm-count-header-row');
-      const countTbody = document.getElementById('gm-count-tbody');
-      const pctHeaderRow = document.getElementById('gm-pct-header-row');
-      const pctTbody = document.getElementById('gm-pct-tbody');
+   /* ---------- Render GM View Tables (Total Counts & % View for Past 5 Days with T-1 Shipment Date) ---------- */
+function renderGMViewTables() {
+  const countHeaderRow = document.getElementById('gm-count-header-row');
+  const countTbody = document.getElementById('gm-count-tbody');
+  const pctHeaderRow = document.getElementById('gm-pct-header-row');
+  const pctTbody = document.getElementById('gm-pct-tbody');
 
-      if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
+  if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
 
-      // Get unique past 5 sorted dates descending
-      const allDates = [...new Set(masterData.map(r => r.Date))].filter(Boolean);
-      const recent5Dates = allDates.sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0)).slice(0, 5);
+  // 1. Get unique past dates sorted descending
+  const allDatesSorted = [...new Set(masterData.map(r => r.Date))]
+    .filter(Boolean)
+    .sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
 
-      let headerHtml = `<th class="py-1 px-2 text-left">GM</th>`;
-      recent5Dates.forEach(d => {
-        headerHtml += `<th class="py-1 px-1.5 text-center">${d}</th>`;
-      });
-      countHeaderRow.innerHTML = headerHtml;
-      pctHeaderRow.innerHTML = headerHtml;
+  const recent5Dates = allDatesSorted.slice(0, 5);
 
-      // Aggregate BRSNR counts per GM per Date (merging Somnath G and Somnath Ghosh)
-      const gmBrsnrCounts = {};
-      masterData.forEach(r => {
-        let gm = r.GM;
-        if (!isInvalid(gm)) {
-          if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
-          const date = r.Date;
-          if (date) {
-            if (!gmBrsnrCounts[gm]) gmBrsnrCounts[gm] = {};
-            gmBrsnrCounts[gm][date] = (gmBrsnrCounts[gm][date] || 0) + 1;
-          }
-        }
-      });
+  let headerHtml = `<th class="py-1 px-2 text-left">GM</th>`;
+  recent5Dates.forEach(d => {
+    headerHtml += `<th class="py-1 px-1.5 text-center">${d}</th>`;
+  });
+  countHeaderRow.innerHTML = headerHtml;
+  pctHeaderRow.innerHTML = headerHtml;
 
-      // Aggregate global shipment values merging Somnath variations
-      const normalizedGmShipments = {};
-      Object.keys(globalGmShipments).forEach(gm => {
-        let cleanGm = gm;
-        if (cleanGm.toLowerCase() === 'somnath g') cleanGm = 'Somnath Ghosh';
-        if (!normalizedGmShipments[cleanGm]) normalizedGmShipments[cleanGm] = {};
-        Object.keys(globalGmShipments[gm]).forEach(date => {
-          normalizedGmShipments[cleanGm][date] = (normalizedGmShipments[cleanGm][date] || 0) + globalGmShipments[gm][date];
-        });
-      });
-
-      // Combine all GMs and filter out explicitly excluded names
-      const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
-        .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
-        .sort();
-
-      let countBodyHtml = '';
-      let pctBodyHtml = '';
-
-      allGms.forEach(gm => {
-        countBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-          <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
-
-        pctBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-          <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
-
-        recent5Dates.forEach(date => {
-          const brsnrCount = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
-          const shipmentVal = (normalizedGmShipments[gm] && normalizedGmShipments[gm][date]) || 0;
-
-          // Table 1: Total BRSNR Count
-          countBodyHtml += `<td class="py-0.5 px-1.5 text-center font-mono font-medium leading-tight">${brsnrCount ? brsnrCount.toLocaleString() : '-'}</td>`;
-
-          // Table 2: GM % View
-          let pct = 0;
-          if (shipmentVal > 0) {
-            pct = (brsnrCount / shipmentVal) * 100;
-          }
-
-          const formattedPct = pct.toFixed(2) + '%';
-          // Above 0.12% in red, else green
-          const bgColor = pct > 0.12 ? 'background-color: #f8d7da; color: #842029;' : 'background-color: #d1e7dd; color: #0f5132;';
-
-          pctBodyHtml += `<td class="py-0.5 px-1.5 text-center font-medium leading-tight rounded" style="${bgColor}">${formattedPct}</td>`;
-        });
-
-        countBodyHtml += `</tr>`;
-        pctBodyHtml += `</tr>`;
-      });
-
-      countTbody.innerHTML = countBodyHtml;
-      pctTbody.innerHTML = pctBodyHtml;
+  // 2. Aggregate BRSNR counts per GM per Date (combining Somnath G -> Somnath Ghosh)
+  const gmBrsnrCounts = {};
+  masterData.forEach(r => {
+    let gm = r.GM;
+    if (!isInvalid(gm)) {
+      if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
+      const date = r.Date;
+      if (date) {
+        if (!gmBrsnrCounts[gm]) gmBrsnrCounts[gm] = {};
+        gmBrsnrCounts[gm][date] = (gmBrsnrCounts[gm][date] || 0) + 1;
+      }
     }
+  });
+
+  // 3. Normalize shipment data for GM variations
+  const normalizedGmShipments = {};
+  Object.keys(globalGmShipments).forEach(gm => {
+    let cleanGm = gm;
+    if (cleanGm.toLowerCase() === 'somnath g') cleanGm = 'Somnath Ghosh';
+    if (!normalizedGmShipments[cleanGm]) normalizedGmShipments[cleanGm] = {};
+    Object.keys(globalGmShipments[gm]).forEach(date => {
+      normalizedGmShipments[cleanGm][date] = (normalizedGmShipments[cleanGm][date] || 0) + globalGmShipments[gm][date];
+    });
+  });
+
+  // 4. Combine all GMs and filter out explicitly excluded names
+  const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
+    .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
+    .sort();
+
+  // Helper function to get previous date string (T-1) in standard string format
+  function getPrevDateStr(dateStr) {
+    const parsed = parseDateStrFast(dateStr);
+    if (!parsed) return null;
+    const prev = new Date(parsed);
+    prev.setDate(prev.getDate() - 1);
+    
+    // Format back matching input date format (DD-MM-YYYY or YYYY-MM-DD)
+    const day = String(prev.getDate()).padStart(2, '0');
+    const month = String(prev.getMonth() + 1).padStart(2, '0');
+    const year = prev.getFullYear();
+
+    return dateStr.includes('-') && dateStr.split('-')[0].length === 4
+      ? `${year}-${month}-${day}`
+      : `${day}-${month}-${year}`;
+  }
+
+  let countBodyHtml = '';
+  let pctBodyHtml = '';
+
+  allGms.forEach(gm => {
+    countBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+      <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
+
+    pctBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+      <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
+
+    recent5Dates.forEach(date => {
+      const brsnrCount = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
+
+      // Table 1: Absolute BRSNR Count
+      countBodyHtml += `<td class="py-0.5 px-1.5 text-center font-mono font-medium leading-tight">${brsnrCount ? brsnrCount.toLocaleString() : '-'}</td>`;
+
+      // Table 2: GM % View based on Previous Day (T-1) Shipment
+      const prevDate = getPrevDateStr(date);
+      const shipmentValPrevDay = (prevDate && normalizedGmShipments[gm] && normalizedGmShipments[gm][prevDate]) || 0;
+
+      let pct = 0;
+      if (shipmentValPrevDay > 0) {
+        pct = (brsnrCount / shipmentValPrevDay) * 100;
+      }
+
+      const formattedPct = pct.toFixed(2) + '%';
+      // Highlight > 0.12% in red, otherwise green
+      const bgColor = pct > 0.12 ? 'background-color: #f8d7da; color: #842029;' : 'background-color: #d1e7dd; color: #0f5132;';
+
+      pctBodyHtml += `<td class="py-0.5 px-1.5 text-center font-medium leading-tight rounded" style="${bgColor}">${formattedPct}</td>`;
+    });
+
+    countBodyHtml += `</tr>`;
+    pctBodyHtml += `</tr>`;
+  });
+
+  countTbody.innerHTML = countBodyHtml;
+  pctTbody.innerHTML = pctBodyHtml;
+}
 
     /* ---------- Cascading Filter Options Engine ---------- */
     function updateDynamicFilterOptions() {
