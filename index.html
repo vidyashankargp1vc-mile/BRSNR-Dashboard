@@ -135,29 +135,6 @@
       </button>
     </div>
 
-    <!-- GM % VIEW SECTION (PAST 5 DAYS) -->
-    <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
-        <div>
-          <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <i data-lucide="percent" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
-            <span>GM % View (Past 5 Days)</span>
-          </h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Calculated as Total BRSNR divided by total hub shipment values mapped by General Manager.</p>
-        </div>
-      </div>
-      <div class="overflow-x-auto overflow-y-auto max-h-[450px]">
-        <table id="gm-percentage-table" class="w-full text-xs text-center border-collapse">
-          <thead>
-            <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold sticky top-0" id="gm-pct-header-row">
-              <th class="p-3 text-left">GM</th>
-            </tr>
-          </thead>
-          <tbody id="gm-pct-tbody" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
-        </table>
-      </div>
-    </section>
-
     <!-- GLOBAL FILTER TOOLBAR -->
     <section class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-700 pb-3">
@@ -422,6 +399,9 @@
         <button id="tab-btn-overview" onclick="switchTab('overview')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg">
           <i data-lucide="bar-chart-2" class="w-4 h-4"></i><span>Analytics Overview</span>
         </button>
+        <button id="tab-btn-gmview" onclick="switchTab('gmview')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg">
+          <i data-lucide="percent" class="w-4 h-4"></i><span>GM % View</span>
+        </button>
         <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg">
           <i data-lucide="layout-grid" class="w-4 h-4"></i><span>Performance Summary Tables</span>
         </button>
@@ -540,6 +520,51 @@
         </div>
         <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
           <div class="min-w-[800px] h-72 relative"><canvas id="chart-seller-column"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GM % VIEW TAB (BESIDE ANALYTICS OVERVIEW) -->
+    <section id="tab-gmview" class="hidden space-y-6">
+      <!-- Table 1: Total Count of BRSNR wrt GM -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="border-b border-slate-100 dark:border-slate-700 pb-3">
+          <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="hash" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+            <span>Total Count of BRSNR wrt GM (Past 5 Days)</span>
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Absolute total BRSNR volume count categorized by General Manager.</p>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
+          <table class="w-full text-xs text-center border-collapse">
+            <thead>
+              <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold sticky top-0" id="gm-count-header-row">
+                <th class="p-3 text-left">GM</th>
+              </tr>
+            </thead>
+            <tbody id="gm-count-tbody" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Table 2: GM % View Table -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+        <div class="border-b border-slate-100 dark:border-slate-700 pb-3">
+          <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="percent" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+            <span>GM % View Table (Past 5 Days)</span>
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Calculated as Total BRSNR divided by total shipment values mapped by GM (ignoring mix bagging).</p>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
+          <table class="w-full text-xs text-center border-collapse">
+            <thead>
+              <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold sticky top-0" id="gm-pct-header-row">
+                <th class="p-3 text-left">GM</th>
+              </tr>
+            </thead>
+            <tbody id="gm-pct-tbody" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -978,7 +1003,7 @@
         }));
 
         showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from master JSON.`, "success");
-        renderGMPercentageTable();
+        renderGMViewTables();
         applyFilters(true);
       } catch (err) {
         console.warn("JSON fetch failed, falling back to legacy CSV parsing...", err);
@@ -1028,7 +1053,7 @@
         });
 
         showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from CSVs.`, masterData.length ? "success" : "warning");
-        renderGMPercentageTable();
+        renderGMViewTables();
         applyFilters(true);
       } catch (e) {
         showStatusBanner("Error loading data.", "error");
@@ -1119,24 +1144,27 @@
       debounceTimer = setTimeout(() => { applyFilters(true); }, 150);
     }
 
-    /* ---------- Render GM % View Table (Past 5 Days) ---------- */
-    function renderGMPercentageTable() {
-      const theadRow = document.getElementById('gm-pct-header-row');
-      const tbody = document.getElementById('gm-pct-tbody');
-      if (!theadRow || !tbody) return;
+    /* ---------- Render GM View Tables (Total Counts & % View for Past 5 Days) ---------- */
+    function renderGMViewTables() {
+      const countHeaderRow = document.getElementById('gm-count-header-row');
+      const countTbody = document.getElementById('gm-count-tbody');
+      const pctHeaderRow = document.getElementById('gm-pct-header-row');
+      const pctTbody = document.getElementById('gm-pct-tbody');
 
-      // 1. Get unique past 5 sorted dates descending
+      if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
+
+      // Get unique past 5 sorted dates descending
       const allDates = [...new Set(masterData.map(r => r.Date))].filter(Boolean);
       const recent5Dates = allDates.sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0)).slice(0, 5);
 
-      // Build header row
       let headerHtml = `<th class="p-3 text-left">GM</th>`;
       recent5Dates.forEach(d => {
         headerHtml += `<th class="p-3 text-center">${d}</th>`;
       });
-      theadRow.innerHTML = headerHtml;
+      countHeaderRow.innerHTML = headerHtml;
+      pctHeaderRow.innerHTML = headerHtml;
 
-      // 2. Aggregate BRSNR counts per GM per Date
+      // Aggregate BRSNR counts per GM per Date
       const gmBrsnrCounts = {};
       masterData.forEach(r => {
         const gm = r.GM;
@@ -1147,18 +1175,26 @@
         }
       });
 
-      // Get all unique GMs from both BRSNR records and Shipment mapping
       const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(globalGmShipments)])).sort();
 
-      let bodyHtml = '';
+      let countBodyHtml = '';
+      let pctBodyHtml = '';
+
       allGms.forEach(gm => {
-        bodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+        countBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+          <td class="p-3 text-left font-semibold text-slate-900 dark:text-white">${gm}</td>`;
+
+        pctBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
           <td class="p-3 text-left font-semibold text-slate-900 dark:text-white">${gm}</td>`;
 
         recent5Dates.forEach(date => {
           const brsnrCount = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
           const shipmentVal = (globalGmShipments[gm] && globalGmShipments[gm][date]) || 0;
 
+          // Table 1: Total BRSNR Count
+          countBodyHtml += `<td class="p-3 text-center font-mono font-medium">${brsnrCount ? brsnrCount.toLocaleString() : '-'}</td>`;
+
+          // Table 2: GM % View
           let pct = 0;
           if (shipmentVal > 0) {
             pct = (brsnrCount / shipmentVal) * 100;
@@ -1167,13 +1203,15 @@
           const formattedPct = pct.toFixed(2) + '%';
           const bgColor = pct > 0.20 ? 'background-color: #f8d7da; color: #842029;' : 'background-color: #d1e7dd; color: #0f5132;';
 
-          bodyHtml += `<td class="p-3 text-center font-medium" style="${bgColor}">${formattedPct}</td>`;
+          pctBodyHtml += `<td class="p-3 text-center font-medium" style="${bgColor}">${formattedPct}</td>`;
         });
 
-        bodyHtml += `</tr>`;
+        countBodyHtml += `</tr>`;
+        pctBodyHtml += `</tr>`;
       });
 
-      tbody.innerHTML = bodyHtml;
+      countTbody.innerHTML = countBodyHtml;
+      pctTbody.innerHTML = pctBodyHtml;
     }
 
     /* ---------- Cascading Filter Options Engine ---------- */
@@ -1622,19 +1660,27 @@
 
     function switchTab(t) {
       currentTab = t;
-      ['overview', 'matrix', 'tables', 'table'].forEach(tab => {
-        document.getElementById(`tab-${tab}`).classList.add('hidden');
-        document.getElementById(`tab-btn-${tab}`).classList.remove('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
-        document.getElementById(`tab-btn-${tab}`).classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+      ['overview', 'matrix', 'gmview', 'tables', 'table'].forEach(tab => {
+        const el = document.getElementById(`tab-${tab}`);
+        const btn = document.getElementById(`tab-btn-${tab}`);
+        if (el) el.classList.add('hidden');
+        if (btn) {
+          btn.classList.remove('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
+          btn.classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+        }
       });
 
-      document.getElementById(`tab-${t}`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`tab-btn-${t}`);
-      activeBtn.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
-      activeBtn.classList.add('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
+      const targetTab = document.getElementById(`tab-${t}`);
+      const targetBtn = document.getElementById(`tab-btn-${t}`);
+      if (targetTab) targetTab.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+        targetBtn.classList.add('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
+      }
 
       if (t === 'matrix') renderPHWMAgingMatrix();
       else if (t === 'overview') renderCharts();
+      else if (t === 'gmview') renderGMViewTables();
       else if (t === 'tables') renderSummaryTables();
       else if (t === 'table') renderShipmentsTable();
     }
