@@ -400,7 +400,7 @@
           <i data-lucide="bar-chart-2" class="w-4 h-4"></i><span>Analytics Overview</span>
         </button>
         <button id="tab-btn-gmview" onclick="switchTab('gmview')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg">
-          <i data-lucide="percent" class="w-4 h-4"></i><span>GM % View</span>
+          <i data-lucide="percent" class="w-4 h-4"></i><span>GM View</span>
         </button>
         <button id="tab-btn-tables" onclick="switchTab('tables')" class="py-3 px-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 transition hover:bg-slate-100 dark:hover:bg-slate-800 rounded-t-lg">
           <i data-lucide="layout-grid" class="w-4 h-4"></i><span>Performance Summary Tables</span>
@@ -524,22 +524,22 @@
       </div>
     </section>
 
-    <!-- GM % VIEW TAB (BESIDE ANALYTICS OVERVIEW) -->
-    <section id="tab-gmview" class="hidden space-y-6">
+    <!-- GM VIEW TAB (BESIDE ANALYTICS OVERVIEW) -->
+    <section id="tab-gmview" class="hidden space-y-4">
       <!-- Table 1: Total Count of BRSNR wrt GM -->
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
-        <div class="border-b border-slate-100 dark:border-slate-700 pb-3">
-          <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <i data-lucide="hash" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm space-y-2">
+        <div class="border-b border-slate-100 dark:border-slate-700 pb-1.5">
+          <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center space-x-1.5">
+            <i data-lucide="hash" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
             <span>Total Count of BRSNR wrt GM (Past 5 Days)</span>
           </h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Absolute total BRSNR volume count categorized by General Manager.</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400">Absolute total BRSNR volume count categorized by General Manager.</p>
         </div>
-        <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
-          <table class="w-full text-xs text-center border-collapse">
+        <div class="overflow-x-auto">
+          <table class="w-full text-[11px] text-center border-collapse">
             <thead>
-              <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold sticky top-0" id="gm-count-header-row">
-                <th class="p-3 text-left">GM</th>
+              <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold" id="gm-count-header-row">
+                <th class="py-1 px-2 text-left">GM</th>
               </tr>
             </thead>
             <tbody id="gm-count-tbody" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
@@ -548,19 +548,19 @@
       </div>
 
       <!-- Table 2: GM % View Table -->
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
-        <div class="border-b border-slate-100 dark:border-slate-700 pb-3">
-          <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <i data-lucide="percent" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
-            <span>GM % View Table (Past 5 Days)</span>
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm space-y-2">
+        <div class="border-b border-slate-100 dark:border-slate-700 pb-1.5">
+          <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center space-x-1.5">
+            <i data-lucide="percent" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
+            <span>GM View Table (Past 5 Days)</span>
           </h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Calculated as Total BRSNR divided by total shipment values mapped by GM (ignoring mix bagging).</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400">Calculated as Total BRSNR divided by total shipment values mapped by GM (ignoring mix bagging). Values &gt; 0.12% in red.</p>
         </div>
-        <div class="overflow-x-auto overflow-y-auto max-h-[400px]">
-          <table class="w-full text-xs text-center border-collapse">
+        <div class="overflow-x-auto">
+          <table class="w-full text-[11px] text-center border-collapse">
             <thead>
-              <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold sticky top-0" id="gm-pct-header-row">
-                <th class="p-3 text-left">GM</th>
+              <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold" id="gm-pct-header-row">
+                <th class="py-1 px-2 text-left">GM</th>
               </tr>
             </thead>
             <tbody id="gm-pct-tbody" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
@@ -701,6 +701,18 @@
 
     const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh'];
     const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
+
+    // List of GMs to explicitly exclude from GM View tables
+    const EXCLUDED_GMS = [
+      'amitava dutta',
+      'arjun bhargava',
+      'arvind bansal (up)',
+      'arvind bansal(up)',
+      'sankar barman',
+      'swapnil borgaonkar (mp)',
+      'swapnil borgoankar(mp)',
+      'vineeth v'
+    ];
 
     const COLS = { 
       DATE: 'Date', 
@@ -1091,6 +1103,9 @@
       let dtStr = r[COLS.DATE] || r['date'] || '';
       if (!dtStr && sourceUrl) { const m = sourceUrl.match(/\d{4}-\d{2}-\d{2}/); if (m) dtStr = m[0]; }
       const pd = parseDateStrFast(dtStr);
+      let gmName = cleanVal(r[COLS.GM], 'Unassigned GM');
+      if (gmName.toLowerCase() === 'somnath g') gmName = 'Somnath Ghosh';
+
       return {
         Date: dtStr || 'Unassigned Date', ParsedDate: pd, ts: pd ? pd.getTime() : 0,
         Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
@@ -1110,7 +1125,7 @@
         BagId: cleanVal(r[COLS.BAG_ID], 'None'),
         BagStatus: cleanVal(r[COLS.BAG_STATUS], 'None'),
         BagReceiveTime: cleanVal(r[COLS.BAG_RECEIVE_TIME], 'None'),
-        GM: cleanVal(r[COLS.GM], 'Unassigned GM'),
+        GM: gmName,
         DispatchToMH: cleanVal(r[COLS.DISPATCH_TO_MH], 'None'),
         ReceivedAtMH: cleanVal(r[COLS.RECEIVED_AT_MH], 'None'),
         Diff: cleanVal(r[COLS.DIFF], '0'),
@@ -1157,42 +1172,59 @@
       const allDates = [...new Set(masterData.map(r => r.Date))].filter(Boolean);
       const recent5Dates = allDates.sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0)).slice(0, 5);
 
-      let headerHtml = `<th class="p-3 text-left">GM</th>`;
+      let headerHtml = `<th class="py-1 px-2 text-left">GM</th>`;
       recent5Dates.forEach(d => {
-        headerHtml += `<th class="p-3 text-center">${d}</th>`;
+        headerHtml += `<th class="py-1 px-1.5 text-center">${d}</th>`;
       });
       countHeaderRow.innerHTML = headerHtml;
       pctHeaderRow.innerHTML = headerHtml;
 
-      // Aggregate BRSNR counts per GM per Date
+      // Aggregate BRSNR counts per GM per Date (merging Somnath G and Somnath Ghosh)
       const gmBrsnrCounts = {};
       masterData.forEach(r => {
-        const gm = r.GM;
-        const date = r.Date;
-        if (!isInvalid(gm) && date) {
-          if (!gmBrsnrCounts[gm]) gmBrsnrCounts[gm] = {};
-          gmBrsnrCounts[gm][date] = (gmBrsnrCounts[gm][date] || 0) + 1;
+        let gm = r.GM;
+        if (!isInvalid(gm)) {
+          if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
+          const date = r.Date;
+          if (date) {
+            if (!gmBrsnrCounts[gm]) gmBrsnrCounts[gm] = {};
+            gmBrsnrCounts[gm][date] = (gmBrsnrCounts[gm][date] || 0) + 1;
+          }
         }
       });
 
-      const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(globalGmShipments)])).sort();
+      // Aggregate global shipment values merging Somnath variations
+      const normalizedGmShipments = {};
+      Object.keys(globalGmShipments).forEach(gm => {
+        let cleanGm = gm;
+        if (cleanGm.toLowerCase() === 'somnath g') cleanGm = 'Somnath Ghosh';
+        if (!normalizedGmShipments[cleanGm]) normalizedGmShipments[cleanGm] = {};
+        Object.keys(globalGmShipments[gm]).forEach(date => {
+          normalizedGmShipments[cleanGm][date] = (normalizedGmShipments[cleanGm][date] || 0) + globalGmShipments[gm][date];
+        });
+      });
+
+      // Combine all GMs and filter out explicitly excluded names
+      const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
+        .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
+        .sort();
 
       let countBodyHtml = '';
       let pctBodyHtml = '';
 
       allGms.forEach(gm => {
         countBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-          <td class="p-3 text-left font-semibold text-slate-900 dark:text-white">${gm}</td>`;
+          <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
 
         pctBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-          <td class="p-3 text-left font-semibold text-slate-900 dark:text-white">${gm}</td>`;
+          <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
 
         recent5Dates.forEach(date => {
           const brsnrCount = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
-          const shipmentVal = (globalGmShipments[gm] && globalGmShipments[gm][date]) || 0;
+          const shipmentVal = (normalizedGmShipments[gm] && normalizedGmShipments[gm][date]) || 0;
 
           // Table 1: Total BRSNR Count
-          countBodyHtml += `<td class="p-3 text-center font-mono font-medium">${brsnrCount ? brsnrCount.toLocaleString() : '-'}</td>`;
+          countBodyHtml += `<td class="py-0.5 px-1.5 text-center font-mono font-medium leading-tight">${brsnrCount ? brsnrCount.toLocaleString() : '-'}</td>`;
 
           // Table 2: GM % View
           let pct = 0;
@@ -1201,9 +1233,10 @@
           }
 
           const formattedPct = pct.toFixed(2) + '%';
-          const bgColor = pct > 0.20 ? 'background-color: #f8d7da; color: #842029;' : 'background-color: #d1e7dd; color: #0f5132;';
+          // Above 0.12% in red, else green
+          const bgColor = pct > 0.12 ? 'background-color: #f8d7da; color: #842029;' : 'background-color: #d1e7dd; color: #0f5132;';
 
-          pctBodyHtml += `<td class="p-3 text-center font-medium" style="${bgColor}">${formattedPct}</td>`;
+          pctBodyHtml += `<td class="py-0.5 px-1.5 text-center font-medium leading-tight rounded" style="${bgColor}">${formattedPct}</td>`;
         });
 
         countBodyHtml += `</tr>`;
@@ -1318,6 +1351,7 @@
 
       if (currentTab === 'matrix') renderPHWMAgingMatrix();
       else if (currentTab === 'overview') renderCharts();
+      else if (currentTab === 'gmview') renderGMViewTables();
       else if (currentTab === 'tables') renderSummaryTables();
       else if (currentTab === 'table') renderShipmentsTable();
     }
