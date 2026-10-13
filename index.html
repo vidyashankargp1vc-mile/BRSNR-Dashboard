@@ -135,6 +135,29 @@
       </button>
     </div>
 
+    <!-- GM % VIEW SECTION (PAST 5 DAYS) -->
+    <section class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="percent" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+            <span>GM % View (Past 5 Days)</span>
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Calculated as Total BRSNR divided by total hub shipment values mapped by General Manager.</p>
+        </div>
+      </div>
+      <div class="overflow-x-auto overflow-y-auto max-h-[450px]">
+        <table id="gm-percentage-table" class="w-full text-xs text-center border-collapse">
+          <thead>
+            <tr class="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold sticky top-0" id="gm-pct-header-row">
+              <th class="p-3 text-left">GM</th>
+            </tr>
+          </thead>
+          <tbody id="gm-pct-tbody" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
+        </table>
+      </div>
+    </section>
+
     <!-- GLOBAL FILTER TOOLBAR -->
     <section class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-700 pb-3">
@@ -646,7 +669,7 @@
   <script>
     Chart.register(ChartDataLabels);
 
-    let masterData = [], filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
+    let masterData = [], globalGmShipments = {}, filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
     let debounceTimer = null;
     let selectedLobFilter = 'ALL';
     let currentTab = 'matrix';
@@ -940,17 +963,22 @@
     async function loadRepositoryData() {
       showStatusBanner("Loading master dataset...", "info");
       masterData = [];
+      globalGmShipments = {};
       try {
         const resp = await fetch('data/master-data.json', { cache: 'no-cache' });
         if (!resp.ok) throw new Error("JSON not found");
         
         const raw = await resp.json();
-        masterData = raw.map(r => ({
+        const records = Array.isArray(raw) ? raw : (raw.records || []);
+        globalGmShipments = raw.gmShipments || {};
+
+        masterData = records.map(r => ({
           ...r,
           ParsedDate: r.ParsedDate ? new Date(r.ParsedDate) : null
         }));
 
         showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from master JSON.`, "success");
+        renderGMPercentageTable();
         applyFilters(true);
       } catch (err) {
         console.warn("JSON fetch failed, falling back to legacy CSV parsing...", err);
@@ -1000,6 +1028,7 @@
         });
 
         showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from CSVs.`, masterData.length ? "success" : "warning");
+        renderGMPercentageTable();
         applyFilters(true);
       } catch (e) {
         showStatusBanner("Error loading data.", "error");
@@ -1090,6 +1119,63 @@
       debounceTimer = setTimeout(() => { applyFilters(true); }, 150);
     }
 
+    /* ---------- Render GM % View Table (Past 5 Days) ---------- */
+    function renderGMPercentageTable() {
+      const theadRow = document.getElementById('gm-pct-header-row');
+      const tbody = document.getElementById('gm-pct-tbody');
+      if (!theadRow || !tbody) return;
+
+      // 1. Get unique past 5 sorted dates descending
+      const allDates = [...new Set(masterData.map(r => r.Date))].filter(Boolean);
+      const recent5Dates = allDates.sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0)).slice(0, 5);
+
+      // Build header row
+      let headerHtml = `<th class="p-3 text-left">GM</th>`;
+      recent5Dates.forEach(d => {
+        headerHtml += `<th class="p-3 text-center">${d}</th>`;
+      });
+      theadRow.innerHTML = headerHtml;
+
+      // 2. Aggregate BRSNR counts per GM per Date
+      const gmBrsnrCounts = {};
+      masterData.forEach(r => {
+        const gm = r.GM;
+        const date = r.Date;
+        if (!isInvalid(gm) && date) {
+          if (!gmBrsnrCounts[gm]) gmBrsnrCounts[gm] = {};
+          gmBrsnrCounts[gm][date] = (gmBrsnrCounts[gm][date] || 0) + 1;
+        }
+      });
+
+      // Get all unique GMs from both BRSNR records and Shipment mapping
+      const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(globalGmShipments)])).sort();
+
+      let bodyHtml = '';
+      allGms.forEach(gm => {
+        bodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+          <td class="p-3 text-left font-semibold text-slate-900 dark:text-white">${gm}</td>`;
+
+        recent5Dates.forEach(date => {
+          const brsnrCount = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
+          const shipmentVal = (globalGmShipments[gm] && globalGmShipments[gm][date]) || 0;
+
+          let pct = 0;
+          if (shipmentVal > 0) {
+            pct = (brsnrCount / shipmentVal) * 100;
+          }
+
+          const formattedPct = pct.toFixed(2) + '%';
+          const bgColor = pct > 0.20 ? 'background-color: #f8d7da; color: #842029;' : 'background-color: #d1e7dd; color: #0f5132;';
+
+          bodyHtml += `<td class="p-3 text-center font-medium" style="${bgColor}">${formattedPct}</td>`;
+        });
+
+        bodyHtml += `</tr>`;
+      });
+
+      tbody.innerHTML = bodyHtml;
+    }
+
     /* ---------- Cascading Filter Options Engine ---------- */
     function updateDynamicFilterOptions() {
       const filterConfigs = [
@@ -1129,9 +1215,8 @@
       const df = dateFromInput && dateFromInput.value ? parseDateStrFast(dateFromInput.value) : null;
       let dt = dateToInput && dateToInput.value ? parseDateStrFast(dateToInput.value) : null;
 
-       // Ensure the end date covers the entire day up to 23:59:59.999
       if (dt) {
-          dt.setHours(23, 59, 59, 999);
+        dt.setHours(23, 59, 59, 999);
       }
 
       const selWk = excludedFilterId === 'filter-week' ? [] : selectedFilters['filter-week'];
