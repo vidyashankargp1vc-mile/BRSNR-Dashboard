@@ -1,0 +1,888 @@
+ph_name,AM,RM,GM,Zone,State,City
+AgraHub_AGR_PL,Sunil Yadav,Siddharth Saurav,Arvind Bansal (UP),North,UTTAR PRADESH,Agra
+AjmerHub_AJM_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Ajmer
+AliganjHub_LKO_PL,Nirbhay Jaiswal,Rajan Poswal,Manoj Harsh,North,UTTAR PRADESH,Lucknow
+AligarhHub_ALG_PL,Ajay Kumar Sharma,Vijay Singh,Manoj Harsh,North,UTTAR PRADESH,Aligarh
+Alipur_DEL_PL,Pradeep,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+AllahabadHub_ALD_PL,Ankur Srivastava,Shaiq Hussain,Manoj Harsh,North,UTTAR PRADESH,Allahabad
+AlwarHub_ALW_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Alwar
+AmbalaHub_UMB_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Ambala
+AmritsarHub_ATQ_PL,Mohit Soni,Somvir Dalal,Loveleen Singh,North,PUNJAB,Amritsar
+AmrohaHub_AOA_PL,Ajay Kumar Sharma,Sarang Rajvanshi,Manoj Harsh,North,UTTAR PRADESH,Amroha
+AzamgarhHub_AZM_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Azamgarh
+BaddiHub_BDI_PL,Anand Kumar,Rohit Kumar,Loveleen Singh,North,HIMACHAL PRADESH,Baddi
+BahadurgarhHub_BHD_PL,Ajit Patel,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Bahadurgarh
+BahraichHub_BAI_PL,Ankur Srivastava,Sarvesh Srivastava,Manoj Harsh,North,UTTAR PRADESH,Bahraich
+BalliaHub_BLA_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Ballia
+BalotraHub_BLO_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Balotra
+BarabankiHub_BBK_PL,Nirbhay Jaiswal,Rajan Poswal,Manoj Harsh,North,UTTAR PRADESH,Barabanki
+BareillyHub_BRY_PL,Nirbhay Jaiswal,Ishwar Prakash Sahani,Manoj Harsh,North,UTTAR PRADESH,Bareilly
+BarmerHub_BMR_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Barmer
+BarnalaHub_BRN_PL,Vishal Kalra,Rohit Kumar,Loveleen Singh,North,PUNJAB,Barnala
+BatalaHub_BAA_PL,Navjot Singh,Bikramjeet Singh,Loveleen Singh,North,PUNJAB,Batala
+BharatpurHub_BTP_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Bharatpur
+BhatindaHub_BUP_PL,Ravi Kumar,Somvir Dalal,Loveleen Singh,North,PUNJAB,Bhatinda
+BhilwaraHub_BLW_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+BhiwaniHub_DEL_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Bhiwani
+BikanerHub_BKB_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Bikaner
+Britania_DEL_PL,Parkash Mishra,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+BulandshahrHub_BUR_PL,Ajay Kumar Sharma,Vijay Singh,Manoj Harsh,North,UTTAR PRADESH,Bulandshahr
+ChandigarhHub_CHD_PL,Pearl Dhiman,Rohit Kumar,Loveleen Singh,North,CHANDIGARH,Chandigarh
+Chhatarpur_DEL_PL,Prem Singh,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+DehradunHub_DED_PL,Ashish Nautiyal,Amit Naithani,Loveleen Singh,North,UTTARAKHAND,Dehradun
+DeoriaHub_DRA_PL,Ankur Srivastava,Gaurav Gupta,Manoj Harsh,North,UTTAR PRADESH,Deoriya
+EtwahHub_ETW_PL,Nirbhay Jaiswal,Ishwar Prakash Sahani,Manoj Harsh,North,UTTAR PRADESH,Etwah
+FaridabadHub_DEL_PL,Prem Singh,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Faridabad
+FarrukhabadHub_FRR_PL,Nirbhay Jaiswal,Ishwar Prakash Sahani,Manoj Harsh,North,UTTAR PRADESH,Farrukhabad
+FatehabadHub_FHB_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Ftehabad
+FerozepurHub_FER_PL,Ravi Kumar,Somvir Dalal,Loveleen Singh,North,PUNJAB,Ferozepur
+Firozabad_FZD_PL,Nirbhay Jaiswal,Ishwar Prakash Sahani,Manoj Harsh,North,UTTAR PRADESH,Firozabad
+GeorgeTownHub_ALD_PL,Ankur Srivastava,Shaiq Hussain,Manoj Harsh,North,UTTAR PRADESH,Allahabad
+GhazipurHub_GIR_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Ghazipur
+GobindgarhHub_LUH_PL,Jitender Kumar,Rohit Kumar,Loveleen Singh,North,PUNJAB,Gobindgarh
+GondaHub_GND_PL,Nirbhay Jaiswal,Sarvesh Srivastava,Manoj Harsh,North,UTTAR PRADESH,Gonda
+GorakhpurHub_GOP_PL,Ankur Srivastava,Gaurav Gupta,Manoj Harsh,North,UTTAR PRADESH,Gorakhpur
+GumtiHub_PL,Nirbhay Jaiswal,Sunil Sharma,Manoj Harsh,North,UTTAR PRADESH,Kanpur
+GurdaspurHub_GDS_PL,Navjot Singh,Bikramjeet Singh,Loveleen Singh,North,PUNJAB,Gurdaspur
+GurgaonHub_DEL_PL,Deepak,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Gurgaon
+HaldwaniHub_HWI_PL,Gaurav Gangwar,Amit Naithani,Loveleen Singh,North,UTTARAKHAND,Haldwani
+HapurHub_HPU_PL,Imran Khan,Sarang Rajvanshi,Manoj Harsh,North,UTTAR PRADESH,Hapur
+HaridwarHub_HRD_PL,Jitendra Mehar,Amit Naithani,Loveleen Singh,North,UTTARAKHAND,Haridwar
+HissarHub_HSS_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Hissar
+HoshiarpurHub_HAP_PL,Mohit Soni,Somvir Dalal,Loveleen Singh,North,PUNJAB,Hoshiarpur
+JaipurHub_JAI_PL,Bholuram Kumawat,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+JaunpurHub_JNP_PL,Ankur Srivastava,Shaiq Hussain,Manoj Harsh,North,UTTAR PRADESH,Jaunpur
+JhansiHub_JHS_PL,Nirbhay Jaiswal,Sunil Sharma,Manoj Harsh,North,UTTAR PRADESH,Jhansi
+Jhilmil_DEL_PL,Pradeep,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+JhunjhunuHub_JNJ_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jhunjhunu
+JindHub_JND_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Jind
+JodhpurHub_JDH_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jodhpur
+KaithalHub_KTL_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Kaithal
+KannaujiHub_KAU_PL,Nirbhay Jaiswal,Sunil Sharma,Manoj Harsh,North,UTTAR PRADESH,Kannauj
+KarnalHub_KAL_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Karnal
+KashipurHub_KAS_PL,Gaurav Gangwar,Amit Naithani,Loveleen Singh,North,UTTARAKHAND,Kashipur
+KheriHub_KHE_PL,Nirbhay Jaiswal,Sarvesh Srivastava,Manoj Harsh,North,UTTAR PRADESH,Kheri
+KotaHub_KTU_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Kota
+KurukshetraHub_KUR_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Kurukshetra
+MathuraHub_MTH_PL,Ajay Kumar Sharma,Vijay Singh,Manoj Harsh,North,UTTAR PRADESH,Mathura
+MauHub_MAU_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Mau
+MedicalRoadHub_GOP_PL,Ankur Srivastava,Gaurav Gupta,Manoj Harsh,North,UTTAR PRADESH,Gorakhpur
+MeerutHub_PL,Imran Khan,Sarang Rajvanshi,Manoj Harsh,North,UTTAR PRADESH,Meerut
+MirzapurHub_MZP_PL,Ankur Srivastava,Shaiq Hussain,Manoj Harsh,North,UTTAR PRADESH,Mirzapur
+MohaliHub_IXC_PL,Jitender Kumar,Rohit Kumar,Loveleen Singh,North,PUNJAB,Mohali
+MoradabadHub_MRD_PL,Surendra Kumar,Sonveer Tomar,Arvind Bansal (DNCR),North,UTTAR PRADESH,Moradabad
+MuktsarHub_MKT_PL,Ravi Kumar,Somvir Dalal,Loveleen Singh,North,PUNJAB,Muksar
+MundkaHub_DEL_PL,Ajit Patel,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+MuzaffarnagarHub_MFN_PL,Imran Khan,Sarang Rajvanshi,Manoj Harsh,North,UTTAR PRADESH,Muzaffarnagar
+NarnaulHub_NNL_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Narnaul
+NawanshahrHub_NSH_PL,Anand Kumar,Rohit Kumar,Loveleen Singh,North,PUNJAB,Nawan Shahar
+NoidaHub_DEL_PL,Nakul Verma,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Noida
+OrderlyBazarHub_VNS_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Varanasi
+PanchkulaMPHub_PNK_PL,Pearl Dhiman,Rohit Kumar,Loveleen Singh,North,HARYANA,Panchkula
+PanipatHub_PPT_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Panipat
+PatialaHub_PTA_PL,Vishal Kalra,Rohit Kumar,Loveleen Singh,North,PUNJAB,Patiala
+PhagwaraHub_PGR_PL,Munish Kumar,Somvir Dalal,Loveleen Singh,North,PUNJAB,Phagwara
+Phase3NoidaHub_DEL_PL,Nakul Verma,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Noida
+PilaniHub_PIL_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Pilani
+PilibhitHub_PII_PL,Nirbhay Jaiswal,Ishwar Prakash Sahani,Manoj Harsh,North,UTTAR PRADESH,Pilibhit
+PrahladPur_DEL_PL,Prem Singh,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+RohtakHub_ROH_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Rohtak
+RoorkeeHub_HRD_PL,Jitendra Mehar,Amit Naithani,Loveleen Singh,North,UTTARAKHAND,Roorkee
+RudrapurHub_RDP_PL,Gaurav Gangwar,Amit Naithani,Loveleen Singh,North,UTTARAKHAND,Rudrapur
+RupnagarHub_RUP_PL,Anand Kumar,Rohit Kumar,Loveleen Singh,North,PUNJAB,Rupnagar
+SaharanpurHub_SHP_PL,Imran Khan,Sarang Rajvanshi,Manoj Harsh,North,UTTAR PRADESH,Saharanpur
+SahibabadHub_DEL_PL,Nakul Verma,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Ghaziabad
+SahjanwaHub_SHJ_PL,Ankur Srivastava,Gaurav Gupta,Manoj Harsh,North,UTTAR PRADESH,Sahjanwa
+ShahjahanpurHub_SJH_PL,Nirbhay Jaiswal,Sarvesh Srivastava,Manoj Harsh,North,UTTAR PRADESH,Shajahanpur
+Sigra_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Varanasi
+SikarHub_SIK_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Sikar
+SirsaHub_SRS_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Sirsahub
+SitapurHub_SIT_PL,Nirbhay Jaiswal,Sarvesh Srivastava,Manoj Harsh,North,UTTAR PRADESH,Sitapur
+SolanHub_SLN_PL,Ashish Pundir,Amit Naithani,Loveleen Singh,North,HIMACHAL PRADESH,Solan
+SonepatHub_SOP_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Sonipat
+SriGanganagarHub_SGN_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Sri Ganganagar
+SultanpurHub_STP_PL,Ankur Srivastava,Rajan Poswal,Manoj Harsh,North,UTTAR PRADESH,Sultanpur
+TohanaHub_THN_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Tohana
+TransportNagarHub_LKO_PL,Ankur Srivastava,Rajan Poswal,Manoj Harsh,North,UTTAR PRADESH,Lucknow
+UdaipurHub_UDR_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Udaipur
+UnaHPHub_UNA_PL,Anand Kumar,Rohit Kumar,Loveleen Singh,North,HIMACHAL PRADESH,Una
+UttamNagarHub_DEL_PL,Romy Kapoor,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+VKIAHub_JAI_PL,Neha Shinde,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+YamunaNagarHub_YNR_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Yamunanagar
+HathrasHub_HTH_PL,Ajay Kumar Sharma,Vijay Singh,Manoj Harsh,North,UTTAR PRADESH,Hathras
+MalviyaNagarhub_JAI_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+CABTJalandharOPH_JLR_PL,Harpreet Singh,Somvir Dalal,Loveleen Singh,North,PUNJAB,Jalandhar
+Pitampurahub_DEL_PL,Mandesh Kumar,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+MangolpuriHub_DEL_PL,Ajit Patel,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+NehruPlaceHub_DEL_PL,Prem Singh,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+Rohinihub_DEL_PL,Romy Kapoor,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+BurariHub_DEL_PL,Pradeep,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+Ramaroadhub_DEL_PL,Parkash Mishra,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+JasolaHub_DEL_PL,Prem Singh,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+IPextension_DEL_PL,Neeraj,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+BudhViharHub_DEL_PL,Romy Kapoor,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+RishikeshHub_HRD_PL,Jitendra Mehar,Amit Naithani,Loveleen Singh,North,UTTARAKHAND,Rishikesh
+LadwaHub_LAD_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Ladwa
+BhiwadiHub_DHR_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Bhiwadi
+WelcomeHub_DEL_PL,Neeraj,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+VasundharaHub_DEL_PL,Neeraj,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+VrindavanHub_MTH_PL,Ajay Kumar Sharma,Vijay Singh,Manoj Harsh,North,UTTAR PRADESH,Vrindavan
+Motibaghhub_DEL_PL,Prem Singh,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+BhankrotaHub_JAI_PL,Neha Shinde,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+BallabhgarhHub_DEL_PL,Prem Singh,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Ballabhgarh
+BawanaHub_DEL_PL,Pradeep,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+KarolbaghHub_DEL_PL,Parkash Mishra,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+BilaspurHub_DRH_PL,Deepak,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Gurgaon
+SitapuraHub_JAI_PL,Bholuram Kumawat,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+KanjhawalaHub_DEL_PL,Romy Kapoor,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+HawamahalHub_JAI_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+SangamviharHub_DEL_PL,Prem Singh,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Sangamvihar
+ShalimarGardenHub_DEL_PL,Nakul Verma,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Ghaziabad
+PaharganjHub_DEL_PL,Parkash Mishra,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+GandhinagarHub_DEL_PL,Neeraj,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+Faridkothub_FAD_PL,Ravi Kumar,Somvir Dalal,Loveleen Singh,North,PUNJAB,Faridkot
+PaliHub_PAL_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Pali
+JhajjarHub_JJJ_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Jhajjar
+SirsaganjHub_SRS_PL,Nirbhay Jaiswal,Ishwar Prakash Sahani,Manoj Harsh,North,UTTAR PRADESH,Sirsaganj
+ModinagarHub_MEE_PL,Imran Khan,Sarang Rajvanshi,Manoj Harsh,North,UTTAR PRADESH,Modinagar
+SelaquiHub_DED_PL,Ashish Pundir,Amit Naithani,Loveleen Singh,North,UTTARAKHAND,Dehradun
+FerozepurRoadHub_LUH_PL,Ishant Gupta,Somvir Dalal,Loveleen Singh,North,PUNJAB,Ludhiana
+PathankotHub_PHT_PL,Navjot Singh,Bikramjeet Singh,Loveleen Singh,North,PUNJAB,Pathankot
+BKTHub_LKO_PL,Nirbhay Jaiswal,Sarvesh Srivastava,Manoj Harsh,North,UTTAR PRADESH,Bkt
+BeawarHub_BEA_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Beawar
+ChunarHub_CHU_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Chunar
+DhampurHub_DHM_PL,Ajay Kumar Sharma,Sarang Rajvanshi,Manoj Harsh,North,UTTAR PRADESH,Dhampur
+Fazilkahub_FAL_PL,Ravi Kumar,Somvir Dalal,Loveleen Singh,North,PUNJAB,Fazilka
+GoshainganjHub_GOS_PL,Nirbhay Jaiswal,Sarvesh Srivastava,Manoj Harsh,North,UTTAR PRADESH,Goshainganj
+MakranaHub_MAK_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Makrana
+PalwalHub_PLW_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Palwal
+RewariHub_RWR_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Rewari
+SIGMAJAGRAONODH_JGN_PL,Harpreet Singh,Somvir Dalal,Loveleen Singh,North,PUNJAB,Jagraon
+IDENTIFYPLUSELLENABADODH_ELB_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Ellenabad
+ELASTICRUNHANSIODH_HNS_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Hansi
+GIDDERBAHAHUB_GID_PL,Ravi Kumar,Somvir Dalal,Loveleen Singh,North,PUNJAB,Gidderbaha
+RatiaODH_RTA_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Ratia
+HanumangarhHub_HAN_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Hanumangarh
+KundliHub_KND_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Kundli
+ChandigarhRoadSplitHub_LUH_PL,Harpreet Singh,Somvir Dalal,Loveleen Singh,North,PUNJAB,Ludhiana
+DasnaHub_DEL_PL,Nakul Verma,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Ghaziabad
+BijwasanHub_DEL_PL,Parkash Mishra,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+ChoumuHub_JAI_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+MuhammadabadHub_MUH_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Azamgarh
+IDENTIFYPLUSRAJSAMANDODH_RJS_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Rajsamand
+IDENTIFYPLUSSHAHPURAODH_SHA_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+NAGAURODH_NGR_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Nagaur
+TTSPLGANGAPURODH_GAG_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Sawai Madhav Pur
+KOPAGANJMDH_MAU_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Mau
+Farrukhnagarhub_FRK_PL,Deepak,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Gurgaon
+SikandraNH2Hub_AGR_PL,Sunil Yadav,Siddharth Saurav,Arvind Bansal (UP),North,UTTAR PRADESH,Agra
+ShyamnagarHub_JAI_PL,Neha Shinde,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+NajafgarhHub_DEL_PL,Parkash Mishra,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+BhisiHub_KNP_PL,Nirbhay Jaiswal,Sunil Sharma,Manoj Harsh,North,UTTAR PRADESH,Kanpur
+KhurjaHub_KRJ_PL,Ajay Kumar Sharma,Vijay Singh,Manoj Harsh,North,UTTAR PRADESH,Kanpur
+ChandigarhRoadHub_LUH_PL,Harpreet Singh,Somvir Dalal,Loveleen Singh,North,PUNJAB,Ludhiana
+SRCVAgraHub_AGR_OPH_PL,Yasharth Bhatnagar,Siddharth Saurav,Arvind Bansal (UP),North,UTTAR PRADESH,Agra
+DholpurHub_DLP_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Dholpur
+IdentifyPlusTonkODH_TNK_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Tonk
+ELASTICRUNKASGANJODH_KSJ_PL,Ajay Kumar Sharma,Vijay Singh,Manoj Harsh,North,UTTAR PRADESH,Etah
+AshokViharHub_DEL_PL,Romy Kapoor,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+Peeragarhi_DEL_PL,Mandesh Kumar,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+JalandharSplitOPH_JLR_PL,Harpreet Singh,Somvir Dalal,Loveleen Singh,North,PUNJAB,Jalandhar
+GurgaonOPHHUB_PL,Deepak,Manal Sharma,Arvind Bansal (DNCR),North,DELHI NCR,Gurgaon
+VikasNagarHub_DEL_PL,Parkash Mishra,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+ERAgraOPHHub_AGR_PL,Yasharth Bhatnagar,Siddharth Saurav,Arvind Bansal (UP),North,UTTAR PRADESH,Agra
+SFXAgraOPHHub_AGR_PL,Yasharth Bhatnagar,Siddharth Saurav,Arvind Bansal (UP),North,UTTAR PRADESH,Agra
+BHUHub_VNS_PL,Ankur Srivastava,Vinod Kumar Yadav,Manoj Harsh,North,UTTAR PRADESH,Varanasi
+KalwarroadHub_JAI_PL,Neha Shinde,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+BhadohiHub_BOH_PL,Ankur Srivastava,Shaiq Hussain,Manoj Harsh,North,UTTAR PRADESH,Varanasi
+YamunaViharHub_DEL_PL,Surendra Kumar,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+KeshavPuramOPH_KEP_PL,Parkash Mishra,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+KukasHub_KUK_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+MoradabadTempHub_MRD_PL,Surendra Kumar,Sonveer Tomar,Arvind Bansal (DNCR),North,UTTAR PRADESH,Moradabad
+JamdoliOPHHub_PL,Naresh Kumar,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+YashobhoomiHub_DEL_PL,Parkash Mishra,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+KhurjaHubTempBBD26_KRJ_PL,Ajay Kumar Sharma,Vijay Singh,Manoj Harsh,North,UTTAR PRADESH,Kanpur
+RamaViharMPHub_DEL_PL,Romy Kapoor,Manish Mishra,Arvind Bansal (DNCR),North,DELHI NCR,Delhi
+JagatpuraHub_JAI_PL,Bholuram Kumawat,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+NiwaruHub_JAI_PL,Neha Shinde,Mohit Sharma,Akash Sharma,North,RAJASTHAN,Jaipur
+RanibaghHub_DEL_PL,Ajit Patel,Manal Sharma,Arvind Bansal (DNCR),North,Delhi,Delhi
+UdhyogNagarMPHub_DEL_PL,Pradeep,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+LoniHub_DEL_PL,Nakul Verma,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,Noida
+SantNagarHub_DEL_PL,Pradeep,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+SwaroopNagarHub_DEL_PL,Mandesh Kumar,Sonveer Tomar,Arvind Bansal (DNCR),North,Uttar Pradesh,SwaroopNagar
+TextileCityHub_PPT_PL,Shivraj Sharma,Vikram Dahiya,Arjun Bhargava,North,HARYANA,Panipat
+TransportNagarHubTempBBD26_LKO_PL,Ankur Srivastava,Rajan Poswal,Manoj Harsh,North,UTTAR PRADESH,Lucknow
+GeetaColonyHub_DEL_PL,Pradeep,Sonveer Tomar,Arvind Bansal (DNCR),North,DELHI NCR,New Delhi
+NangloiMPHub_DEL_PL,Ajit Patel,Manal Sharma,Arvind Bansal (DNCR),North,Delhi,Delhi
+NauchandiHub_MEE_PL,Imran Khan,Sarang Rajvanshi,Manoj Harsh,North,Uttar Pradesh,Meerut
+BuddhiViharHub_MRD_PL,Surendra Kumar,Sonveer Tomar,Arvind Bansal (DNCR),North,Uttar Pradesh,Moradabad
+TundlaHub_FIR_PL,Nirbhay Jaiswal,Ishwar Prakash Sahani,Manoj Harsh,North,UTTAR PRADESH,Tundla
+SaharanpurHubTempBBD26_SHP_PL,Imran Khan,Sarang Rajvanshi,Manoj Harsh,North,UTTAR PRADESH,Sharanpur
+GumtiTempHub_KNU_PL,Nirbhay Jaiswal,Sunil Sharma,Manoj Harsh,North,UTTAR PRADESH,Kanpur
+MoradabadHubTempBBD26_MRD_PL,Surendra Kumar,Sonveer Tomar,Arvind Bansal (DNCR),North,Uttar Pradesh,Moradabad
+AhmedNagarHub_AHN_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Ahmednagar
+AkolaHub_AKD_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Akolahub
+AmravatiHub_AMI_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Amravati
+AnandHub_AMD_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Anand
+AurangabadHub_IXU_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Aurangabad
+BalaghatHub_BGT_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Balaghathub
+BaramatiHub_BRM_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Baramati
+BharuchHub_BRH_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Bharuch
+BhavnagarHub_BVG_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Bhavnagar
+BhiwandiHub_BHI_PL,Sanjay Kawar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Bhiwandi
+BhiwandiSH_BWD_PL,Rupak Bidkar,Suraj upadhyay,Yatin Verma,West,MAHARASHTRA,Bhiwandi
+Bhiwandisplithub_BHI_PL,Sanjay Kawar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Mumbai
+BhujHub_BHJ_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Bhujhub
+BinaHub_BIN_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Satnahub
+BoisarHub_BIS_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Boisarhub
+ChhindwaraHub_CHH_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Chhindwarahub
+CollegeRoadHub_NSK_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Nashik
+CornerRoadHub_IXU_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Aurangabad
+DewasHub_DWS_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Indore
+DhankawadiHub_PUNE_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Pune
+DhuleHub_DHL_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Dhulehub
+NavsariHub_STV_PL,Harsh Shah,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Navsari
+elasticrunkhargoneodh_khg_pl,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Khargone
+elasticrunmahuvaodh_mhv_pl,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Bhavnagar
+elasticrunparatwadaodh_prt_pl,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Amravati
+FortHub_MUM_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Mumbai
+GandhidhamHub_GDM_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Gandhidham
+GandhiNagarHub_GAN_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Gandhinagar
+GondalHub_GDN_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Gondalhub
+GoregaonMPHub_MUM_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Mumbai
+GunaHub_GUN_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Gunahub
+GwaliorHub_GWL_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Gwalior
+Halolhub_HLL_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Halol
+hattahub_hat_pl,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Hatta
+HimmatnagarHub_HMT_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Himmatnagarhub
+HoshangabadHub_HGB_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Hoshangabadhub
+IndoreSplitHub_IDR_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Indore
+JabalpurHub_JBL_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Jabalpur
+JalgaonHub_JGO_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Jalgaon
+JamnagarHub_QGR_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Jamnagar
+JasdanHub_JSN_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Jasdan
+JunagadhHub_IXK_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Junagadh
+KalolHub_GAN_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Surat
+KalyanHub_MUM_PL,Sanjay Kawar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Mumbai
+KaradHub_KRD_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Karad
+KatniHub_KTN_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Katni
+KhandwaHub_KWA_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Khandwahub
+KhopoliHub_KPL_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Khopoli
+KolhapurHub_KHL_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Kolhapur
+koorieemumbraodh_mbr_pl,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Thane
+KopargaonHub_KPG_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Kopargaonhub
+LalparHub_LLP_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Lalparhub
+MalegaonHub_MLG_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Malegaonhub
+MandsaurHub_MAN_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Indore
+ManinagarHub_ADI_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Ahmedabad
+MehsanaHub_MHN_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Mehsana
+MhalungeHub_CHK_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Pune
+MiraRoadHub_MUM_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Thane
+MorbiHub_MRB_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Morbihub
+SilvassaHub_AMD_PL,Harsh Shah,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Silvasssa
+NadiadHub_AMD_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Anand
+NandedHub_NDC_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Nanded
+ValsadHub_AMD_PL,Harsh Shah,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Valsad
+PalanpurHub_PLN_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Palanpurhub
+PalgharHub_PAR_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Palgharhub
+PanchavatiHub_NSK_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Nashik
+PhursungiHub_Pune_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Pune
+Pimpri_PNQ_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Pune
+PorbandarHub_POR_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Porbandarhub
+RajkotHub_RAJ_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Rajkot
+RatlamHub_RTM_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Ratlamhub
+SagarHub_SGR_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Sagar
+SakinakaHub_MUM_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Mumbai
+SangliHub_SNG_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Sanglihub
+VapiHub_AMD_PL,Harsh Shah,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Vapi
+SataraHub_STR_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Satara
+SatnaHub_STA_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Satnahub
+Sewrihub_Mum_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Mumbai
+ShukrawarpethHub_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Pune
+ShyamalHub_SHY_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Shyamal
+ShyamalOPH_IPH_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Shyamal
+SaniyaHub_STV_PL,Harsh Shah,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+SuratHub_STV_PL,Preet Dhaduk,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+SolapurHub_SSE_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Solapur
+VarachhaHub_STV_PL,Preet Dhaduk,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+SuratTempHub_STV,Preet Dhaduk,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+singapurhub_stv_pl,Sahil Patel,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+SurendraNagarHub_SDR_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Surendranagarhub
+ThaneHub_MUM_PL,Sanjay Kawar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Thane
+TrimurtiNagarHub_NAG_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Nagpur
+UjjainHub_UJN_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Ujjainhub
+UnaHub_UNA_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Unahub
+VadodaraHub_BDQ_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Vadodara
+StationTempHub_STV_PL,Sahil Patel,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+MotaVarachhaSplitHub_STV_PL,Sahil Patel,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+SaroliHub_STV_PL,Sarfaraz Shaikh,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Saroli
+VasaiHub_MUM_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Vasiai Road
+VashiHub_MUM_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Mumbai
+VastralHub_ADI_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Vastral
+VeravalHub_VRV_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Veravalhub
+VidyanagarHub_BHO_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Bhopal
+WagholiHub_PNQ_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Pune
+WardhaHub_WRD_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Wardhahub
+WardhamanNagar_NAG_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Nagpur
+YavatmalHub_YTM_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Yavatmalhub
+KamrejHub_STV_PL,Sarfaraz Shaikh,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+Motavarachahub_STV_PL,Sushil Pal,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+AnnapurnaShajapurODH_SJP_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Indore
+SaroliHubSplit_STV_PL,Sushil Pal,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+DindoliHub_STV_PL,Sushil Pal,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Saroli
+UdhnaHub_STV_PL,Sushil Pal,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+YogiChowkTempHub_STV_PL,Thomas Joshi,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+RaisenOPH_RAI_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Bhopal
+VareliSurat_MYNTRA_SRT_PL,Thomas Joshi,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+MyntraUdhnaHub_SRT_PL,Thomas Joshi,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+Rajkotsplithub_RAJ_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Rajkot
+Aslalihub_ASL_IPH_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Vastral
+AmroliHub_STV_PL,Sahil Patel,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+Bhopal1OPH_PL,Amit Dey,Amit Dey,Swapnil Borgaonkar (MP),West,MADHYA PRADESH,Bhopal
+kosadhub_stv_pl,Sahil Patel,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+PunagamHub_STV_PL,Preet Dhaduk,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+VedHub_STV_PL,Sahil Patel,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+TalegaonHub_PNQ_PL,Sandip Mandole,Kuldip Jadhav,Swapnil Borgaonkar (MH),West,MAHARASHTRA,Pune
+GodadaraHub_STV_PL,Thomas Joshi,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Surat
+SachinHub_STV_PL,Sarfaraz Shaikh,Pujnesh Tiwari,Ashvani Bhatt,West,GUJARAT,Sachin
+JetpurHub_JTP_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Jetpur
+Kathwadahub_OPH_IPH_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Kathwada
+VavdiOPH_IPH_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Vavdi
+SaparOPH_IPH_PL,Pritesh Buch,Dixit Joshi,Ankur Sinha,West,GUJARAT,Rajkot
+NarodaOPH_IPH_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Naroda
+RanipHub_AMD_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Ranip
+GotaOPH_IPH_PL,Hrishi Kumar,Dixit Joshi,Ankur Sinha,West,GUJARAT,Gota
+AngulHub_ANG_PL,Abhimanyu Das,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Angul
+BhubaneswarHub_BBI_PL,Abhimanyu Das,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Bhubaneshwar
+CABTBhubaneswarODH_BBI_PL,Abhimanyu Das,Sebasis Rayguru,Amitava Dutta,East,Odisha,Odisha 1
+CABTGautamnagarODH_BBI_PL,Abhimanyu Das,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Bhubaneswar
+DependoBanarpalODH_ANG_PL,Abhimanyu Das,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Angul
+GautamnagarHub_BBI_PL,Abhimanyu Das,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Bhubaneswar
+TalcherHub_TLH_PL,Abhimanyu Das,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Talcher
+KatiharHub_KIR_PL,Sandeep Prakash,Anurag Singh,Amitava Dutta,East,BIHAR,Katihar
+KishanganjHub_KNE_PL,Abhishek Mishra,Anurag Singh,Amitava Dutta,East,BIHAR,Kishanganj
+PurniaHub_PRN_PL,Abhishek Mishra,Anurag Singh,Amitava Dutta,East,BIHAR,Purnia
+CABTNoonmatiSplitODH_GAU_PL,Abhishek Singh,Aman Kumar,Sankar Barman,East,ASSAM,Guwahati
+CABTFancyBazaarOPH_GAU_PL,Abhishek Singh,Aman Kumar,Sankar Barman,East,Assam,Assam & North East
+ETASHSaukuchiODH_GAU_PL,Abhishek Singh,Aman Kumar,Sankar Barman,East,ASSAM,Guwahati
+NoonmatiHub_GAU_PL,Abhishek Singh,Aman Kumar,Sankar Barman,East,ASSAM,Guwahati
+SixMileHub_GAU_PL,Abhishek Singh,Aman Kumar,Sankar Barman,East,ASSAM,Guwahati
+SonapurHub_GAU_PL,Abhishek Singh,Aman Kumar,Sankar Barman,East,ASSAM,Guwahati
+UlubariHub_GAU_PL,Abhishek Singh,Aman Kumar,Sankar Barman,East,ASSAM,Guwahati
+CuttackCDAHUB_CTC_PL,Amar Rout,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Cuttack
+CABTTIRTOLODH_TTL_PL,Amar Rout,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Cuttack
+ParadipHub_PDP_PL,Amar Rout,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Paradip
+PuriHub_PUR_PL,Amar Rout,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Puri
+Sakhigopalhub_PUR_PL,Amar Rout,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Puri
+BokaroHub_BKO_PL,Amit Kumar,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Bokaro
+CHATRAHUB_CTR_PL,Amit Kumar,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Chatra
+ChitrapurHub_RMT_PL,Amit Kumar,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Chitarpur
+HazaribaghHub_HZB_PL,Amit Kumar,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Hazaribagh
+IchakHub_HZB_PL,Amit Kumar,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Hazaribag
+JhumriTelaiyaHub_KQR_PL,Amit Kumar,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Jhumritelaiya_Koderma
+RamgarhHub_RMT_PL,Amit Kumar,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Ramgarh
+DanapurHub_DNR_PL,Amit Kumar Rai,Sumit Kumar,Amitava Dutta,East,BIHAR,Danapur
+RajabazarHub_PAT_PL,Amit Kumar Rai,Sumit Kumar,Amitava Dutta,East,BIHAR,Patna
+RajivNagarHub_PAT_PL,Amit Kumar Rai,Sumit Kumar,Amitava Dutta,East,BIHAR,Patna
+BegusaraiHub_BGI_PL,Amit Kumar Roy,Anurag Singh,Amitava Dutta,East,BIHAR,Begusarai
+JamuiHub_JMU_PL,Amit Kumar Roy,Anurag Singh,Amitava Dutta,East,Bihar,Bihar-2
+LakhisaraiHub_LKR_PL,Amit Kumar Roy,Anurag Singh,Amitava Dutta,East,Bihar,Bihar-2
+ADITYAPURHUB_IXW_PL,Anamika Sinha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Jamshedpur
+ChaibasaHub_CBS_PL,Anamika Sinha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Chaibasa
+GOLMURIHUB_IXW_PL,Anamika Sinha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Jamshedpur
+JamshedpurHub_IXW_PL,Anamika Sinha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Jamshedpur
+VxpressAdityapurSplitODH_IXW_PL,Anamika Sinha,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Adityapur
+Raxaulhub_RXL_PL,Anish Kumar,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Nawadah
+BettiahHub_BTH_PL,Anish Kumar,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Bettiha
+Myntra_Kolkata_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+Parganas_MYNTRA_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+BarasatHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+BarrackpurHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+BehalaHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+BelghariaHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+BhawanipurHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+BongaonHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bongaon
+CABTKalyaniSplitODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Naihati
+CABTKolaghatODH_KIG_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,South Bengal 2
+ChandannagarHub_CNR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Chinchurah
+ChinarparkHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+DALHOUSIEHUB_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+DEPENDOHABRAODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,South Bengal 2
+RAIDIGHIHUB_RDG_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Nadia
+DiamondHarbourHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ElasticRunBamungachiODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ELASTICRUNBAMUNGACHIODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ElasticRunBantalaODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ElasticRunChapadaliODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ElasticRunChinarParkSpiltODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ElasticRunKhardahODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ElasticRunPanihatiODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ELASTICRUNPANIHATIODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ElasticRunSealdahODH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+GardenReachHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,Kolkata
+GariaHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+HaltuHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+HowrahHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Howrah
+KalyaniHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kalyani
+LaketownHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+PhooltalaHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+RDCHRN_VPH_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Howrah
+SakherbazarHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+SalkiaHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Howrah
+SaltlakeHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+SectorVHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+ShantipurHub_STP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Shantipur
+SodepurHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+TopsiaHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+DarbhangaHub_DBG_PL,Arvind Kumar Sharma,Anurag Singh,Amitava Dutta,East,BIHAR,Darbhanga
+DarbhangaSplitHUB_DBG_PL,Arvind Kumar Sharma,Anurag Singh,Amitava Dutta,East,BIHAR,Darbhanga
+MadhubaniHub_MBI_PL,Arvind Kumar Sharma,Anurag Singh,Amitava Dutta,East,BIHAR,Madhubani
+BolangirHub_BLG_PL,Ashish Pradhan,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Bolangir
+SambalpurHub_SBP_PL,Ashish Pradhan,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Sambalpur
+ElasticRunSambalpurSplitODH_SBP_PL,Ashish Pradhan,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Sambalpur
+DeogharHub_DGH_PL,Avinab Nayak,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Deoghar
+DumkaHub_DMK_PL,Avinab Nayak,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Dumka
+GiridihHub_GRD_PL,Avinab Nayak,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Giridih
+JAMTARAHUB_JMT_PL,Avinab Nayak,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Jamtara
+MadhupurHub_MDP_PL,Avinab Nayak,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Madhupur
+NirsaHub_NRA_PL,Avinab Nayak,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Nirsa
+BaleshwarHub_BAW_PL,Balaram Nayak,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Baleshwar
+BhadrakHub_BHC_PL,Balaram Nayak,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Bhadrak
+DhamnagarHub_BHC_PL,Balaram Nayak,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Dhamnagar
+ElasticRunSoroODH_SRO_PL,Balaram Nayak,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Soro
+TihidiHub_BHC_PL,Balaram Nayak,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Bhadrak
+AgartalaHub_IXA_PL,Bapi Chakraborty,Arnab Roy,Sankar Barman,East,TRIPURA,Agartala
+JogindraNagarHub_IXA_PL,Bapi Chakraborty,Saif Ali Sharhan,Sankar Barman,East,TRIPURA,Agartala
+MoloyNagarHub_IXA_PL,Bapi Chakraborty,Arnab Roy,Sankar Barman,East,TRIPURA,Moloynagar
+UdaipurTripuraHub_IXR_PL,Bapi Chakraborty,Arnab Roy,Sankar Barman,East,TRIPURA,Udaipur
+DhenkanalHub_DNK_PL,Bhagirathi Swain,Sujeet Kumar Shaw,Amitava Dutta,East,Odisha,Odisha 1
+ElasticRunAthagarhODH_ATG_PL,Bhagirathi Swain,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Athagarh
+KendraparaHub_KNP_PL,Bhagirathi Swain,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Kendrapara
+GangtokHub_GGT_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,SIKKIM,Gangtok
+MgMargHub_MGM_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,SIKKIM,Gangtok
+TadongHub_TAD_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,Sikkim,WBSK Hills
+AdraHub_ADR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Adra
+ADRASPLITHUB_ADR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Purulia
+AlipurduarHub_ADP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Alipurduar
+AmbikaKalnaHub_ABK_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Ambika Kalna
+AndalHub_DGP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Durgapur
+ArambaghHub_AMB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Arambagh
+AranghataHub_NDA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Aranghata
+AsansolHub_ASN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Asansol
+ASHARUHUB_ASH_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,South Bengal 2
+BAGNANODH_BZN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bagnan
+BAJKULHUB_BKL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bajkul
+BalurghatHub_BLT_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Balurghat
+BandelHub_BND_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Chinchurah
+SaltoraHub_SLR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bankura
+Satighathubsplit_BKR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bankura
+BankuraHub_BKR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bankura
+BarjoraHub_DGP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Barjora
+BasirhatHub_BSH_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Basirhat
+BELDAHUB_BLD_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Belda
+BethuadahariODH_BET_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Nadia
+BeldangaHub_BEB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Beldanga
+BishnupurHub_VSU_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bishnupur
+BolpurHub_BHP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bolpur
+BudbudHub_BDM_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,South Bengal 1
+BurdwanHub_BDM_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Burdwan
+CABTBagulaODH_KNJ_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Krishnanagar
+CABTBarobishaODH_BAR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Alipurduar
+CABTCoochbeharODH_COB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,North Bengal
+CABTCoochbeharSplitODH_COB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,North Bengal
+CABTDIGHAODH_DGA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Digha
+CABTKalchiniODH_ADP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Alipurduar
+CABTMankunduODH_MNK_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,South Bengal 1
+CABTNarayanpurODH_LDA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,North Bengal
+CABTNAZATODH_NZT_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Hasnabad
+CABTTarakeshwarODH_TAK_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Arambagh
+CANNINGHUB_CNG_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,KOLKATA
+CHAKDAHAHUB_CDH_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Chakdaha
+ChanchalHub_CHC_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Chanchal
+ChandrakonaHub_CDR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Chandrakona
+ContaiHub_CNT_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Contai
+CoochBeharHub_COB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Coochbehar
+DalkholaHub_DLK_PL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Dalkhola
+DarjeelingHub_DAI_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Darjeeling
+DebagramHub_DEB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Nadia
+DEPENDOKALIACHAKODH_KTJ_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Malda
+DewandighiHub_BDM_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Burdwan
+DurgapurHub_DGP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Durgapur
+EgraHub_MDN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Contai
+ElasticRunGuskaraODH_GKH_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Guskhara
+ElasticRunKhargramODH_KND_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Khargram
+ElasticRunMallarpurODH_RPH_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Mallarpur
+ElasticRunSiuriODH_SRI_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Sainthia
+EnglishBazarHub_LDA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,English Bazar
+FALAKATAODH_FAL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Falakata
+FarrakaHub_NFK_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Farakka
+GangajalghatiHub_BKR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,South Bengal 1
+GANGANIHUB_GNN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Garhbeta
+GANGARAMPURHUB_GRM_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Gangarampur
+GOPIBALLAVPURHUB_MDN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Jhargram
+GURAPHUB_GRA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Gurap
+HabraHub_KOL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kolkata
+HaldiaHub_HLD_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Haldia
+IslampurWBHub_IPR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Islampur
+JagatballavpurHub_BAC_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Howrah
+JagtaiHub_NIL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Jagtai
+JaigaonHub_JGN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Jaigaon
+JalpaiguriHub_JPG_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Jalpaiguri
+JAYNAGARHUB_JYN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Jaynagar
+JHALDAHUB_JAA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Jhalda
+JhargramHub_JGM_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Jhargram
+JhatipahariHub_JTP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bankura
+KALIMPONGHUB_KMG_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kalimpong
+KandiHub_KND_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,MURSHIDABAD
+KandraHub_GNN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,North Bengal
+KatwaHub_KWA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Katwa
+KhakurdaHub_MDN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,West Medinipur
+Kharagpurhub_KGP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kharagpur
+KhatraHub_KHT_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bankura
+KhoyrasoleHub_BMG_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Khorasole
+KOTULPURHUB_KOP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bankura
+KrishnanagarHub_KNJ_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Krishnanagar
+KurseongHub_KUR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Darjeeling
+KusumgramHub_KSG_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kusumgram
+LakshmikantpurHub_LKP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Barjora
+LalgolaHub_LGL_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Lalgola
+LoadshareAmtaODH_HWH_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Howrah
+LOADSHAREANDALSPLITODH_DGP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Raniganj
+LoadshareCitiCenterODH_DGP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Durgapur
+LOADSHARELALBAGHODH_MBB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,North Bengal
+LoadshareMograODH_MGR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Mogra
+LOADSHAREPREMBAZARODH_KGP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kharagpur
+MalbazarHub_NJP_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Jalpaiguri
+MANIKCHAKHUB_LDA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,North Bengal
+MARISHDAHUB_DSI_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Contai
+MatigaraHub_IXB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Siliguri
+MidnaporeHub_MDN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Kharagpur
+MorgramHub_MGA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Sagardighi
+MOYNAODH_MYO_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,East Midnapur
+MuraraiHub_MRR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Murarai
+MurshidabadHub_MBB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Murshidabad
+NabadwipHub_NDA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Nabadwip
+Panchanandapurhub_PCD_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Howrah
+PANDEBESWARHUB_BMG_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Pandebeswar
+PanjiparaHub_PNJ_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Uttar Dinajpur
+PARULIAODH_PAR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Parulia
+PuruliaHub_PRR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Purulia
+RaiganjHub_RGJ_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Raiganj
+RampurhatHub_RPH_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Rampurhat
+RanaghatHub_RHA_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Ranaghat
+SiliguriHub_IXB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Siliguri
+SingurHub_SIU_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Hooghly
+SiuriHub_SUR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Siuri
+SonamukhiHub_VSU_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Bankura
+TamlukHub_TMZ_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Tamluk
+UluberiaHub_ULB_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,South Bengal 2
+UshagramHUB_ASN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,Nadia
+VxpressAdraODH_ADR_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,WEST BENGAL,RAGHUNATHPUR
+VxpressBurnpurODH_ASN_PL,Arpan Majhi,Debasheesh Hota,Somnath Ghosh,East,West Bengal,South Bengal 1
+MangaldoiHub_MGI_PL,Chandan Sarmah,Arnab Roy,Sankar Barman,East,ASSAM,Mangaldoi
+MirzaHub_GAU_PL,Chandan Sarmah,Arnab Roy,Sankar Barman,East,ASSAM,Guwahati
+RJSCRangiaODH_NLV_PL,Biki Brahma,Arnab Roy,Sankar Barman,East,ASSAM,Rangia
+ShadowFaxBelsorODH_NLV_PL,Biki Brahma,Aman Kumar,Sankar Barman,East,ASSAM,Guwahati
+ShadowFaxRangiaODH_NLV_PL,Biki Brahma,Aman Kumar,Sankar Barman,East,ASSAM,Guwahati
+BaripadaHub_BPO_PL,Biswaranjan Panda,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Baripada
+IndupurHub_KNP_PL,Biswaranjan Panda,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Kendrapara
+BeltolaHub_GAU_PL,Abhishek Singh,Aman Kumar,Sankar Barman,East,ASSAM,Guwahati
+KoliaborHub_TZR_PL,Bitopan Baruah,Arnab Roy,Sankar Barman,East,ASSAM,Koliabor
+MaligaonHub_GAU_PL,Pradipta Mazumdar,Arnab Roy,Sankar Barman,East,ASSAM,Guwahati
+NagaonHub_NGN_PL,Tirthanka Nath,Saif Ali Sharhan,Sankar Barman,East,ASSAM,Nagaon
+PuronigudamHub_NGN_PL,Bitopan Baruah,Aman Kumar,Sankar Barman,East,ASSAM,Puronigudam
+BaliparaHub_TZR_PL,Chandan Sharma,Arnab Roy,Sankar Barman,East,ASSAM,Balipara
+TezpurHub_TZR_PL,Chandan Sarmah,Arnab Roy,Sankar Barman,East,ASSAM,Tezpur
+BadmalHub_JSG_PL,Debasis Nayak,Sebasis Rayguru,Amitava Dutta,East,Odisha,Odisha 2
+JharsugudaHub_JSG_PL,Debasis Nayak,Sebasis Rayguru,Amitava Dutta,East,Odisha,Odisha 2
+RourkelaHub_RRK_PL,Debasis Nayak,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Rourkela
+SundargarhHub_SDG_PL,Debasis Nayak,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Sundergarh
+RAJNANDGAONHUB_RJN_PL,Debikalyan Mohapatra,Mohit Kumar,Amitava Dutta,East,CHHATTISGARH,Rajnandgaon
+BhilaiHub_BIA_PL,Debikalyan Mohapatra,Mohit Kumar,Amitava Dutta,East,CHHATTISGARH,Bhilai
+ShillongHub_SHL_PL,Deigratia Passah,Arnab Roy,Sankar Barman,East,MEGHALAYA,Shillong
+RJSCShillongODH_SHL,Deigratia Passah,Arnab Roy,Sankar Barman,East,MEGHALAYA,Shilong
+HajipurHub_HJP_PL,Gaurav Kumar,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Hajipur
+ArrahHub_ARH_PL,Gaurav Kumar Singh,Sumit Kumar,Amitava Dutta,East,BIHAR,Arrah
+BEHEAHUB_ARH_PL,Gaurav Kumar Singh,Sumit Kumar,Amitava Dutta,East,BIHAR,Behea
+BerhampurHub_BMP_PL,Gopal Pandit,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Berhampur
+CABTBerhampurODH_BMP_PL,Gopal Pandit,Sebasis Rayguru,Amitava Dutta,East,Odisha,Odisha 2
+CABTBerhampurSplitODH_BMP_PL,Gopal Pandit,Sebasis Rayguru,Amitava Dutta,East,Odisha,Odisha 2
+CABTHaladiapadarODH_BMP_PL,Gopal Pandit,Sebasis Rayguru,Amitava Dutta,East,Odisha,Odisha 2
+KhandagiriHub_BBI_PL,Gopal Pandit,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Bhubaneswar
+BhagalpurHub_BGP_PL,Jwala Raj,Anurag Singh,Amitava Dutta,East,BIHAR,Bhagalpur
+MungerHub_JMP_PL,Jwala Raj,Anurag Singh,Amitava Dutta,East,BIHAR,Jamalpur
+MungerCityHub_MCT_PL,Jwala Raj,Anurag Singh,Amitava Dutta,East,BIHAR,Munger
+DhanbadHub_DBD_PL,Kamalesh Bera,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Dhanbad
+SindriSplitODH_DBD_PL,Kamalesh Bera,Sidharth Kumar,Amitava Dutta,East,Jharkhand,PCF-BRJH
+VxpressDhanbadSplitODH_DBD_PL,Kamalesh Bera,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Dhanbad
+VxpressGovindpurODH_DBD_PL,Kamalesh Bera,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,PCF-BRJH
+VxpressHarmuSplitODH_IXR_PL,Kamalesh Bera,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Ranchi
+VxpressHatiaODH_HTI_PL,Kamalesh Bera,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Hatia
+VxpressKuiaODH_DBD_PL,Kamalesh Bera,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,PCF-BRJH
+VxpressSayalODH_SAY_PL,Kamalesh Bera,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Ramgarh
+VxpressSindriODH_SIN_PL,Kamalesh Bera,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Dhanbad
+CuttackHub_BBI_PL,Kumar Rajmanyu,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Cuttack
+KendujharHub_KDJ_PL,Kumar Rajmanyu,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Kendujhar
+PanikoiliHub_JJK_PL,Kumar Rajmanyu,Sujeet Kumar Shaw,Amitava Dutta,East,ODISHA,Panikoili
+AizawlHub_AJL_PL,Lalremruata Chhangte,Arnab Roy,Sankar Barman,East,MIZORAM,Aizawl
+ETASHRamhlunODH_AJL_PL,Lalremruata Chhangte,Arnab Roy,Sankar Barman,East,MIZORAM,Aizawl
+CABTDarbhangaSplitODH_DBG_PL,Manish Chandra,Sidharth Kumar,Amitava Dutta,East,BIHAR,PCF-BRJH
+CABTDehriOnSoneSplitODH_DOS_PL,Manish Chandra,Sidharth Kumar,Amitava Dutta,East,BIHAR,PCF-BRJH
+CABTHajipurSplitODH_HJP_PL,Manish Chandra,Sidharth Kumar,Amitava Dutta,East,BIHAR,PCF-BRJH
+CABTMairwaODH_MRW_PL,Manish Chandra,Sidharth Kumar,Amitava Dutta,East,BIHAR,PCF-BRJH
+PatliputraHub_PAT_PL,Manish Chandra,Sidharth Kumar,Amitava Dutta,East,BIHAR,Danapur
+DaltonganjHub_DTO_PL,Manish Kumar JHR,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Daltonganj
+GarhwaHub_GHQ_PL,Manish Kumar JHR,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Garhwa
+PeterbarHub_GRE_PL,Manish Kumar Jhr,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Bokaro
+NawadahHub_NWD_PL,Manish Kumar Singh,Subrat Kumar Giri,Amitava Dutta,East,BIHAR,Nawadah
+BiharSharifHub_BSF_PL,Karan Jaiswal,Subrat Kumar Giri,Amitava Dutta,East,BIHAR,Biharsharif
+GayaHub_GAY_PL,Manish Kumar-B1,Sumit Kumar,Amitava Dutta,East,BIHAR,Gaya
+GayaSplitHub2_GAY_PL,Manish Kumar-B1,Sumit Kumar,Amitava Dutta,East,Bihar,Bihar-1
+JehanabadHub_JHD_PL,Manish Kumar-B1,Sumit Kumar,Amitava Dutta,East,Bihar,Bihar-1
+SherghatiHub_GAY_PL,Manish Kumar-B1,Sumit Kumar,Amitava Dutta,East,BIHAR,Sherghati
+JeyporeHub_JYP_PL,Mrutyunjaya Maharana,Mohit Kumar,Amitava Dutta,East,ODISHA,Jeypore
+RayagadaHub_RGD_PL,Mrutyunjaya Maharana,Mohit Kumar,Amitava Dutta,East,ODISHA,Rayagada
+ChapraHub_CPR_PL,Navin Kumar Singh,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Chapra
+GopalganjHub_GOG_PL,Navin Kumar Singh,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Gopalganj
+MAHARAJGANJHUB_SWN_PL,Navin Kumar Singh,Arun Kumar Tiwary,Amitava Dutta,East,Bihar,Bihar-3
+MirganjHub_GOG_PL,Navin Kumar Singh,Arun Kumar Tiwary,Amitava Dutta,East,Bihar,Bihar-3
+SiwanHub_SWN_PL,Navin Kumar Singh,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Siwan
+CHASHUB_BKO_PL,Niraj Kumar,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Bokaro
+RatuHub_IXR_PL,Niraj Kumar,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Ranchi
+ANISHABADHUB_PAT_PL,Niranjan Kumar,Sumit Kumar,Amitava Dutta,East,BIHAR,Patna
+AshokNagarHub_PAT_PL,Niranjan Kumar,Sumit Kumar,Amitava Dutta,East,BIHAR,Patna
+BankiPoreHub_PAT_PL,Niranjan Kumar,Sumit Kumar,Amitava Dutta,East,BIHAR,Patna
+FatuhaHub_PAT_PL,Niranjan Kumar,Sumit Kumar,Amitava Dutta,East,Bihar,Bihar-1
+HajiGanjHub_PAT_PL,Niranjan Kumar,Sumit Kumar,Amitava Dutta,East,BIHAR,Patna
+KankarBaghHub_PAT_PL,Niranjan Kumar,Sumit Kumar,Amitava Dutta,East,BIHAR,Patna
+SANDALPURHUB_PAT_PL,Niranjan Kumar,Sumit Kumar,Amitava Dutta,East,BIHAR,Patna
+ZeroMilePahariHub_PAT_PL,Niranjan Kumar,Sumit Kumar,Amitava Dutta,East,BIHAR,Patna
+KorbaHub_KOR_PL,P Ramesh,Mohit Kumar,Amitava Dutta,East,CHHATTISGARH,Korba
+RaipurCityHub_RPR_PL,P Ramesh,Mohit Kumar,Amitava Dutta,East,CHHATTISGARH,Raipur
+RaipurHub_RPR_PL,P Ramesh,Mohit Kumar,Amitava Dutta,East,CHHATTISGARH,Raipur
+ElasticRunDhamtariODH_DMT_PL,P Ramesh,Mohit Kumar,Amitava Dutta,East,CHHATTISGARH,Bhilai
+CABTKhurdaODH_KUD_PL,Prahallad Sahu,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Alipurduar
+NimapadaHub_BBI_PL,Amar Rout,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Cuttack
+DependoKhandagiriSpiltODH_BBI_PL,Prahallad Sahu,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Bhubaneswar
+KhurdaHub_KUD_PL,Prahallad Sahu,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Khurda
+NayagarhHub_NYG_PL,Prahallad Sahu,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Nayagarh
+SITICSKhandagiriSpiltODH_BBI_PL,Prahallad Sahu,Sebasis Rayguru,Amitava Dutta,East,Odisha,Odisha 2
+DergaonHub_DGN_PL,Pranjit Hazarika,Aman Kumar,Sankar Barman,East,ASSAM,Dergaon
+JorhatHub_JRH_PL,Pranjit Hazarika,Aman Kumar,Sankar Barman,East,ASSAM,Jorhat
+NaziraHub_NZR_PL,Pranjit Hazarika,Aman Kumar,Sankar Barman,East,ASSAM,Nazira
+NumaligarhHub_GLG_PL,Pranjit Hazarika,Aman Kumar,Sankar Barman,East,ASSAM,Golaghat
+SibsagarHub_SBS_PL,Pranjit Hazarika,Aman Kumar,Sankar Barman,East,ASSAM,Sibsagar
+TitabarHub_TTB_PL,Supriya Das,Aman Kumar,Sankar Barman,East,ASSAM,Titabar
+BhawanipatnaHub_BWP_PL,Pratush Kumar Sahu,Mohit Kumar,Amitava Dutta,East,ODISHA,Bhawanipatna
+RaigarhHub_RGH_PL,Praveen Singh Tomar,Mohit Kumar,Amitava Dutta,East,Chhattisgarh,CG Extended
+RatanpurHub_PAB_PL,Praveen Singh Tomar,Mohit Kumar,Amitava Dutta,East,CHHATTISGARH,Bilaspur
+JAGDALPURHUB_JGR_PL,Debikalyan Mohapatra,Mohit Kumar,Amitava Dutta,East,CHHATTISGARH,Bhilai
+MowaHub_RPR_PL,Rajesh Kaushik,Mohit Kumar,Amitava Dutta,East,CHHATTISGARH,Raipur
+MithanpuraHub_MZF_PL,Rajiv Mishra,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Muzaffarpur
+MuzaffarpurHub_MZF_PL,Rajiv Mishra,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Muzaffarpur
+SitamarhiHub_SMI_PL,Rajiv Mishra,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Sitamahri
+CABTMithanpuraSplitODH_MZF_PL,Ram Bhadra Mishra,Sidharth Kumar,Amitava Dutta,East,BIHAR,PCF-BRJH
+CABTMuzaffarpurSplitODH_MZF_PL,Ram Bhadra Mishra,Sidharth Kumar,Amitava Dutta,East,BIHAR,PCF-BRJH
+GolaghatHub_GLG_PL,Pranjit Hazarika,Aman Kumar,Sankar Barman,East,Assam,Assam & North East
+LumdingHub_LMG_PL,Tirthanka Nath,Saif Ali Sharhan,Sankar Barman,East,ASSAM,Lumding
+ChandraSekharpurHub_BBI_PL,Ranjita Sahu,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Bhubaneswar
+ElasticRunChandraSekharpurODH_BBI_PL,Ranjita Sahu,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Bhubaneshwar
+OldTownHub_BBI_PL,Ranjita Sahu,Sebasis Rayguru,Amitava Dutta,East,ODISHA,Bhubaneswar
+BikramganjHub_BKJ_PL,Ratnesh Kumar Singh,Sumit Kumar,Amitava Dutta,East,Bihar,Bihar-1
+DehriOnSoneHub_DOS_PL,Ratnesh Kumar Singh,Sumit Kumar,Amitava Dutta,East,BIHAR,Rohtas
+BariatuHub_IXR_PL,Ravi Kumar Ojha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Ranchi
+BITMesraHub_IXR_PL,Ravi Kumar Ojha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Ranchi
+HarmuHub_IXR_PL,Ravi Kumar Ojha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Ranchi
+KankeHub_IXR_PL,Ravi Kumar Ojha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Ranchi
+KantatoliHub_IXR_PL,Ravi Kumar Ojha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Ranchi
+KokarHub_IXR_PL,Ravi Kumar Ojha,Rajesh Kumar Singh,Amitava Dutta,East,JHARKHAND,Ranchi
+Hisuahub_NWD_PL,Ritesh Kumar Singh,Subrat Kumar Giri,Amitava Dutta,East,BIHAR,Nawadah
+BarhHub_BRH_PL,Karan Jaiswal,Subrat Kumar Giri,Amitava Dutta,East,Bihar,Bihar-4
+AzaraHub_GAU_PL,Rizu Uz Zaman,Arnab Roy,Sankar Barman,East,ASSAM,Guwahati
+BangaliparaHub_BGL_PL,Azmal Hoque,Saif Ali Sharhan,Sankar Barman,East,ASSAM,Bangalipara
+Chhaygaonhub_CGN_PL,Rizu Uz Zaman,Arnab Roy,Sankar Barman,East,ASSAM,Chhaygaon
+DhubriHub_DBB_PL,Azmal Hoque,Saif Ali Sharhan,Sankar Barman,East,ASSAM,Dhubri
+DudhnoiHub_DNI_PL,Rizu Uz Zaman,Arnab Roy,Sankar Barman,East,ASSAM,Dudhnoi
+GoalparaHub_GLP_PL,Rizu Uz Zaman,Saif Ali Sharhan,Sankar Barman,East,ASSAM,Goalpara
+CABTBanderdawaODH_NLP_PL,Safraz Nawaz Ahmed,Aman Kumar,Sankar Barman,East,ASSAM,NORTH LAKHIMPUR
+NorthLakhimpurHub_NLP_PL,Chandan Sarmah,Arnab Roy,Sankar Barman,East,ASSAM,Northlakhimpurhub_Nlp
+DibrugarhHub_DIB_PL,Sarfaraz Nawab,Aman Kumar,Sankar Barman,East,ASSAM,DibrugarhHub_DIB
+DigboiODH_MRG_PL,Sarfaraz Nawab,Aman Kumar,Sankar Barman,East,ASSAM,Digboi
+DuliajanHub_DLN_PL,Sarfaraz Nawab,Aman Kumar,Sankar Barman,East,ASSAM,Duliajanhub_Dln
+MargheritaHub_MRG_PL,Sarfaraz Nawab,Aman Kumar,Sankar Barman,East,ASSAM,MargheritaHub_MRG
+MoranhatHub_MRH_PL,Pranjit Hazarika,Aman Kumar,Sankar Barman,East,ASSAM,Moranhathub_Mrh
+NaharkatiyaHub_NHK_PL,Sarfaraz Nawab,Aman Kumar,Sankar Barman,East,ASSAM,NaharkatiyaHub_NHK
+TinsukiaHub_TSK_PL,Sarfaraz Nawab,Aman Kumar,Sankar Barman,East,ASSAM,TinsukiaHub_TSK
+BhangabazarHub_IXS_PL,Shaharul Barbhuiya,Arnab Roy,Sankar Barman,East,ASSAM,Hailakandi
+CacharHub_IXS_PL,Ishu Barua,Saif Ali Sharhan,Sankar Barman,East,ASSAM,Cachar
+LalaBazarHub_IXS_PL,Shaharul Barbhuiya,Arnab Roy,Sankar Barman,East,ASSAM,Hailakandi
+SilcharHub_IXS_PL,Ishu Barua,Saif Ali Sharhan,Sankar Barman,East,ASSAM,Silchar
+UdarbondHub_IXS_PL,Shaharul Barbhuiya,Arnab Roy,Sankar Barman,East,ASSAM,Silchar
+MotihariHub_MTI_PL,Shailesh Kumar Singh,Arun Kumar Tiwary,Amitava Dutta,East,BIHAR,Motihari
+SaranHub_CPR_PL,Shailesh Kumar Singh,Arun Kumar Tiwary,Amitava Dutta,East,Bihar,Bihar-3
+CABTBokaroODH_BKO_PL,Sonia Upadhyay,Sidharth Kumar,Amitava Dutta,East,Jharkhand,PCF-BRJH
+CABTJamshedpurODH_IXW_PL,Sonia Upadhyay,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Jamshedpur
+CABTPakaurODH_PKR_PL,Sonia Upadhyay,Sidharth Kumar,Amitava Dutta,East,Jharkhand,Jharkhand
+CABTTopchanchiODH_TCH_PL,Sonia Upadhyay,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Topchanchi
+GumlaHub_GMA_PL,Sonia Upadhyay,Sidharth Kumar,Amitava Dutta,East,Jharkhand,PCF-BRJH
+JhariaHub_DBD_PL,Sonia Upadhyay,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Dhanbad
+RAC_VPH_PL,Sonia Upadhyay,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Ranchi
+GandhiNagarODH_DBD_PL,Sonia Upadhyay,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,Dhanbad
+VxpressSundarnagarODH_IXW_PL,Sonia Upadhyay,Sidharth Kumar,Amitava Dutta,East,JHARKHAND,JAMSHEDPUR
+ArariaHub_ARR_PL,Sovon Ganguly,Subrat Kumar Giri,Amitava Dutta,East,Bihar,Bihar-4
+ForbesganjHub_FBG_PL,Sovon Ganguly,Subrat Kumar Giri,Amitava Dutta,East,Bihar,Bihar-4
+MadhepuraHub_DMH_PL,Sovon Ganguly,Subrat Kumar Giri,Amitava Dutta,East,BIHAR,Madhepura
+SaharsaHub_SHC_PL,Sovon Ganguly,Subrat Kumar Giri,Amitava Dutta,East,Bihar,Bihar-4
+HISUAHUB_NWD_PL,Sovon Ganguly,Subrat Kumar Giri,Amitava Dutta,East,BIHAR,Nawadah
+ItanagarHub_ITO_PL,Tato Maling,Aman Kumar,Sankar Barman,East,ARUNACHAL PRADESH,Itanagar
+NaharlagunHub_NHL_PL,Tato Maling,Aman Kumar,Sankar Barman,East,ARUNACHAL PRADESH,NAHARLAGUN
+NirjuliHub_NRI_PL,Tato Maling,Aman Kumar,Sankar Barman,East,ARUNACHAL PRADESH,Nirjuli
+BarpetaHub_BPR_PL,Azmal Hoque,Saif Ali Sharhan,Sankar Barman,East,ASSAM,Barpeta
+BijniHub_BJF_PL,Trailokya Pathak,Aman Kumar,Sankar Barman,East,ASSAM,bijni
+BongaigaonHub_BGG_PL,Tanmoy Baruah,Arnab Roy,Sankar Barman,East,ASSAM,Bongaigaon
+FakiragramHub_KOJ_PL,Trailokya Pathak,Aman Kumar,Sankar Barman,East,ASSAM,Fakiragram
+HowlyHub_BPR_PL,Tanmoy Baruah,Arnab Roy,Sankar Barman,East,ASSAM,Howly
+KokrajharHub_KOJ_PL,Tanmoy Baruah,Arnab Roy,Sankar Barman,East,ASSAM,Kokrajhar
+HaflongHub_LFG_PL,Uttam Nayak,Arnab Roy,Sankar Barman,East,ASSAM,Haflong
+HojaiHub_HJI_PL,Bitopan Baruah,Arnab Roy,Sankar Barman,East,ASSAM,Hojai
+NalbariHub_NLV_PL,Pradipta Mazumdar,Arnab Roy,Sankar Barman,East,ASSAM,Nalbari
+PathsalaHub_PBL_PL,Uttam Nayak,Arnab Roy,Sankar Barman,East,ASSAM,Pathsala
+SamastipurHub_SMP_PL,Vikash Kumar Singh,Subrat Kumar Giri,Amitava Dutta,East,BIHAR,Samastipur
+AmalapuramHub_AMP_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Amalapuram
+PeddapuramHub_PDM_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Peddapuram
+RajahmundryHub_RJY_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Rajahmundary
+TuniHub_TNI_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Tuni
+VisakhapatnamHub_VTZ_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Vishakapatnam
+GajuwakaHub_VTZ_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Vishakapatnam
+KakinadaHub_KKD_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Kakinada
+BenzCircleHub_VJA_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Vijayawada
+BhimavaramHub_BVM_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Bhimavaram
+BiwiNagarHub_NLR_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Nellore
+EluruHub_ELU_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Eluru
+AnanthapurHub_ATP_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Ananthapur
+KadapaHub_KDP_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Kadapa
+KurnoolHub_KRN_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Kurnool
+SapthagiriHub_TPT_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,ANDHRA PRADESH,Tirupati
+HoodiHub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+JiganiHub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+KanakpuraRdHub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+SoukyaRoad_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+BanashankariHub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+KalyanNagarHub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+KengeriHub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+MysorerdHub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+NelamangalaHub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+Yashwantpurahub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+YelahankaHub_BLR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bengaluru
+MalaPuramHub_MLP_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Malappuram
+VettichiraHub_VTT_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Vetticira
+KanjoorHub_ALU_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Kalady
+ThenjipalamHub_TJI_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Thejipalam
+AlleppeyHub_ALP_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Alleppey
+AluvaHub_ALU_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Aluva
+Changanassery_CGY_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Tiruvalla
+ChengannurHub_CNN_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Chengannur
+ElamakkaraHub_COK_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Cochin
+ErnakulamHub_COK_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Ernakulam
+KakkanadHub_COK_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Ernakulam
+KochiHub_COK_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Kochi
+KottayamHub_KTY_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Kottayam
+Manarcadu_MRD_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Kottayam
+MekkaadHub_MKD_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Mekkaad
+MuvattupuzhaHub_MVA_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Thodupuzha
+OllurHub_TCR_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Ollur
+PalakkadHub_PKD_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Palakkad
+PalluruthyHub_PRT_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Edakochi
+PanayikkulamHub_PNK_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Varapuzha
+ShornurHub_SHO_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Palakkad
+TrissurHub_TCR_PL,Neethu K,Manu Joseph,Vineeth V,South,KERALA,Thrissur
+GuindyHub_CHN_PL,murugan.srinivasan,Manikandan Selvaraj,ranju.chandran,South,TAMIL NADU,Chennai
+KilpaukHub_CHN_PL,murugan.srinivasan,Manikandan Selvaraj,ranju.chandran,South,TAMIL NADU,Chennai
+MinjurHub_CHN_PL,murugan.srinivasan,Manikandan Selvaraj,ranju.chandran,South,TAMIL NADU,Chennai
+ShollinganallurHub_CHN_PL,murugan.srinivasan,Manikandan Selvaraj,ranju.chandran,South,TAMIL NADU,Chennai
+ThiruvallurHub_TRL_PL,murugan.srinivasan,Manikandan Selvaraj,ranju.chandran,South,TAMIL NADU,Thiruvallur
+DomalgudaHub_HYD_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Domalguda
+KukatpallyHub_HYD_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Hyderabad
+LBNagarHub_HYD_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Hyderabad
+MasabTankHub_HYD_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Hyderabad
+MedchalHub_HYD_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Hyderabd
+TrimulgherryHub_HYD_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Hyderabad
+CalicutHub_CCJ_PL,Neethu K,Priyesh P,Vineeth V,South,KERALA,Calicut
+KannurHub_KAN_PL,Neethu K,Priyesh P,Vineeth V,South,KERALA,Kannur
+KunnamangalamHub_KNM_PL,Neethu K,Priyesh P,Vineeth V,South,KERALA,Calicut
+ThalasseryHub_THL_PL,Neethu K,Priyesh P,Vineeth V,South,KERALA,Thalassery
+AmbalamukkuHub_TRV_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Trivandrum
+Attingal_AAL_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Trivandrum
+ErattupettaHub_ETP_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Erattupetta
+Kanjirappally_KJP_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Pala
+KeezhvaipurHub_KHR_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Thiruvalla
+KollamHub_QLN_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Kollam
+PalaHub_PLA_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Pala
+PathanamthittaHub_PMT_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Pathanamthitta
+PattomHub_TRV_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Trivandrum
+Petta_PEA_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Trivandrum
+PoojapuraHub_PJA_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Poojapura
+ThodupuzhaHub_THP_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Thodupuzha
+TrivandrumHub_TRV_PL,Neethu K,Hamsa Iqbal,Vineeth V,South,KERALA,Trivandrum
+BelgaumHub_IXG_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Belgaum
+DavanagereHub_DVG_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Davangere
+GulbargaHub_GUL_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Gulbarga
+HubliHub_HBX_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Hubli
+BHATKALHUB_BKL_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bhatkal
+JaydevNagarHub_JDN_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Mysore
+MandyaHub_MNY_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Mandya
+MangaloreHub_IXE_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Mangalore
+ManipalHub_MPL_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Manipal
+TUMKURHub_TKR_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Tumkur
+HAROHALLIHUB_RMG_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Ramanagara
+BellaryHub_BLY_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bellary
+BellaryFortHub_BLY_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bellary
+SandurHub_SND_PL,srinivasa.kb,s.shivshankar,Anwar Babu Maldar,South,KARNATAKA,Bellary
+VaniyambadiHub_VNM_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Vaniyambadi
+ArcotHub_ARC_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Arcot
+ChidambaramHub_CDM_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Chidambaram
+DharmapuriHub_DMP_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Dharmapuri
+ErodeHub_ERD_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Erode
+GobichettipalayamHub_GOB_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Gobichettipalayam
+Hosurnorthhub_HOS_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Hosur
+KarurHub_KRR_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Karur
+KrishnagiriHub_KSG_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Krishnagiri
+NamakkalHub_NKK_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Namakkal
+PallipalayamHub_ERD_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Erode
+PerambalurHub_PLR_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Perambalur
+PondicherryHub_PDY_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Pondicherry
+AurovilleHub_PDY_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Pondicherry
+PudukottaiHub_PDK_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Pudukottai
+SalemHub_SXV_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Salem
+TirupurHub_TPR_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Tirupur
+TrichyHub_TRZ_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Trichy
+VelloreHub_VLR_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Vellore
+NambiyurHub_NMB_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Erode
+DindigulHub_DND_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Dindigul
+KarumatampattyHub_KUM_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Karumatampatty
+MaduraiHub_IXM_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Madurai
+MalumichampattiHub_MUC_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Coimbatore
+MondayMarketHub_MDM_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Neyyoor
+NagercoilHub_NGL_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Nagercoil
+OotyHub_OTY_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Ooty
+Ramanathapuramhub_RTP_pl,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Ramanathapuramhub
+SivakasiHub_SVK_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Sivakasihub_Svk
+TempleCityHub_IXM_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Templecityhub_Ixm
+ThadagamRD_THA_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Coimbatore
+ThirunelveliHub_TVL_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Tirunelveli
+TuticorinHub_TUT_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Tuticorin
+VirudhunagarHub_VIR_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Virdhunagar
+GodavarikhaniHub_GDK_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Godavarikani
+HanamkondaHub_WGL_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Warangal
+KarimnagarHub_KMN_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Karimnagar
+KhammamHub_KHM_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Khammam
+NirmalHub_Nml_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Nirmal
+NizamabadHub_NZB_PL,Jacob Pavan PavanKumar,vihar.madishettty,Vivekananda Tallapudi,South,TELANGANA,Nizamabad
+UtangaraiHub_UTN_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Utangarai
+ThanjavurHub_TNJ_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Thanjavur
+PeelameduHub_CJB_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Peelamedu
+AnnurHub_ANN_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Coimbatore
+MetturHub_MUR_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Mettur
+ParamakudiHub_PRM_PL,devisri.r,jagatheeswaran.a,ranju.chandran,South,TAMIL NADU,Paramakudi
+SewrihubTempBBD26_Mum_PL,Rahul Vhatkar,Ashish Ghete,Ashwarya Singh,West,MAHARASHTRA,Mumbai
+JalandharsplitHub_JLR_PL,Harpreet Singh,Somvir Dalal,Loveleen Singh,North,PUNJAB,Jalandhar
