@@ -258,11 +258,11 @@
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-hub">
           <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-hub')">
-            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Pickup Hub (PH)</label>
-            <span id="label-filter-hub" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Pickup Hubs</span>
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Hub Name</label>
+            <span id="label-filter-hub" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Hubs</span>
           </div>
           <div class="relative">
-            <input type="text" onfocus="openMultiSelect('filter-hub')" oninput="filterDropdownOptions('filter-hub', this.value)" placeholder="Search PH..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <input type="text" onfocus="openMultiSelect('filter-hub')" oninput="filterDropdownOptions('filter-hub', this.value)" placeholder="Search Hubs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
             <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
           </div>
           <div id="dropdown-filter-hub" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
@@ -273,11 +273,11 @@
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-wm">
           <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-wm')">
-            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">WM Name</label>
-            <span id="label-filter-wm" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Wish Masters / WMs</span>
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">FE / WM Name</label>
+            <span id="label-filter-wm" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All FEs / WMs</span>
           </div>
           <div class="relative">
-            <input type="text" onfocus="openMultiSelect('filter-wm')" oninput="filterDropdownOptions('filter-wm', this.value)" placeholder="Search WMs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <input type="text" onfocus="openMultiSelect('filter-wm')" oninput="filterDropdownOptions('filter-wm', this.value)" placeholder="Search FEs / WMs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
             <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
           </div>
           <div id="dropdown-filter-wm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
@@ -317,7 +317,7 @@
           </div>
         </div>
 
-        <!-- SEGMENTED TOGGLE SWITCH FOR LOB (Ekart, Trueflex, APM) -->
+        <!-- SEGMENTED TOGGLE SWITCH FOR LOB -->
         <div class="col-span-1 sm:col-span-2 lg:col-span-1 flex flex-col justify-end">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Line of Business (LOB)</label>
           <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-300 dark:border-slate-700 w-full justify-between gap-1 text-[11px] font-medium h-8 items-center">
@@ -331,7 +331,7 @@
       </div>
     </section>
 
-    <!-- KEY PERFORMANCE INDICATORS WITH GREATER THAN 24 HRS SUBTEXT -->
+    <!-- KEY PERFORMANCE INDICATORS -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
         <div class="flex items-center justify-between">
@@ -349,7 +349,7 @@
 
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received at MH</span>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received (MH / TC)</span>
           <div class="p-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-lg"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
@@ -363,7 +363,7 @@
 
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched to MH</span>
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched (MH / TC)</span>
           <div class="p-2 bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-lg"><i data-lucide="truck" class="w-5 h-5"></i></div>
         </div>
         <div class="mt-3">
@@ -411,16 +411,16 @@
       </nav>
     </section>
 
-    <!-- DAY-WISE AGING TAB (3-TIER COLLAPSIBLE HIERARCHY) -->
+    <!-- DAY-WISE AGING TAB -->
     <section id="tab-matrix" class="space-y-6">
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
               <i data-lucide="layers" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
-              <span>Zone &gt; Pickup Hub &gt; Wish Master Day-wise Aging Matrix</span>
+              <span>Zone &gt; Hub Name &gt; FE / WM Day-wise Aging Matrix</span>
             </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Click on any <strong>Zone</strong> to expand Pickup Hubs, and click on a <strong>Pickup Hub</strong> to expand Wish Masters.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Click on any <strong>Zone</strong> to expand Hubs, and click on a <strong>Hub Name</strong> to expand Field Executives / WMs.</p>
           </div>
           <button onclick="exportHierarchicalAgingCSV('matrix-table-ph-wm', 'BRSNR_Hierarchical_Aging')" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:ring-2 hover:ring-indigo-400">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export Hierarchical Aging CSV</span>
@@ -478,7 +478,7 @@
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM Wise Volume Distribution</span>
+            <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>FE / WM Wise Volume Distribution</span>
           </h3>
           <span class="text-xs text-slate-500 dark:text-slate-400">Vertical Column Visual (Descending)</span>
         </div>
@@ -490,9 +490,9 @@
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Volume</span>
+            <i data-lucide="map-pin" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Hub Name Wise Volume</span>
           </h3>
-          <span class="text-xs text-slate-500 dark:text-slate-400">Pickup Hub Columns (Descending)</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Hub Columns (Descending)</span>
         </div>
         <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
           <div class="min-w-[800px] h-72 relative"><canvas id="chart-ph-bar"></canvas></div>
@@ -524,9 +524,8 @@
       </div>
     </section>
 
-    <!-- GM VIEW TAB (BESIDE ANALYTICS OVERVIEW) -->
+    <!-- GM VIEW TAB -->
     <section id="tab-gmview" class="hidden space-y-4">
-      <!-- Table 1: Total Count of BRSNR wrt GM -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm space-y-2">
         <div class="border-b border-slate-100 dark:border-slate-700 pb-1.5">
           <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center space-x-1.5">
@@ -547,14 +546,13 @@
         </div>
       </div>
 
-      <!-- Table 2: GM % View Table -->
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm space-y-2">
         <div class="border-b border-slate-100 dark:border-slate-700 pb-1.5">
           <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center space-x-1.5">
             <i data-lucide="percent" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
             <span>GM View Table (Past 5 Days)</span>
           </h3>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400">Calculated as Total BRSNR divided by total shipment values mapped by GM (ignoring mix bagging). Values &gt; 0.12% in red.</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400">Calculated as Total BRSNR divided by total shipment values mapped by GM. Values &gt; 0.12% in red.</p>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-[11px] text-center border-collapse">
@@ -615,12 +613,12 @@
 
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
-          <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM Wise Breakdown</span>
+          <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>FE / WM Wise Breakdown</span>
         </h3>
         <div class="overflow-x-auto overflow-y-auto max-h-80">
           <table class="w-full text-xs text-left">
             <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
-              <tr><th class="p-2">WM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+              <tr><th class="p-2">FE / WM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
             </thead>
             <tbody id="tbl-wm-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
@@ -629,12 +627,12 @@
 
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
-          <i data-lucide="building" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Pickup Hub Wise Breakdown</span>
+          <i data-lucide="building" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Hub Name Wise Breakdown</span>
         </h3>
         <div class="overflow-x-auto overflow-y-auto max-h-80">
           <table class="w-full text-xs text-left">
             <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
-              <tr><th class="p-2">Pickup Hub (PH)</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+              <tr><th class="p-2">Hub Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
             </thead>
             <tbody id="tbl-ph-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
@@ -661,12 +659,12 @@
               <th class="p-3">Shipment ID</th>
               <th class="p-3">Status</th>
               <th class="p-3">Zone</th>
-              <th class="p-3">Mother Hub</th>
+              <th class="p-3">Hub Name</th>
+              <th class="p-3">MH Name</th>
               <th class="p-3">GM</th>
-              <th class="p-3">WM Name</th>
+              <th class="p-3">FE / WM</th>
               <th class="p-3">Seller Name</th>
               <th class="p-3">LOB</th>
-              <th class="p-3">RCA</th>
             </tr>
           </thead>
           <tbody id="shipments-tbody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
@@ -699,10 +697,10 @@
     let selectedLobFilter = 'ALL';
     let currentTab = 'matrix';
 
-    const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh'];
+    // Supporting both old and new status criteria
+    const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh', 'received_to_tc', 'dispatched_to_tc'];
     const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
 
-    // List of GMs to explicitly exclude from GM View tables
     const EXCLUDED_GMS = [
       'amitava dutta',
       'arjun bhargava',
@@ -714,31 +712,40 @@
       'vineeth v'
     ];
 
+    // Fallback/Multi-mapping column lookup configuration
     const COLS = { 
-      DATE: 'Date', 
-      SHIPMENT_ID: 'ShipmentId', 
-      HUB_NAME: 'Hub Name', 
-      SELLER_NAME: 'Seller name', 
-      SELLER_ID: 'seller id',
-      STATUS: 'Status', 
-      SHIPMENT_STATUS: 'Shipment Status',
-      ZONE: 'Zone', 
-      LIB: 'LIB', 
-      CASPER_ID: 'Casper id',
-      PARTNER_NAME: 'Partner Name',
-      WM: 'WM name', 
-      MH: 'MH', 
-      RCA: 'RCA',
-      PH_NAME: 'PH Name',
-      BAG_ID: 'BagId',
-      BAG_STATUS: 'Bag status',
-      BAG_RECEIVE_TIME: 'Bag Receive time',
-      GM: 'GM',
-      DISPATCH_TO_MH: 'Dispatch to MH',
-      RECEIVED_AT_MH: 'Received at MH',
-      DIFF: 'Diff',
-      HRS: 'Hrs'
+      DATE: ['Date', 'date'], 
+      SHIPMENT_ID: ['ShipmentId', 'Shipment ID'], 
+      HUB_NAME: ['Hub Name', 'PH Name'], 
+      SELLER_NAME: ['Seller name', 'seller_name'], 
+      SELLER_ID: ['seller id', 'SellerId'],
+      STATUS: ['Status', 'Shipment Status'], 
+      ZONE: ['Zone'], 
+      LIB: ['LIB', 'Line_of_Business'], 
+      CASPER_ID: ['Casper id', 'Casper_id'],
+      PARTNER_NAME: ['Partner Name'],
+      WM: ['WM name', 'FE_Name'], 
+      MH: ['MH', 'MH Name'], 
+      RCA: ['RCA'],
+      BAG_ID: ['BagId'],
+      BAG_STATUS: ['Bag status'],
+      BAG_RECEIVE_TIME: ['Bag Receive time'],
+      GM: ['GM'],
+      DISPATCH_TO_MH: ['Dispatch to MH', 'Dispatched_to_TC'],
+      RECEIVED_AT_MH: ['Received at MH', 'Received_to_TC'],
+      DIFF: ['Diff', 'diff'],
+      HRS: ['Hrs']
     };
+
+    function getColVal(row, colKeyList) {
+      for (let i = 0; i < colKeyList.length; i++) {
+        const val = row[colKeyList[i]];
+        if (val !== undefined && val !== null && String(val).trim() !== '') {
+          return val;
+        }
+      }
+      return '';
+    }
 
     const selectedFilters = {
       'filter-week': [],
@@ -757,9 +764,9 @@
       'filter-month': 'All Months',
       'filter-gm': 'All GMs',
       'filter-seller': 'All Sellers',
-      'filter-mh': 'All Mother Hubs',
-      'filter-hub': 'All Pickup Hubs',
-      'filter-wm': 'All Wish Masters / WMs',
+      'filter-mh': 'All MH Names',
+      'filter-hub': 'All Hubs',
+      'filter-wm': 'All FEs / WMs',
       'filter-status': 'All Status',
       'filter-zone': 'All Zones'
     };
@@ -769,14 +776,13 @@
       'filter-month': 'Month',
       'filter-gm': 'GM',
       'filter-seller': 'Seller',
-      'filter-mh': 'Mother Hub',
-      'filter-hub': 'Pickup Hub',
-      'filter-wm': 'WM',
+      'filter-mh': 'MH Name',
+      'filter-hub': 'Hub Name',
+      'filter-wm': 'FE / WM',
       'filter-status': 'Status',
       'filter-zone': 'Zone'
     };
 
-    /* Expanded State Tracker for Matrix Tier Collapsing */
     const expandedZones = new Set();
     const expandedHubs = new Set();
 
@@ -791,7 +797,6 @@
       });
     });
 
-    /* ---------- Mode Switcher ---------- */
     function switchMode(mode) {
       const pastView = document.getElementById('view-past-analytics');
       const realtimeView = document.getElementById('view-realtime-wm');
@@ -811,13 +816,11 @@
       }
     }
 
-    /* ---------- Theme Toggle ---------- */
     function toggleTheme() {
       document.documentElement.classList.toggle('dark');
       if (currentTab === 'overview') renderCharts();
     }
 
-    /* ---------- LOB Toggle Switch ---------- */
     function setLobToggle(lobVal) {
       selectedLobFilter = lobVal;
       ['ALL', 'Ekart', 'Trueflex', 'APM'].forEach(val => {
@@ -831,7 +834,6 @@
       applyFilters();
     }
 
-    /* ---------- Preset Date Handlers & Highlight ---------- */
     function setPresetDate(p) {
       const f = document.getElementById('filter-date-from'), t = document.getElementById('filter-date-to'), today = new Date();
       const iso = d => d.toISOString().split('T')[0];
@@ -856,7 +858,6 @@
       applyFilters();
     }
 
-    /* ---------- Multi-Select Dropdowns ---------- */
     function openMultiSelect(id) {
       closeAllMultiSelects();
       const dropdown = document.getElementById(`dropdown-${id}`);
@@ -996,7 +997,6 @@
       container.innerHTML = badgesHtml;
     }
 
-    /* ---------- Fast Data Loading (JSON Primary with CSV Fallback) ---------- */
     async function loadRepositoryData() {
       showStatusBanner("Loading master dataset...", "info");
       masterData = [];
@@ -1053,7 +1053,7 @@
         texts.forEach((t, i) => {
           if (!t) return;
           for (const row of Papa.parse(t, { header: true, skipEmptyLines: true }).data) {
-            const id = row[COLS.SHIPMENT_ID] || row['Shipment ID'];
+            const id = getColVal(row, COLS.SHIPMENT_ID);
             if (id && !seen.has(id)) {
               const normalized = normalizeRow(row, id, csvUrls[i]);
               if (normalized && !IGNORED_STATUSES.includes(normalized.Status)) {
@@ -1100,10 +1100,10 @@
     }
 
     function normalizeRow(r, id, sourceUrl = '') {
-      let dtStr = r[COLS.DATE] || r['date'] || '';
+      let dtStr = getColVal(r, COLS.DATE);
       if (!dtStr && sourceUrl) { const m = sourceUrl.match(/\d{4}-\d{2}-\d{2}/); if (m) dtStr = m[0]; }
       const pd = parseDateStrFast(dtStr);
-      let gmName = cleanVal(r[COLS.GM], 'Unassigned GM');
+      let gmName = cleanVal(getColVal(r, COLS.GM), 'Unassigned GM');
       if (gmName.toLowerCase() === 'somnath g') gmName = 'Somnath Ghosh';
 
       return {
@@ -1111,25 +1111,25 @@
         Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
         Week: pd ? getWeekIdentifier(pd) : null,
         ShipmentId: id,
-        HubName: cleanVal(r[COLS.HUB_NAME] || r[COLS.PH_NAME], 'Unassigned'),
-        SellerName: cleanVal(r[COLS.SELLER_NAME], 'Unknown Seller'),
-        SellerId: cleanVal(r[COLS.SELLER_ID], 'None'),
-        Status: cleanVal(r[COLS.STATUS] || r[COLS.SHIPMENT_STATUS], 'Unknown Status'),
-        Zone: cleanVal(r[COLS.ZONE], 'Unknown Zone'),
-        LOB: cleanVal(r[COLS.LIB] || r['LOB'], 'Unassigned'),
-        CasperId: cleanVal(r[COLS.CASPER_ID], 'None'),
-        PartnerName: cleanVal(r[COLS.PARTNER_NAME], 'None'),
-        WM: cleanVal(r[COLS.WM], 'Unassigned WM'),
-        MH: cleanVal(r[COLS.MH], 'Unassigned MH'),
-        RCA: cleanVal(r[COLS.RCA], 'None'),
-        BagId: cleanVal(r[COLS.BAG_ID], 'None'),
-        BagStatus: cleanVal(r[COLS.BAG_STATUS], 'None'),
-        BagReceiveTime: cleanVal(r[COLS.BAG_RECEIVE_TIME], 'None'),
+        HubName: cleanVal(getColVal(r, COLS.HUB_NAME), 'Unassigned'),
+        SellerName: cleanVal(getColVal(r, COLS.SELLER_NAME), 'Unknown Seller'),
+        SellerId: cleanVal(getColVal(r, COLS.SELLER_ID), 'None'),
+        Status: cleanVal(getColVal(r, COLS.STATUS), 'Unknown Status'),
+        Zone: cleanVal(getColVal(r, COLS.ZONE), 'Unknown Zone'),
+        LOB: cleanVal(getColVal(r, COLS.LIB), 'Unassigned'),
+        CasperId: cleanVal(getColVal(r, COLS.CASPER_ID), 'None'),
+        PartnerName: cleanVal(getColVal(r, COLS.PARTNER_NAME), 'None'),
+        WM: cleanVal(getColVal(r, COLS.WM), 'Unassigned FE / WM'),
+        MH: cleanVal(getColVal(r, COLS.MH), 'Unassigned MH'),
+        RCA: cleanVal(getColVal(r, COLS.RCA), 'None'),
+        BagId: cleanVal(getColVal(r, COLS.BAG_ID), 'None'),
+        BagStatus: cleanVal(getColVal(r, COLS.BAG_STATUS), 'None'),
+        BagReceiveTime: cleanVal(getColVal(r, COLS.BAG_RECEIVE_TIME), 'None'),
         GM: gmName,
-        DispatchToMH: cleanVal(r[COLS.DISPATCH_TO_MH], 'None'),
-        ReceivedAtMH: cleanVal(r[COLS.RECEIVED_AT_MH], 'None'),
-        Diff: cleanVal(r[COLS.DIFF], '0'),
-        Hrs: cleanVal(r[COLS.HRS], '0')
+        DispatchToMH: cleanVal(getColVal(r, COLS.DISPATCH_TO_MH), 'None'),
+        ReceivedAtMH: cleanVal(getColVal(r, COLS.RECEIVED_AT_MH), 'None'),
+        Diff: cleanVal(getColVal(r, COLS.DIFF), '0'),
+        Hrs: cleanVal(getColVal(r, COLS.HRS), '0')
       };
     }
 
@@ -1159,117 +1159,106 @@
       debounceTimer = setTimeout(() => { applyFilters(true); }, 150);
     }
 
-   /* ---------- Render GM View Tables (Total Counts & % View for Past 5 Days with T-1 Shipment Date) ---------- */
-function renderGMViewTables() {
-  const countHeaderRow = document.getElementById('gm-count-header-row');
-  const countTbody = document.getElementById('gm-count-tbody');
-  const pctHeaderRow = document.getElementById('gm-pct-header-row');
-  const pctTbody = document.getElementById('gm-pct-tbody');
+    function renderGMViewTables() {
+      const countHeaderRow = document.getElementById('gm-count-header-row');
+      const countTbody = document.getElementById('gm-count-tbody');
+      const pctHeaderRow = document.getElementById('gm-pct-header-row');
+      const pctTbody = document.getElementById('gm-pct-tbody');
 
-  if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
+      if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
 
-  // 1. Get unique past dates sorted descending
-  const allDatesSorted = [...new Set(masterData.map(r => r.Date))]
-    .filter(Boolean)
-    .sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
+      const allDatesSorted = [...new Set(masterData.map(r => r.Date))]
+        .filter(Boolean)
+        .sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
 
-  const recent5Dates = allDatesSorted.slice(0, 5);
+      const recent5Dates = allDatesSorted.slice(0, 5);
 
-  let headerHtml = `<th class="py-1 px-2 text-left">GM</th>`;
-  recent5Dates.forEach(d => {
-    headerHtml += `<th class="py-1 px-1.5 text-center">${d}</th>`;
-  });
-  countHeaderRow.innerHTML = headerHtml;
-  pctHeaderRow.innerHTML = headerHtml;
+      let headerHtml = `<th class="py-1 px-2 text-left">GM</th>`;
+      recent5Dates.forEach(d => {
+        headerHtml += `<th class="py-1 px-1.5 text-center">${d}</th>`;
+      });
+      countHeaderRow.innerHTML = headerHtml;
+      pctHeaderRow.innerHTML = headerHtml;
 
-  // 2. Aggregate BRSNR counts per GM per Date (combining Somnath G -> Somnath Ghosh)
-  const gmBrsnrCounts = {};
-  masterData.forEach(r => {
-    let gm = r.GM;
-    if (!isInvalid(gm)) {
-      if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
-      const date = r.Date;
-      if (date) {
-        if (!gmBrsnrCounts[gm]) gmBrsnrCounts[gm] = {};
-        gmBrsnrCounts[gm][date] = (gmBrsnrCounts[gm][date] || 0) + 1;
+      const gmBrsnrCounts = {};
+      masterData.forEach(r => {
+        let gm = r.GM;
+        if (!isInvalid(gm)) {
+          if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
+          const date = r.Date;
+          if (date) {
+            if (!gmBrsnrCounts[gm]) gmBrsnrCounts[gm] = {};
+            gmBrsnrCounts[gm][date] = (gmBrsnrCounts[gm][date] || 0) + 1;
+          }
+        }
+      });
+
+      const normalizedGmShipments = {};
+      Object.keys(globalGmShipments).forEach(gm => {
+        let cleanGm = gm;
+        if (cleanGm.toLowerCase() === 'somnath g') cleanGm = 'Somnath Ghosh';
+        if (!normalizedGmShipments[cleanGm]) normalizedGmShipments[cleanGm] = {};
+        Object.keys(globalGmShipments[gm]).forEach(date => {
+          normalizedGmShipments[cleanGm][date] = (normalizedGmShipments[cleanGm][date] || 0) + globalGmShipments[gm][date];
+        });
+      });
+
+      const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
+        .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
+        .sort();
+
+      function getPrevDateStr(dateStr) {
+        const parsed = parseDateStrFast(dateStr);
+        if (!parsed) return null;
+        const prev = new Date(parsed);
+        prev.setDate(prev.getDate() - 1);
+        
+        const day = String(prev.getDate()).padStart(2, '0');
+        const month = String(prev.getMonth() + 1).padStart(2, '0');
+        const year = prev.getFullYear();
+
+        return dateStr.includes('-') && dateStr.split('-')[0].length === 4
+          ? `${year}-${month}-${day}`
+          : `${day}-${month}-${year}`;
       }
+
+      let countBodyHtml = '';
+      let pctBodyHtml = '';
+
+      allGms.forEach(gm => {
+        countBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+          <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
+
+        pctBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+          <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
+
+        recent5Dates.forEach(date => {
+          const brsnrCount = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
+
+          countBodyHtml += `<td class="py-0.5 px-1.5 text-center font-mono font-medium leading-tight">${brsnrCount ? brsnrCount.toLocaleString() : '-'}</td>`;
+
+          const prevDate = getPrevDateStr(date);
+          const shipmentValPrevDay = (prevDate && normalizedGmShipments[gm] && normalizedGmShipments[gm][prevDate]) || 0;
+
+          let pct = 0;
+          if (shipmentValPrevDay > 0) {
+            pct = (brsnrCount / shipmentValPrevDay) * 100;
+          }
+
+          const formattedPct = pct.toFixed(2) + '%';
+          const bgColor = pct > 0.12 ? 'background-color: #f8d7da; color: #842029;' : 'background-color: #d1e7dd; color: #0f5132;';
+
+          pctBodyHtml += `<td class="py-0.5 px-1.5 text-center font-medium leading-tight rounded" style="${bgColor}">${formattedPct}</td>`;
+        });
+
+        countBodyHtml += `</tr>`;
+        pctBodyHtml += `</tr>`;
+      });
+
+      countTbody.innerHTML = countBodyHtml;
+      pctTbody.innerHTML = pctBodyHtml;
     }
-  });
 
-  // 3. Normalize shipment data for GM variations
-  const normalizedGmShipments = {};
-  Object.keys(globalGmShipments).forEach(gm => {
-    let cleanGm = gm;
-    if (cleanGm.toLowerCase() === 'somnath g') cleanGm = 'Somnath Ghosh';
-    if (!normalizedGmShipments[cleanGm]) normalizedGmShipments[cleanGm] = {};
-    Object.keys(globalGmShipments[gm]).forEach(date => {
-      normalizedGmShipments[cleanGm][date] = (normalizedGmShipments[cleanGm][date] || 0) + globalGmShipments[gm][date];
-    });
-  });
-
-  // 4. Combine all GMs and filter out explicitly excluded names
-  const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
-    .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
-    .sort();
-
-  // Helper function to get previous date string (T-1) in standard string format
-  function getPrevDateStr(dateStr) {
-    const parsed = parseDateStrFast(dateStr);
-    if (!parsed) return null;
-    const prev = new Date(parsed);
-    prev.setDate(prev.getDate() - 1);
-    
-    // Format back matching input date format (DD-MM-YYYY or YYYY-MM-DD)
-    const day = String(prev.getDate()).padStart(2, '0');
-    const month = String(prev.getMonth() + 1).padStart(2, '0');
-    const year = prev.getFullYear();
-
-    return dateStr.includes('-') && dateStr.split('-')[0].length === 4
-      ? `${year}-${month}-${day}`
-      : `${day}-${month}-${year}`;
-  }
-
-  let countBodyHtml = '';
-  let pctBodyHtml = '';
-
-  allGms.forEach(gm => {
-    countBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-      <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
-
-    pctBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-      <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
-
-    recent5Dates.forEach(date => {
-      const brsnrCount = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
-
-      // Table 1: Absolute BRSNR Count
-      countBodyHtml += `<td class="py-0.5 px-1.5 text-center font-mono font-medium leading-tight">${brsnrCount ? brsnrCount.toLocaleString() : '-'}</td>`;
-
-      // Table 2: GM % View based on Previous Day (T-1) Shipment
-      const prevDate = getPrevDateStr(date);
-      const shipmentValPrevDay = (prevDate && normalizedGmShipments[gm] && normalizedGmShipments[gm][prevDate]) || 0;
-
-      let pct = 0;
-      if (shipmentValPrevDay > 0) {
-        pct = (brsnrCount / shipmentValPrevDay) * 100;
-      }
-
-      const formattedPct = pct.toFixed(2) + '%';
-      // Highlight > 0.12% in red, otherwise green
-      const bgColor = pct > 0.12 ? 'background-color: #f8d7da; color: #842029;' : 'background-color: #d1e7dd; color: #0f5132;';
-
-      pctBodyHtml += `<td class="py-0.5 px-1.5 text-center font-medium leading-tight rounded" style="${bgColor}">${formattedPct}</td>`;
-    });
-
-    countBodyHtml += `</tr>`;
-    pctBodyHtml += `</tr>`;
-  });
-
-  countTbody.innerHTML = countBodyHtml;
-  pctTbody.innerHTML = pctBodyHtml;
-}
-
-    /* ---------- Cascading Filter Options Engine ---------- */
     function updateDynamicFilterOptions() {
       const filterConfigs = [
         { id: 'filter-week', field: 'Week' },
@@ -1385,8 +1374,8 @@ function renderGMViewTables() {
       let rec = 0, disp = 0;
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
-        if (r.Status === 'received_at_mh') rec++;
-        if (r.Status === 'dispatched_to_mh') disp++;
+        if (r.Status === 'received_at_mh' || r.Status === 'received_to_tc') rec++;
+        if (r.Status === 'dispatched_to_mh' || r.Status === 'dispatched_to_tc') disp++;
       }
 
       document.getElementById('kpi-received-mh').textContent = rec.toLocaleString();
@@ -1396,7 +1385,6 @@ function renderGMViewTables() {
       document.getElementById('kpi-active-zones').textContent = '4';
     }
 
-    /* ---------- Charts ---------- */
     function renderCharts() {
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#f8fafc' : '#0f172a';
@@ -1532,7 +1520,6 @@ function renderGMViewTables() {
       });
     }
 
-    /* ---------- 3-TIER COLLAPSIBLE MATRIX TOGGLE HANDLERS ---------- */
     function toggleZoneRow(zoneKey) {
       if (expandedZones.has(zoneKey)) {
         expandedZones.delete(zoneKey);
@@ -1551,7 +1538,6 @@ function renderGMViewTables() {
       renderPHWMAgingMatrix();
     }
 
-    /* ---------- 3-Tier Collapsible Matrix (Zone > PH > WM) ---------- */
     function renderPHWMAgingMatrix() {
       const datesSet = new Set();
       const hierarchy = {};
@@ -1559,8 +1545,8 @@ function renderGMViewTables() {
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
         const z = r.Zone || 'Unassigned Zone';
-        const ph = r.HubName || 'Unassigned PH';
-        const wm = r.WM || 'Unassigned WM';
+        const ph = r.HubName || 'Unassigned Hub';
+        const wm = r.WM || 'Unassigned FE / WM';
         const d = r.Date || 'No Date';
 
         datesSet.add(d);
@@ -1581,7 +1567,7 @@ function renderGMViewTables() {
       const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
 
       const thead = document.getElementById('matrix-thead-ph-wm');
-      thead.innerHTML = `<th class="p-3">Hierarchy (Zone &gt; Hub &gt; WM)</th>` + 
+      thead.innerHTML = `<th class="p-3">Hierarchy (Zone &gt; Hub Name &gt; FE / WM)</th>` + 
                         dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + 
                         `<th class="p-3 text-right bg-slate-100 dark:bg-slate-900">Total</th>`;
 
@@ -1625,7 +1611,7 @@ function renderGMViewTables() {
 
               sortedWMs.forEach(([wm, wmData]) => {
                 let wmRow = `<tr class="hover:bg-slate-100/50 dark:hover:bg-slate-700/30 text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">
-                  <td class="p-2 pl-14 font-mono">🚚 WM: ${wm}</td>`;
+                  <td class="p-2 pl-14 font-mono">🚚 FE / WM: ${wm}</td>`;
                 dates.forEach(d => {
                   const v = wmData.dates[d] || 0;
                   wmRow += `<td class="p-2 text-center">${v ? v.toLocaleString() : '-'}</td>`;
@@ -1642,7 +1628,6 @@ function renderGMViewTables() {
       if (window.lucide) lucide.createIcons();
     }
 
-    /* ---------- Summary Tables ---------- */
     function renderSummaryTables() {
       const tot = filteredData.length || 1;
       populateSummaryTable('tbl-zone-body', 'Zone', tot);
@@ -1678,7 +1663,6 @@ function renderGMViewTables() {
       tbody.innerHTML = html;
     }
 
-    /* ---------- Shipments Detail Table ---------- */
     function renderShipmentsTable() {
       const tbody = document.getElementById('shipments-tbody');
       const tot = filteredData.length, pages = Math.ceil(tot / pageSize) || 1;
@@ -1696,14 +1680,14 @@ function renderGMViewTables() {
           <tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400">
             <td class="p-3">${r.Date}</td>
             <td class="p-3 font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${r.ShipmentId}</td>
-            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status === 'received_at_mh' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'}">${r.Status}</span></td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status.includes('received') ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'}">${r.Status}</span></td>
             <td class="p-3">${r.Zone}</td>
+            <td class="p-3">${r.HubName}</td>
             <td class="p-3">${r.MH}</td>
             <td class="p-3 font-medium">${r.GM}</td>
             <td class="p-3">${r.WM}</td>
             <td class="p-3 truncate max-w-[150px]">${r.SellerName}</td>
             <td class="p-3">${r.LOB}</td>
-            <td class="p-3">${r.RCA}</td>
           </tr>
         `;
       }
@@ -1751,10 +1735,8 @@ function renderGMViewTables() {
       setPresetDate('all');
     }
 
-    /* Clean CSV Export */
     function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `BRSNR_Export_${new Date().toISOString().split('T')[0]}.csv`); }
 
-    /* Structured Hierarchical CSV Export (Zone, Hub Name, WM Name columns + Date columns) */
     function exportHierarchicalAgingCSV(tableId, filenamePrefix) {
       const datesSet = new Set();
       const hierarchy = {};
@@ -1762,8 +1744,8 @@ function renderGMViewTables() {
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
         const z = r.Zone || 'Unassigned Zone';
-        const ph = r.HubName || 'Unassigned PH';
-        const wm = r.WM || 'Unassigned WM';
+        const ph = r.HubName || 'Unassigned Hub';
+        const wm = r.WM || 'Unassigned FE / WM';
         const d = r.Date || 'No Date';
 
         datesSet.add(d);
@@ -1779,7 +1761,7 @@ function renderGMViewTables() {
       const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
 
       const csvRows = [];
-      const headerRow = ['"Zone"', '"Hub Name"', '"WM Name"', ...dates.map(d => `"${d}"`), '"Total"'];
+      const headerRow = ['"Zone"', '"Hub Name"', '"FE / WM Name"', ...dates.map(d => `"${d}"`), '"Total"'];
       csvRows.push(headerRow.join(','));
 
       Object.keys(hierarchy).sort().forEach(z => {
