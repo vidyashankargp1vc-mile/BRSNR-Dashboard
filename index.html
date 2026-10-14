@@ -1479,7 +1479,7 @@
         datasets: [{ label: 'Volume', data: topMH.map(i => i[1]), backgroundColor: '#3b82f6', borderRadius: 4 }]
       }, {
         indexAxis: 'y',
-        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
+        scales: { x: { ticks: { color: textColor }, beginAtZero: true }, y: { ticks: { color: textColor } } },
         plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#93c5fd' : '#1e3a8a', font: { weight: 'bold' } } }
       });
 
