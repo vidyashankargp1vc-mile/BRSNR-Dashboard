@@ -715,24 +715,24 @@
       DATE: ['Date', 'date'], 
       SHIPMENT_ID: ['ShipmentId', 'Shipment ID'], 
       HUB_NAME: ['Hub Name', 'PH Name'], 
-      SELLER_NAME: ['Seller name', 'seller_name'], 
+      SELLER_NAME: ['seller_name', 'Seller name'], 
       SELLER_ID: ['seller id', 'SellerId'],
       STATUS: ['Status', 'Shipment Status'], 
       ZONE: ['Zone'], 
-      LIB: ['LIB', 'Line_of_Business'], 
-      CASPER_ID: ['Casper id', 'Casper_id'],
+      LIB: ['Line_of_Business', 'LIB'], 
+      CASPER_ID: ['Casper_id', 'Casper id'],
       PARTNER_NAME: ['Partner Name'],
-      WM: ['WM name', 'FE_Name'], 
-      MH: ['MH', 'MH Name'], 
+      WM: ['FE_Name', 'WM name'], 
+      MH: ['MH Name', 'MH'], 
       RCA: ['RCA'],
+      PH_NAME: ['PH Name', 'Hub Name'],
       BAG_ID: ['BagId'],
       GM: ['GM'],
       RM: ['RM'],
       AM: ['AM'],
-      DISPATCH_TO_MH: ['Dispatch to MH', 'Dispatched_to_TC'],
-      RECEIVED_AT_MH: ['Received at MH', 'Received_to_TC'],
-      DIFF: ['Diff', 'diff'],
-      HRS: ['Hrs']
+      DISPATCH_TO_MH: ['Dispatched_to_TC', 'Dispatch to MH'],
+      RECEIVED_AT_MH: ['Received_to_TC', 'Received at MH'],
+      DIFF: ['diff', 'Diff']
     };
 
     function getColVal(row, colKeyList) {
@@ -1126,8 +1126,7 @@
         AM: cleanVal(getColVal(r, COLS.AM), 'None'),
         DispatchToMH: cleanVal(getColVal(r, COLS.DISPATCH_TO_MH), 'None'),
         ReceivedAtMH: cleanVal(getColVal(r, COLS.RECEIVED_AT_MH), 'None'),
-        Diff: cleanVal(getColVal(r, COLS.DIFF), '0'),
-        Hrs: cleanVal(getColVal(r, COLS.HRS), '0')
+        Diff: cleanVal(getColVal(r, COLS.DIFF), '0')
       };
     }
 
