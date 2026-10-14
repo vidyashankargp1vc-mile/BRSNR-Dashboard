@@ -113,7 +113,6 @@ async function run() {
         if (!IGNORED_STATUSES.includes(status)) {
           seenIds.add(id);
           masterData.push({
-            masterData.push({
   Date: dtStr || 'Unassigned Date',
   ParsedDate: pd ? pd.toISOString() : null,
   Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
