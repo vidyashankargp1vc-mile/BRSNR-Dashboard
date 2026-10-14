@@ -113,30 +113,34 @@ async function run() {
         if (!IGNORED_STATUSES.includes(status)) {
           seenIds.add(id);
           masterData.push({
-            Date: dtStr || 'Unassigned Date',
-            ParsedDate: pd ? pd.toISOString() : null,
-            Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
-            Week: pd ? getWeekIdentifier(pd) : null,
-            ShipmentId: id,
-            HubName: cleanVal(row['Hub Name'] || row['PH Name'], 'Unassigned'),
-            SellerName: cleanVal(row['Seller name'], 'Unknown Seller'),
-            SellerId: cleanVal(row['seller id'], 'None'),
-            Status: status,
-            Zone: cleanVal(row['Zone'], 'Unknown Zone'),
-            LOB: cleanVal(row['LIB'] || row['LOB'], 'Unassigned'),
-            CasperId: cleanVal(row['Casper id'], 'None'),
-            PartnerName: cleanVal(row['Partner Name'], 'None'),
-            WM: cleanVal(row['WM name'], 'Unassigned WM'),
-            MH: cleanVal(row['MH'], 'Unassigned MH'),
-            RCA: cleanVal(row['RCA'], 'None'),
-            BagId: cleanVal(row['BagId'], 'None'),
-            BagStatus: cleanVal(row['Bag status'], 'None'),
-            BagReceiveTime: cleanVal(row['Bag Receive time'], 'None'),
-            GM: cleanVal(row['GM'], 'Unassigned GM'),
-            DispatchToMH: cleanVal(row['Dispatch to MH'], 'None'),
-            ReceivedAtMH: cleanVal(row['Received at MH'], 'None'),
-            Diff: cleanVal(row['Diff'], '0'),
-            Hrs: cleanVal(row['Hrs'], '0')
+            masterData.push({
+  Date: dtStr || 'Unassigned Date',
+  ParsedDate: pd ? pd.toISOString() : null,
+  Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
+  Week: pd ? getWeekIdentifier(pd) : null,
+  ShipmentId: id,
+  HubName: cleanVal(row['Hub Name'] || row['PH Name'], 'Unassigned'),
+  SellerName: cleanVal(row['seller_name'] || row['Seller name'], 'Unknown Seller'),
+  SellerId: cleanVal(row['seller id'] || row['SellerId'], 'None'),
+  Status: status,
+  Zone: cleanVal(row['Zone'], 'Unknown Zone'),
+  LOB: cleanVal(row['Line_of_Business'] || row['LIB'] || row['LOB'], 'Unassigned'),
+  CasperId: cleanVal(row['Casper_id'] || row['Casper id'], 'None'),
+  PartnerName: cleanVal(row['Partner Name'], 'None'),
+  WM: cleanVal(row['FE_Name'] || row['WM name'], 'Unassigned WM / FE'),
+  MH: cleanVal(row['MH Name'] || row['MH'], 'Unassigned MH'),
+  RCA: cleanVal(row['RCA'], 'None'),
+  BagId: cleanVal(row['BagId'], 'None'),
+  BagStatus: cleanVal(row['Bag status'], 'None'),
+  BagReceiveTime: cleanVal(row['Bag Receive time'], 'None'),
+  GM: cleanVal(row['GM'], 'Unassigned GM'),
+  RM: cleanVal(row['RM'], 'None'),
+  AM: cleanVal(row['AM'], 'None'),
+  DispatchToMH: cleanVal(row['Dispatched_to_TC'] || row['Dispatch to MH'], 'None'),
+  ReceivedAtMH: cleanVal(row['Received_to_TC'] || row['Received at MH'], 'None'),
+  Diff: cleanVal(row['diff'] || row['Diff'], '0'),
+  Hrs: cleanVal(row['Hrs'], '0')
+});
           });
         }
       }
