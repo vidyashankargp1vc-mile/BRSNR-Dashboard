@@ -243,8 +243,8 @@
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-mh">
           <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-mh')">
-            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Mother Hub (MH)</label>
-            <span id="label-filter-mh" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Mother Hubs</span>
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">MH / MH Name</label>
+            <span id="label-filter-mh" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All MH / MH Names</span>
           </div>
           <div class="relative">
             <input type="text" onfocus="openMultiSelect('filter-mh')" oninput="filterDropdownOptions('filter-mh', this.value)" placeholder="Search MH..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
@@ -258,7 +258,7 @@
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-hub">
           <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-hub')">
-            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Hub Name</label>
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Hub Name / PH Name</label>
             <span id="label-filter-hub" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Hubs</span>
           </div>
           <div class="relative">
@@ -273,11 +273,11 @@
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-wm">
           <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-wm')">
-            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">FE / WM Name</label>
-            <span id="label-filter-wm" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All FEs / WMs</span>
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">WM Name / FE Name</label>
+            <span id="label-filter-wm" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All WMs / FEs</span>
           </div>
           <div class="relative">
-            <input type="text" onfocus="openMultiSelect('filter-wm')" oninput="filterDropdownOptions('filter-wm', this.value)" placeholder="Search FEs / WMs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <input type="text" onfocus="openMultiSelect('filter-wm')" oninput="filterDropdownOptions('filter-wm', this.value)" placeholder="Search WMs / FEs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
             <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
           </div>
           <div id="dropdown-filter-wm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
@@ -418,9 +418,9 @@
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
               <i data-lucide="layers" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
-              <span>Zone &gt; Hub Name &gt; FE / WM Day-wise Aging Matrix</span>
+              <span>Zone &gt; Hub Name &gt; WM / FE Day-wise Aging Matrix</span>
             </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Click on any <strong>Zone</strong> to expand Hubs, and click on a <strong>Hub Name</strong> to expand Field Executives / WMs.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Click on any <strong>Zone</strong> to expand Hubs, and click on a <strong>Hub Name</strong> to expand WMs / FEs.</p>
           </div>
           <button onclick="exportHierarchicalAgingCSV('matrix-table-ph-wm', 'BRSNR_Hierarchical_Aging')" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg flex items-center space-x-1.5 transition shadow-sm hover:ring-2 hover:ring-indigo-400">
             <i data-lucide="download" class="w-4 h-4"></i><span>Export Hierarchical Aging CSV</span>
@@ -478,7 +478,7 @@
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>FE / WM Wise Volume Distribution</span>
+            <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM / FE Wise Volume Distribution</span>
           </h3>
           <span class="text-xs text-slate-500 dark:text-slate-400">Vertical Column Visual (Descending)</span>
         </div>
@@ -613,12 +613,12 @@
 
       <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-3">
         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
-          <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>FE / WM Wise Breakdown</span>
+          <i data-lucide="users" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>WM / FE Wise Breakdown</span>
         </h3>
         <div class="overflow-x-auto overflow-y-auto max-h-80">
           <table class="w-full text-xs text-left">
             <thead class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 sticky top-0 font-semibold">
-              <tr><th class="p-2">FE / WM Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
+              <tr><th class="p-2">WM / FE Name</th><th class="p-2 text-right">Volume</th><th class="p-2 text-right">% Share</th></tr>
             </thead>
             <tbody id="tbl-wm-body" class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-800 dark:text-slate-200"></tbody>
           </table>
@@ -662,7 +662,7 @@
               <th class="p-3">Hub Name</th>
               <th class="p-3">MH Name</th>
               <th class="p-3">GM</th>
-              <th class="p-3">FE / WM</th>
+              <th class="p-3">WM / FE</th>
               <th class="p-3">Seller Name</th>
               <th class="p-3">LOB</th>
             </tr>
@@ -697,7 +697,6 @@
     let selectedLobFilter = 'ALL';
     let currentTab = 'matrix';
 
-    // Supporting both old and new status criteria
     const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh', 'received_to_tc', 'dispatched_to_tc'];
     const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
 
@@ -712,7 +711,6 @@
       'vineeth v'
     ];
 
-    // Fallback/Multi-mapping column lookup configuration
     const COLS = { 
       DATE: ['Date', 'date'], 
       SHIPMENT_ID: ['ShipmentId', 'Shipment ID'], 
@@ -728,9 +726,9 @@
       MH: ['MH', 'MH Name'], 
       RCA: ['RCA'],
       BAG_ID: ['BagId'],
-      BAG_STATUS: ['Bag status'],
-      BAG_RECEIVE_TIME: ['Bag Receive time'],
       GM: ['GM'],
+      RM: ['RM'],
+      AM: ['AM'],
       DISPATCH_TO_MH: ['Dispatch to MH', 'Dispatched_to_TC'],
       RECEIVED_AT_MH: ['Received at MH', 'Received_to_TC'],
       DIFF: ['Diff', 'diff'],
@@ -764,9 +762,9 @@
       'filter-month': 'All Months',
       'filter-gm': 'All GMs',
       'filter-seller': 'All Sellers',
-      'filter-mh': 'All MH Names',
-      'filter-hub': 'All Hubs',
-      'filter-wm': 'All FEs / WMs',
+      'filter-mh': 'All MH / MH Names',
+      'filter-hub': 'All Hubs / PH Names',
+      'filter-wm': 'All WMs / FEs',
       'filter-status': 'All Status',
       'filter-zone': 'All Zones'
     };
@@ -776,9 +774,9 @@
       'filter-month': 'Month',
       'filter-gm': 'GM',
       'filter-seller': 'Seller',
-      'filter-mh': 'MH Name',
-      'filter-hub': 'Hub Name',
-      'filter-wm': 'FE / WM',
+      'filter-mh': 'MH / MH Name',
+      'filter-hub': 'Hub / PH Name',
+      'filter-wm': 'WM / FE',
       'filter-status': 'Status',
       'filter-zone': 'Zone'
     };
@@ -1119,13 +1117,13 @@
         LOB: cleanVal(getColVal(r, COLS.LIB), 'Unassigned'),
         CasperId: cleanVal(getColVal(r, COLS.CASPER_ID), 'None'),
         PartnerName: cleanVal(getColVal(r, COLS.PARTNER_NAME), 'None'),
-        WM: cleanVal(getColVal(r, COLS.WM), 'Unassigned FE / WM'),
+        WM: cleanVal(getColVal(r, COLS.WM), 'Unassigned WM / FE'),
         MH: cleanVal(getColVal(r, COLS.MH), 'Unassigned MH'),
         RCA: cleanVal(getColVal(r, COLS.RCA), 'None'),
         BagId: cleanVal(getColVal(r, COLS.BAG_ID), 'None'),
-        BagStatus: cleanVal(getColVal(r, COLS.BAG_STATUS), 'None'),
-        BagReceiveTime: cleanVal(getColVal(r, COLS.BAG_RECEIVE_TIME), 'None'),
         GM: gmName,
+        RM: cleanVal(getColVal(r, COLS.RM), 'None'),
+        AM: cleanVal(getColVal(r, COLS.AM), 'None'),
         DispatchToMH: cleanVal(getColVal(r, COLS.DISPATCH_TO_MH), 'None'),
         ReceivedAtMH: cleanVal(getColVal(r, COLS.RECEIVED_AT_MH), 'None'),
         Diff: cleanVal(getColVal(r, COLS.DIFF), '0'),
@@ -1546,7 +1544,7 @@
         const r = filteredData[i];
         const z = r.Zone || 'Unassigned Zone';
         const ph = r.HubName || 'Unassigned Hub';
-        const wm = r.WM || 'Unassigned FE / WM';
+        const wm = r.WM || 'Unassigned WM / FE';
         const d = r.Date || 'No Date';
 
         datesSet.add(d);
@@ -1567,7 +1565,7 @@
       const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
 
       const thead = document.getElementById('matrix-thead-ph-wm');
-      thead.innerHTML = `<th class="p-3">Hierarchy (Zone &gt; Hub Name &gt; FE / WM)</th>` + 
+      thead.innerHTML = `<th class="p-3">Hierarchy (Zone &gt; Hub Name &gt; WM / FE)</th>` + 
                         dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + 
                         `<th class="p-3 text-right bg-slate-100 dark:bg-slate-900">Total</th>`;
 
@@ -1611,7 +1609,7 @@
 
               sortedWMs.forEach(([wm, wmData]) => {
                 let wmRow = `<tr class="hover:bg-slate-100/50 dark:hover:bg-slate-700/30 text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">
-                  <td class="p-2 pl-14 font-mono">🚚 FE / WM: ${wm}</td>`;
+                  <td class="p-2 pl-14 font-mono">🚚 WM / FE: ${wm}</td>`;
                 dates.forEach(d => {
                   const v = wmData.dates[d] || 0;
                   wmRow += `<td class="p-2 text-center">${v ? v.toLocaleString() : '-'}</td>`;
@@ -1680,7 +1678,7 @@
           <tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400">
             <td class="p-3">${r.Date}</td>
             <td class="p-3 font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${r.ShipmentId}</td>
-            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status.includes('received') ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'}">${r.Status}</span></td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status.toLowerCase().includes('received') ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'}">${r.Status}</span></td>
             <td class="p-3">${r.Zone}</td>
             <td class="p-3">${r.HubName}</td>
             <td class="p-3">${r.MH}</td>
@@ -1745,7 +1743,7 @@
         const r = filteredData[i];
         const z = r.Zone || 'Unassigned Zone';
         const ph = r.HubName || 'Unassigned Hub';
-        const wm = r.WM || 'Unassigned FE / WM';
+        const wm = r.WM || 'Unassigned WM / FE';
         const d = r.Date || 'No Date';
 
         datesSet.add(d);
@@ -1761,7 +1759,7 @@
       const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
 
       const csvRows = [];
-      const headerRow = ['"Zone"', '"Hub Name"', '"FE / WM Name"', ...dates.map(d => `"${d}"`), '"Total"'];
+      const headerRow = ['"Zone"', '"Hub Name"', '"WM / FE Name"', ...dates.map(d => `"${d}"`), '"Total"'];
       csvRows.push(headerRow.join(','));
 
       Object.keys(hierarchy).sort().forEach(z => {
