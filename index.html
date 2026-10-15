@@ -1561,7 +1561,7 @@
         hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].wms[wm].dates[d] || 0) + 1;
       }
 
-      const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
+      const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
 
       const thead = document.getElementById('matrix-thead-ph-wm');
       thead.innerHTML = `<th class="p-3">Hierarchy (Zone &gt; Hub Name &gt; WM / FE)</th>` + 
@@ -1755,7 +1755,7 @@
         hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].wms[wm].dates[d] || 0) + 1;
       }
 
-      const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
+      const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
 
       const csvRows = [];
       const headerRow = ['"Zone"', '"Hub Name"', '"WM / FE Name"', ...dates.map(d => `"${d}"`), '"Total"'];
