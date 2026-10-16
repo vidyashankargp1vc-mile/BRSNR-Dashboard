@@ -1,4 +1,4 @@
-Date,ShipmentId,Hub Name,seller id,Status,Line_of_Business,Casper_id,MH Name,BagId,Dispatched_to_TC,Received_to_TC,diff,seller_name,FE_Name,Zone,GM,RM,AM,Partner Name
+date,ShipmentId,Hub Name,seller id,Status,Line_of_Business,Casper_id,MH Name,BagId,Dispatched_to_TC,Received_to_TC,diff,seller_name,FE_Name,Zone,GM,RM,AM,Partner Name
 ########,FMPC6603828673,MeerutHub_PL,038829c6bff8443c,received_at_mh,EKART,4333327,MotherHub_YKB,PH-ZO-DELYKB-66738930,########,########,48,AMAN ENTERPRISES +919720698048,Pawan Kumar,North,Manoj Harsh,Sarang Rajvanshi,Imran Khan,ekart
 ########,FMPP4359433835,BallabhgarhHub_Del_PL,ef95397af9764afd,received_at_mh,EKART,4300608,MotherHub_NDC,PH-B10-NCRNDC-6208677,########,########,48,dadoos +919818238760,Mohit Pandey,North,Arvind Bansal (DNCR),Manal Sharma,Prem Singh,ekart
 ########,FMPP4363306821,BallabhgarhHub_Del_PL,9d956ed0e53e449e,received_at_mh,EKART,4109911,MotherHub_NDC,PH-B10-NCRNDC-7138208,########,########,48,Creating bharat +919868582200,Umesh Kumar,North,Arvind Bansal (DNCR),Manal Sharma,Prem Singh,ekart
