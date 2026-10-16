@@ -89,29 +89,35 @@ async function run() {
     const parsed = Papa.parse(content, { header: true, skipEmptyLines: true });
 
     parsed.data.forEach(row => {
-      // 1. Process Daily Shipment Files (if the CSV contains 'Shipment' column)
-      if (row['Shipment'] !== undefined || row['shipment'] !== undefined) {
-        const hubRaw = row['Hub'] || row['ph_name'] || row['PH Name'] || '';
-        const dateStr = row['Date'] || row['date'] || '';
-        const shipmentVal = parseFloat(row['Shipment'] || row['shipment']) || 0;
-        const gm = hubMap[hubRaw.trim().toLowerCase()] || row['GM'];
+      const dtStr = row['Date'] || row['date'] || '';
+      const hubRaw = row['Hub'] || row['ph_name'] || row['Hub Name'] || row['PH Name'] || '';
+      const gmRaw = hubMap[hubRaw.trim().toLowerCase()] || row['GM'];
+      const cleanGM = cleanVal(gmRaw, 'Unassigned GM');
 
-        if (gm && dateStr) {
-          const cleanGM = cleanVal(gm, 'Unassigned GM');
+      // 1. Process Daily Shipment Files (if the CSV contains explicit 'Shipment' count column)
+      if (row['Shipment'] !== undefined || row['shipment'] !== undefined) {
+        const shipmentVal = parseFloat(row['Shipment'] || row['shipment']) || 0;
+        if (cleanGM !== 'Unassigned GM' && dtStr) {
           if (!gmShipments[cleanGM]) gmShipments[cleanGM] = {};
-          gmShipments[cleanGM][dateStr] = (gmShipments[cleanGM][dateStr] || 0) + shipmentVal;
+          gmShipments[cleanGM][dtStr] = (gmShipments[cleanGM][dtStr] || 0) + shipmentVal;
         }
       }
 
       // 2. Process Main BRSNR Data Files
       const id = row['ShipmentId'] || row['Shipment ID'];
       if (id && !seenIds.has(id)) {
-        const dtStr = row['Date'] || row['date'] || '';
         const pd = parseDateStrFast(dtStr);
         const status = cleanVal(row['Status'] || row['Shipment Status'], 'Unknown Status');
 
         if (!IGNORED_STATUSES.includes(status)) {
           seenIds.add(id);
+          
+          // Automatically aggregate count of valid records per GM per Date if explicit shipment column is missing
+          if (dtStr && cleanGM !== 'Unassigned GM') {
+            if (!gmShipments[cleanGM]) gmShipments[cleanGM] = {};
+            gmShipments[cleanGM][dtStr] = (gmShipments[cleanGM][dtStr] || 0) + 1;
+          }
+
           masterData.push({
             Date: dtStr || 'Unassigned Date',
             ParsedDate: pd ? pd.toISOString() : null,
@@ -132,7 +138,7 @@ async function run() {
             BagId: cleanVal(row['BagId'], 'None'),
             BagStatus: cleanVal(row['Bag status'], 'None'),
             BagReceiveTime: cleanVal(row['Bag Receive time'], 'None'),
-            GM: cleanVal(row['GM'], 'Unassigned GM'),
+            GM: cleanGM,
             RM: cleanVal(row['RM'], 'None'),
             AM: cleanVal(row['AM'], 'None'),
             DispatchToMH: cleanVal(row['Dispatched_to_TC'] || row['Dispatch to MH'], 'None'),
@@ -145,7 +151,6 @@ async function run() {
     });
   });
 
-  // Combine both BRSNR Master Records and Aggregated GM Shipments into the output JSON
   const outputPayload = {
     records: masterData,
     gmShipments: gmShipments
