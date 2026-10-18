@@ -704,10 +704,11 @@
     let selectedCategory = 'BRSNR';
     let currentTab = 'matrix';
 
-    // RCA = "BRSNR" or "FM BRSNR" -> BRSNR. Anything else (incl. blank) -> Mixbagging.
+    // RCA = Missort / Mixbagging variants -> Mixbagging. Anything else (incl. blank / no RCA) -> BRSNR.
+    const MIXBAGGING_RCAS = ['FMMISSORT', 'MISSORT', 'FMMIXBAGGING', 'MIXBAGGING'];
     function getCategory(r) {
-      const v = String(r.RCA || '').trim().toUpperCase().replace(/\s+/g, ' ');
-      return (v === 'BRSNR' || v === 'FM BRSNR') ? 'BRSNR' : 'Mixbagging';
+      const v = String(r.RCA || '').toUpperCase().replace(/[\s_-]+/g, '');
+      return MIXBAGGING_RCAS.includes(v) ? 'Mixbagging' : 'BRSNR';
     }
 
     function setCategory(cat) {
@@ -1157,9 +1158,10 @@
       if (!str) return null;
       const p = str.split(/[-/]/);
       if (p.length === 3) {
-        return p[0].length === 4
+        const d = p[0].length === 4
           ? new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]))
           : new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
+        if (!isNaN(d.getTime())) return d;
       }
       const nativeDate = Date.parse(str);
       return !isNaN(nativeDate) ? new Date(nativeDate) : null;
@@ -1308,7 +1310,7 @@
       });
     }
 
-    function getFilteredDataExcluding(excludedFilterId) {
+    function getFilteredDataExcluding(excludedFilterId, ignoreCategory = false) {
       const searchInput = document.getElementById('filter-search');
       const search = searchInput ? searchInput.value.toLowerCase().trim() : '';
       const dateFromInput = document.getElementById('filter-date-from');
@@ -1343,7 +1345,7 @@
         if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
         if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
         if (!targetStatuses.includes(r.Status)) continue;
-        if (getCategory(r) !== selectedCategory) continue;
+        if (!ignoreCategory && getCategory(r) !== selectedCategory) continue;
 
         if (selectedLobFilter !== 'ALL') {
           const rLob = r.LOB.toLowerCase();
@@ -1369,6 +1371,13 @@
         res.push(r);
       }
       return res;
+    }
+
+    // Dates present under current filters regardless of BRSNR/Mixbagging toggle, so every date shows in both views
+    function getAllDatesDesc() {
+      const set = new Set();
+      getFilteredDataExcluding(null, true).forEach(r => { if (r.Date) set.add(r.Date); });
+      return Array.from(set).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
     }
 
     function applyFilters(rebuildOptions = true) {
@@ -1415,6 +1424,7 @@
         if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1;
       }
 
+      getAllDatesDesc().forEach(d => { if (!(d in dailyMap)) dailyMap[d] = 0; });
       let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
       let displayLabels = [...sortedDates];
       let displayValues = sortedDates.map(d => dailyMap[d]);
@@ -1423,7 +1433,10 @@
         displayLabels = ['', ...sortedDates, ''];
         displayValues = [null, ...sortedDates.map(d => dailyMap[d]), null];
       }
-      document.getElementById('chart-daily-trend').parentElement.style.minWidth = Math.max(800, displayLabels.length * 70) + 'px';
+
+      document.getElementById('chart-daily-trend').parentElement.style.minWidth =
+        Math.max(800, displayLabels.length * 70) + 'px';
+
       createChart('chart-daily-trend', 'line', {
         labels: displayLabels,
         datasets: [{
@@ -1584,7 +1597,7 @@
         hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].wms[wm].dates[d] || 0) + 1;
       }
 
-      const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
+      const dates = getAllDatesDesc();
 
       const thead = document.getElementById('matrix-thead-ph-wm');
       thead.innerHTML = `<th class="p-3">Hierarchy (Zone &gt; Hub Name &gt; WM / FE)</th>` + 
@@ -1778,7 +1791,7 @@
         hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].wms[wm].dates[d] || 0) + 1;
       }
 
-      const dates = Array.from(datesSet).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
+      const dates = getAllDatesDesc();
 
       const csvRows = [];
       const headerRow = ['"Zone"', '"Hub Name"', '"WM / FE Name"', ...dates.map(d => `"${d}"`), '"Total"'];
