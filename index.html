@@ -69,6 +69,12 @@
 
         <!-- RIGHT HEADER ACTION BAR -->
         <div class="flex items-center space-x-3 sm:space-x-5">
+          <!-- CATEGORY TOGGLE: BRSNR / MIXBAGGING -->
+          <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-bold">
+            <button onclick="setCategory('BRSNR')" id="cat-btn-BRSNR" class="px-3 py-1 rounded-md bg-indigo-600 text-white shadow transition">BRSNR</button>
+            <button onclick="setCategory('Mixbagging')" id="cat-btn-Mixbagging" class="px-3 py-1 rounded-md text-slate-600 dark:text-slate-300 transition">Mixbagging</button>
+          </div>
+
           <!-- HANGING THEME BULB TOGGLE BUTTON -->
           <div class="relative flex items-center pt-10 z-40" id="bulb-container">
             <button onclick="toggleTheme()" id="theme-toggle-btn" title="Toggle Light/Dark Theme" class="relative group p-2 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:scale-110 active:scale-95 transition-all duration-300 shadow-md hover:ring-2 hover:ring-amber-400">
@@ -530,9 +536,9 @@
         <div class="border-b border-slate-100 dark:border-slate-700 pb-1.5">
           <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center space-x-1.5">
             <i data-lucide="hash" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
-            <span>Total Count of BRSNR wrt GM (Past 5 Days)</span>
+            <span>Total Count of BRSNR / Mixbagging wrt GM (Past 5 Days)</span>
           </h3>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400">Absolute total BRSNR volume count categorized by General Manager.</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400">Absolute total volume count categorized by General Manager, split into BRSNR and Mixbagging per date.</p>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-[11px] text-center border-collapse">
@@ -552,7 +558,7 @@
             <i data-lucide="percent" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
             <span>GM View Table (Past 5 Days)</span>
           </h3>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400">Calculated as Total BRSNR divided by total shipment values mapped by GM. Values &gt; 0.12% in red.</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400">Calculated as BRSNR / Mixbagging count divided by total shipment values mapped by GM (previous day). Values &gt; 0.12% in red.</p>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-[11px] text-center border-collapse">
@@ -695,7 +701,24 @@
     let masterData = [], globalGmShipments = {}, filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
     let debounceTimer = null;
     let selectedLobFilter = 'ALL';
+    let selectedCategory = 'BRSNR';
     let currentTab = 'matrix';
+
+    // RCA = "BRSNR" or "FM BRSNR" -> BRSNR. Anything else (incl. blank) -> Mixbagging.
+    function getCategory(r) {
+      const v = String(r.RCA || '').trim().toUpperCase().replace(/\s+/g, ' ');
+      return (v === 'BRSNR' || v === 'FM BRSNR') ? 'BRSNR' : 'Mixbagging';
+    }
+
+    function setCategory(cat) {
+      selectedCategory = cat;
+      ['BRSNR', 'Mixbagging'].forEach(c => {
+        document.getElementById(`cat-btn-${c}`).className = c === cat
+          ? 'px-3 py-1 rounded-md bg-indigo-600 text-white shadow transition'
+          : 'px-3 py-1 rounded-md text-slate-600 dark:text-slate-300 transition';
+      });
+      applyFilters(true);
+    }
 
     const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh', 'received_to_tc', 'dispatched_to_tc'];
     const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
@@ -1170,24 +1193,31 @@
 
       const recent5Dates = allDatesSorted.slice(0, 5);
 
-      let headerHtml = `<th class="py-1 px-2 text-left">GM</th>`;
-      recent5Dates.forEach(d => {
-        headerHtml += `<th class="py-1 px-1.5 text-center">${d}</th>`;
+      // Two header rows: date (colspan 2) + BRSNR / Mixbagging sub-columns
+      const cellB = 'py-0.5 px-1.5 text-center border-l border-slate-200 dark:border-slate-700';
+      const headerHtml = `<th rowspan="2" class="py-1 px-2 text-left">GM</th>` +
+        recent5Dates.map(d => `<th colspan="2" class="py-1 px-1.5 text-center border-l border-slate-200 dark:border-slate-700">${d}</th>`).join('');
+      const subHtml = recent5Dates.map(() => `<th class="${cellB}">BRSNR</th><th class="py-0.5 px-1.5 text-center">Mixbagging</th>`).join('');
+      [countHeaderRow, pctHeaderRow].forEach(row => {
+        row.innerHTML = headerHtml;
+        let sub = row.parentElement.querySelector('.sub-row');
+        if (!sub) {
+          sub = document.createElement('tr');
+          sub.className = 'sub-row bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold';
+          row.after(sub);
+        }
+        sub.innerHTML = subHtml;
       });
-      countHeaderRow.innerHTML = headerHtml;
-      pctHeaderRow.innerHTML = headerHtml;
 
+      // Counts per GM per date, split by category: { B: BRSNR, M: Mixbagging }
       const gmBrsnrCounts = {};
       masterData.forEach(r => {
         let gm = r.GM;
-        if (!isInvalid(gm)) {
-          if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
-          const date = r.Date;
-          if (date) {
-            if (!gmBrsnrCounts[gm]) gmBrsnrCounts[gm] = {};
-            gmBrsnrCounts[gm][date] = (gmBrsnrCounts[gm][date] || 0) + 1;
-          }
-        }
+        if (isInvalid(gm) || !r.Date) return;
+        if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
+        const c = gmBrsnrCounts[gm] || (gmBrsnrCounts[gm] = {});
+        const e = c[r.Date] || (c[r.Date] = { B: 0, M: 0 });
+        getCategory(r) === 'BRSNR' ? e.B++ : e.M++;
       });
 
       const normalizedGmShipments = {};
@@ -1222,34 +1252,26 @@
       let countBodyHtml = '';
       let pctBodyHtml = '';
 
+      const cntCell = n => `<td class="py-0.5 px-1.5 text-center font-mono font-medium leading-tight">${n ? n.toLocaleString() : '-'}</td>`;
+      const pctCell = (n, den) => {
+        const p = den > 0 ? (n / den) * 100 : 0;
+        const c = p > 0.12 ? 'background-color:#f8d7da;color:#842029;' : 'background-color:#d1e7dd;color:#0f5132;';
+        return `<td class="py-0.5 px-1.5 text-center font-medium leading-tight rounded" style="${c}">${p.toFixed(2)}%</td>`;
+      };
+      const nameTd = gm => `<td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
+
       allGms.forEach(gm => {
-        countBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-          <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
-
-        pctBodyHtml += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">
-          <td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
-
+        let cRow = `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">${nameTd(gm)}`;
+        let pRow = cRow;
         recent5Dates.forEach(date => {
-          const brsnrCount = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
-
-          countBodyHtml += `<td class="py-0.5 px-1.5 text-center font-mono font-medium leading-tight">${brsnrCount ? brsnrCount.toLocaleString() : '-'}</td>`;
-
-          const prevDate = getPrevDateStr(date);
-          const shipmentValPrevDay = (prevDate && normalizedGmShipments[gm] && normalizedGmShipments[gm][prevDate]) || 0;
-
-          let pct = 0;
-          if (shipmentValPrevDay > 0) {
-            pct = (brsnrCount / shipmentValPrevDay) * 100;
-          }
-
-          const formattedPct = pct.toFixed(2) + '%';
-          const bgColor = pct > 0.12 ? 'background-color: #f8d7da; color: #842029;' : 'background-color: #d1e7dd; color: #0f5132;';
-
-          pctBodyHtml += `<td class="py-0.5 px-1.5 text-center font-medium leading-tight rounded" style="${bgColor}">${formattedPct}</td>`;
+          const e = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || { B: 0, M: 0 };
+          const prev = getPrevDateStr(date);
+          const den = (prev && normalizedGmShipments[gm] && normalizedGmShipments[gm][prev]) || 0;
+          cRow += cntCell(e.B) + cntCell(e.M);
+          pRow += pctCell(e.B, den) + pctCell(e.M, den);
         });
-
-        countBodyHtml += `</tr>`;
-        pctBodyHtml += `</tr>`;
+        countBodyHtml += cRow + '</tr>';
+        pctBodyHtml += pRow + '</tr>';
       });
 
       countTbody.innerHTML = countBodyHtml;
@@ -1321,6 +1343,7 @@
         if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
         if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
         if (!targetStatuses.includes(r.Status)) continue;
+        if (getCategory(r) !== selectedCategory) continue;
 
         if (selectedLobFilter !== 'ALL') {
           const rLob = r.LOB.toLowerCase();
@@ -1732,7 +1755,7 @@
       setPresetDate('all');
     }
 
-    function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `BRSNR_Export_${new Date().toISOString().split('T')[0]}.csv`); }
+    function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `${selectedCategory}_Export_${new Date().toISOString().split('T')[0]}.csv`); }
 
     function exportHierarchicalAgingCSV(tableId, filenamePrefix) {
       const datesSet = new Set();
