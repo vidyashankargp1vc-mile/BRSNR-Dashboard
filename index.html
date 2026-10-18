@@ -1415,7 +1415,7 @@
         if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1;
       }
 
-      let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStrFast(a) || 0) - (parseDateStrFast(b) || 0));
+      let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
       let displayLabels = [...sortedDates];
       let displayValues = sortedDates.map(d => dailyMap[d]);
 
@@ -1423,7 +1423,7 @@
         displayLabels = ['', ...sortedDates, ''];
         displayValues = [null, ...sortedDates.map(d => dailyMap[d]), null];
       }
-
+      document.getElementById('chart-daily-trend').parentElement.style.minWidth = Math.max(800, displayLabels.length * 70) + 'px';
       createChart('chart-daily-trend', 'line', {
         labels: displayLabels,
         datasets: [{
