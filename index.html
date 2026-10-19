@@ -48,6 +48,14 @@
     .dark .hanging-bulb-cord {
       background-color: #f59e0b;
     }
+
+    /* Excel-style GM view tables */
+    .xl-table { border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #000; white-space: nowrap; }
+    .xl-table th, .xl-table td { border: 1px solid #000; padding: 2px 10px; text-align: center; font-weight: 700; color: #000; }
+    .xl-table .xl-h { background: #bfe3f4; }
+    .xl-table td.xl-n { background: #fff; }
+    .xl-table td.xl-bad { background: #f4c7c3; }
+    .xl-table td.xl-good { background: #b7e1cd; }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-300">
@@ -567,9 +575,9 @@
         <div class="border-b border-slate-100 dark:border-slate-700 pb-1.5">
           <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center space-x-1.5">
             <i data-lucide="hash" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
-            <span>Total Count of BRSNR / Mixbagging wrt GM (Past 5 Days)</span>
+            <span>Total Count of BRSNR / Mix Bagging wrt GM (Past 5 Days)</span>
           </h3>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400">Absolute total volume count categorized by General Manager, split into BRSNR and Mixbagging per date.</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400">Absolute total volume count categorized by General Manager, split into BRSNR and Mix Bagging per date.</p>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-[11px] text-center border-collapse">
@@ -1230,23 +1238,30 @@
         .filter(Boolean)
         .sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
 
-      const recent5Dates = allDatesSorted.slice(0, 5);
+      const recentDates = allDatesSorted.slice(0, 5);
 
-      // Two header rows: date (colspan 2) + BRSNR / Mixbagging sub-columns
-      const cellB = 'py-0.5 px-1.5 text-center border-l border-slate-200 dark:border-slate-700';
-      const headerHtml = `<th rowspan="2" class="py-1 px-2 text-left">GM</th>` +
-        recent5Dates.map(d => `<th colspan="2" class="py-1 px-1.5 text-center border-l border-slate-200 dark:border-slate-700">${d}</th>`).join('');
-      const subHtml = recent5Dates.map(() => `<th class="${cellB}">BRSNR</th><th class="py-0.5 px-1.5 text-center">Mixbagging</th>`).join('');
+      const fmtDate = ds => {
+        const d = parseDateStrFast(ds);
+        if (!d) return ds;
+        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+      };
+
+      // Excel-style two-row header: "Date" + date (colspan 2); "GM" + BRSNR / Mix Bagging
+      const row1 = `<th class="xl-h">Date</th>` + recentDates.map(d => `<th class="xl-h" colspan="2">${fmtDate(d)}</th>`).join('');
+      const row2 = `<th class="xl-h">GM</th>` + recentDates.map(() => `<th class="xl-h">BRSNR</th><th class="xl-h">Mix Bagging</th>`).join('');
       [countHeaderRow, pctHeaderRow].forEach(row => {
-        row.innerHTML = headerHtml;
+        row.className = '';
+        row.innerHTML = row1;
+        row.parentElement.closest('table').className = 'xl-table';
         let sub = row.parentElement.querySelector('.sub-row');
         if (!sub) {
           sub = document.createElement('tr');
-          sub.className = 'sub-row bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold';
+          sub.className = 'sub-row';
           row.after(sub);
         }
-        sub.innerHTML = subHtml;
+        sub.innerHTML = row2;
       });
+      [countTbody, pctTbody].forEach(tb => { tb.className = ''; });
 
       // Counts per GM per date, split by category: { B: BRSNR, M: Mixbagging }
       const gmBrsnrCounts = {};
@@ -1278,7 +1293,7 @@
         if (!parsed) return null;
         const prev = new Date(parsed);
         prev.setDate(prev.getDate() - 1);
-        
+
         const day = String(prev.getDate()).padStart(2, '0');
         const month = String(prev.getMonth() + 1).padStart(2, '0');
         const year = prev.getFullYear();
@@ -1288,21 +1303,20 @@
           : `${day}-${month}-${year}`;
       }
 
+      const cntCell = n => `<td class="xl-n">${(n || 0).toLocaleString()}</td>`;
+      const pctCell = (n, den) => {
+        const p = den > 0 ? (n / den) * 100 : 0;
+        return `<td class="${p > 0.12 ? 'xl-bad' : 'xl-good'}">${p.toFixed(2)}%</td>`;
+      };
+      const nameTd = gm => `<td class="xl-n">${gm}</td>`;
+
       let countBodyHtml = '';
       let pctBodyHtml = '';
 
-      const cntCell = n => `<td class="py-0.5 px-1.5 text-center font-mono font-medium leading-tight">${n ? n.toLocaleString() : '-'}</td>`;
-      const pctCell = (n, den) => {
-        const p = den > 0 ? (n / den) * 100 : 0;
-        const c = p > 0.12 ? 'background-color:#f8d7da;color:#842029;' : 'background-color:#d1e7dd;color:#0f5132;';
-        return `<td class="py-0.5 px-1.5 text-center font-medium leading-tight rounded" style="${c}">${p.toFixed(2)}%</td>`;
-      };
-      const nameTd = gm => `<td class="py-0.5 px-2 text-left font-semibold text-slate-900 dark:text-white leading-tight">${gm}</td>`;
-
       allGms.forEach(gm => {
-        let cRow = `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition">${nameTd(gm)}`;
+        let cRow = `<tr>${nameTd(gm)}`;
         let pRow = cRow;
-        recent5Dates.forEach(date => {
+        recentDates.forEach(date => {
           const e = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || { B: 0, M: 0 };
           const prev = getPrevDateStr(date);
           const den = (prev && normalizedGmShipments[gm] && normalizedGmShipments[gm][prev]) || 0;
