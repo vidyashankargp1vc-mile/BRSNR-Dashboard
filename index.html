@@ -323,6 +323,37 @@
           </div>
         </div>
 
+        <!-- RM / AM MULTI-SELECT FILTERS -->
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-rm">
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-rm')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">RM (Regional Manager)</label>
+            <span id="label-filter-rm" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All RMs</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-rm')" oninput="filterDropdownOptions('filter-rm', this.value)" placeholder="Search RMs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-rm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
+            <div id="options-filter-rm" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
+          </div>
+        </div>
+
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-am">
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-am')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">AM (Area Manager)</label>
+            <span id="label-filter-am" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All AMs</span>
+          </div>
+          <div class="relative">
+            <input type="text" onfocus="openMultiSelect('filter-am')" oninput="filterDropdownOptions('filter-am', this.value)" placeholder="Search AMs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+          </div>
+          <div id="dropdown-filter-am" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
+            <div id="options-filter-am" class="max-h-48 overflow-y-auto space-y-1"></div>
+            <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
+          </div>
+        </div>
+
         <!-- SEGMENTED TOGGLE SWITCH FOR LOB -->
         <div class="col-span-1 sm:col-span-2 lg:col-span-1 flex flex-col justify-end">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Line of Business (LOB)</label>
@@ -778,7 +809,9 @@
       'filter-hub': [],
       'filter-wm': [],
       'filter-status': [],
-      'filter-zone': []
+      'filter-zone': [],
+      'filter-rm': [],
+      'filter-am': []
     };
 
     const filterLabels = {
@@ -790,7 +823,9 @@
       'filter-hub': 'All Hubs / PH Names',
       'filter-wm': 'All WMs / FEs',
       'filter-status': 'All Status',
-      'filter-zone': 'All Zones'
+      'filter-zone': 'All Zones',
+      'filter-rm': 'All RMs',
+      'filter-am': 'All AMs'
     };
 
     const filterFriendlyNames = {
@@ -802,7 +837,9 @@
       'filter-hub': 'Hub / PH Name',
       'filter-wm': 'WM / FE',
       'filter-status': 'Status',
-      'filter-zone': 'Zone'
+      'filter-zone': 'Zone',
+      'filter-rm': 'RM',
+      'filter-am': 'AM'
     };
 
     const expandedZones = new Set();
@@ -1290,7 +1327,9 @@
         { id: 'filter-hub', field: 'HubName' },
         { id: 'filter-wm', field: 'WM' },
         { id: 'filter-status', field: 'Status' },
-        { id: 'filter-zone', field: 'Zone' }
+        { id: 'filter-zone', field: 'Zone' },
+        { id: 'filter-rm', field: 'RM' },
+        { id: 'filter-am', field: 'AM' }
       ];
 
       filterConfigs.forEach(config => {
@@ -1331,6 +1370,8 @@
       const selWm = excludedFilterId === 'filter-wm' ? [] : selectedFilters['filter-wm'];
       const selStatus = excludedFilterId === 'filter-status' ? [] : selectedFilters['filter-status'];
       const selZone = excludedFilterId === 'filter-zone' ? [] : selectedFilters['filter-zone'];
+      const selRm = excludedFilterId === 'filter-rm' ? [] : selectedFilters['filter-rm'];
+      const selAm = excludedFilterId === 'filter-am' ? [] : selectedFilters['filter-am'];
 
       const targetStatuses = selStatus.length > 0 ? selStatus : ALLOWED_STATUSES;
 
@@ -1344,6 +1385,8 @@
         if (selHub.length > 0 && !selHub.includes(r.HubName)) continue;
         if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
         if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
+        if (selRm.length > 0 && !selRm.includes(r.RM)) continue;
+        if (selAm.length > 0 && !selAm.includes(r.AM)) continue;
         if (!targetStatuses.includes(r.Status)) continue;
         if (!ignoreCategory && getCategory(r) !== selectedCategory) continue;
 
@@ -1763,7 +1806,7 @@
         const el = document.getElementById(id);
         if (el) el.value = '';
       });
-      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-zone'].forEach(id => resetMultiSelect(id, false));
+      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-zone', 'filter-rm', 'filter-am'].forEach(id => resetMultiSelect(id, false));
       setLobToggle('ALL');
       setPresetDate('all');
     }
