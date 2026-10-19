@@ -1312,6 +1312,8 @@
 
       let countBodyHtml = '';
       let pctBodyHtml = '';
+      const grand = {}; // per date: { B, M, den }
+      recentDates.forEach(d => { grand[d] = { B: 0, M: 0, den: 0 }; });
 
       allGms.forEach(gm => {
         let cRow = `<tr>${nameTd(gm)}`;
@@ -1322,10 +1324,27 @@
           const den = (prev && normalizedGmShipments[gm] && normalizedGmShipments[gm][prev]) || 0;
           cRow += cntCell(e.B) + cntCell(e.M);
           pRow += pctCell(e.B, den) + pctCell(e.M, den);
+          grand[date].B += e.B; grand[date].M += e.M; grand[date].den += den;
         });
         countBodyHtml += cRow + '</tr>';
         pctBodyHtml += pRow + '</tr>';
       });
+
+      // Grand Total rows
+      const gtName = `<td class="xl-h">Grand Total</td>`;
+      const gtCnt = n => `<td class="xl-h">${n.toLocaleString()}</td>`;
+      const gtPct = (n, den) => {
+        const p = den > 0 ? (n / den) * 100 : 0;
+        return `<td class="${p > 0.12 ? 'xl-bad' : 'xl-good'}">${p.toFixed(2)}%</td>`;
+      };
+      let gtC = `<tr>${gtName}`, gtP = `<tr>${gtName}`;
+      recentDates.forEach(d => {
+        const g = grand[d];
+        gtC += gtCnt(g.B) + gtCnt(g.M);
+        gtP += gtPct(g.B, g.den) + gtPct(g.M, g.den);
+      });
+      countBodyHtml += gtC + '</tr>';
+      pctBodyHtml += gtP + '</tr>';
 
       countTbody.innerHTML = countBodyHtml;
       pctTbody.innerHTML = pctBodyHtml;
