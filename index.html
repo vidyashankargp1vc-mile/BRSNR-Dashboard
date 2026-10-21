@@ -1052,65 +1052,39 @@
       return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
     }
 
-    async function loadRepositoryData() {
-      showStatusBanner("Parsing raw CSV dataset directly...", "info");
-      masterData = [];
-      globalGmShipments = {};
-      try {
-        const today = new Date();
-        const csvUrls = [];
-        // Generate past 60 days of date-based CSV URLs inside data/
-        for (let i = 0; i < 60; i++) {
-          const d = new Date(today);
-          d.setDate(d.getDate() - i);
-          csvUrls.push(`data/${d.toISOString().split('T')[0]}.csv`);
-        }
+   async function loadRepositoryData() {
+  showStatusBanner("Loading master data...", "info");
+  masterData = [];
+  globalGmShipments = {};
+  try {
+    const manifestRes = await fetch('data/master-manifest.json', { cache: 'no-cache' });
+    if (!manifestRes.ok) throw new Error('master-manifest.json missing');
+    const files = (await manifestRes.json()).sort().reverse(); // newest month first
 
-        const hubMap = await loadHubMappingClient();
-        const texts = await pool(csvUrls, 8, fetchCsv);
-        const seen = new Set();
+    const [gmShip, ...months] = await Promise.all([
+      fetch('data/master-gm-shipments.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}),
+      ...files.map(f => fetch('data/' + f, { cache: 'no-cache' }).then(r => r.json()))
+    ]);
+    globalGmShipments = gmShip;
 
-        texts.forEach((t, i) => {
-          if (!t) return;
-          const parsedCsv = Papa.parse(t, { header: true, skipEmptyLines: true });
-          
-          parsedCsv.data.forEach(row => {
-            // A. Populate globalGmShipments for denominators
-            if (row['Shipment'] !== undefined || row['shipment'] !== undefined) {
-              const hubRaw = row['Hub'] || row['ph_name'] || row['PH Name'] || '';
-              const rawDateStr = row['Date'] || row['date'] || '';
-              const parsedDt = parseDateStrFast(rawDateStr);
-              const normDateStr = parsedDt ? formatDateISO(parsedDt) : rawDateStr;
-              const shipmentVal = parseFloat(row['Shipment'] || row['shipment']) || 0;
-              const gm = hubMap[hubRaw.trim().toLowerCase()] || row['GM'];
+    months.forEach(m => m.records.forEach(rec => {
+      const pd = parseDateStrFast(rec.Date);
+      rec.ParsedDate = pd;
+      rec.ts = pd ? pd.getTime() : 0;
+      rec.Month = pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null;
+      rec.Week = pd ? getWeekIdentifier(pd) : null;
+      if (rec.GM.toLowerCase() === 'somnath g') rec.GM = 'Somnath Ghosh';
+      masterData.push(rec);
+    }));
 
-              if (gm && normDateStr) {
-                const cleanGM = cleanVal(gm, 'Unassigned GM');
-                if (!globalGmShipments[cleanGM]) globalGmShipments[cleanGM] = {};
-                globalGmShipments[cleanGM][normDateStr] = (globalGmShipments[cleanGM][normDateStr] || 0) + shipmentVal;
-              }
-            }
-
-            // B. Populate masterData records
-            const id = getColVal(row, COLS.SHIPMENT_ID);
-            if (id && !seen.has(id)) {
-              const normalized = normalizeRow(row, id, csvUrls[i]);
-              if (normalized && !IGNORED_STATUSES.includes(normalized.Status)) {
-                seen.add(id);
-                masterData.push(normalized);
-              }
-            }
-          });
-        });
-
-        showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from raw CSVs.`, masterData.length ? "success" : "warning");
-        renderGMViewTables();
-        applyFilters(true);
-      } catch (e) {
-        console.error("Error loading CSV data:", e);
-        showStatusBanner("Error loading data from CSV files.", "error");
-      }
-    }
+    showStatusBanner(`Loaded ${masterData.length.toLocaleString()} shipments from ${files.length} month file(s).`, masterData.length ? "success" : "warning");
+    renderGMViewTables();
+    applyFilters(true);
+  } catch (e) {
+    console.error("Error loading master data:", e);
+    showStatusBanner("Error loading master data JSON.", "error");
+  }
+}
 
     async function fetchCsv(url) {
       try {
