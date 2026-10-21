@@ -23,7 +23,7 @@ function cleanVal(val, defaultVal = 'Unassigned') {
 
 function parseDateStrFast(str) {
   if (!str) return null;
-  const p = str.split(/[-/]/);
+  const p = str.trim().split(/[-/]/);
   if (p.length === 3) {
     return p[0].length === 4
       ? new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]))
@@ -66,15 +66,18 @@ async function run() {
   if (!fs.existsSync(dataDir)) process.exit(1);
 
   const hubMap = loadHubMapping();
-  const files = fs.readdirSync(dataDir).filter(f => f.endsWith('.csv') && f !== 'hub-mapping.csv');
+  const files = fs.readdirSync(dataDir)
+    .filter(f => f.endsWith('.csv') && f !== 'hub-mapping.csv')
+    .sort().reverse(); // newest first, same dedup order as old frontend
   const seenIds = new Set();
   const monthlyRecords = {}; // { "2026-10": [records...] }
   const gmShipments = {};
 
   files.forEach(file => {
     const filePath = path.join(dataDir, file);
-    const content = fs.readFileSync(filePath, 'utf8');
+    const content = fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, '');
     const parsed = Papa.parse(content, { header: true, skipEmptyLines: true });
+    const fileDate = (file.match(/\d{4}-\d{2}-\d{2}/) || [''])[0];
 
     parsed.data.forEach(row => {
       // 1. Daily shipment baseline files
@@ -96,7 +99,7 @@ async function run() {
       // 2. Main BRSNR records
       const id = row['ShipmentId'] || row['Shipment ID'];
       if (id && !seenIds.has(id)) {
-        const dtStr = row['Date'] || row['date'] || '';
+        const dtStr = row['Date'] || row['date'] || fileDate;
         const pd = parseDateStrFast(dtStr);
         const status = cleanVal(row['Status'] || row['Shipment Status'], 'Unknown Status');
 
@@ -107,8 +110,6 @@ async function run() {
 
           monthlyRecords[monthKey].push({
             Date: dtStr || 'Unassigned Date',
-            ParsedDate: pd ? pd.toISOString() : null,
-            Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
             ShipmentId: id,
             HubName: cleanVal(row['Hub Name'] || row['PH Name'], 'Unassigned'),
             SellerName: cleanVal(row['seller_name'] || row['Seller name'], 'Unknown Seller'),
@@ -118,6 +119,7 @@ async function run() {
             WM: cleanVal(row['FE_Name'] || row['WM name'], 'Unassigned WM / FE'),
             MH: cleanVal(row['MH Name'] || row['MH'], 'Unassigned MH'),
             RCA: cleanVal(row['RCA'], 'None'),
+            BagId: cleanVal(row['BagId'], 'None'),
             GM: cleanVal(row['GM'], 'Unassigned GM'),
             RM: cleanVal(row['RM'], 'None'),
             AM: cleanVal(row['AM'], 'None')
@@ -127,22 +129,20 @@ async function run() {
     });
   });
 
-  // Write out a separate file per month + an index manifest file
+  // One JSON per month
   const manifest = [];
-  Object.keys(monthlyRecords).forEach(monthKey => {
+  Object.keys(monthlyRecords).sort().forEach(monthKey => {
     const fileName = `master-data-${monthKey}.json`;
-    const filePath = path.join(dataDir, fileName);
-    const payload = {
-      month: monthKey,
-      records: monthlyRecords[monthKey],
-      gmShipments: gmShipments
-    };
-    fs.writeFileSync(filePath, JSON.stringify(payload));
+    const payload = { month: monthKey, records: monthlyRecords[monthKey] };
+    fs.writeFileSync(path.join(dataDir, fileName), JSON.stringify(payload));
     manifest.push(fileName);
     console.log(`Compiled ${monthlyRecords[monthKey].length} records into ${fileName}`);
   });
 
-  // Write a manifest file so the frontend knows which month files exist
+  // GM shipment denominators, written once
+  fs.writeFileSync(path.join(dataDir, 'master-gm-shipments.json'), JSON.stringify(gmShipments));
+
+  // Manifest so the frontend knows which month files exist
   fs.writeFileSync(path.join(dataDir, 'master-manifest.json'), JSON.stringify(manifest));
 }
 
