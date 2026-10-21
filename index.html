@@ -1064,34 +1064,38 @@
       container.innerHTML = badgesHtml;
     }
 
-    async function loadRepositoryData() {
-      showStatusBanner("Loading master dataset...", "info");
-      masterData = [];
-      globalGmShipments = {};
+    async function loadHubMappingClient() {
+      const hubToGM = {};
       try {
-        const resp = await fetch('data/master-data.json', { cache: 'no-cache' });
-        if (!resp.ok) throw new Error("JSON not found");
-        
-        const raw = await resp.json();
-        const records = Array.isArray(raw) ? raw : (raw.records || []);
-        globalGmShipments = raw.gmShipments || {};
-
-        masterData = records.map(r => ({
-          ...r,
-          ParsedDate: r.ParsedDate ? new Date(r.ParsedDate) : null
-        }));
-
-        showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from master JSON.`, "success");
-        renderGMViewTables();
-        applyFilters(true);
-      } catch (err) {
-        console.warn("JSON fetch failed, falling back to legacy CSV parsing...", err);
-        loadLegacyCsvData();
+        const resp = await fetch('data/hub-mapping.csv');
+        if (!resp.ok) return hubToGM;
+        const content = await resp.text();
+        const parsed = Papa.parse(content, { header: true, skipEmptyLines: true });
+        parsed.data.forEach(row => {
+          const hub = row['ph_name'] || row['Hub'] || row['PH Name'];
+          const gm = row['GM'];
+          if (hub && gm) {
+            hubToGM[hub.trim().toLowerCase()] = gm.trim();
+          }
+        });
+      } catch (e) {
+        console.warn('Could not load hub-mapping.csv', e);
       }
+      return hubToGM;
     }
 
-    async function loadLegacyCsvData() {
-      showStatusBanner("Parsing CSV files...", "info");
+    function formatDateISO(dateObj) {
+      if (!dateObj || isNaN(dateObj.getTime())) return null;
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    async function loadRepositoryData() {
+      showStatusBanner("Loading CSV dataset...", "info");
+      masterData = [];
+      globalGmShipments = {};
       try {
         const pathSegments = window.location.pathname.split('/').filter(Boolean);
         const repoName = pathSegments.length > 0 ? pathSegments[0] : null;
@@ -1102,7 +1106,7 @@
           const resp = await fetch(`https://api.github.com/repos/${ownerName}/${repoName}/contents/data`);
           if (resp.ok) {
             const files = await resp.json();
-            csvUrls = files.filter(f => f.name.endsWith('.csv')).map(f => f.download_url);
+            csvUrls = files.filter(f => f.name.endsWith('.csv') && f.name !== 'hub-mapping.csv').map(f => f.download_url);
           }
         }
 
@@ -1115,11 +1119,32 @@
           }
         }
 
+        const hubMap = await loadHubMappingClient();
         const texts = await pool(csvUrls, 8, fetchCsv);
         const seen = new Set();
+
         texts.forEach((t, i) => {
           if (!t) return;
-          for (const row of Papa.parse(t, { header: true, skipEmptyLines: true }).data) {
+          const parsedCsv = Papa.parse(t, { header: true, skipEmptyLines: true });
+          
+          parsedCsv.data.forEach(row => {
+            // A. Populate globalGmShipments for the denominator table
+            if (row['Shipment'] !== undefined || row['shipment'] !== undefined) {
+              const hubRaw = row['Hub'] || row['ph_name'] || row['PH Name'] || '';
+              const rawDateStr = row['Date'] || row['date'] || '';
+              const parsedDt = parseDateStrFast(rawDateStr);
+              const normDateStr = parsedDt ? formatDateISO(parsedDt) : rawDateStr;
+              const shipmentVal = parseFloat(row['Shipment'] || row['shipment']) || 0;
+              const gm = hubMap[hubRaw.trim().toLowerCase()] || row['GM'];
+
+              if (gm && normDateStr) {
+                const cleanGM = cleanVal(gm, 'Unassigned GM');
+                if (!globalGmShipments[cleanGM]) globalGmShipments[cleanGM] = {};
+                globalGmShipments[cleanGM][normDateStr] = (globalGmShipments[cleanGM][normDateStr] || 0) + shipmentVal;
+              }
+            }
+
+            // B. Populate masterData records
             const id = getColVal(row, COLS.SHIPMENT_ID);
             if (id && !seen.has(id)) {
               const normalized = normalizeRow(row, id, csvUrls[i]);
@@ -1128,14 +1153,15 @@
                 masterData.push(normalized);
               }
             }
-          }
+          });
         });
 
-        showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from CSVs.`, masterData.length ? "success" : "warning");
+        showStatusBanner(`Successfully loaded ${masterData.length.toLocaleString()} shipments from raw CSVs.`, masterData.length ? "success" : "warning");
         renderGMViewTables();
         applyFilters(true);
       } catch (e) {
-        showStatusBanner("Error loading data.", "error");
+        console.error("Error loading CSV data:", e);
+        showStatusBanner("Error loading data from CSV files.", "error");
       }
     }
 
@@ -1298,9 +1324,8 @@
         const month = String(prev.getMonth() + 1).padStart(2, '0');
         const day = String(prev.getDate()).padStart(2, '0');
 
-        // Match the format used in your master-data.json keys (e.g. YYYY-MM-DD)
         return `${year}-${month}-${day}`;
-       }
+      }
 
       const cntCell = n => `<td class="xl-n">${(n || 0).toLocaleString()}</td>`;
       const pctCell = (n, den) => {
@@ -1448,7 +1473,6 @@
       return res;
     }
 
-    // Dates present under current filters regardless of BRSNR/Mixbagging toggle, so every date shows in both views
     function getAllDatesDesc() {
       const set = new Set();
       getFilteredDataExcluding(null, true).forEach(r => { if (r.Date) set.add(r.Date); });
@@ -1900,7 +1924,7 @@
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
     }
 
-    function showStatusBanner(msg, type) {
+    function statusBanner(msg, type) {
       const b = document.getElementById('status-banner');
       document.getElementById('status-banner-text').textContent = msg;
       b.classList.remove('hidden');
