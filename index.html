@@ -1493,18 +1493,35 @@
       }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
     }
 
-    function createChart(id, type, data, options = {}) {
-      if (chartInstances[id]) chartInstances[id].destroy();
-      const ctx = document.getElementById(id).getContext('2d');
-      chartInstances[id] = new Chart(ctx, {
-        type: type, data: data,
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 }, color: document.documentElement.classList.contains('dark') ? '#f8fafc' : '#0f172a' } }, ...options.plugins },
-          ...options
-        }
-      });
+   function createChart(id, type, data, options = {}) {
+  if (chartInstances[id]) chartInstances[id].destroy();
+  const ctx = document.getElementById(id).getContext('2d');
+  const isDark = document.documentElement.classList.contains('dark');
+  const textColor = isDark ? '#f8fafc' : '#0f172a';
+  const isPie = type === 'pie';
+  const isHorizontal = options.indexAxis === 'y';
+
+  chartInstances[id] = new Chart(ctx, {
+    type: type, data: data,
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: isHorizontal ? { right: 40 } : { top: 24 } },
+      ...options,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 }, color: textColor } },
+        datalabels: {
+          display: c => c.dataset.data[c.dataIndex] !== null,
+          color: isPie ? '#ffffff' : textColor,
+          font: { weight: 'bold', size: 11 },
+          anchor: isPie ? 'center' : 'end',
+          align: isPie ? 'center' : (type === 'line' ? 'top' : 'end'),
+          formatter: v => (typeof v === 'number' ? v.toLocaleString() : v)
+        },
+        ...options.plugins
+      }
     }
+  });
+}
 
     function toggleZoneRow(zoneKey) {
       if (expandedZones.has(zoneKey)) expandedZones.delete(zoneKey);
