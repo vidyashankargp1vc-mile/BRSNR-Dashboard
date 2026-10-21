@@ -3,7 +3,6 @@ const path = require('path');
 const Papa = require('papaparse');
 
 const dataDir = path.join(__dirname, '../data');
-const outputFile = path.join(__dirname, '../data/master-data.json');
 const mappingFile = path.join(__dirname, '../data/hub-mapping.csv');
 
 const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
@@ -12,13 +11,9 @@ function isInvalid(val) {
   if (!val) return true;
   const clean = String(val).trim().toUpperCase();
   return (
-    clean === '#N/A' ||
-    clean === 'N/A' ||
-    clean === 'NA' ||
-    clean === '#VALUE!' ||
-    clean === 'UNKNOWN ZONE' ||
-    clean === 'UNASSIGNED' ||
-    clean.startsWith('UNASSIGNED')
+    clean === '#N/A' || clean === 'N/A' || clean === 'NA' ||
+    clean === '#VALUE!' || clean === 'UNKNOWN ZONE' ||
+    clean === 'UNASSIGNED' || clean.startsWith('UNASSIGNED')
   );
 }
 
@@ -46,50 +41,35 @@ function formatDateISO(dateObj) {
   return `${year}-${month}-${day}`;
 }
 
-function getWeekIdentifier(date) {
-  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  const dayNum = d.getUTCDay() || 7;
-  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
-  return `Week ${weekNo}, ${d.getUTCFullYear()}`;
+function getMonthKey(dateObj) {
+  if (!dateObj || isNaN(dateObj.getTime())) return 'unknown-month';
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  return `${year}-${month}`; // e.g., "2026-10"
 }
 
-// Loads Hub -> GM lookup dictionary from data/hub-mapping.csv
 function loadHubMapping() {
   const hubToGM = {};
-  if (!fs.existsSync(mappingFile)) {
-    console.warn('Warning: hub-mapping.csv not found in data directory.');
-    return hubToGM;
-  }
-
+  if (!fs.existsSync(mappingFile)) return hubToGM;
   const content = fs.readFileSync(mappingFile, 'utf8');
   const parsed = Papa.parse(content, { header: true, skipEmptyLines: true });
-
   parsed.data.forEach(row => {
     const hub = row['ph_name'] || row['Hub'] || row['PH Name'];
     const gm = row['GM'];
-    if (hub && gm) {
-      hubToGM[hub.trim().toLowerCase()] = gm.trim();
-    }
+    if (hub && gm) hubToGM[hub.trim().toLowerCase()] = gm.trim();
   });
-
   return hubToGM;
 }
 
 async function run() {
-  console.log('Starting CSV consolidation...');
-
-  if (!fs.existsSync(dataDir)) {
-    console.error('Data directory does not exist!');
-    process.exit(1);
-  }
+  console.log('Starting CSV consolidation by month...');
+  if (!fs.existsSync(dataDir)) process.exit(1);
 
   const hubMap = loadHubMapping();
   const files = fs.readdirSync(dataDir).filter(f => f.endsWith('.csv') && f !== 'hub-mapping.csv');
   const seenIds = new Set();
-  const masterData = [];
-  const gmShipments = {}; // Aggregated structure: { "GM Name": { "YYYY-MM-DD": totalShipment } }
+  const monthlyRecords = {}; // { "2026-10": [records...] }
+  const gmShipments = {};
 
   files.forEach(file => {
     const filePath = path.join(dataDir, file);
@@ -97,7 +77,7 @@ async function run() {
     const parsed = Papa.parse(content, { header: true, skipEmptyLines: true });
 
     parsed.data.forEach(row => {
-      // 1. Process Daily Shipment Baseline Files
+      // 1. Daily shipment baseline files
       if (row['Shipment'] !== undefined || row['shipment'] !== undefined) {
         const hubRaw = row['Hub'] || row['ph_name'] || row['PH Name'] || '';
         const rawDateStr = row['Date'] || row['date'] || '';
@@ -113,7 +93,7 @@ async function run() {
         }
       }
 
-      // 2. Process Main BRSNR Data Files
+      // 2. Main BRSNR records
       const id = row['ShipmentId'] || row['Shipment ID'];
       if (id && !seenIds.has(id)) {
         const dtStr = row['Date'] || row['date'] || '';
@@ -122,43 +102,48 @@ async function run() {
 
         if (!IGNORED_STATUSES.includes(status)) {
           seenIds.add(id);
-          masterData.push({
+          const monthKey = getMonthKey(pd);
+          if (!monthlyRecords[monthKey]) monthlyRecords[monthKey] = [];
+
+          monthlyRecords[monthKey].push({
             Date: dtStr || 'Unassigned Date',
             ParsedDate: pd ? pd.toISOString() : null,
             Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
-            Week: pd ? getWeekIdentifier(pd) : null,
             ShipmentId: id,
             HubName: cleanVal(row['Hub Name'] || row['PH Name'], 'Unassigned'),
             SellerName: cleanVal(row['seller_name'] || row['Seller name'], 'Unknown Seller'),
-            SellerId: cleanVal(row['seller id'] || row['SellerId'], 'None'),
             Status: status,
             Zone: cleanVal(row['Zone'], 'Unknown Zone'),
             LOB: cleanVal(row['Line_of_Business'] || row['LIB'] || row['LOB'], 'Unassigned'),
-            CasperId: cleanVal(row['Casper_id'] || row['Casper id'], 'None'),
-            PartnerName: cleanVal(row['Partner Name'], 'None'),
             WM: cleanVal(row['FE_Name'] || row['WM name'], 'Unassigned WM / FE'),
             MH: cleanVal(row['MH Name'] || row['MH'], 'Unassigned MH'),
             RCA: cleanVal(row['RCA'], 'None'),
-            BagId: cleanVal(row['BagId'], 'None'),
             GM: cleanVal(row['GM'], 'Unassigned GM'),
             RM: cleanVal(row['RM'], 'None'),
-            AM: cleanVal(row['AM'], 'None'),
-            DispatchToMH: cleanVal(row['Dispatched_to_TC'] || row['Dispatch to MH'], 'None'),
-            ReceivedAtMH: cleanVal(row['Received_to_TC'] || row['Received at MH'], 'None'),
-            Diff: cleanVal(row['diff'] || row['Diff'], '0')
+            AM: cleanVal(row['AM'], 'None')
           });
         }
       }
     });
   });
 
-  const outputPayload = {
-    records: masterData,
-    gmShipments: gmShipments
-  };
+  // Write out a separate file per month + an index manifest file
+  const manifest = [];
+  Object.keys(monthlyRecords).forEach(monthKey => {
+    const fileName = `master-data-${monthKey}.json`;
+    const filePath = path.join(dataDir, fileName);
+    const payload = {
+      month: monthKey,
+      records: monthlyRecords[monthKey],
+      gmShipments: gmShipments
+    };
+    fs.writeFileSync(filePath, JSON.stringify(payload));
+    manifest.push(fileName);
+    console.log(`Compiled ${monthlyRecords[monthKey].length} records into ${fileName}`);
+  });
 
-  fs.writeFileSync(outputFile, JSON.stringify(outputPayload));
-  console.log(`Successfully compiled ${masterData.length} records into ${outputFile}`);
+  // Write a manifest file so the frontend knows which month files exist
+  fs.writeFileSync(path.join(dataDir, 'master-manifest.json'), JSON.stringify(manifest));
 }
 
 run();
