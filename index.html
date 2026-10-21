@@ -1174,17 +1174,24 @@
 
     function parseDateStrFast(str) {
       if (!str) return null;
-      const p = str.split(/[-/]/);
+      const trimmed = str.trim();
+        // Handle DD-MM-YYYY or DD/MM/YYYY format explicitly
+      const p = trimmed.split(/[-/]/);
       if (p.length === 3) {
-        const d = p[0].length === 4
-          ? new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]))
-          : new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
-        if (!isNaN(d.getTime())) return d;
-      }
-      const nativeDate = Date.parse(str);
-      return !isNaN(nativeDate) ? new Date(nativeDate) : null;
-    }
-
+    // If the first part is day (<= 31) and the last part is year (4 digits)
+         if (p[0].length <= 2 && p[2].length === 4) {
+            const d = new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
+            if (!isNaN(d.getTime())) return d;
+           }
+    // Fallback for YYYY-MM-DD
+         if (p[0].length === 4) {
+            const d = new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]));
+            if (!isNaN(d.getTime())) return d;
+          }
+       }
+       const nativeDate = Date.parse(trimmed);
+       return !isNaN(nativeDate) ? new Date(nativeDate) : null;
+     }
     function getWeekIdentifier(date) {
       const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
       const dayNum = d.getUTCDay() || 7;
