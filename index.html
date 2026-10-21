@@ -743,7 +743,6 @@
     let selectedCategory = 'BRSNR';
     let currentTab = 'matrix';
 
-    // RCA = Missort / Mixbagging variants -> Mixbagging. Anything else (incl. blank / no RCA) -> BRSNR.
     const MIXBAGGING_RCAS = ['FMMISSORT', 'MISSORT', 'FMMIXBAGGING', 'MIXBAGGING'];
     function getCategory(r) {
       const v = String(r.RCA || '').toUpperCase().replace(/[\s_-]+/g, '');
@@ -809,45 +808,22 @@
     }
 
     const selectedFilters = {
-      'filter-week': [],
-      'filter-month': [],
-      'filter-gm': [],
-      'filter-seller': [],
-      'filter-mh': [],
-      'filter-hub': [],
-      'filter-wm': [],
-      'filter-status': [],
-      'filter-zone': [],
-      'filter-rm': [],
-      'filter-am': []
+      'filter-week': [], 'filter-month': [], 'filter-gm': [], 'filter-seller': [],
+      'filter-mh': [], 'filter-hub': [], 'filter-wm': [], 'filter-status': [],
+      'filter-zone': [], 'filter-rm': [], 'filter-am': []
     };
 
     const filterLabels = {
-      'filter-week': 'All Weeks',
-      'filter-month': 'All Months',
-      'filter-gm': 'All GMs',
-      'filter-seller': 'All Sellers',
-      'filter-mh': 'All MH / MH Names',
-      'filter-hub': 'All Hubs / PH Names',
-      'filter-wm': 'All WMs / FEs',
-      'filter-status': 'All Status',
-      'filter-zone': 'All Zones',
-      'filter-rm': 'All RMs',
-      'filter-am': 'All AMs'
+      'filter-week': 'All Weeks', 'filter-month': 'All Months', 'filter-gm': 'All GMs',
+      'filter-seller': 'All Sellers', 'filter-mh': 'All MH / MH Names', 'filter-hub': 'All Hubs / PH Names',
+      'filter-wm': 'All WMs / FEs', 'filter-status': 'All Status', 'filter-zone': 'All Zones',
+      'filter-rm': 'All RMs', 'filter-am': 'All AMs'
     };
 
     const filterFriendlyNames = {
-      'filter-week': 'Week',
-      'filter-month': 'Month',
-      'filter-gm': 'GM',
-      'filter-seller': 'Seller',
-      'filter-mh': 'MH / MH Name',
-      'filter-hub': 'Hub / PH Name',
-      'filter-wm': 'WM / FE',
-      'filter-status': 'Status',
-      'filter-zone': 'Zone',
-      'filter-rm': 'RM',
-      'filter-am': 'AM'
+      'filter-week': 'Week', 'filter-month': 'Month', 'filter-gm': 'GM', 'filter-seller': 'Seller',
+      'filter-mh': 'MH / MH Name', 'filter-hub': 'Hub / PH Name', 'filter-wm': 'WM / FE',
+      'filter-status': 'Status', 'filter-zone': 'Zone', 'filter-rm': 'RM', 'filter-am': 'AM'
     };
 
     const expandedZones = new Set();
@@ -927,17 +903,14 @@
 
     function openMultiSelect(id) {
       closeAllMultiSelects();
-      const dropdown = document.getElementById(`dropdown-${id}`);
-      dropdown.classList.remove('hidden');
+      document.getElementById(`dropdown-${id}`).classList.remove('hidden');
     }
 
     function toggleMultiSelect(id) {
       const dropdown = document.getElementById(`dropdown-${id}`);
       const isHidden = dropdown.classList.contains('hidden');
       closeAllMultiSelects();
-      if (isHidden) {
-        dropdown.classList.remove('hidden');
-      }
+      if (isHidden) dropdown.classList.remove('hidden');
     }
 
     function closeAllMultiSelects() {
@@ -947,10 +920,8 @@
     function filterDropdownOptions(id, query) {
       openMultiSelect(id);
       const q = query.toLowerCase().trim();
-      const labels = document.querySelectorAll(`#options-${id} label.option-item`);
-      labels.forEach(lbl => {
-        const txt = lbl.innerText.toLowerCase();
-        lbl.style.display = txt.includes(q) ? 'flex' : 'none';
+      document.querySelectorAll(`#options-${id} label.option-item`).forEach(lbl => {
+        lbl.style.display = lbl.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
       });
     }
 
@@ -1010,8 +981,7 @@
       document.querySelectorAll(`.cb-${id}`).forEach(cb => cb.checked = false);
       const selectAll = document.getElementById(`selectAll-${id}`);
       if (selectAll) selectAll.checked = false;
-      const total = document.querySelectorAll(`.cb-${id}`).length;
-      updateMultiSelectLabel(id, total);
+      updateMultiSelectLabel(id, document.querySelectorAll(`.cb-${id}`).length);
       if (triggerApply) applyFilters(true);
     }
 
@@ -1038,18 +1008,15 @@
       let badgesHtml = '';
 
       Object.keys(selectedFilters).forEach(id => {
-        const arr = selectedFilters[id];
-        if (arr.length > 0) {
-          arr.forEach(val => {
-            const escapedVal = val.replace(/'/g, "\\'");
-            badgesHtml += `
-              <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800 font-medium">
-                <span class="text-indigo-500 font-bold mr-1">${filterFriendlyNames[id]}:</span>${val}
-                <button type="button" onclick="removeSingleFilterValue('${id}', '${escapedVal}')" class="ml-1 text-indigo-600 dark:text-indigo-400 hover:text-rose-600 dark:hover:text-rose-400 font-bold focus:outline-none">&times;</button>
-              </span>
-            `;
-          });
-        }
+        selectedFilters[id].forEach(val => {
+          const escapedVal = val.replace(/'/g, "\\'");
+          badgesHtml += `
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800 font-medium">
+              <span class="text-indigo-500 font-bold mr-1">${filterFriendlyNames[id]}:</span>${val}
+              <button type="button" onclick="removeSingleFilterValue('${id}', '${escapedVal}')" class="ml-1 text-indigo-600 dark:text-indigo-400 hover:text-rose-600 dark:hover:text-rose-400 font-bold focus:outline-none">&times;</button>
+            </span>
+          `;
+        });
       });
 
       if (selectedLobFilter !== 'ALL') {
@@ -1060,7 +1027,6 @@
           </span>
         `;
       }
-
       container.innerHTML = badgesHtml;
     }
 
@@ -1069,14 +1035,11 @@
       try {
         const resp = await fetch('data/hub-mapping.csv');
         if (!resp.ok) return hubToGM;
-        const content = await resp.text();
-        const parsed = Papa.parse(content, { header: true, skipEmptyLines: true });
+        const parsed = Papa.parse(await resp.text(), { header: true, skipEmptyLines: true });
         parsed.data.forEach(row => {
           const hub = row['ph_name'] || row['Hub'] || row['PH Name'];
           const gm = row['GM'];
-          if (hub && gm) {
-            hubToGM[hub.trim().toLowerCase()] = gm.trim();
-          }
+          if (hub && gm) hubToGM[hub.trim().toLowerCase()] = gm.trim();
         });
       } catch (e) {
         console.warn('Could not load hub-mapping.csv', e);
@@ -1086,37 +1049,21 @@
 
     function formatDateISO(dateObj) {
       if (!dateObj || isNaN(dateObj.getTime())) return null;
-      const year = dateObj.getFullYear();
-      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-      const day = String(dateObj.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
+      return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
     }
 
     async function loadRepositoryData() {
-      showStatusBanner("Loading CSV dataset...", "info");
+      showStatusBanner("Parsing raw CSV dataset directly...", "info");
       masterData = [];
       globalGmShipments = {};
       try {
-        const pathSegments = window.location.pathname.split('/').filter(Boolean);
-        const repoName = pathSegments.length > 0 ? pathSegments[0] : null;
-        const ownerName = window.location.hostname.split('.')[0];
-        let csvUrls = [];
-
-        if (ownerName && repoName && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) {
-          const resp = await fetch(`https://api.github.com/repos/${ownerName}/${repoName}/contents/data`);
-          if (resp.ok) {
-            const files = await resp.json();
-            csvUrls = files.filter(f => f.name.endsWith('.csv') && f.name !== 'hub-mapping.csv').map(f => f.download_url);
-          }
-        }
-
-        if (csvUrls.length === 0) {
-          const today = new Date();
-          for (let i = 0; i < 60; i++) {
-            const d = new Date(today);
-            d.setDate(d.getDate() - i);
-            csvUrls.push(`data/${d.toISOString().split('T')[0]}.csv`);
-          }
+        const today = new Date();
+        const csvUrls = [];
+        // Generate past 60 days of date-based CSV URLs inside data/
+        for (let i = 0; i < 60; i++) {
+          const d = new Date(today);
+          d.setDate(d.getDate() - i);
+          csvUrls.push(`data/${d.toISOString().split('T')[0]}.csv`);
         }
 
         const hubMap = await loadHubMappingClient();
@@ -1128,7 +1075,7 @@
           const parsedCsv = Papa.parse(t, { header: true, skipEmptyLines: true });
           
           parsedCsv.data.forEach(row => {
-            // A. Populate globalGmShipments for the denominator table
+            // A. Populate globalGmShipments for denominators
             if (row['Shipment'] !== undefined || row['shipment'] !== undefined) {
               const hubRaw = row['Hub'] || row['ph_name'] || row['PH Name'] || '';
               const rawDateStr = row['Date'] || row['date'] || '';
@@ -1272,7 +1219,6 @@
         return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
       };
 
-      // Excel-style two-row header: "Date" + date (colspan 2); "GM" + BRSNR / Mix Bagging
       const row1 = `<th class="xl-h">Date</th>` + recentDates.map(d => `<th class="xl-h" colspan="2">${fmtDate(d)}</th>`).join('');
       const row2 = `<th class="xl-h">GM</th>` + recentDates.map(() => `<th class="xl-h">BRSNR</th><th class="xl-h">Mix Bagging</th>`).join('');
       [countHeaderRow, pctHeaderRow].forEach(row => {
@@ -1289,7 +1235,6 @@
       });
       [countTbody, pctTbody].forEach(tb => { tb.className = ''; });
 
-      // Counts per GM per date, split by category: { B: BRSNR, M: Mixbagging }
       const gmBrsnrCounts = {};
       masterData.forEach(r => {
         let gm = r.GM;
@@ -1319,12 +1264,7 @@
         if (!parsed) return null;
         const prev = new Date(parsed);
         prev.setDate(prev.getDate() - 1);
-
-        const year = prev.getFullYear();
-        const month = String(prev.getMonth() + 1).padStart(2, '0');
-        const day = String(prev.getDate()).padStart(2, '0');
-
-        return `${year}-${month}-${day}`;
+        return `${prev.getFullYear()}-${String(prev.getMonth() + 1).padStart(2, '0')}-${String(prev.getDate()).padStart(2, '0')}`;
       }
 
       const cntCell = n => `<td class="xl-n">${(n || 0).toLocaleString()}</td>`;
@@ -1334,14 +1274,12 @@
       };
       const nameTd = gm => `<td class="xl-n">${gm}</td>`;
 
-      let countBodyHtml = '';
-      let pctBodyHtml = '';
-      const grand = {}; // per date: { B, M, den }
+      let countBodyHtml = '', pctBodyHtml = '';
+      const grand = {}; 
       recentDates.forEach(d => { grand[d] = { B: 0, M: 0, den: 0 }; });
 
       allGms.forEach(gm => {
-        let cRow = `<tr>${nameTd(gm)}`;
-        let pRow = cRow;
+        let cRow = `<tr>${nameTd(gm)}`, pRow = cRow;
         recentDates.forEach(date => {
           const e = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || { B: 0, M: 0 };
           const prev = getPrevDateStr(date);
@@ -1354,18 +1292,14 @@
         pctBodyHtml += pRow + '</tr>';
       });
 
-      // Grand Total rows
       const gtName = `<td class="xl-h">Grand Total</td>`;
-      const gtCnt = n => `<td class="xl-h">${n.toLocaleString()}</td>`;
-      const gtPct = (n, den) => {
-        const p = den > 0 ? (n / den) * 100 : 0;
-        return `<td class="${p > 0.12 ? 'xl-bad' : 'xl-good'}">${p.toFixed(2)}%</td>`;
-      };
       let gtC = `<tr>${gtName}`, gtP = `<tr>${gtName}`;
       recentDates.forEach(d => {
         const g = grand[d];
-        gtC += gtCnt(g.B) + gtCnt(g.M);
-        gtP += gtPct(g.B, g.den) + gtPct(g.M, g.den);
+        const pB = g.den > 0 ? (g.B / g.den) * 100 : 0;
+        const pM = g.den > 0 ? (g.M / g.den) * 100 : 0;
+        gtC += `<td class="xl-h">${g.B.toLocaleString()}</td><td class="xl-h">${g.M.toLocaleString()}</td>`;
+        gtP += `<td class="${pB > 0.12 ? 'xl-bad' : 'xl-good'}">${pB.toFixed(2)}%</td><td class="${pM > 0.12 ? 'xl-bad' : 'xl-good'}">${pM.toFixed(2)}%</td>`;
       });
       countBodyHtml += gtC + '</tr>';
       pctBodyHtml += gtP + '</tr>';
@@ -1376,23 +1310,16 @@
 
     function updateDynamicFilterOptions() {
       const filterConfigs = [
-        { id: 'filter-week', field: 'Week' },
-        { id: 'filter-month', field: 'Month' },
-        { id: 'filter-gm', field: 'GM' },
-        { id: 'filter-seller', field: 'SellerName' },
-        { id: 'filter-mh', field: 'MH' },
-        { id: 'filter-hub', field: 'HubName' },
-        { id: 'filter-wm', field: 'WM' },
-        { id: 'filter-status', field: 'Status' },
-        { id: 'filter-zone', field: 'Zone' },
-        { id: 'filter-rm', field: 'RM' },
-        { id: 'filter-am', field: 'AM' }
+        { id: 'filter-week', field: 'Week' }, { id: 'filter-month', field: 'Month' },
+        { id: 'filter-gm', field: 'GM' }, { id: 'filter-seller', field: 'SellerName' },
+        { id: 'filter-mh', field: 'MH' }, { id: 'filter-hub', field: 'HubName' },
+        { id: 'filter-wm', field: 'WM' }, { id: 'filter-status', field: 'Status' },
+        { id: 'filter-zone', field: 'Zone' }, { id: 'filter-rm', field: 'RM' }, { id: 'filter-am', field: 'AM' }
       ];
 
       filterConfigs.forEach(config => {
         const scopedDataset = getFilteredDataExcluding(config.id);
         const availableSet = new Set();
-
         for (let i = 0; i < scopedDataset.length; i++) {
           const val = scopedDataset[i][config.field];
           if (!isInvalid(val)) {
@@ -1400,7 +1327,6 @@
             availableSet.add(val);
           }
         }
-
         selectedFilters[config.id] = selectedFilters[config.id].filter(val => availableSet.has(val));
         fillMultiSelect(config.id, availableSet);
       });
@@ -1409,14 +1335,9 @@
     function getFilteredDataExcluding(excludedFilterId, ignoreCategory = false) {
       const searchInput = document.getElementById('filter-search');
       const search = searchInput ? searchInput.value.toLowerCase().trim() : '';
-      const dateFromInput = document.getElementById('filter-date-from');
-      const dateToInput = document.getElementById('filter-date-to');
-      const df = dateFromInput && dateFromInput.value ? parseDateStrFast(dateFromInput.value) : null;
-      let dt = dateToInput && dateToInput.value ? parseDateStrFast(dateToInput.value) : null;
-
-      if (dt) {
-        dt.setHours(23, 59, 59, 999);
-      }
+      const df = document.getElementById('filter-date-from').value ? parseDateStrFast(document.getElementById('filter-date-from').value) : null;
+      let dt = document.getElementById('filter-date-to').value ? parseDateStrFast(document.getElementById('filter-date-to').value) : null;
+      if (dt) dt.setHours(23, 59, 59, 999);
 
       const selWk = excludedFilterId === 'filter-week' ? [] : selectedFilters['filter-week'];
       const selMo = excludedFilterId === 'filter-month' ? [] : selectedFilters['filter-month'];
@@ -1431,11 +1352,10 @@
       const selAm = excludedFilterId === 'filter-am' ? [] : selectedFilters['filter-am'];
 
       const targetStatuses = selStatus.length > 0 ? selStatus : ALLOWED_STATUSES;
-
       const res = [];
+
       for (let i = 0; i < masterData.length; i++) {
         const r = masterData[i];
-
         if (selGm.length > 0 && !selGm.includes(r.GM)) continue;
         if (selSeller.length > 0 && !selSeller.includes(r.SellerName)) continue;
         if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
@@ -1451,9 +1371,7 @@
           const rLob = r.LOB.toLowerCase();
           if (selectedLobFilter === 'APM') {
             if (rLob !== 'apm' && rLob !== 'lma') continue;
-          } else if (rLob !== selectedLobFilter.toLowerCase()) {
-            continue;
-          }
+          } else if (rLob !== selectedLobFilter.toLowerCase()) continue;
         }
 
         const rd = r.ParsedDate;
@@ -1462,9 +1380,7 @@
           if (selMo.length > 0 && !selMo.includes(r.Month)) continue;
           if (df && rd < df) continue;
           if (dt && rd > dt) continue;
-        } else if (selWk.length > 0 || selMo.length > 0 || df || dt) {
-          continue;
-        }
+        } else if (selWk.length > 0 || selMo.length > 0 || df || dt) continue;
 
         if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search) && !r.BagId.toLowerCase().includes(search)) continue;
 
@@ -1480,14 +1396,9 @@
     }
 
     function applyFilters(rebuildOptions = true) {
-      if (rebuildOptions) {
-        updateDynamicFilterOptions();
-      }
-
+      if (rebuildOptions) updateDynamicFilterOptions();
       filteredData = getFilteredDataExcluding(null);
-
       updateKPIs();
-
       if (currentTab === 'matrix') renderPHWMAgingMatrix();
       else if (currentTab === 'overview') renderCharts();
       else if (currentTab === 'gmview') renderGMViewTables();
@@ -1498,14 +1409,12 @@
     function updateKPIs() {
       const tot = filteredData.length;
       document.getElementById('kpi-total-volume').textContent = tot.toLocaleString();
-
       let rec = 0, disp = 0;
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
         if (r.Status === 'received_at_mh' || r.Status === 'received_to_tc') rec++;
         if (r.Status === 'dispatched_to_mh' || r.Status === 'dispatched_to_tc') disp++;
       }
-
       document.getElementById('kpi-received-mh').textContent = rec.toLocaleString();
       document.getElementById('kpi-received-pct').textContent = `${tot ? ((rec / tot) * 100).toFixed(1) : 0}% of total`;
       document.getElementById('kpi-dispatched-mh').textContent = disp.toLocaleString();
@@ -1516,36 +1425,25 @@
     function renderCharts() {
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#f8fafc' : '#0f172a';
-
       const dailyMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
         if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1;
       }
-
       getAllDatesDesc().forEach(d => { if (!(d in dailyMap)) dailyMap[d] = 0; });
       let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
-      let displayLabels = [...sortedDates];
-      let displayValues = sortedDates.map(d => dailyMap[d]);
+      let displayLabels = [...sortedDates], displayValues = sortedDates.map(d => dailyMap[d]);
 
       if (sortedDates.length > 0 && sortedDates.length <= 4) {
         displayLabels = ['', ...sortedDates, ''];
         displayValues = [null, ...sortedDates.map(d => dailyMap[d]), null];
       }
 
-      document.getElementById('chart-daily-trend').parentElement.style.minWidth =
-        Math.max(800, displayLabels.length * 70) + 'px';
-
+      document.getElementById('chart-daily-trend').parentElement.style.minWidth = Math.max(800, displayLabels.length * 70) + 'px';
       createChart('chart-daily-trend', 'line', {
         labels: displayLabels,
-        datasets: [{
-          label: 'Shipments', data: displayValues,
-          borderColor: '#6366f1', backgroundColor: 'rgba(99, 102, 241, 0.15)', fill: true, tension: 0.3, pointRadius: 5
-        }]
-      }, {
-        scales: { x: { bounds: 'ticks', ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'top', color: '#6366f1', font: { weight: 'bold' } } }
-      });
+        datasets: [{ label: 'Shipments', data: displayValues, borderColor: '#6366f1', backgroundColor: 'rgba(99, 102, 241, 0.15)', fill: true, tension: 0.3, pointRadius: 5 }]
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
 
       const zoneMap = {};
       for (let i = 0; i < filteredData.length; i++) {
@@ -1555,11 +1453,8 @@
       const sortedZones = Object.entries(zoneMap).sort((a, b) => b[1] - a[1]);
       createChart('chart-zone', 'pie', {
         labels: sortedZones.map(i => i[0]).slice(0, 4),
-        datasets: [{
-          data: sortedZones.map(i => i[1]).slice(0, 4),
-          backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899']
-        }]
-      }, { plugins: { datalabels: { color: '#fff', font: { weight: 'bold' } } } });
+        datasets: [{ data: sortedZones.map(i => i[1]).slice(0, 4), backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899'] }]
+      });
 
       const gmMap = {};
       for (let i = 0; i < filteredData.length; i++) {
@@ -1570,10 +1465,7 @@
       createChart('chart-gm-column', 'bar', {
         labels: topGMs.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topGMs.map(i => i[1]), backgroundColor: '#6366f1', borderRadius: 6 }]
-      }, {
-        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#a5b4fc' : '#312e81', font: { weight: 'bold' } } }
-      });
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
 
       const wmMap = {};
       for (let i = 0; i < filteredData.length; i++) {
@@ -1584,10 +1476,7 @@
       createChart('chart-wm-column', 'bar', {
         labels: topWMs.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topWMs.map(i => i[1]), backgroundColor: '#0ea5e9', borderRadius: 6 }]
-      }, {
-        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#7dd3fc' : '#0369a1', font: { weight: 'bold' } } }
-      });
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
 
       const phMap = {};
       for (let i = 0; i < filteredData.length; i++) {
@@ -1598,10 +1487,7 @@
       createChart('chart-ph-bar', 'bar', {
         labels: topPHs.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topPHs.map(i => i[1]), backgroundColor: '#8b5cf6', borderRadius: 6 }]
-      }, {
-        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#c084fc' : '#5b21b6', font: { weight: 'bold' } } }
-      });
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
 
       const mhMap = {};
       for (let i = 0; i < filteredData.length; i++) {
@@ -1612,11 +1498,7 @@
       createChart('chart-top-mh', 'bar', {
         labels: topMH.map(i => i[0]),
         datasets: [{ label: 'Volume', data: topMH.map(i => i[1]), backgroundColor: '#3b82f6', borderRadius: 4 }]
-      }, {
-        indexAxis: 'y',
-        scales: { x: { ticks: { color: textColor }, beginAtZero: true }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#93c5fd' : '#1e3a8a', font: { weight: 'bold' } } }
-      });
+      }, { indexAxis: 'y', scales: { x: { ticks: { color: textColor }, beginAtZero: true }, y: { ticks: { color: textColor } } } });
 
       const sellerMap = {};
       for (let i = 0; i < filteredData.length; i++) {
@@ -1627,10 +1509,7 @@
       createChart('chart-seller-column', 'bar', {
         labels: topSellers.map(i => i[0].length > 20 ? i[0].substring(0, 20) + '...' : i[0]),
         datasets: [{ label: 'Volume', data: topSellers.map(i => i[1]), backgroundColor: '#ec4899', borderRadius: 6 }]
-      }, {
-        scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } },
-        plugins: { datalabels: { align: 'end', anchor: 'end', color: isDark ? '#f472b6' : '#9d174d', font: { weight: 'bold' } } }
-      });
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
     }
 
     function createChart(id, type, data, options = {}) {
@@ -1640,48 +1519,32 @@
         type: type, data: data,
         options: {
           responsive: true, maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: { boxWidth: 10, font: { size: 10 }, color: document.documentElement.classList.contains('dark') ? '#f8fafc' : '#0f172a' }
-            },
-            ...options.plugins
-          },
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 }, color: document.documentElement.classList.contains('dark') ? '#f8fafc' : '#0f172a' } }, ...options.plugins },
           ...options
         }
       });
     }
 
     function toggleZoneRow(zoneKey) {
-      if (expandedZones.has(zoneKey)) {
-        expandedZones.delete(zoneKey);
-      } else {
-        expandedZones.add(zoneKey);
-      }
+      if (expandedZones.has(zoneKey)) expandedZones.delete(zoneKey);
+      else expandedZones.add(zoneKey);
       renderPHWMAgingMatrix();
     }
 
     function toggleHubRow(hubKey) {
-      if (expandedHubs.has(hubKey)) {
-        expandedHubs.delete(hubKey);
-      } else {
-        expandedHubs.add(hubKey);
-      }
+      if (expandedHubs.has(hubKey)) expandedHubs.delete(hubKey);
+      else expandedHubs.add(hubKey);
       renderPHWMAgingMatrix();
     }
 
     function renderPHWMAgingMatrix() {
-      const datesSet = new Set();
       const hierarchy = {};
-
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
         const z = r.Zone || 'Unassigned Zone';
         const ph = r.HubName || 'Unassigned Hub';
         const wm = r.WM || 'Unassigned WM / FE';
         const d = r.Date || 'No Date';
-
-        datesSet.add(d);
 
         if (!hierarchy[z]) hierarchy[z] = { grandTotal: 0, dates: {}, phs: {} };
         hierarchy[z].grandTotal++;
@@ -1697,57 +1560,32 @@
       }
 
       const dates = getAllDatesDesc();
+      document.getElementById('matrix-thead-ph-wm').innerHTML = `<th class="p-3">Hierarchy (Zone &gt; Hub Name &gt; WM / FE)</th>` + dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + `<th class="p-3 text-right bg-slate-100 dark:bg-slate-900">Total</th>`;
 
-      const thead = document.getElementById('matrix-thead-ph-wm');
-      thead.innerHTML = `<th class="p-3">Hierarchy (Zone &gt; Hub Name &gt; WM / FE)</th>` + 
-                        dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + 
-                        `<th class="p-3 text-right bg-slate-100 dark:bg-slate-900">Total</th>`;
-
-      const tbody = document.getElementById('matrix-tbody-ph-wm');
       let html = '';
-
-      const sortedZones = Object.entries(hierarchy).sort((a, b) => b[1].grandTotal - a[1].grandTotal);
-
-      sortedZones.forEach(([z, zData]) => {
+      Object.entries(hierarchy).sort((a, b) => b[1].grandTotal - a[1].grandTotal).forEach(([z, zData]) => {
         const isZoneExpanded = expandedZones.has(z);
-        const zIcon = isZoneExpanded ? '▼' : '▶';
-
-        let zRow = `<tr onclick="toggleZoneRow('${z.replace(/'/g, "\\'")}')" class="cursor-pointer bg-slate-200/80 dark:bg-slate-900/80 font-bold border-b border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-300/80 dark:hover:bg-slate-800 transition">
-          <td class="p-3 font-semibold text-indigo-700 dark:text-indigo-300"><span class="inline-block w-4 text-xs">${zIcon}</span> 🌐 Zone: ${z}</td>`;
-        dates.forEach(d => {
-          const v = zData.dates[d] || 0;
-          zRow += `<td class="p-3 text-center">${v ? v.toLocaleString() : '-'}</td>`;
-        });
+        let zRow = `<tr onclick="toggleZoneRow('${z.replace(/'/g, "\\'")}')" class="cursor-pointer bg-slate-200/80 dark:bg-slate-900/80 font-bold border-b border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-300/80 transition">
+          <td class="p-3 font-semibold text-indigo-700 dark:text-indigo-300"><span class="inline-block w-4 text-xs">${isZoneExpanded ? '▼' : '▶'}</span> 🌐 Zone: ${z}</td>`;
+        dates.forEach(d => { zRow += `<td class="p-3 text-center">${(zData.dates[d] || 0) ? zData.dates[d].toLocaleString() : '-'}</td>`; });
         zRow += `<td class="p-3 text-right text-indigo-700 dark:text-indigo-300 font-extrabold">${zData.grandTotal.toLocaleString()}</td></tr>`;
         html += zRow;
 
         if (isZoneExpanded) {
-          const sortedPHs = Object.entries(zData.phs).sort((a, b) => b[1].grandTotal - a[1].grandTotal);
-
-          sortedPHs.forEach(([ph, phData]) => {
+          Object.entries(zData.phs).sort((a, b) => b[1].grandTotal - a[1].grandTotal).forEach(([ph, phData]) => {
             const hubKey = `${z}___${ph}`;
             const isHubExpanded = expandedHubs.has(hubKey);
-            const hubIcon = isHubExpanded ? '▼' : '▶';
-
-            let phRow = `<tr onclick="toggleHubRow('${hubKey.replace(/'/g, "\\'")}')" class="cursor-pointer bg-indigo-50/70 dark:bg-indigo-950/40 font-bold border-b border-indigo-100 dark:border-slate-700 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-100/70 dark:hover:bg-indigo-900/50 transition">
-              <td class="p-2.5 pl-8"><span class="inline-block w-4 text-xs">${hubIcon}</span> 🏢 Hub: ${ph}</td>`;
-            dates.forEach(d => {
-              const v = phData.dates[d] || 0;
-              phRow += `<td class="p-2.5 text-center">${v ? v.toLocaleString() : '-'}</td>`;
-            });
-            phRow += `<td class="p-2.5 text-right text-indigo-600 dark:text-indigo-400 font-extrabold">${phData.grandTotal.toLocaleString()}</td></tr>`;
+            let phRow = `<tr onclick="toggleHubRow('${hubKey.replace(/'/g, "\\'")}')" class="cursor-pointer bg-indigo-50/70 dark:bg-indigo-950/40 font-bold border-b border-indigo-100 text-indigo-900 dark:text-indigo-200 transition">
+              <td class="p-2.5 pl-8"><span class="inline-block w-4 text-xs">${isHubExpanded ? '▼' : '▶'}</span> 🏢 Hub: ${ph}</td>`;
+            dates.forEach(d => { phRow += `<td class="p-2.5 text-center">${(phData.dates[d] || 0) ? phData.dates[d].toLocaleString() : '-'}</td>`; });
+            phRow += `<td class="p-2.5 text-right text-indigo-600 font-extrabold">${phData.grandTotal.toLocaleString()}</td></tr>`;
             html += phRow;
 
             if (isHubExpanded) {
-              const sortedWMs = Object.entries(phData.wms).sort((a, b) => b[1].grandTotal - a[1].grandTotal);
-
-              sortedWMs.forEach(([wm, wmData]) => {
-                let wmRow = `<tr class="hover:bg-slate-100/50 dark:hover:bg-slate-700/30 text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800">
+              Object.entries(phData.wms).sort((a, b) => b[1].grandTotal - a[1].grandTotal).forEach(([wm, wmData]) => {
+                let wmRow = `<tr class="hover:bg-slate-100/50 text-slate-700 dark:text-slate-300 border-b border-slate-100">
                   <td class="p-2 pl-14 font-mono">🚚 WM / FE: ${wm}</td>`;
-                dates.forEach(d => {
-                  const v = wmData.dates[d] || 0;
-                  wmRow += `<td class="p-2 text-center">${v ? v.toLocaleString() : '-'}</td>`;
-                });
+                dates.forEach(d => { wmRow += `<td class="p-2 text-center">${(wmData.dates[d] || 0) ? wmData.dates[d].toLocaleString() : '-'}</td>`; });
                 wmRow += `<td class="p-2 text-right font-semibold text-slate-900 dark:text-white">${wmData.grandTotal.toLocaleString()}</td></tr>`;
                 html += wmRow;
               });
@@ -1755,8 +1593,7 @@
           });
         }
       });
-
-      tbody.innerHTML = html;
+      document.getElementById('matrix-tbody-ph-wm').innerHTML = html;
       if (window.lucide) lucide.createIcons();
     }
 
@@ -1776,23 +1613,11 @@
         if (isInvalid(k)) continue;
         map[k] = (map[k] || 0) + 1;
       }
-
-      const sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
-      const tbody = document.getElementById(elementId);
       let html = '';
-
-      for (let i = 0; i < sorted.length; i++) {
-        const [key, count] = sorted[i];
-        const pct = ((count / totalCount) * 100).toFixed(1);
-        html += `
-          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400">
-            <td class="p-2 font-medium text-slate-800 dark:text-slate-200">${key}</td>
-            <td class="p-2 text-right font-mono text-slate-900 dark:text-white font-semibold">${count.toLocaleString()}</td>
-            <td class="p-2 text-right font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${pct}%</td>
-          </tr>
-        `;
-      }
-      tbody.innerHTML = html;
+      Object.entries(map).sort((a, b) => b[1] - a[1]).forEach(([key, count]) => {
+        html += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700"><td class="p-2 font-medium">${key}</td><td class="p-2 text-right font-mono font-semibold">${count.toLocaleString()}</td><td class="p-2 text-right font-mono text-indigo-600 font-semibold">${((count / totalCount) * 100).toFixed(1)}%</td></tr>`;
+      });
+      document.getElementById(elementId).innerHTML = html;
     }
 
     function renderShipmentsTable() {
@@ -1803,25 +1628,10 @@
       document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${pages}`;
 
       const start = (currentPage - 1) * pageSize;
-      const end = Math.min(start + pageSize, tot);
       let html = '';
-
-      for (let i = start; i < end; i++) {
+      for (let i = start; i < Math.min(start + pageSize, tot); i++) {
         const r = filteredData[i];
-        html += `
-          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700 transition hover:border-indigo-400">
-            <td class="p-3">${r.Date}</td>
-            <td class="p-3 font-mono text-indigo-600 dark:text-indigo-400 font-semibold">${r.ShipmentId}</td>
-            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status.toLowerCase().includes('received') ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'}">${r.Status}</span></td>
-            <td class="p-3">${r.Zone}</td>
-            <td class="p-3">${r.HubName}</td>
-            <td class="p-3">${r.MH}</td>
-            <td class="p-3 font-medium">${r.GM}</td>
-            <td class="p-3">${r.WM}</td>
-            <td class="p-3 truncate max-w-[150px]">${r.SellerName}</td>
-            <td class="p-3">${r.LOB}</td>
-          </tr>
-        `;
+        html += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700"><td class="p-3">${r.Date}</td><td class="p-3 font-mono text-indigo-600 font-semibold">${r.ShipmentId}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status.toLowerCase().includes('received') ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${r.Status}</span></td><td class="p-3">${r.Zone}</td><td class="p-3">${r.HubName}</td><td class="p-3">${r.MH}</td><td class="p-3 font-medium">${r.GM}</td><td class="p-3">${r.WM}</td><td class="p-3 truncate max-w-[150px]">${r.SellerName}</td><td class="p-3">${r.LOB}</td></tr>`;
       }
       tbody.innerHTML = html;
     }
@@ -1833,22 +1643,15 @@
     function switchTab(t) {
       currentTab = t;
       ['overview', 'matrix', 'gmview', 'tables', 'table'].forEach(tab => {
-        const el = document.getElementById(`tab-${tab}`);
+        document.getElementById(`tab-${tab}`).classList.add('hidden');
         const btn = document.getElementById(`tab-btn-${tab}`);
-        if (el) el.classList.add('hidden');
-        if (btn) {
-          btn.classList.remove('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
-          btn.classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
-        }
+        btn.classList.remove('border-indigo-600', 'text-indigo-600', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
+        btn.classList.add('border-transparent', 'text-slate-500');
       });
-
-      const targetTab = document.getElementById(`tab-${t}`);
+      document.getElementById(`tab-${t}`).classList.remove('hidden');
       const targetBtn = document.getElementById(`tab-btn-${t}`);
-      if (targetTab) targetTab.classList.remove('hidden');
-      if (targetBtn) {
-        targetBtn.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
-        targetBtn.classList.add('border-indigo-600', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
-      }
+      targetBtn.classList.remove('border-transparent', 'text-slate-500');
+      targetBtn.classList.add('border-indigo-600', 'text-indigo-600', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
 
       if (t === 'matrix') renderPHWMAgingMatrix();
       else if (t === 'overview') renderCharts();
@@ -1858,11 +1661,8 @@
     }
 
     function resetAllFilters() {
-      ['filter-search', 'filter-date-from', 'filter-date-to'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = '';
-      });
-      ['filter-week', 'filter-month', 'filter-gm', 'filter-seller', 'filter-mh', 'filter-hub', 'filter-wm', 'filter-status', 'filter-zone', 'filter-rm', 'filter-am'].forEach(id => resetMultiSelect(id, false));
+      ['filter-search', 'filter-date-from', 'filter-date-to'].forEach(id => { document.getElementById(id).value = ''; });
+      Object.keys(selectedFilters).forEach(id => resetMultiSelect(id, false));
       setLobToggle('ALL');
       setPresetDate('all');
     }
@@ -1870,52 +1670,30 @@
     function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `${selectedCategory}_Export_${new Date().toISOString().split('T')[0]}.csv`); }
 
     function exportHierarchicalAgingCSV(tableId, filenamePrefix) {
-      const datesSet = new Set();
       const hierarchy = {};
-
-      for (let i = 0; i < filteredData.length; i++) {
-        const r = filteredData[i];
-        const z = r.Zone || 'Unassigned Zone';
-        const ph = r.HubName || 'Unassigned Hub';
-        const wm = r.WM || 'Unassigned WM / FE';
-        const d = r.Date || 'No Date';
-
-        datesSet.add(d);
-
+      filteredData.forEach(r => {
+        const z = r.Zone || 'Unassigned Zone', ph = r.HubName || 'Unassigned Hub', wm = r.WM || 'Unassigned WM / FE', d = r.Date || 'No Date';
         if (!hierarchy[z]) hierarchy[z] = { phs: {} };
         if (!hierarchy[z].phs[ph]) hierarchy[z].phs[ph] = { wms: {} };
         if (!hierarchy[z].phs[ph].wms[wm]) hierarchy[z].phs[ph].wms[wm] = { grandTotal: 0, dates: {} };
-
         hierarchy[z].phs[ph].wms[wm].grandTotal++;
         hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].wms[wm].dates[d] || 0) + 1;
-      }
+      });
 
       const dates = getAllDatesDesc();
-
-      const csvRows = [];
-      const headerRow = ['"Zone"', '"Hub Name"', '"WM / FE Name"', ...dates.map(d => `"${d}"`), '"Total"'];
-      csvRows.push(headerRow.join(','));
+      const csvRows = [['"Zone"', '"Hub Name"', '"WM / FE Name"', ...dates.map(d => `"${d}"`), '"Total"'].join(',')];
 
       Object.keys(hierarchy).sort().forEach(z => {
         Object.keys(hierarchy[z].phs).sort().forEach(ph => {
           Object.keys(hierarchy[z].phs[ph].wms).sort().forEach(wm => {
             const wmData = hierarchy[z].phs[ph].wms[wm];
-            const row = [
-              `"${z.replace(/"/g, '""')}"`,
-              `"${ph.replace(/"/g, '""')}"`,
-              `"${wm.replace(/"/g, '""')}"`
-            ];
-
-            dates.forEach(d => {
-              row.push(wmData.dates[d] || 0);
-            });
-
+            const row = [`"${z}"`, `"${ph}"`, `"${wm}"`];
+            dates.forEach(d => row.push(wmData.dates[d] || 0));
             row.push(wmData.grandTotal);
             csvRows.push(row.join(','));
           });
         });
       });
-
       downloadBlob(csvRows.join('\n'), `${filenamePrefix}_${new Date().toISOString().split('T')[0]}.csv`);
     }
 
@@ -1924,10 +1702,9 @@
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
     }
 
-    function statusBanner(msg, type) {
-      const b = document.getElementById('status-banner');
+    function showStatusBanner(msg) {
       document.getElementById('status-banner-text').textContent = msg;
-      b.classList.remove('hidden');
+      document.getElementById('status-banner').classList.remove('hidden');
     }
   </script>
 </body>
