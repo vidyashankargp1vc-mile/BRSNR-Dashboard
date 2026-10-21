@@ -38,6 +38,14 @@ function parseDateStrFast(str) {
   return !isNaN(nativeDate) ? new Date(nativeDate) : null;
 }
 
+function formatDateISO(dateObj) {
+  if (!dateObj || isNaN(dateObj.getTime())) return null;
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 function getWeekIdentifier(date) {
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   const dayNum = d.getUTCDay() || 7;
@@ -89,20 +97,21 @@ async function run() {
     const parsed = Papa.parse(content, { header: true, skipEmptyLines: true });
 
     parsed.data.forEach(row => {
-      // Inside your CSV parsing loop for daily shipment files:
+      // 1. Process Daily Shipment Baseline Files
       if (row['Shipment'] !== undefined || row['shipment'] !== undefined) {
-         const hubRaw = row['Hub'] || row['ph_name'] || row['PH Name'] || '';
-         const dateStr = row['Date'] || row['date'] || '';
-         const shipmentVal = parseFloat(row['Shipment'] || row['shipment']) || 0;
-         const gm = hubMap[hubRaw.trim().toLowerCase()] || row['GM'];
+        const hubRaw = row['Hub'] || row['ph_name'] || row['PH Name'] || '';
+        const rawDateStr = row['Date'] || row['date'] || '';
+        const parsedDt = parseDateStrFast(rawDateStr);
+        const normDateStr = parsedDt ? formatDateISO(parsedDt) : rawDateStr;
+        const shipmentVal = parseFloat(row['Shipment'] || row['shipment']) || 0;
+        const gm = hubMap[hubRaw.trim().toLowerCase()] || row['GM'];
 
-      if (gm && dateStr) {
-         const cleanGM = cleanVal(gm, 'Unassigned GM');
-         if (!gmShipments[cleanGM]) gmShipments[cleanGM] = {};
-        gmShipments[cleanGM][dateStr] = (gmShipments[cleanGM][dateStr] || 0) + shipmentVal;
+        if (gm && normDateStr) {
+          const cleanGM = cleanVal(gm, 'Unassigned GM');
+          if (!gmShipments[cleanGM]) gmShipments[cleanGM] = {};
+          gmShipments[cleanGM][normDateStr] = (gmShipments[cleanGM][normDateStr] || 0) + shipmentVal;
+        }
       }
-    }
-  }
 
       // 2. Process Main BRSNR Data Files
       const id = row['ShipmentId'] || row['Shipment ID'];
@@ -131,28 +140,24 @@ async function run() {
             MH: cleanVal(row['MH Name'] || row['MH'], 'Unassigned MH'),
             RCA: cleanVal(row['RCA'], 'None'),
             BagId: cleanVal(row['BagId'], 'None'),
-            BagStatus: cleanVal(row['Bag status'], 'None'),
-            BagReceiveTime: cleanVal(row['Bag Receive time'], 'None'),
             GM: cleanVal(row['GM'], 'Unassigned GM'),
             RM: cleanVal(row['RM'], 'None'),
             AM: cleanVal(row['AM'], 'None'),
             DispatchToMH: cleanVal(row['Dispatched_to_TC'] || row['Dispatch to MH'], 'None'),
             ReceivedAtMH: cleanVal(row['Received_to_TC'] || row['Received at MH'], 'None'),
-            Diff: cleanVal(row['diff'] || row['Diff'], '0'),
-            Hrs: cleanVal(row['Hrs'], '0')
+            Diff: cleanVal(row['diff'] || row['Diff'], '0')
           });
         }
       }
     });
   });
 
-  // Combine both BRSNR Master Records and Aggregated GM Shipments into the output JSON
   const outputPayload = {
     records: masterData,
     gmShipments: gmShipments
   };
 
-  fs.writeFileSync(outputFile, JSON.stringify(outputPayload, null, 0));
+  fs.writeFileSync(outputFile, JSON.stringify(outputPayload));
   console.log(`Successfully compiled ${masterData.length} records into ${outputFile}`);
 }
 
