@@ -89,19 +89,20 @@ async function run() {
     const parsed = Papa.parse(content, { header: true, skipEmptyLines: true });
 
     parsed.data.forEach(row => {
-      // 1. Process Daily Shipment Files (if the CSV contains 'Shipment' column)
+      // Inside your CSV parsing loop for daily shipment files:
       if (row['Shipment'] !== undefined || row['shipment'] !== undefined) {
-        const hubRaw = row['Hub'] || row['ph_name'] || row['PH Name'] || '';
-        const dateStr = row['Date'] || row['date'] || '';
-        const shipmentVal = parseFloat(row['Shipment'] || row['shipment']) || 0;
-        const gm = hubMap[hubRaw.trim().toLowerCase()] || row['GM'];
+         const hubRaw = row['Hub'] || row['ph_name'] || row['PH Name'] || '';
+         const dateStr = row['Date'] || row['date'] || '';
+         const shipmentVal = parseFloat(row['Shipment'] || row['shipment']) || 0;
+         const gm = hubMap[hubRaw.trim().toLowerCase()] || row['GM'];
 
-        if (gm && dateStr) {
-          const cleanGM = cleanVal(gm, 'Unassigned GM');
-          if (!gmShipments[cleanGM]) gmShipments[cleanGM] = {};
-          gmShipments[cleanGM][dateStr] = (gmShipments[cleanGM][dateStr] || 0) + shipmentVal;
-        }
+      if (gm && dateStr) {
+         const cleanGM = cleanVal(gm, 'Unassigned GM');
+         if (!gmShipments[cleanGM]) gmShipments[cleanGM] = {};
+        gmShipments[cleanGM][dateStr] = (gmShipments[cleanGM][dateStr] || 0) + shipmentVal;
       }
+    }
+  }
 
       // 2. Process Main BRSNR Data Files
       const id = row['ShipmentId'] || row['Shipment ID'];
