@@ -1294,14 +1294,13 @@
         const prev = new Date(parsed);
         prev.setDate(prev.getDate() - 1);
 
-        const day = String(prev.getDate()).padStart(2, '0');
-        const month = String(prev.getMonth() + 1).padStart(2, '0');
         const year = prev.getFullYear();
+        const month = String(prev.getMonth() + 1).padStart(2, '0');
+        const day = String(prev.getDate()).padStart(2, '0');
 
-        return dateStr.includes('-') && dateStr.split('-')[0].length === 4
-          ? `${year}-${month}-${day}`
-          : `${day}-${month}-${year}`;
-      }
+        // Match the format used in your master-data.json keys (e.g. YYYY-MM-DD)
+        return `${year}-${month}-${day}`;
+       }
 
       const cntCell = n => `<td class="xl-n">${(n || 0).toLocaleString()}</td>`;
       const pctCell = (n, den) => {
