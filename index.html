@@ -763,15 +763,18 @@
     const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
 
     const EXCLUDED_GMS = [
-      'amitava dutta',
-      'arjun bhargava',
-      'arvind bansal (up)',
-      'arvind bansal(up)',
-      'sankar barman',
-      'swapnil borgaonkar (mp)',
-      'swapnil borgoankar(mp)',
-      'vineeth v'
-    ];
+  'arvind bansal (up)',
+  'arvind bansal(up)',
+  'sankar barman',
+  'vineeth v'
+];
+const SWAPNIL_CANON = 'Swapnil Borgaonkar (MH)'; // change if your MH name is spelled differently
+function canonGm(gm) {
+  const g = String(gm || '').trim();
+  if (g.toLowerCase() === 'somnath g') return 'Somnath Ghosh';
+  if (/^swapnil\s*borg(aon|oan)kar\s*\((mp|mh)\)$/i.test(g)) return SWAPNIL_CANON;
+  return g;
+}
 
     const COLS = { 
       DATE: ['Date', 'date'], 
@@ -1181,113 +1184,110 @@
     }
 
     function renderGMViewTables() {
-      const countHeaderRow = document.getElementById('gm-count-header-row');
-      const countTbody = document.getElementById('gm-count-tbody');
-      const pctHeaderRow = document.getElementById('gm-pct-header-row');
-      const pctTbody = document.getElementById('gm-pct-tbody');
+  const countHeaderRow = document.getElementById('gm-count-header-row');
+  const countTbody = document.getElementById('gm-count-tbody');
+  const pctHeaderRow = document.getElementById('gm-pct-header-row');
+  const pctTbody = document.getElementById('gm-pct-tbody');
+  if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
 
-      if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
+  const recentDates = [...new Set(masterData.map(r => r.Date))]
+    .filter(Boolean)
+    .sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0))
+    .slice(0, 5);
 
-      const allDatesSorted = [...new Set(masterData.map(r => r.Date))]
-        .filter(Boolean)
-        .sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
+  const fmtDate = ds => {
+    const d = parseDateStrFast(ds);
+    if (!d) return ds;
+    return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+  };
 
-      const recentDates = allDatesSorted.slice(0, 5);
-
-      const fmtDate = ds => {
-        const d = parseDateStrFast(ds);
-        if (!d) return ds;
-        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-      };
-
-      const row1 = `<th class="xl-h">Date</th>` + recentDates.map(d => `<th class="xl-h" colspan="2">${fmtDate(d)}</th>`).join('');
-      const row2 = `<th class="xl-h">GM</th>` + recentDates.map(() => `<th class="xl-h">BRSNR</th><th class="xl-h">Mix Bagging</th>`).join('');
-      [countHeaderRow, pctHeaderRow].forEach(row => {
-        row.className = '';
-        row.innerHTML = row1;
-        row.parentElement.closest('table').className = 'xl-table';
-        let sub = row.parentElement.querySelector('.sub-row');
-        if (!sub) {
-          sub = document.createElement('tr');
-          sub.className = 'sub-row';
-          row.after(sub);
-        }
-        sub.innerHTML = row2;
-      });
-      [countTbody, pctTbody].forEach(tb => { tb.className = ''; });
-
-      const gmBrsnrCounts = {};
-      masterData.forEach(r => {
-        let gm = r.GM;
-        if (isInvalid(gm) || !r.Date) return;
-        if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
-        const c = gmBrsnrCounts[gm] || (gmBrsnrCounts[gm] = {});
-        const e = c[r.Date] || (c[r.Date] = { B: 0, M: 0 });
-        getCategory(r) === 'BRSNR' ? e.B++ : e.M++;
-      });
-
-      const normalizedGmShipments = {};
-      Object.keys(globalGmShipments).forEach(gm => {
-        let cleanGm = gm;
-        if (cleanGm.toLowerCase() === 'somnath g') cleanGm = 'Somnath Ghosh';
-        if (!normalizedGmShipments[cleanGm]) normalizedGmShipments[cleanGm] = {};
-        Object.keys(globalGmShipments[gm]).forEach(date => {
-          normalizedGmShipments[cleanGm][date] = (normalizedGmShipments[cleanGm][date] || 0) + globalGmShipments[gm][date];
-        });
-      });
-
-      const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
-        .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
-        .sort();
-
-      function getPrevDateStr(dateStr) {
-        const parsed = parseDateStrFast(dateStr);
-        if (!parsed) return null;
-        const prev = new Date(parsed);
-        prev.setDate(prev.getDate() - 1);
-        return `${prev.getFullYear()}-${String(prev.getMonth() + 1).padStart(2, '0')}-${String(prev.getDate()).padStart(2, '0')}`;
-      }
-
-      const cntCell = n => `<td class="xl-n">${(n || 0).toLocaleString()}</td>`;
-      const pctCell = (n, den) => {
-        const p = den > 0 ? (n / den) * 100 : 0;
-        return `<td class="${p > 0.12 ? 'xl-bad' : 'xl-good'}">${p.toFixed(2)}%</td>`;
-      };
-      const nameTd = gm => `<td class="xl-n">${gm}</td>`;
-
-      let countBodyHtml = '', pctBodyHtml = '';
-      const grand = {}; 
-      recentDates.forEach(d => { grand[d] = { B: 0, M: 0, den: 0 }; });
-
-      allGms.forEach(gm => {
-        let cRow = `<tr>${nameTd(gm)}`, pRow = cRow;
-        recentDates.forEach(date => {
-          const e = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || { B: 0, M: 0 };
-          const prev = getPrevDateStr(date);
-          const den = (prev && normalizedGmShipments[gm] && normalizedGmShipments[gm][prev]) || 0;
-          cRow += cntCell(e.B) + cntCell(e.M);
-          pRow += pctCell(e.B, den) + pctCell(e.M, den);
-          grand[date].B += e.B; grand[date].M += e.M; grand[date].den += den;
-        });
-        countBodyHtml += cRow + '</tr>';
-        pctBodyHtml += pRow + '</tr>';
-      });
-
-      const gtName = `<td class="xl-h">Grand Total</td>`;
-      let gtC = `<tr>${gtName}`, gtP = `<tr>${gtName}`;
-      recentDates.forEach(d => {
-        const g = grand[d];
-        const pB = g.den > 0 ? (g.B / g.den) * 100 : 0;
-        const pM = g.den > 0 ? (g.M / g.den) * 100 : 0;
-        gtC += `<td class="xl-h">${g.B.toLocaleString()}</td><td class="xl-h">${g.M.toLocaleString()}</td>`;
-        gtP += `<td class="${pB > 0.12 ? 'xl-bad' : 'xl-good'}">${pB.toFixed(2)}%</td><td class="${pM > 0.12 ? 'xl-bad' : 'xl-good'}">${pM.toFixed(2)}%</td>`;
-      });
-      countBodyHtml += gtC + '</tr>';
-      pctBodyHtml += gtP + '</tr>';
-
-      countTbody.innerHTML = countBodyHtml;
-      pctTbody.innerHTML = pctBodyHtml;
+  const row1 = `<th class="xl-h">Date</th>` + recentDates.map(d => `<th class="xl-h">${fmtDate(d)}</th>`).join('');
+  const row2 = `<th class="xl-h">GM</th>` + recentDates.map(() => `<th class="xl-h">BRSNR</th>`).join('');
+  [countHeaderRow, pctHeaderRow].forEach(row => {
+    row.className = '';
+    row.innerHTML = row1;
+    row.parentElement.closest('table').className = 'xl-table';
+    let sub = row.parentElement.querySelector('.sub-row');
+    if (!sub) {
+      sub = document.createElement('tr');
+      sub.className = 'sub-row';
+      row.after(sub);
     }
+    sub.innerHTML = row2;
+  });
+  [countTbody, pctTbody].forEach(tb => { tb.className = ''; });
+
+  // BRSNR counts per GM per date (Swapnil MP + MH merged into MH)
+  const gmBrsnrCounts = {};
+  masterData.forEach(r => {
+    if (isInvalid(r.GM) || !r.Date) return;
+    if (getCategory(r) !== 'BRSNR') return;
+    const gm = canonGm(r.GM);
+    const c = gmBrsnrCounts[gm] || (gmBrsnrCounts[gm] = {});
+    c[r.Date] = (c[r.Date] || 0) + 1;
+  });
+
+  // Denominators (total shipments per GM per date), merged the same way
+  const normalizedGmShipments = {};
+  Object.keys(globalGmShipments).forEach(gm => {
+    const cleanGm = canonGm(gm);
+    const t = normalizedGmShipments[cleanGm] || (normalizedGmShipments[cleanGm] = {});
+    Object.keys(globalGmShipments[gm]).forEach(date => {
+      t[date] = (t[date] || 0) + globalGmShipments[gm][date];
+    });
+  });
+
+  const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
+    .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
+    .sort();
+
+  function getPrevDateStr(dateStr) {
+    const parsed = parseDateStrFast(dateStr);
+    if (!parsed) return null;
+    const prev = new Date(parsed);
+    prev.setDate(prev.getDate() - 1);
+    return `${prev.getFullYear()}-${String(prev.getMonth() + 1).padStart(2, '0')}-${String(prev.getDate()).padStart(2, '0')}`;
+  }
+
+  const cntCell = n => `<td class="xl-n">${(n || 0).toLocaleString()}</td>`;
+  const pctCell = (n, den) => {
+    const p = den > 0 ? (n / den) * 100 : 0;
+    return `<td class="${p > 0.12 ? 'xl-bad' : 'xl-good'}">${p.toFixed(2)}%</td>`;
+  };
+  const nameTd = gm => `<td class="xl-n">${gm}</td>`;
+
+  let countBodyHtml = '', pctBodyHtml = '';
+  const grand = {};
+  recentDates.forEach(d => { grand[d] = { B: 0, den: 0 }; });
+
+  allGms.forEach(gm => {
+    let cRow = `<tr>${nameTd(gm)}`, pRow = cRow;
+    recentDates.forEach(date => {
+      const b = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
+      const prev = getPrevDateStr(date);
+      const den = (prev && normalizedGmShipments[gm] && normalizedGmShipments[gm][prev]) || 0;
+      cRow += cntCell(b);
+      pRow += pctCell(b, den);
+      grand[date].B += b; grand[date].den += den;
+    });
+    countBodyHtml += cRow + '</tr>';
+    pctBodyHtml += pRow + '</tr>';
+  });
+
+  const gtName = `<td class="xl-h">Grand Total</td>`;
+  let gtC = `<tr>${gtName}`, gtP = `<tr>${gtName}`;
+  recentDates.forEach(d => {
+    const g = grand[d];
+    const pB = g.den > 0 ? (g.B / g.den) * 100 : 0;
+    gtC += `<td class="xl-h">${g.B.toLocaleString()}</td>`;
+    gtP += `<td class="${pB > 0.12 ? 'xl-bad' : 'xl-good'}">${pB.toFixed(2)}%</td>`;
+  });
+  countBodyHtml += gtC + '</tr>';
+  pctBodyHtml += gtP + '</tr>';
+
+  countTbody.innerHTML = countBodyHtml;
+  pctTbody.innerHTML = pctBodyHtml;
+}
 
     function updateDynamicFilterOptions() {
       const filterConfigs = [
