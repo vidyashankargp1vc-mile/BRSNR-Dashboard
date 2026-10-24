@@ -149,6 +149,69 @@
       </button>
     </div>
 
+    <!-- KEY PERFORMANCE INDICATORS -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Card 1: Total Volume -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Total Volume</span>
+          <div class="p-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-lg"><i data-lucide="package" class="w-5 h-5"></i></div>
+        </div>
+        <div class="mt-3">
+          <p id="kpi-total-volume" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
+          <div class="flex items-center justify-between mt-1 text-xs text-slate-500 dark:text-slate-400">
+            <span>Filtered shipments</span>
+            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800">&gt; 24 hrs aging</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Top Hub -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Top Hub</span>
+          <div class="p-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-lg"><i data-lucide="building" class="w-5 h-5"></i></div>
+        </div>
+        <div class="mt-3">
+          <p id="kpi-top-hub-name" class="text-lg font-bold text-slate-900 dark:text-white truncate" title="Top Hub">-</p>
+          <div class="flex items-center justify-between mt-1 text-xs">
+            <span id="kpi-top-hub-count" class="text-emerald-600 dark:text-emerald-400 font-medium">0 shipments</span>
+            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800">&gt; 24 hrs aging</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Top GM -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Top GM</span>
+          <div class="p-2 bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 rounded-lg"><i data-lucide="user-check" class="w-5 h-5"></i></div>
+        </div>
+        <div class="mt-3">
+          <p id="kpi-top-gm-name" class="text-lg font-bold text-slate-900 dark:text-white truncate" title="Top GM">-</p>
+          <div class="flex items-center justify-between mt-1 text-xs">
+            <span id="kpi-top-gm-count" class="text-purple-600 dark:text-purple-400 font-medium">0 shipments</span>
+            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800">&gt; 24 hrs aging</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Active Zones -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Active Zones</span>
+          <div class="p-2 bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 rounded-lg"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+        </div>
+        <div class="mt-3">
+          <p id="kpi-active-zones" class="text-2xl font-bold text-slate-900 dark:text-white">4</p>
+          <div class="flex items-center justify-between mt-1 text-xs text-slate-500 dark:text-slate-400">
+            <span id="kpi-active-zones-sub">Active Regions</span>
+            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800">&gt; 24 hrs aging</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- GLOBAL FILTER TOOLBAR -->
     <section class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-700 pb-3">
@@ -373,65 +436,6 @@
           </div>
         </div>
 
-      </div>
-    </section>
-
-    <!-- KEY PERFORMANCE INDICATORS -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Total Volume</span>
-          <div class="p-2 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-lg"><i data-lucide="package" class="w-5 h-5"></i></div>
-        </div>
-        <div class="mt-3">
-          <p id="kpi-total-volume" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
-          <div class="flex items-center justify-between mt-1 text-xs text-slate-500 dark:text-slate-400">
-            <span>Filtered shipments</span>
-            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800">&gt; 24 hrs aging</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Received (MH / TC)</span>
-          <div class="p-2 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-lg"><i data-lucide="check-circle-2" class="w-5 h-5"></i></div>
-        </div>
-        <div class="mt-3">
-          <p id="kpi-received-mh" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
-          <div class="flex items-center justify-between mt-1 text-xs">
-            <span id="kpi-received-pct" class="text-emerald-600 dark:text-emerald-400 font-medium">0% of total</span>
-            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800">&gt; 24 hrs aging</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Dispatched (MH / TC)</span>
-          <div class="p-2 bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-lg"><i data-lucide="truck" class="w-5 h-5"></i></div>
-        </div>
-        <div class="mt-3">
-          <p id="kpi-dispatched-mh" class="text-2xl font-bold text-slate-900 dark:text-white">0</p>
-          <div class="flex items-center justify-between mt-1 text-xs">
-            <span id="kpi-dispatched-pct" class="text-amber-600 dark:text-amber-400 font-medium">0% dispatched</span>
-            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800">&gt; 24 hrs aging</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm hover:border-indigo-400 transition-all hover:shadow-md">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Active Zones</span>
-          <div class="p-2 bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 rounded-lg"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
-        </div>
-        <div class="mt-3">
-          <p id="kpi-active-zones" class="text-2xl font-bold text-slate-900 dark:text-white">4</p>
-          <div class="flex items-center justify-between mt-1 text-xs text-slate-500 dark:text-slate-400">
-            <span id="kpi-active-zones-sub">Active Regions</span>
-            <span class="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800">&gt; 24 hrs aging</span>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -706,9 +710,9 @@
               <th class="p-3">Zone</th>
               <th class="p-3">Hub Name</th>
               <th class="p-3">MH Name</th>
-              <th class="p-3">GM</th>
+              <th class="p-3 font-medium">GM</th>
               <th class="p-3">WM / FE</th>
-              <th class="p-3">Seller Name</th>
+              <th class="p-3 truncate max-w-[150px]">Seller Name</th>
               <th class="p-3">LOB</th>
             </tr>
           </thead>
@@ -1052,39 +1056,39 @@
       return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
     }
 
-   async function loadRepositoryData() {
-  showStatusBanner("Loading master data...", "info");
-  masterData = [];
-  globalGmShipments = {};
-  try {
-    const manifestRes = await fetch('data/master-manifest.json', { cache: 'no-cache' });
-    if (!manifestRes.ok) throw new Error('master-manifest.json missing');
-    const files = (await manifestRes.json()).sort().reverse(); // newest month first
+    async function loadRepositoryData() {
+      showStatusBanner("Loading master data...", "info");
+      masterData = [];
+      globalGmShipments = {};
+      try {
+        const manifestRes = await fetch('data/master-manifest.json', { cache: 'no-cache' });
+        if (!manifestRes.ok) throw new Error('master-manifest.json missing');
+        const files = (await manifestRes.json()).sort().reverse();
 
-    const [gmShip, ...months] = await Promise.all([
-      fetch('data/master-gm-shipments.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}),
-      ...files.map(f => fetch('data/' + f, { cache: 'no-cache' }).then(r => r.json()))
-    ]);
-    globalGmShipments = gmShip;
+        const [gmShip, ...months] = await Promise.all([
+          fetch('data/master-gm-shipments.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}),
+          ...files.map(f => fetch('data/' + f, { cache: 'no-cache' }).then(r => r.json()))
+        ]);
+        globalGmShipments = gmShip;
 
-    months.forEach(m => m.records.forEach(rec => {
-      const pd = parseDateStrFast(rec.Date);
-      rec.ParsedDate = pd;
-      rec.ts = pd ? pd.getTime() : 0;
-      rec.Month = pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null;
-      rec.Week = pd ? getWeekIdentifier(pd) : null;
-      if (rec.GM.toLowerCase() === 'somnath g') rec.GM = 'Somnath Ghosh';
-      masterData.push(rec);
-    }));
+        months.forEach(m => m.records.forEach(rec => {
+          const pd = parseDateStrFast(rec.Date);
+          rec.ParsedDate = pd;
+          rec.ts = pd ? pd.getTime() : 0;
+          rec.Month = pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null;
+          rec.Week = pd ? getWeekIdentifier(pd) : null;
+          if (rec.GM.toLowerCase() === 'somnath g') rec.GM = 'Somnath Ghosh';
+          masterData.push(rec);
+        }));
 
-    showStatusBanner(`Loaded ${masterData.length.toLocaleString()} shipments from ${files.length} month file(s).`, masterData.length ? "success" : "warning");
-    renderGMViewTables();
-    applyFilters(true);
-  } catch (e) {
-    console.error("Error loading master data:", e);
-    showStatusBanner("Error loading master data JSON.", "error");
-  }
-}
+        showStatusBanner(`Loaded ${masterData.length.toLocaleString()} shipments from ${files.length} month file(s).`, masterData.length ? "success" : "warning");
+        renderGMViewTables();
+        applyFilters(true);
+      } catch (e) {
+        console.error("Error loading master data:", e);
+        showStatusBanner("Error loading master data JSON.", "error");
+      }
+    }
 
     async function fetchCsv(url) {
       try {
@@ -1149,23 +1153,21 @@
     function parseDateStrFast(str) {
       if (!str) return null;
       const trimmed = str.trim();
-        // Handle DD-MM-YYYY or DD/MM/YYYY format explicitly
       const p = trimmed.split(/[-/]/);
       if (p.length === 3) {
-    // If the first part is day (<= 31) and the last part is year (4 digits)
-         if (p[0].length <= 2 && p[2].length === 4) {
-            const d = new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
-            if (!isNaN(d.getTime())) return d;
-           }
-    // Fallback for YYYY-MM-DD
-         if (p[0].length === 4) {
-            const d = new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]));
-            if (!isNaN(d.getTime())) return d;
-          }
-       }
-       const nativeDate = Date.parse(trimmed);
-       return !isNaN(nativeDate) ? new Date(nativeDate) : null;
-     }
+        if (p[0].length <= 2 && p[2].length === 4) {
+          const d = new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
+          if (!isNaN(d.getTime())) return d;
+        }
+        if (p[0].length === 4) {
+          const d = new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]));
+          if (!isNaN(d.getTime())) return d;
+        }
+      }
+      const nativeDate = Date.parse(trimmed);
+      return !isNaN(nativeDate) ? new Date(nativeDate) : null;
+    }
+
     function getWeekIdentifier(date) {
       const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
       const dayNum = d.getUTCDay() || 7;
@@ -1181,110 +1183,110 @@
     }
 
     function renderGMViewTables() {
-  const countHeaderRow = document.getElementById('gm-count-header-row');
-  const countTbody = document.getElementById('gm-count-tbody');
-  const pctHeaderRow = document.getElementById('gm-pct-header-row');
-  const pctTbody = document.getElementById('gm-pct-tbody');
-  if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
+      const countHeaderRow = document.getElementById('gm-count-header-row');
+      const countTbody = document.getElementById('gm-count-tbody');
+      const pctHeaderRow = document.getElementById('gm-pct-header-row');
+      const pctTbody = document.getElementById('gm-pct-tbody');
+      if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
 
-  const recentDates = [...new Set(masterData.map(r => r.Date))]
-    .filter(Boolean)
-    .sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0))
-    .slice(0, 5);
+      const recentDates = [...new Set(masterData.map(r => r.Date))]
+        .filter(Boolean)
+        .sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0))
+        .slice(0, 5);
 
-  const fmtDate = ds => {
-    const d = parseDateStrFast(ds);
-    if (!d) return ds;
-    return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
-  };
+      const fmtDate = ds => {
+        const d = parseDateStrFast(ds);
+        if (!d) return ds;
+        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+      };
 
-  const row1 = `<th class="xl-h">Date</th>` + recentDates.map(d => `<th class="xl-h">${fmtDate(d)}</th>`).join('');
-  const row2 = `<th class="xl-h">GM</th>` + recentDates.map(() => `<th class="xl-h">BRSNR</th>`).join('');
-  [countHeaderRow, pctHeaderRow].forEach(row => {
-    row.className = '';
-    row.innerHTML = row1;
-    row.parentElement.closest('table').className = 'xl-table';
-    let sub = row.parentElement.querySelector('.sub-row');
-    if (!sub) {
-      sub = document.createElement('tr');
-      sub.className = 'sub-row';
-      row.after(sub);
+      const row1 = `<th class="xl-h">Date</th>` + recentDates.map(d => `<th class="xl-h">${fmtDate(d)}</th>`).join('');
+      const row2 = `<th class="xl-h">GM</th>` + recentDates.map(() => `<th class="xl-h">BRSNR</th>`).join('');
+      [countHeaderRow, pctHeaderRow].forEach(row => {
+        row.className = '';
+        row.innerHTML = row1;
+        row.parentElement.closest('table').className = 'xl-table';
+        let sub = row.parentElement.querySelector('.sub-row');
+        if (!sub) {
+          sub = document.createElement('tr');
+          sub.className = 'sub-row';
+          row.after(sub);
+        }
+        sub.innerHTML = row2;
+      });
+      [countTbody, pctTbody].forEach(tb => { tb.className = ''; });
+
+      const gmBrsnrCounts = {};
+      masterData.forEach(r => {
+        let gm = r.GM;
+        if (isInvalid(gm) || !r.Date) return;
+        if (getCategory(r) !== 'BRSNR') return;
+        if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
+        const c = gmBrsnrCounts[gm] || (gmBrsnrCounts[gm] = {});
+        c[r.Date] = (c[r.Date] || 0) + 1;
+      });
+
+      const normalizedGmShipments = {};
+      Object.keys(globalGmShipments).forEach(gm => {
+        let cleanGm = gm;
+        if (cleanGm.toLowerCase() === 'somnath g') cleanGm = 'Somnath Ghosh';
+        if (!normalizedGmShipments[cleanGm]) normalizedGmShipments[cleanGm] = {};
+        Object.keys(globalGmShipments[gm]).forEach(date => {
+          normalizedGmShipments[cleanGm][date] = (normalizedGmShipments[cleanGm][date] || 0) + globalGmShipments[gm][date];
+        });
+      });
+
+      const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
+        .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
+        .sort();
+
+      function getPrevDateStr(dateStr) {
+        const parsed = parseDateStrFast(dateStr);
+        if (!parsed) return null;
+        const prev = new Date(parsed);
+        prev.setDate(prev.getDate() - 1);
+        return `${prev.getFullYear()}-${String(prev.getMonth() + 1).padStart(2, '0')}-${String(prev.getDate()).padStart(2, '0')}`;
+      }
+
+      const cntCell = n => `<td class="xl-n">${(n || 0).toLocaleString()}</td>`;
+      const pctCell = (n, den) => {
+        const p = den > 0 ? (n / den) * 100 : 0;
+        return `<td class="${p > 0.12 ? 'xl-bad' : 'xl-good'}">${p.toFixed(2)}%</td>`;
+      };
+      const nameTd = gm => `<td class="xl-n">${gm}</td>`;
+
+      let countBodyHtml = '', pctBodyHtml = '';
+      const grand = {};
+      recentDates.forEach(d => { grand[d] = { B: 0, den: 0 }; });
+
+      allGms.forEach(gm => {
+        let cRow = `<tr>${nameTd(gm)}`, pRow = cRow;
+        recentDates.forEach(date => {
+          const b = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
+          const prev = getPrevDateStr(date);
+          const den = (prev && normalizedGmShipments[gm] && normalizedGmShipments[gm][prev]) || 0;
+          cRow += cntCell(b);
+          pRow += pctCell(b, den);
+          grand[date].B += b; grand[date].den += den;
+        });
+        countBodyHtml += cRow + '</tr>';
+        pctBodyHtml += pRow + '</tr>';
+      });
+
+      const gtName = `<td class="xl-h">Grand Total</td>`;
+      let gtC = `<tr>${gtName}`, gtP = `<tr>${gtName}`;
+      recentDates.forEach(d => {
+        const g = grand[d];
+        const pB = g.den > 0 ? (g.B / g.den) * 100 : 0;
+        gtC += `<td class="xl-h">${g.B.toLocaleString()}</td>`;
+        gtP += `<td class="${pB > 0.12 ? 'xl-bad' : 'xl-good'}">${pB.toFixed(2)}%</td>`;
+      });
+      countBodyHtml += gtC + '</tr>';
+      pctBodyHtml += gtP + '</tr>';
+
+      countTbody.innerHTML = countBodyHtml;
+      pctTbody.innerHTML = pctBodyHtml;
     }
-    sub.innerHTML = row2;
-  });
-  [countTbody, pctTbody].forEach(tb => { tb.className = ''; });
-
-  const gmBrsnrCounts = {};
-  masterData.forEach(r => {
-    let gm = r.GM;
-    if (isInvalid(gm) || !r.Date) return;
-    if (getCategory(r) !== 'BRSNR') return;
-    if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
-    const c = gmBrsnrCounts[gm] || (gmBrsnrCounts[gm] = {});
-    c[r.Date] = (c[r.Date] || 0) + 1;
-  });
-
-  const normalizedGmShipments = {};
-  Object.keys(globalGmShipments).forEach(gm => {
-    let cleanGm = gm;
-    if (cleanGm.toLowerCase() === 'somnath g') cleanGm = 'Somnath Ghosh';
-    if (!normalizedGmShipments[cleanGm]) normalizedGmShipments[cleanGm] = {};
-    Object.keys(globalGmShipments[gm]).forEach(date => {
-      normalizedGmShipments[cleanGm][date] = (normalizedGmShipments[cleanGm][date] || 0) + globalGmShipments[gm][date];
-    });
-  });
-
-  const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
-    .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
-    .sort();
-
-  function getPrevDateStr(dateStr) {
-    const parsed = parseDateStrFast(dateStr);
-    if (!parsed) return null;
-    const prev = new Date(parsed);
-    prev.setDate(prev.getDate() - 1);
-    return `${prev.getFullYear()}-${String(prev.getMonth() + 1).padStart(2, '0')}-${String(prev.getDate()).padStart(2, '0')}`;
-  }
-
-  const cntCell = n => `<td class="xl-n">${(n || 0).toLocaleString()}</td>`;
-  const pctCell = (n, den) => {
-    const p = den > 0 ? (n / den) * 100 : 0;
-    return `<td class="${p > 0.12 ? 'xl-bad' : 'xl-good'}">${p.toFixed(2)}%</td>`;
-  };
-  const nameTd = gm => `<td class="xl-n">${gm}</td>`;
-
-  let countBodyHtml = '', pctBodyHtml = '';
-  const grand = {};
-  recentDates.forEach(d => { grand[d] = { B: 0, den: 0 }; });
-
-  allGms.forEach(gm => {
-    let cRow = `<tr>${nameTd(gm)}`, pRow = cRow;
-    recentDates.forEach(date => {
-      const b = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
-      const prev = getPrevDateStr(date);
-      const den = (prev && normalizedGmShipments[gm] && normalizedGmShipments[gm][prev]) || 0;
-      cRow += cntCell(b);
-      pRow += pctCell(b, den);
-      grand[date].B += b; grand[date].den += den;
-    });
-    countBodyHtml += cRow + '</tr>';
-    pctBodyHtml += pRow + '</tr>';
-  });
-
-  const gtName = `<td class="xl-h">Grand Total</td>`;
-  let gtC = `<tr>${gtName}`, gtP = `<tr>${gtName}`;
-  recentDates.forEach(d => {
-    const g = grand[d];
-    const pB = g.den > 0 ? (g.B / g.den) * 100 : 0;
-    gtC += `<td class="xl-h">${g.B.toLocaleString()}</td>`;
-    gtP += `<td class="${pB > 0.12 ? 'xl-bad' : 'xl-good'}">${pB.toFixed(2)}%</td>`;
-  });
-  countBodyHtml += gtC + '</tr>';
-  pctBodyHtml += gtP + '</tr>';
-
-  countTbody.innerHTML = countBodyHtml;
-  pctTbody.innerHTML = pctBodyHtml;
-}
 
     function updateDynamicFilterOptions() {
       const filterConfigs = [
@@ -1387,17 +1389,49 @@
     function updateKPIs() {
       const tot = filteredData.length;
       document.getElementById('kpi-total-volume').textContent = tot.toLocaleString();
-      let rec = 0, disp = 0;
+
+      const hubMap = {};
+      const gmMap = {};
+
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
-        if (r.Status === 'received_at_mh' || r.Status === 'received_to_tc') rec++;
-        if (r.Status === 'dispatched_to_mh' || r.Status === 'dispatched_to_tc') disp++;
+
+        if (!isInvalid(r.HubName)) {
+          hubMap[r.HubName] = (hubMap[r.HubName] || 0) + 1;
+        }
+
+        if (!isInvalid(r.GM)) {
+          gmMap[r.GM] = (gmMap[r.GM] || 0) + 1;
+        }
       }
-      document.getElementById('kpi-received-mh').textContent = rec.toLocaleString();
-      document.getElementById('kpi-received-pct').textContent = `${tot ? ((rec / tot) * 100).toFixed(1) : 0}% of total`;
-      document.getElementById('kpi-dispatched-mh').textContent = disp.toLocaleString();
-      document.getElementById('kpi-dispatched-pct').textContent = `${tot ? ((disp / tot) * 100).toFixed(1) : 0}% dispatched`;
+
+      const sortedHubs = Object.entries(hubMap).sort((a, b) => b[1] - a[1]);
+      if (sortedHubs.length > 0) {
+        const topHub = sortedHubs[0];
+        const hubEl = document.getElementById('kpi-top-hub-name');
+        hubEl.textContent = topHub[0];
+        hubEl.title = topHub[0];
+        document.getElementById('kpi-top-hub-count').textContent = `${topHub[1].toLocaleString()} shipments`;
+      } else {
+        document.getElementById('kpi-top-hub-name').textContent = '-';
+        document.getElementById('kpi-top-hub-count').textContent = '0 shipments';
+      }
+
+      const sortedGMs = Object.entries(gmMap).sort((a, b) => b[1] - a[1]);
+      if (sortedGMs.length > 0) {
+        const topGM = sortedGMs[0];
+        const gmEl = document.getElementById('kpi-top-gm-name');
+        gmEl.textContent = topGM[0];
+        gmEl.title = topGM[0];
+        document.getElementById('kpi-top-gm-count').textContent = `${topGM[1].toLocaleString()} shipments`;
+      } else {
+        document.getElementById('kpi-top-gm-name').textContent = '-';
+        document.getElementById('kpi-top-gm-count').textContent = '0 shipments';
+      }
+
       document.getElementById('kpi-active-zones').textContent = '4';
+
+      if (window.lucide) lucide.createIcons();
     }
 
     function renderCharts() {
@@ -1490,35 +1524,35 @@
       }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
     }
 
-   function createChart(id, type, data, options = {}) {
-  if (chartInstances[id]) chartInstances[id].destroy();
-  const ctx = document.getElementById(id).getContext('2d');
-  const isDark = document.documentElement.classList.contains('dark');
-  const textColor = isDark ? '#f8fafc' : '#0f172a';
-  const isPie = type === 'pie';
-  const isHorizontal = options.indexAxis === 'y';
+    function createChart(id, type, data, options = {}) {
+      if (chartInstances[id]) chartInstances[id].destroy();
+      const ctx = document.getElementById(id).getContext('2d');
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#f8fafc' : '#0f172a';
+      const isPie = type === 'pie';
+      const isHorizontal = options.indexAxis === 'y';
 
-  chartInstances[id] = new Chart(ctx, {
-    type: type, data: data,
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      layout: { padding: isHorizontal ? { right: 40 } : { top: 24 } },
-      ...options,
-      plugins: {
-        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 }, color: textColor } },
-        datalabels: {
-          display: c => c.dataset.data[c.dataIndex] !== null,
-          color: isPie ? '#ffffff' : textColor,
-          font: { weight: 'bold', size: 11 },
-          anchor: isPie ? 'center' : 'end',
-          align: isPie ? 'center' : (type === 'line' ? 'top' : 'end'),
-          formatter: v => (typeof v === 'number' ? v.toLocaleString() : v)
-        },
-        ...options.plugins
-      }
+      chartInstances[id] = new Chart(ctx, {
+        type: type, data: data,
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          layout: { padding: isHorizontal ? { right: 40 } : { top: 24 } },
+          ...options,
+          plugins: {
+            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 }, color: textColor } },
+            datalabels: {
+              display: c => c.dataset.data[c.dataIndex] !== null,
+              color: isPie ? '#ffffff' : textColor,
+              font: { weight: 'bold', size: 11 },
+              anchor: isPie ? 'center' : 'end',
+              align: isPie ? 'center' : (type === 'line' ? 'top' : 'end'),
+              formatter: v => (typeof v === 'number' ? v.toLocaleString() : v)
+            },
+            ...options.plugins
+          }
+        }
+      });
     }
-  });
-}
 
     function toggleZoneRow(zoneKey) {
       if (expandedZones.has(zoneKey)) expandedZones.delete(zoneKey);
