@@ -565,6 +565,19 @@
           <div class="min-w-[800px] h-72 relative"><canvas id="chart-seller-column"></canvas></div>
         </div>
       </div>
+
+      <!-- PARTNER WISE VOLUME VISUAL -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="briefcase" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Partner Wise Volume Distribution</span>
+          </h3>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Top Partners Column Visual (Descending)</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-partner-column"></canvas></div>
+        </div>
+      </div>
     </section>
 
     <!-- GM VIEW TAB -->
@@ -776,7 +789,7 @@
       ZONE: ['Zone'], 
       LIB: ['Line_of_Business', 'LIB'], 
       CASPER_ID: ['Casper_id', 'Casper id'],
-      PARTNER_NAME: ['Partner Name'],
+      PARTNER_NAME: ['Partner Name', 'partner_name', 'Partner', 'partner'],
       WM: ['FE_Name', 'WM name'], 
       MH: ['MH Name', 'MH'], 
       RCA: ['RCA'],
@@ -1475,11 +1488,32 @@
         labels: topSellers.map(i => i[0].length > 20 ? i[0].substring(0, 20) + '...' : i[0]),
         datasets: [{ label: 'Volume', data: topSellers.map(i => i[1]), backgroundColor: '#ec4899', borderRadius: 6 }]
       }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
+
+      // Partner wise volume chart
+      const partnerMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        const pName = r.PartnerName || 'None';
+        if (!isInvalid(pName) && pName.toLowerCase() !== 'none') {
+          partnerMap[pName] = (partnerMap[pName] || 0) + 1;
+        }
+      }
+      const topPartners = Object.entries(partnerMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      const partnerEl = document.getElementById('chart-partner-column');
+      if (partnerEl) {
+        partnerEl.parentElement.style.minWidth = Math.max(800, topPartners.length * 80) + 'px';
+        createChart('chart-partner-column', 'bar', {
+          labels: topPartners.map(i => i[0].length > 20 ? i[0].substring(0, 20) + '...' : i[0]),
+          datasets: [{ label: 'Volume', data: topPartners.map(i => i[1]), backgroundColor: '#14b8a6', borderRadius: 6 }]
+        }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
+      }
     }
 
     function createChart(id, type, data, options = {}) {
       if (chartInstances[id]) chartInstances[id].destroy();
-      const ctx = document.getElementById(id).getContext('2d');
+      const canvasEl = document.getElementById(id);
+      if (!canvasEl) return;
+      const ctx = canvasEl.getContext('2d');
       const isDark = document.documentElement.classList.contains('dark');
       const textColor = isDark ? '#f8fafc' : '#0f172a';
       const isPie = type === 'pie';
