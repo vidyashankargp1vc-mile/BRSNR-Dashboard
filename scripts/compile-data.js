@@ -122,7 +122,9 @@ async function run() {
             BagId: cleanVal(row['BagId'], 'None'),
             GM: cleanVal(row['GM'], 'Unassigned GM'),
             RM: cleanVal(row['RM'], 'None'),
-            AM: cleanVal(row['AM'], 'None')
+            AM: cleanVal(row['AM'], 'None'),
+            PartnerName: cleanVal(row['Partner Name'] || row['Partner'] || row['partner_name'] || row['partner'], 'None'),
+            CasperId: cleanVal(row['casper_id'] || row['casper id'] || row['Casper_id'] || row['Casper id'] || row['CasperId'], 'None')
           });
         }
       }
