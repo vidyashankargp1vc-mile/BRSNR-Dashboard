@@ -720,6 +720,7 @@
               <th class="p-3 font-medium">GM</th>
               <th class="p-3">WM / FE</th>
               <th class="p-3 truncate max-w-[150px]">Seller Name</th>
+              <th class="p-3">Partner Name</th>
               <th class="p-3">LOB</th>
             </tr>
           </thead>
@@ -789,7 +790,7 @@
       ZONE: ['Zone'], 
       LIB: ['Line_of_Business', 'LIB'], 
       CASPER_ID: ['Casper_id', 'Casper id'],
-      PARTNER_NAME: ['Partner Name', 'partner_name', 'Partner', 'partner'],
+      PARTNER_NAME: ['Partner Name', 'partner_name', 'Partner', 'partner', '3pl', 'vendor'],
       WM: ['FE_Name', 'WM name'], 
       MH: ['MH Name', 'MH'], 
       RCA: ['RCA'],
@@ -1083,6 +1084,11 @@
           rec.Month = pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null;
           rec.Week = pd ? getWeekIdentifier(pd) : null;
           if (rec.GM && rec.GM.toLowerCase() === 'somnath g') rec.GM = 'Somnath Ghosh';
+
+          // Extract Partner name across multiple casing styles
+          const pVal = rec.PartnerName || rec['Partner Name'] || rec.partner_name || rec.Partner || rec.partner || rec['3pl'] || rec.vendor;
+          rec.PartnerName = (!isInvalid(pVal) && String(pVal).trim() !== '') ? String(pVal).trim() : 'Direct / In-house';
+
           masterData.push(rec);
         }));
 
@@ -1489,23 +1495,30 @@
         datasets: [{ label: 'Volume', data: topSellers.map(i => i[1]), backgroundColor: '#ec4899', borderRadius: 6 }]
       }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
 
-      // Partner wise volume chart
+      // Robust Partner wise volume extraction and chart rendering
       const partnerMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
-        const pName = r.PartnerName || 'None';
-        if (!isInvalid(pName) && pName.toLowerCase() !== 'none') {
-          partnerMap[pName] = (partnerMap[pName] || 0) + 1;
+        let pName = r.PartnerName || r['Partner Name'] || r.partner_name || r.Partner || r.partner || r['3pl'] || r.vendor;
+        if (isInvalid(pName) || String(pName).trim() === '' || String(pName).trim().toLowerCase() === 'none') {
+          pName = 'Direct / In-house';
+        } else {
+          pName = String(pName).trim();
         }
+        partnerMap[pName] = (partnerMap[pName] || 0) + 1;
       }
-      const topPartners = Object.entries(partnerMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+
+      let topPartners = Object.entries(partnerMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
       const partnerEl = document.getElementById('chart-partner-column');
       if (partnerEl) {
+        if (topPartners.length === 0) {
+          topPartners = [['No Partner Data', 0]];
+        }
         partnerEl.parentElement.style.minWidth = Math.max(800, topPartners.length * 80) + 'px';
         createChart('chart-partner-column', 'bar', {
           labels: topPartners.map(i => i[0].length > 20 ? i[0].substring(0, 20) + '...' : i[0]),
           datasets: [{ label: 'Volume', data: topPartners.map(i => i[1]), backgroundColor: '#14b8a6', borderRadius: 6 }]
-        }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
+        }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor }, beginAtZero: true } } });
       }
     }
 
@@ -1647,7 +1660,19 @@
       let html = '';
       for (let i = start; i < Math.min(start + pageSize, tot); i++) {
         const r = filteredData[i];
-        html += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700"><td class="p-3">${r.Date}</td><td class="p-3 font-mono text-indigo-600 font-semibold">${r.ShipmentId}</td><td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status.toLowerCase().includes('received') ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${r.Status}</span></td><td class="p-3">${r.Zone}</td><td class="p-3">${r.HubName}</td><td class="p-3">${r.MH}</td><td class="p-3 font-medium">${r.GM}</td><td class="p-3">${r.WM}</td><td class="p-3 truncate max-w-[150px]">${r.SellerName}</td><td class="p-3">${r.LOB}</td></tr>`;
+        html += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700">
+          <td class="p-3">${r.Date}</td>
+          <td class="p-3 font-mono text-indigo-600 font-semibold">${r.ShipmentId}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status.toLowerCase().includes('received') ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${r.Status}</span></td>
+          <td class="p-3">${r.Zone}</td>
+          <td class="p-3">${r.HubName}</td>
+          <td class="p-3">${r.MH}</td>
+          <td class="p-3 font-medium">${r.GM}</td>
+          <td class="p-3">${r.WM}</td>
+          <td class="p-3 truncate max-w-[150px]">${r.SellerName}</td>
+          <td class="p-3 truncate max-w-[120px] font-medium text-slate-600 dark:text-slate-300">${r.PartnerName || '-'}</td>
+          <td class="p-3">${r.LOB}</td>
+        </tr>`;
       }
       tbody.innerHTML = html;
     }
