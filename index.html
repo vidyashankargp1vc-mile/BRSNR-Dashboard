@@ -763,16 +763,8 @@
     const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh', 'received_to_tc', 'dispatched_to_tc'];
     const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
 
-    const EXCLUDED_GMS = [
-      'amitava dutta',
-      'arjun bhargava',
-      'arvind bansal (up)',
-      'arvind bansal(up)',
-      'sankar barman',
-      'swapnil borgaonkar (mp)',
-      'swapnil borgoankar(mp)',
-      'vineeth v'
-    ];
+    // No GMs excluded
+    const EXCLUDED_GMS = [];
 
     const COLS = { 
       DATE: ['Date', 'date'], 
@@ -1186,6 +1178,7 @@
         });
       });
 
+      // Include all GMs without exclusion
       const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
         .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
         .sort();
@@ -1339,7 +1332,6 @@
     function updateKPIs() {
       const tot = filteredData.length;
       
-      // Calculate Avg BRSNR across distinct dates
       const distinctDates = new Set();
       const hubMap = {};
       const gmMap = {};
