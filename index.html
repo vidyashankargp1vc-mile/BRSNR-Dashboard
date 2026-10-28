@@ -789,7 +789,7 @@
       STATUS: ['Status', 'Shipment Status'], 
       ZONE: ['Zone'], 
       LIB: ['Line_of_Business', 'LIB'], 
-      CASPER_ID: ['Casper_id', 'Casper id'],
+      CASPER_ID: ['Casper_id', 'Casper id', 'casper_id', 'casper id', 'CasperId'],
       PARTNER_NAME: ['Partner Name', 'partner_name', 'Partner', 'partner', '3pl', 'vendor'],
       WM: ['FE_Name', 'WM name'], 
       MH: ['MH Name', 'MH'], 
@@ -812,6 +812,44 @@
         }
       }
       return '';
+    }
+
+    // Normalizes variations in casing and common typos (e.g., TRUEFLEX, trueflex, Truueflex, EKART, ekart)
+    function normalizePartnerName(raw) {
+      if (!raw || isInvalid(raw)) return 'Direct / In-house';
+      const clean = String(raw).trim();
+      const lower = clean.toLowerCase().replace(/[\s_-]+/g, '');
+      
+      if (!lower || lower === 'none' || lower === 'null' || lower === 'unassigned' || lower === 'direct/inhouse') {
+        return 'Direct / In-house';
+      }
+      if (lower === 'ekart' || lower === 'e-kart' || lower === 'ekartlogistics') {
+        return 'Ekart';
+      }
+      if (lower === 'trueflex' || lower === 'truueflex' || lower === 'true-flex') {
+        return 'Trueflex';
+      }
+      if (lower.startsWith('wercatalyst')) {
+        return 'Wercatalyst Ventures';
+      }
+      if (lower === 'loadshare') {
+        return 'Loadshare';
+      }
+      if (lower === 'vxpress') {
+        return 'Vxpress';
+      }
+      if (lower === 'wheeley') {
+        return 'Wheeley';
+      }
+      if (lower.startsWith('princyen')) {
+        return 'Princy Enterprise';
+      }
+      if (lower.startsWith('greenteck')) {
+        return 'Greenteck Logistics';
+      }
+
+      // Preserve clean original string casing for other partners
+      return clean;
     }
 
     const selectedFilters = {
@@ -1085,9 +1123,9 @@
           rec.Week = pd ? getWeekIdentifier(pd) : null;
           if (rec.GM && rec.GM.toLowerCase() === 'somnath g') rec.GM = 'Somnath Ghosh';
 
-          // Extract Partner name across multiple casing styles
-          const pVal = rec.PartnerName || rec['Partner Name'] || rec.partner_name || rec.Partner || rec.partner || rec['3pl'] || rec.vendor;
-          rec.PartnerName = (!isInvalid(pVal) && String(pVal).trim() !== '') ? String(pVal).trim() : 'Direct / In-house';
+          // Extract and normalize Partner Name to merge casing/typos
+          const rawPartner = rec.PartnerName || rec['Partner Name'] || rec.partner_name || rec.Partner || rec.partner || rec['3pl'] || rec.vendor;
+          rec.PartnerName = normalizePartnerName(rawPartner);
 
           masterData.push(rec);
         }));
@@ -1495,17 +1533,13 @@
         datasets: [{ label: 'Volume', data: topSellers.map(i => i[1]), backgroundColor: '#ec4899', borderRadius: 6 }]
       }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
 
-      // Robust Partner wise volume extraction and chart rendering
+      // Partner wise volume extraction with unified normalized naming
       const partnerMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
-        let pName = r.PartnerName || r['Partner Name'] || r.partner_name || r.Partner || r.partner || r['3pl'] || r.vendor;
-        if (isInvalid(pName) || String(pName).trim() === '' || String(pName).trim().toLowerCase() === 'none') {
-          pName = 'Direct / In-house';
-        } else {
-          pName = String(pName).trim();
-        }
-        partnerMap[pName] = (partnerMap[pName] || 0) + 1;
+        const raw = r.PartnerName || r['Partner Name'] || r.partner_name || r.Partner || r.partner;
+        const norm = normalizePartnerName(raw);
+        partnerMap[norm] = (partnerMap[norm] || 0) + 1;
       }
 
       let topPartners = Object.entries(partnerMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
