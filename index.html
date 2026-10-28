@@ -940,3 +940,938 @@
     }
 
     function openMultiSelect(id) {
+      closeAllMultiSelects();
+      document.getElementById(`dropdown-${id}`).classList.remove('hidden');
+    }
+
+    function toggleMultiSelect(id) {
+      const dropdown = document.getElementById(`dropdown-${id}`);
+      const isHidden = dropdown.classList.contains('hidden');
+      closeAllMultiSelects();
+      if (isHidden) dropdown.classList.remove('hidden');
+    }
+
+    function closeAllMultiSelects() {
+      document.querySelectorAll('.multi-select-container [id^="dropdown-"]').forEach(el => el.classList.add('hidden'));
+    }
+
+    function filterDropdownOptions(id, query) {
+      openMultiSelect(id);
+      const q = query.toLowerCase().trim();
+      document.querySelectorAll(`#options-${id} label.option-item`).forEach(lbl => {
+        lbl.style.display = lbl.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    function fillMultiSelect(id, set) {
+      const optionsContainer = document.getElementById(`options-${id}`);
+      if (!optionsContainer) return;
+      const sorted = Array.from(set).sort();
+      let html = `
+        <label class="flex items-center space-x-2 px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer font-semibold text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-700 mb-1" onclick="event.stopPropagation()">
+          <input type="checkbox" onchange="handleSelectAll('${id}', this.checked)" id="selectAll-${id}" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+          <span>Select All</span>
+        </label>
+      `;
+
+      sorted.forEach(val => {
+        const checked = selectedFilters[id].includes(val) ? 'checked' : '';
+        const escapedVal = val.replace(/'/g, "\\'");
+        html += `
+          <label class="option-item flex items-center space-x-2 px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded cursor-pointer text-slate-800 dark:text-slate-200" onclick="event.stopPropagation()">
+            <input type="checkbox" value="${val}" ${checked} onchange="handleOptionToggle('${id}', '${escapedVal}', this.checked)" class="cb-${id} rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+            <span class="truncate">${val}</span>
+          </label>
+        `;
+      });
+
+      optionsContainer.innerHTML = html;
+      updateMultiSelectLabel(id, sorted.length);
+    }
+
+    function handleSelectAll(id, isChecked) {
+      const checkboxes = document.querySelectorAll(`.cb-${id}`);
+      checkboxes.forEach(cb => { cb.checked = isChecked; });
+      selectedFilters[id] = isChecked ? Array.from(checkboxes).map(cb => cb.value) : [];
+      updateMultiSelectLabel(id, checkboxes.length);
+      applyFilters(true);
+    }
+
+    function handleOptionToggle(id, val, isChecked) {
+      if (isChecked) {
+        if (!selectedFilters[id].includes(val)) selectedFilters[id].push(val);
+      } else {
+        selectedFilters[id] = selectedFilters[id].filter(item => item !== val);
+      }
+
+      const totalBoxes = document.querySelectorAll(`.cb-${id}`).length;
+      const selectAllCb = document.getElementById(`selectAll-${id}`);
+      if (selectAllCb) {
+        selectAllCb.checked = selectedFilters[id].length === totalBoxes && totalBoxes > 0;
+      }
+
+      updateMultiSelectLabel(id, totalBoxes);
+      applyFilters(true);
+    }
+
+    function resetMultiSelect(id, triggerApply = true) {
+      selectedFilters[id] = [];
+      document.querySelectorAll(`.cb-${id}`).forEach(cb => cb.checked = false);
+      const selectAll = document.getElementById(`selectAll-${id}`);
+      if (selectAll) selectAll.checked = false;
+      updateMultiSelectLabel(id, document.querySelectorAll(`.cb-${id}`).length);
+      if (triggerApply) applyFilters(true);
+    }
+
+    function removeSingleFilterValue(id, val) {
+      handleOptionToggle(id, val, false);
+    }
+
+    function updateMultiSelectLabel(id, totalCount) {
+      const labelEl = document.getElementById(`label-${id}`);
+      if (!labelEl) return;
+      const count = selectedFilters[id].length;
+      if (count === 0 || count === totalCount) {
+        labelEl.textContent = filterLabels[id];
+      } else if (count <= 2) {
+        labelEl.textContent = selectedFilters[id].join(', ');
+      } else {
+        labelEl.textContent = `${count} Selected (${selectedFilters[id][0]}, ...)`;
+      }
+      renderActiveFilterBadges();
+    }
+
+    function renderActiveFilterBadges() {
+      const container = document.getElementById('active-filter-badges');
+      let badgesHtml = '';
+
+      Object.keys(selectedFilters).forEach(id => {
+        selectedFilters[id].forEach(val => {
+          const escapedVal = val.replace(/'/g, "\\'");
+          badgesHtml += `
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800 font-medium">
+              <span class="text-indigo-500 font-bold mr-1">${filterFriendlyNames[id]}:</span>${val}
+              <button type="button" onclick="removeSingleFilterValue('${id}', '${escapedVal}')" class="ml-1 text-indigo-600 dark:text-indigo-400 hover:text-rose-600 dark:hover:text-rose-400 font-bold focus:outline-none">&times;</button>
+            </span>
+          `;
+        });
+      });
+
+      if (selectedLobFilter !== 'ALL') {
+        badgesHtml += `
+          <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800 font-medium">
+            <span class="text-indigo-500 font-bold mr-1">LOB:</span>${selectedLobFilter}
+            <button type="button" onclick="setLobToggle('ALL')" class="ml-1 text-indigo-600 dark:text-indigo-400 hover:text-rose-600 dark:hover:text-rose-400 font-bold focus:outline-none">&times;</button>
+          </span>
+        `;
+      }
+      container.innerHTML = badgesHtml;
+    }
+
+    function formatDateISO(dateObj) {
+      if (!dateObj || isNaN(dateObj.getTime())) return null;
+      return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
+    }
+
+    async function loadRepositoryData() {
+      showStatusBanner("Loading master data...", "info");
+      masterData = [];
+      globalGmShipments = {};
+      try {
+        const manifestRes = await fetch('data/master-manifest.json', { cache: 'no-cache' });
+        if (!manifestRes.ok) throw new Error('master-manifest.json missing');
+        const files = (await manifestRes.json()).sort().reverse();
+
+        const [gmShip, ...months] = await Promise.all([
+          fetch('data/master-gm-shipments.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}),
+          ...files.map(f => fetch('data/' + f, { cache: 'no-cache' }).then(r => r.json()))
+        ]);
+        globalGmShipments = gmShip;
+
+        months.forEach(m => (m.records || []).forEach(rec => {
+          const rawDate = getColVal(rec, COLS.DATE);
+          const pd = parseDateStrFast(rawDate);
+          
+          const rawHub = getColVal(rec, COLS.HUB_NAME);
+          const hubResolved = cleanVal(rawHub, 'Unassigned Hub');
+          
+          const rawPartner = getColVal(rec, COLS.PARTNER_NAME);
+          const partnerResolved = normalizePartnerName(rawPartner);
+
+          let gm = getColVal(rec, COLS.GM);
+          if (gm && gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
+
+          const record = {
+            ...rec,
+            Date: rawDate,
+            ParsedDate: pd,
+            ts: pd ? pd.getTime() : 0,
+            Month: pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null,
+            Week: pd ? getWeekIdentifier(pd) : null,
+            ShipmentId: getColVal(rec, COLS.SHIPMENT_ID),
+            CasperId: getColVal(rec, COLS.CASPER_ID),
+            BagId: cleanVal(getColVal(rec, COLS.BAG_ID), 'No Bag ID'),
+            Status: getColVal(rec, COLS.STATUS),
+            Zone: cleanVal(getColVal(rec, COLS.ZONE), 'Unassigned Zone'),
+            'Hub Name': hubResolved,
+            HubName: hubResolved,
+            MH: cleanVal(getColVal(rec, COLS.MH), 'Unassigned MH'),
+            GM: cleanVal(gm, 'Unassigned GM'),
+            WM: cleanVal(getColVal(rec, COLS.WM), 'Unassigned WM / FE'),
+            SellerName: cleanVal(getColVal(rec, COLS.SELLER_NAME), 'Unassigned Seller'),
+            'Partner Name': partnerResolved,
+            PartnerName: partnerResolved,
+            LOB: cleanVal(getColVal(rec, COLS.LIB), 'ALL'),
+            RM: cleanVal(getColVal(rec, COLS.RM), 'Unassigned RM'),
+            AM: cleanVal(getColVal(rec, COLS.AM), 'Unassigned AM')
+          };
+
+          masterData.push(record);
+        }));
+
+        showStatusBanner(`Loaded ${masterData.length.toLocaleString()} shipments from ${files.length} month file(s).`, masterData.length ? "success" : "warning");
+        renderGMViewTables();
+        applyFilters(true);
+      } catch (e) {
+        console.error("Error loading master data:", e);
+        showStatusBanner("Error loading master data JSON.", "error");
+      }
+    }
+
+    function isInvalid(val) {
+      if (val === undefined || val === null) return true;
+      const clean = String(val).trim().toUpperCase();
+      return clean === '' || clean === '#N/A' || clean === 'N/A' || clean === 'NA' || clean === '#VALUE!' || clean === 'NULL' || clean === 'UNDEFINED';
+    }
+
+    function cleanVal(val, defaultVal = 'Unassigned') {
+      return isInvalid(val) ? defaultVal : String(val).trim();
+    }
+
+    function parseDateStrFast(str) {
+      if (!str) return null;
+      const trimmed = str.trim();
+      const p = trimmed.split(/[-/]/);
+      if (p.length === 3) {
+        if (p[0].length <= 2 && p[2].length === 4) {
+          const d = new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
+          if (!isNaN(d.getTime())) return d;
+        }
+        if (p[0].length === 4) {
+          const d = new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]));
+          if (!isNaN(d.getTime())) return d;
+        }
+      }
+      const nativeDate = Date.parse(trimmed);
+      return !isNaN(nativeDate) ? new Date(nativeDate) : null;
+    }
+
+    function getWeekIdentifier(date) {
+      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      const dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+      return `Week ${weekNo}, ${d.getUTCFullYear()}`;
+    }
+
+    function debouncedApplyFilters() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => { applyFilters(true); }, 150);
+    }
+
+    function renderGMViewTables() {
+      const countHeaderRow = document.getElementById('gm-count-header-row');
+      const countTbody = document.getElementById('gm-count-tbody');
+      const pctHeaderRow = document.getElementById('gm-pct-header-row');
+      const pctTbody = document.getElementById('gm-pct-tbody');
+      if (!countHeaderRow || !countTbody || !pctHeaderRow || !pctTbody) return;
+
+      const recentDates = [...new Set(masterData.map(r => r.Date))]
+        .filter(Boolean)
+        .sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0))
+        .slice(0, 5);
+
+      const fmtDate = ds => {
+        const d = parseDateStrFast(ds);
+        if (!d) return ds;
+        return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+      };
+
+      const row1 = `<th class="xl-h">Date</th>` + recentDates.map(d => `<th class="xl-h">${fmtDate(d)}</th>`).join('');
+      const row2 = `<th class="xl-h">GM</th>` + recentDates.map(() => `<th class="xl-h">BRSNR</th>`).join('');
+      [countHeaderRow, pctHeaderRow].forEach(row => {
+        row.className = '';
+        row.innerHTML = row1;
+        row.parentElement.closest('table').className = 'xl-table';
+        let sub = row.parentElement.querySelector('.sub-row');
+        if (!sub) {
+          sub = document.createElement('tr');
+          sub.className = 'sub-row';
+          row.after(sub);
+        }
+        sub.innerHTML = row2;
+      });
+      [countTbody, pctTbody].forEach(tb => { tb.className = ''; });
+
+      const gmBrsnrCounts = {};
+      masterData.forEach(r => {
+        let gm = r.GM;
+        if (isInvalid(gm) || !r.Date) return;
+        if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
+        const c = gmBrsnrCounts[gm] || (gmBrsnrCounts[gm] = {});
+        c[r.Date] = (c[r.Date] || 0) + 1;
+      });
+
+      const normalizedGmShipments = {};
+      Object.keys(globalGmShipments).forEach(gm => {
+        let cleanGm = gm;
+        if (cleanGm.toLowerCase() === 'somnath g') cleanGm = 'Somnath Ghosh';
+        if (!normalizedGmShipments[cleanGm]) normalizedGmShipments[cleanGm] = {};
+        Object.keys(globalGmShipments[gm]).forEach(date => {
+          normalizedGmShipments[cleanGm][date] = (normalizedGmShipments[cleanGm][date] || 0) + globalGmShipments[gm][date];
+        });
+      });
+
+      const allGms = Array.from(new Set([...Object.keys(gmBrsnrCounts), ...Object.keys(normalizedGmShipments)]))
+        .filter(gm => !EXCLUDED_GMS.includes(gm.trim().toLowerCase()))
+        .sort();
+
+      function getPrevDateStr(dateStr) {
+        const parsed = parseDateStrFast(dateStr);
+        if (!parsed) return null;
+        const prev = new Date(parsed);
+        prev.setDate(prev.getDate() - 1);
+        return `${prev.getFullYear()}-${String(prev.getMonth() + 1).padStart(2, '0')}-${String(prev.getDate()).padStart(2, '0')}`;
+      }
+
+      const cntCell = n => `<td class="xl-n">${(n || 0).toLocaleString()}</td>`;
+      const pctCell = (n, den) => {
+        const p = den > 0 ? (n / den) * 100 : 0;
+        return `<td class="${p > 0.12 ? 'xl-bad' : 'xl-good'}">${p.toFixed(2)}%</td>`;
+      };
+      const nameTd = gm => `<td class="xl-n">${gm}</td>`;
+
+      let countBodyHtml = '', pctBodyHtml = '';
+      const grand = {};
+      recentDates.forEach(d => { grand[d] = { B: 0, den: 0 }; });
+
+      allGms.forEach(gm => {
+        let cRow = `<tr>${nameTd(gm)}`, pRow = cRow;
+        recentDates.forEach(date => {
+          const b = (gmBrsnrCounts[gm] && gmBrsnrCounts[gm][date]) || 0;
+          const prev = getPrevDateStr(date);
+          const den = (prev && normalizedGmShipments[gm] && normalizedGmShipments[gm][prev]) || 0;
+          cRow += cntCell(b);
+          pRow += pctCell(b, den);
+          grand[date].B += b; grand[date].den += den;
+        });
+        countBodyHtml += cRow + '</tr>';
+        pctBodyHtml += pRow + '</tr>';
+      });
+
+      const gtName = `<td class="xl-h">Grand Total</td>`;
+      let gtC = `<tr>${gtName}`, gtP = `<tr>${gtName}`;
+      recentDates.forEach(d => {
+        const g = grand[d];
+        const pB = g.den > 0 ? (g.B / g.den) * 100 : 0;
+        gtC += `<td class="xl-h">${g.B.toLocaleString()}</td>`;
+        gtP += `<td class="${pB > 0.12 ? 'xl-bad' : 'xl-good'}">${pB.toFixed(2)}%</td>`;
+      });
+      countBodyHtml += gtC + '</tr>';
+      pctBodyHtml += gtP + '</tr>';
+
+      countTbody.innerHTML = countBodyHtml;
+      pctTbody.innerHTML = pctBodyHtml;
+    }
+
+    function updateDynamicFilterOptions() {
+      const filterConfigs = [
+        { id: 'filter-week', field: 'Week' }, { id: 'filter-month', field: 'Month' },
+        { id: 'filter-gm', field: 'GM' }, { id: 'filter-seller', field: 'SellerName' },
+        { id: 'filter-mh', field: 'MH' }, { id: 'filter-hub', field: 'HubName' },
+        { id: 'filter-wm', field: 'WM' }, { id: 'filter-bagid', field: 'BagId' },
+        { id: 'filter-zone', field: 'Zone' }, { id: 'filter-rm', field: 'RM' }, { id: 'filter-am', field: 'AM' }
+      ];
+
+      filterConfigs.forEach(config => {
+        const scopedDataset = getFilteredDataExcluding(config.id);
+        const availableSet = new Set();
+        for (let i = 0; i < scopedDataset.length; i++) {
+          const val = scopedDataset[i][config.field];
+          if (!isInvalid(val)) {
+            availableSet.add(val);
+          }
+        }
+        selectedFilters[config.id] = selectedFilters[config.id].filter(val => availableSet.has(val));
+        fillMultiSelect(config.id, availableSet);
+      });
+    }
+
+    function getFilteredDataExcluding(excludedFilterId) {
+      const searchInput = document.getElementById('filter-search');
+      const search = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      const df = document.getElementById('filter-date-from').value ? parseDateStrFast(document.getElementById('filter-date-from').value) : null;
+      let dt = document.getElementById('filter-date-to').value ? parseDateStrFast(document.getElementById('filter-date-to').value) : null;
+      if (dt) dt.setHours(23, 59, 59, 999);
+
+      const selWk = excludedFilterId === 'filter-week' ? [] : selectedFilters['filter-week'];
+      const selMo = excludedFilterId === 'filter-month' ? [] : selectedFilters['filter-month'];
+      const selGm = excludedFilterId === 'filter-gm' ? [] : selectedFilters['filter-gm'];
+      const selSeller = excludedFilterId === 'filter-seller' ? [] : selectedFilters['filter-seller'];
+      const selMh = excludedFilterId === 'filter-mh' ? [] : selectedFilters['filter-mh'];
+      const selHub = excludedFilterId === 'filter-hub' ? [] : selectedFilters['filter-hub'];
+      const selWm = excludedFilterId === 'filter-wm' ? [] : selectedFilters['filter-wm'];
+      const selBagId = excludedFilterId === 'filter-bagid' ? [] : selectedFilters['filter-bagid'];
+      const selZone = excludedFilterId === 'filter-zone' ? [] : selectedFilters['filter-zone'];
+      const selRm = excludedFilterId === 'filter-rm' ? [] : selectedFilters['filter-rm'];
+      const selAm = excludedFilterId === 'filter-am' ? [] : selectedFilters['filter-am'];
+
+      const res = [];
+
+      for (let i = 0; i < masterData.length; i++) {
+        const r = masterData[i];
+        if (selGm.length > 0 && !selGm.includes(r.GM)) continue;
+        if (selSeller.length > 0 && !selSeller.includes(r.SellerName)) continue;
+        if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
+        if (selHub.length > 0 && !selHub.includes(r.HubName)) continue;
+        if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
+        if (selBagId.length > 0 && !selBagId.includes(r.BagId)) continue;
+        if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
+        if (selRm.length > 0 && !selRm.includes(r.RM)) continue;
+        if (selAm.length > 0 && !selAm.includes(r.AM)) continue;
+        if (r.Status && !ALLOWED_STATUSES.includes(r.Status.toLowerCase())) continue;
+
+        if (selectedLobFilter !== 'ALL') {
+          const rLob = (r.LOB || '').toLowerCase();
+          if (selectedLobFilter === 'APM') {
+            if (rLob !== 'apm' && rLob !== 'lma') continue;
+          } else if (rLob !== selectedLobFilter.toLowerCase()) continue;
+        }
+
+        const rd = r.ParsedDate;
+        if (rd) {
+          if (selWk.length > 0 && !selWk.includes(r.Week)) continue;
+          if (selMo.length > 0 && !selMo.includes(r.Month)) continue;
+          if (df && rd < df) continue;
+          if (dt && rd > dt) continue;
+        } else if (selWk.length > 0 || selMo.length > 0 || df || dt) continue;
+
+        if (search && 
+            !(r.ShipmentId || '').toLowerCase().includes(search) && 
+            !(r.CasperId || '').toLowerCase().includes(search) && 
+            !(r.BagId || '').toLowerCase().includes(search) && 
+            !(r.WM || '').toLowerCase().includes(search) && 
+            !(r.HubName || '').toLowerCase().includes(search) &&
+            !(r.PartnerName || '').toLowerCase().includes(search) &&
+            !(r.SellerName || '').toLowerCase().includes(search)) {
+          continue;
+        }
+
+        res.push(r);
+      }
+      return res;
+    }
+
+    function getAllDatesDesc() {
+      const set = new Set();
+      getFilteredDataExcluding(null).forEach(r => { if (r.Date) set.add(r.Date); });
+      return Array.from(set).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
+    }
+
+    function applyFilters(rebuildOptions = true) {
+      if (rebuildOptions) updateDynamicFilterOptions();
+      filteredData = getFilteredDataExcluding(null);
+      updateKPIs();
+      if (currentTab === 'matrix') renderPHWMAgingMatrix();
+      else if (currentTab === 'overview') renderCharts();
+      else if (currentTab === 'gmview') renderGMViewTables();
+      else if (currentTab === 'tables') renderSummaryTables();
+      else if (currentTab === 'table') renderShipmentsTable();
+    }
+
+    function updateKPIs() {
+      const tot = filteredData.length;
+      
+      const distinctDates = new Set();
+      const hubMap = {};
+      const gmMap = {};
+
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (r.Date) distinctDates.add(r.Date);
+
+        if (!isInvalid(r.HubName)) {
+          hubMap[r.HubName] = (hubMap[r.HubName] || 0) + 1;
+        }
+
+        // Exclude unassigned GM from the Top GM KPI calculation
+        if (!isInvalid(r.GM) && r.GM.trim().toLowerCase() !== 'unassigned gm' && r.GM.trim().toLowerCase() !== 'unassigned') {
+          gmMap[r.GM] = (gmMap[r.GM] || 0) + 1;
+        }
+      }
+
+      const numDays = distinctDates.size || 1;
+      const avgBrsnr = tot > 0 ? Math.round(tot / numDays) : 0;
+      
+      const avgEl = document.getElementById('kpi-avg-brsnr');
+      if (avgEl) avgEl.textContent = avgBrsnr.toLocaleString();
+      
+      const avgSubEl = document.getElementById('kpi-avg-brsnr-sub');
+      if (avgSubEl) avgSubEl.textContent = `${tot.toLocaleString()} over ${numDays} day${numDays > 1 ? 's' : ''}`;
+
+      const sortedHubs = Object.entries(hubMap).sort((a, b) => b[1] - a[1]);
+      if (sortedHubs.length > 0) {
+        const topHub = sortedHubs[0];
+        const hubEl = document.getElementById('kpi-top-hub-name');
+        hubEl.textContent = topHub[0];
+        hubEl.title = topHub[0];
+        document.getElementById('kpi-top-hub-count').textContent = `${topHub[1].toLocaleString()} shipments`;
+      } else {
+        document.getElementById('kpi-top-hub-name').textContent = '-';
+        document.getElementById('kpi-top-hub-count').textContent = '0 shipments';
+      }
+
+      const sortedGMs = Object.entries(gmMap).sort((a, b) => b[1] - a[1]);
+      if (sortedGMs.length > 0) {
+        const topGM = sortedGMs[0];
+        const gmEl = document.getElementById('kpi-top-gm-name');
+        gmEl.textContent = topGM[0];
+        gmEl.title = topGM[0];
+        document.getElementById('kpi-top-gm-count').textContent = `${topGM[1].toLocaleString()} shipments`;
+      } else {
+        document.getElementById('kpi-top-gm-name').textContent = '-';
+        document.getElementById('kpi-top-gm-count').textContent = '0 shipments';
+      }
+
+      document.getElementById('kpi-active-zones').textContent = '4';
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function renderCharts() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#f8fafc' : '#0f172a';
+
+      // Helper function to detect unassigned / unwanted label variants
+      const isFilteredOutLabel = (label, bannedList) => {
+        if (!label) return true;
+        const norm = String(label).trim().toLowerCase();
+        return bannedList.some(banned => norm === banned.toLowerCase());
+      };
+
+      // 1. Daily Volume Trend
+      const dailyMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (r.Date) dailyMap[r.Date] = (dailyMap[r.Date] || 0) + 1;
+      }
+      getAllDatesDesc().forEach(d => { if (!(d in dailyMap)) dailyMap[d] = 0; });
+      let sortedDates = Object.keys(dailyMap).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
+      let displayLabels = [...sortedDates], displayValues = sortedDates.map(d => dailyMap[d]);
+
+      if (sortedDates.length > 0 && sortedDates.length <= 4) {
+        displayLabels = ['', ...sortedDates, ''];
+        displayValues = [null, ...sortedDates.map(d => dailyMap[d]), null];
+      }
+
+      document.getElementById('chart-daily-trend').parentElement.style.minWidth = Math.max(800, displayLabels.length * 70) + 'px';
+      createChart('chart-daily-trend', 'line', {
+        labels: displayLabels,
+        datasets: [{ label: 'Shipments', data: displayValues, borderColor: '#6366f1', backgroundColor: 'rgba(99, 102, 241, 0.15)', fill: true, tension: 0.3, pointRadius: 5 }]
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
+
+      // 2. Zone Split
+      const zoneMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.Zone)) zoneMap[r.Zone] = (zoneMap[r.Zone] || 0) + 1;
+      }
+      const sortedZones = Object.entries(zoneMap).sort((a, b) => b[1] - a[1]);
+      createChart('chart-zone', 'pie', {
+        labels: sortedZones.map(i => i[0]).slice(0, 4),
+        datasets: [{ data: sortedZones.map(i => i[1]).slice(0, 4), backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ec4899'] }]
+      });
+
+      // 3. GM Wise Volume Distribution (Excludes Unassigned GM)
+      const gmMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.GM) && !isFilteredOutLabel(r.GM, ['unassigned gm', 'unassigned'])) {
+          gmMap[r.GM] = (gmMap[r.GM] || 0) + 1;
+        }
+      }
+      const topGMs = Object.entries(gmMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      createChart('chart-gm-column', 'bar', {
+        labels: topGMs.map(i => i[0]),
+        datasets: [{ label: 'Volume', data: topGMs.map(i => i[1]), backgroundColor: '#6366f1', borderRadius: 6 }]
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
+
+      // 4. WM / FE Wise Volume Distribution (Excludes Unassigned WM / FE)
+      const wmMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.WM) && !isFilteredOutLabel(r.WM, ['unassigned wm / fe', 'unassigned wm', 'unassigned fe', 'unassigned'])) {
+          wmMap[r.WM] = (wmMap[r.WM] || 0) + 1;
+        }
+      }
+      const topWMs = Object.entries(wmMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      createChart('chart-wm-column', 'bar', {
+        labels: topWMs.map(i => i[0]),
+        datasets: [{ label: 'Volume', data: topWMs.map(i => i[1]), backgroundColor: '#0ea5e9', borderRadius: 6 }]
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
+
+      // 5. Hub Name Wise Volume
+      const phMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.HubName)) phMap[r.HubName] = (phMap[r.HubName] || 0) + 1;
+      }
+      const topPHs = Object.entries(phMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
+      createChart('chart-ph-bar', 'bar', {
+        labels: topPHs.map(i => i[0]),
+        datasets: [{ label: 'Volume', data: topPHs.map(i => i[1]), backgroundColor: '#8b5cf6', borderRadius: 6 }]
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
+
+      // 6. Top Mother Hubs (MH)
+      const mhMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.MH)) mhMap[r.MH] = (mhMap[r.MH] || 0) + 1;
+      }
+      const topMH = Object.entries(mhMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
+      createChart('chart-top-mh', 'bar', {
+        labels: topMH.map(i => i[0]),
+        datasets: [{ label: 'Volume', data: topMH.map(i => i[1]), backgroundColor: '#3b82f6', borderRadius: 4 }]
+      }, { indexAxis: 'y', scales: { x: { ticks: { color: textColor }, beginAtZero: true }, y: { ticks: { color: textColor } } } });
+
+      // 7. Seller Wise Volume Distribution
+      const sellerMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        if (!isInvalid(r.SellerName)) sellerMap[r.SellerName] = (sellerMap[r.SellerName] || 0) + 1;
+      }
+      const topSellers = Object.entries(sellerMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      createChart('chart-seller-column', 'bar', {
+        labels: topSellers.map(i => i[0].length > 20 ? i[0].substring(0, 20) + '...' : i[0]),
+        datasets: [{ label: 'Volume', data: topSellers.map(i => i[1]), backgroundColor: '#ec4899', borderRadius: 6 }]
+      }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
+
+      // 8. Partner Wise Volume (Excludes 'Direct / In-house')
+      const partnerMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        const norm = r.PartnerName || 'Direct / In-house';
+        if (!isFilteredOutLabel(norm, ['direct / in-house', 'direct/inhouse', 'unassigned'])) {
+          partnerMap[norm] = (partnerMap[norm] || 0) + 1;
+        }
+      }
+
+      let topPartners = Object.entries(partnerMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      const partnerEl = document.getElementById('chart-partner-column');
+      if (partnerEl) {
+        if (topPartners.length === 0) {
+          topPartners = [['No 3PL / Partner Data', 0]];
+        }
+        partnerEl.parentElement.style.minWidth = Math.max(800, topPartners.length * 80) + 'px';
+        createChart('chart-partner-column', 'bar', {
+          labels: topPartners.map(i => i[0].length > 20 ? i[0].substring(0, 20) + '...' : i[0]),
+          datasets: [{ label: 'Volume', data: topPartners.map(i => i[1]), backgroundColor: '#14b8a6', borderRadius: 6 }]
+        }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor }, beginAtZero: true } } });
+      }
+
+      // 9. Bag ID Wise Volume (Filters out unassigned WM from hover tooltip)
+      const bagMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        const bag = r.BagId || 'No Bag ID';
+        if (isInvalid(bag)) continue;
+        if (!bagMap[bag]) {
+          bagMap[bag] = { count: 0, wms: new Set(), hubs: new Set() };
+        }
+        bagMap[bag].count++;
+        if (r.WM && !isInvalid(r.WM) && !isFilteredOutLabel(r.WM, ['unassigned wm / fe', 'unassigned wm', 'unassigned fe', 'unassigned'])) {
+          bagMap[bag].wms.add(r.WM);
+        }
+        if (r.HubName && !isInvalid(r.HubName)) {
+          bagMap[bag].hubs.add(r.HubName);
+        }
+      }
+
+      let topBags = Object.entries(bagMap).sort((a, b) => b[1].count - a[1].count).slice(0, 12);
+      const bagEl = document.getElementById('chart-bagid-column');
+      if (bagEl) {
+        if (topBags.length === 0) {
+          topBags = [['No Bag ID Data', { count: 0, wms: new Set(['-']), hubs: new Set(['-']) }]];
+        }
+        bagEl.parentElement.style.minWidth = Math.max(800, topBags.length * 80) + 'px';
+        
+        const bagMetaLookup = {};
+        topBags.forEach(([bId, info]) => {
+          bagMetaLookup[bId] = {
+            wm: Array.from(info.wms).join(', ') || 'N/A',
+            hub: Array.from(info.hubs).join(', ') || 'Unassigned Hub'
+          };
+        });
+
+        createChart('chart-bagid-column', 'bar', {
+          labels: topBags.map(i => i[0].length > 18 ? i[0].substring(0, 18) + '...' : i[0]),
+          datasets: [{
+            label: 'Shipment Volume',
+            data: topBags.map(i => i[1].count),
+            backgroundColor: '#f59e0b',
+            borderRadius: 6
+          }]
+        }, {
+          scales: {
+            x: { ticks: { color: textColor } },
+            y: { ticks: { color: textColor }, beginAtZero: true }
+          },
+          plugins: {
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                title: (context) => `Bag ID: ${topBags[context[0].dataIndex][0]}`,
+                label: (context) => `Volume: ${context.raw.toLocaleString()} shipments`,
+                afterLabel: (context) => {
+                  const bId = topBags[context.dataIndex][0];
+                  const meta = bagMetaLookup[bId] || { wm: '-', hub: '-' };
+                  return [`WM / FE: ${meta.wm}`, `Hub Name: ${meta.hub}`];
+                }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    function createChart(id, type, data, options = {}) {
+      if (chartInstances[id]) chartInstances[id].destroy();
+      const canvasEl = document.getElementById(id);
+      if (!canvasEl) return;
+      const ctx = canvasEl.getContext('2d');
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#f8fafc' : '#0f172a';
+      const isPie = type === 'pie';
+      const isHorizontal = options.indexAxis === 'y';
+
+      chartInstances[id] = new Chart(ctx, {
+        type: type, data: data,
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          layout: { padding: isHorizontal ? { right: 40 } : { top: 24 } },
+          ...options,
+          plugins: {
+            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 }, color: textColor } },
+            datalabels: {
+              display: c => c.dataset.data[c.dataIndex] !== null,
+              color: isPie ? '#ffffff' : textColor,
+              font: { weight: 'bold', size: 11 },
+              anchor: isPie ? 'center' : 'end',
+              align: isPie ? 'center' : (type === 'line' ? 'top' : 'end'),
+              formatter: v => (typeof v === 'number' ? v.toLocaleString() : v)
+            },
+            ...options.plugins
+          }
+        }
+      });
+    }
+
+    function toggleZoneRow(zoneKey) {
+      if (expandedZones.has(zoneKey)) expandedZones.delete(zoneKey);
+      else expandedZones.add(zoneKey);
+      renderPHWMAgingMatrix();
+    }
+
+    function toggleHubRow(hubKey) {
+      if (expandedHubs.has(hubKey)) expandedHubs.delete(hubKey);
+      else expandedHubs.add(hubKey);
+      renderPHWMAgingMatrix();
+    }
+
+    function renderPHWMAgingMatrix() {
+      const hierarchy = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        const z = r.Zone || 'Unassigned Zone';
+        const ph = r.HubName || 'Unassigned Hub';
+        const wm = r.WM || 'Unassigned WM / FE';
+        const d = r.Date || 'No Date';
+
+        if (!hierarchy[z]) hierarchy[z] = { grandTotal: 0, dates: {}, phs: {} };
+        hierarchy[z].grandTotal++;
+        hierarchy[z].dates[d] = (hierarchy[z].dates[d] || 0) + 1;
+
+        if (!hierarchy[z].phs[ph]) hierarchy[z].phs[ph] = { grandTotal: 0, dates: {}, wms: {} };
+        hierarchy[z].phs[ph].grandTotal++;
+        hierarchy[z].phs[ph].dates[d] = (hierarchy[z].phs[ph].dates[d] || 0) + 1;
+
+        if (!hierarchy[z].phs[ph].wms[wm]) hierarchy[z].phs[ph].wms[wm] = { grandTotal: 0, dates: {} };
+        hierarchy[z].phs[ph].wms[wm].grandTotal++;
+        hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].wms[wm].dates[d] || 0) + 1;
+      }
+
+      const dates = getAllDatesDesc();
+      document.getElementById('matrix-thead-ph-wm').innerHTML = `<th class="p-3">Hierarchy (Zone &gt; Hub Name &gt; WM / FE)</th>` + dates.map(d => `<th class="p-3 text-center">${d}</th>`).join('') + `<th class="p-3 text-right bg-slate-100 dark:bg-slate-900">Total</th>`;
+
+      let html = '';
+      Object.entries(hierarchy).sort((a, b) => b[1].grandTotal - a[1].grandTotal).forEach(([z, zData]) => {
+        const isZoneExpanded = expandedZones.has(z);
+        let zRow = `<tr onclick="toggleZoneRow('${z.replace(/'/g, "\\'")}')" class="cursor-pointer bg-slate-200/80 dark:bg-slate-900/80 font-bold border-b border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-300/80 transition">
+          <td class="p-3 font-semibold text-indigo-700 dark:text-indigo-300"><span class="inline-block w-4 text-xs">${isZoneExpanded ? '▼' : '▶'}</span> 🌐 Zone: ${z}</td>`;
+        dates.forEach(d => { zRow += `<td class="p-3 text-center">${(zData.dates[d] || 0) ? zData.dates[d].toLocaleString() : '-'}</td>`; });
+        zRow += `<td class="p-3 text-right text-indigo-700 dark:text-indigo-300 font-extrabold">${zData.grandTotal.toLocaleString()}</td></tr>`;
+        html += zRow;
+
+        if (isZoneExpanded) {
+          Object.entries(zData.phs).sort((a, b) => b[1].grandTotal - a[1].grandTotal).forEach(([ph, phData]) => {
+            const hubKey = `${z}___${ph}`;
+            const isHubExpanded = expandedHubs.has(hubKey);
+            let phRow = `<tr onclick="toggleHubRow('${hubKey.replace(/'/g, "\\'")}')" class="cursor-pointer bg-indigo-50/70 dark:bg-indigo-950/40 font-bold border-b border-indigo-100 text-indigo-900 dark:text-indigo-200 transition">
+              <td class="p-2.5 pl-8"><span class="inline-block w-4 text-xs">${isHubExpanded ? '▼' : '▶'}</span> 🏢 Hub: ${ph}</td>`;
+            dates.forEach(d => { phRow += `<td class="p-2.5 text-center">${(phData.dates[d] || 0) ? phData.dates[d].toLocaleString() : '-'}</td>`; });
+            phRow += `<td class="p-2.5 text-right text-indigo-600 font-extrabold">${phData.grandTotal.toLocaleString()}</td></tr>`;
+            html += phRow;
+
+            if (isHubExpanded) {
+              Object.entries(phData.wms).sort((a, b) => b[1].grandTotal - a[1].grandTotal).forEach(([wm, wmData]) => {
+                let wmRow = `<tr class="hover:bg-slate-100/50 text-slate-700 dark:text-slate-300 border-b border-slate-100">
+                  <td class="p-2 pl-14 font-mono">🚚 WM / FE: ${wm}</td>`;
+                dates.forEach(d => { wmRow += `<td class="p-2 text-center">${(wmData.dates[d] || 0) ? wmData.dates[d].toLocaleString() : '-'}</td>`; });
+                wmRow += `<td class="p-2 text-right font-semibold text-slate-900 dark:text-white">${wmData.grandTotal.toLocaleString()}</td></tr>`;
+                html += wmRow;
+              });
+            }
+          });
+        }
+      });
+      document.getElementById('matrix-tbody-ph-wm').innerHTML = html;
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function renderSummaryTables() {
+      const tot = filteredData.length || 1;
+      populateSummaryTable('tbl-zone-body', 'Zone', tot);
+      populateSummaryTable('tbl-seller-body', 'SellerName', tot);
+      populateSummaryTable('tbl-gm-body', 'GM', tot);
+      populateSummaryTable('tbl-wm-body', 'WM', tot);
+      populateSummaryTable('tbl-ph-body', 'HubName', tot);
+    }
+
+    function populateSummaryTable(elementId, fieldKey, totalCount) {
+      const map = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const k = filteredData[i][fieldKey];
+        if (isInvalid(k)) continue;
+        map[k] = (map[k] || 0) + 1;
+      }
+      let html = '';
+      Object.entries(map).sort((a, b) => b[1] - a[1]).forEach(([key, count]) => {
+        html += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700"><td class="p-2 font-medium">${key}</td><td class="p-2 text-right font-mono font-semibold">${count.toLocaleString()}</td><td class="p-2 text-right font-mono text-indigo-600 font-semibold">${((count / totalCount) * 100).toFixed(1)}%</td></tr>`;
+      });
+      document.getElementById(elementId).innerHTML = html;
+    }
+
+    function renderShipmentsTable() {
+      const tbody = document.getElementById('shipments-tbody');
+      const tot = filteredData.length, pages = Math.ceil(tot / pageSize) || 1;
+      currentPage = Math.min(currentPage, pages);
+      document.getElementById('table-record-count').textContent = `Showing ${tot ? (currentPage - 1) * pageSize + 1 : 0} to ${Math.min(currentPage * pageSize, tot)} of ${tot.toLocaleString()} shipments`;
+      document.getElementById('page-indicator').textContent = `Page ${currentPage} of ${pages}`;
+
+      const start = (currentPage - 1) * pageSize;
+      let html = '';
+      for (let i = start; i < Math.min(start + pageSize, tot); i++) {
+        const r = filteredData[i];
+        html += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700">
+          <td class="p-3">${r.Date || '-'}</td>
+          <td class="p-3 font-mono text-indigo-600 font-semibold">${r.ShipmentId || '-'}</td>
+          <td class="p-3 font-mono text-slate-700 dark:text-slate-300 font-medium">${r.CasperId || '-'}</td>
+          <td class="p-3 font-mono text-amber-600 dark:text-amber-400 font-semibold">${r.BagId || '-'}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${(r.Status || '').toLowerCase().includes('received') ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${r.Status || '-'}</span></td>
+          <td class="p-3">${r.Zone || '-'}</td>
+          <td class="p-3">${r.HubName || '-'}</td>
+          <td class="p-3">${r.MH || '-'}</td>
+          <td class="p-3 font-medium">${r.GM || '-'}</td>
+          <td class="p-3">${r.WM || '-'}</td>
+          <td class="p-3 truncate max-w-[150px]">${r.SellerName || '-'}</td>
+          <td class="p-3 truncate max-w-[120px] font-medium text-slate-600 dark:text-slate-300">${r.PartnerName || '-'}</td>
+          <td class="p-3">${r.LOB || '-'}</td>
+        </tr>`;
+      }
+      tbody.innerHTML = html;
+    }
+
+    function prevPage() { if (currentPage > 1) { currentPage--; renderShipmentsTable(); } }
+    function nextPage() { currentPage++; renderShipmentsTable(); }
+    function changePageSize() { pageSize = parseInt(document.getElementById('table-page-size').value); currentPage = 1; renderShipmentsTable(); }
+
+    function switchTab(t) {
+      currentTab = t;
+      ['overview', 'matrix', 'gmview', 'tables', 'table'].forEach(tab => {
+        document.getElementById(`tab-${tab}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-btn-${tab}`);
+        btn.classList.remove('border-indigo-600', 'text-indigo-600', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
+        btn.classList.add('border-transparent', 'text-slate-500');
+      });
+      document.getElementById(`tab-${t}`).classList.remove('hidden');
+      const targetBtn = document.getElementById(`tab-btn-${t}`);
+      targetBtn.classList.remove('border-transparent', 'text-slate-500');
+      targetBtn.classList.add('border-indigo-600', 'text-indigo-600', 'font-semibold', 'bg-indigo-50', 'dark:bg-slate-800', 'ring-1', 'ring-indigo-300');
+
+      if (t === 'matrix') renderPHWMAgingMatrix();
+      else if (t === 'overview') renderCharts();
+      else if (t === 'gmview') renderGMViewTables();
+      else if (t === 'tables') renderSummaryTables();
+      else if (t === 'table') renderShipmentsTable();
+    }
+
+    function resetAllFilters() {
+      ['filter-search', 'filter-date-from', 'filter-date-to'].forEach(id => { document.getElementById(id).value = ''; });
+      Object.keys(selectedFilters).forEach(id => resetMultiSelect(id, false));
+      setLobToggle('ALL');
+      setPresetDate('all');
+    }
+
+    function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `BRSNR_Export_${new Date().toISOString().split('T')[0]}.csv`); }
+
+    function exportHierarchicalAgingCSV(tableId, filenamePrefix) {
+      const hierarchy = {};
+      filteredData.forEach(r => {
+        const z = r.Zone || 'Unassigned Zone', ph = r.HubName || 'Unassigned Hub', wm = r.WM || 'Unassigned WM / FE', d = r.Date || 'No Date';
+        if (!hierarchy[z]) hierarchy[z] = { phs: {} };
+        if (!hierarchy[z].phs[ph]) hierarchy[z].phs[ph] = { wms: {} };
+        if (!hierarchy[z].phs[ph].wms[wm]) hierarchy[z].phs[ph].wms[wm] = { grandTotal: 0, dates: {} };
+        hierarchy[z].phs[ph].wms[wm].grandTotal++;
+        hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].wms[wm].dates[d] || 0) + 1;
+      });
+
+      const dates = getAllDatesDesc();
+      const csvRows = [['"Zone"', '"Hub Name"', '"WM / FE Name"', ...dates.map(d => `"${d}"`), '"Total"'].join(',')];
+
+      Object.keys(hierarchy).sort().forEach(z => {
+        Object.keys(hierarchy[z].phs).sort().forEach(ph => {
+          Object.keys(hierarchy[z].phs[ph].wms).sort().forEach(wm => {
+            const wmData = hierarchy[z].phs[ph].wms[wm];
+            const row = [`"${z}"`, `"${ph}"`, `"${wm}"`];
+            dates.forEach(d => row.push(wmData.dates[d] || 0));
+            row.push(wmData.grandTotal);
+            csvRows.push(row.join(','));
+          });
+        });
+      });
+      downloadBlob(csvRows.join('\n'), `${filenamePrefix}_${new Date().toISOString().split('T')[0]}.csv`);
+    }
+
+    function downloadBlob(content, name) {
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+    }
+
+    function showStatusBanner(msg) {
+      document.getElementById('status-banner-text').textContent = msg;
+      document.getElementById('status-banner').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
