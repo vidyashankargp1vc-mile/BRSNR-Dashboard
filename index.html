@@ -240,7 +240,7 @@
 
         <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-hub">
           <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-hub')">
-            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Hub Name / PH Name</label>
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Hub Name</label>
             <span id="label-filter-hub" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Hubs</span>
           </div>
           <div class="relative">
@@ -268,17 +268,18 @@
           </div>
         </div>
 
-        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-status">
-          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-status')">
-            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Status</label>
-            <span id="label-filter-status" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Status</span>
+        <!-- BAG ID FILTER (REPLACED STATUS FILTER) -->
+        <div class="relative multi-select-container bg-slate-50 dark:bg-slate-900/50 p-2 rounded-lg border border-slate-200 dark:border-slate-700" id="ms-container-filter-bagid">
+          <div class="flex items-center justify-between mb-1 cursor-pointer" onclick="toggleMultiSelect('filter-bagid')">
+            <label class="font-medium text-slate-700 dark:text-slate-300 cursor-pointer">Bag ID</label>
+            <span id="label-filter-bagid" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 truncate max-w-[120px]">All Bag IDs</span>
           </div>
           <div class="relative">
-            <input type="text" onfocus="openMultiSelect('filter-status')" oninput="filterDropdownOptions('filter-status', this.value)" placeholder="Search status..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
+            <input type="text" onfocus="openMultiSelect('filter-bagid')" oninput="filterDropdownOptions('filter-bagid', this.value)" placeholder="Search Bag IDs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
             <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
           </div>
-          <div id="dropdown-filter-status" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
-            <div id="options-filter-status" class="max-h-48 overflow-y-auto space-y-1"></div>
+          <div id="dropdown-filter-bagid" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
+            <div id="options-filter-bagid" class="max-h-48 overflow-y-auto space-y-1"></div>
             <button onclick="closeAllMultiSelects()" class="w-full mt-1 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] rounded transition">Done</button>
           </div>
         </div>
@@ -752,39 +753,60 @@
     // No GMs excluded
     const EXCLUDED_GMS = [];
 
-    const COLS = { 
-      DATE: ['Date', 'date'], 
-      SHIPMENT_ID: ['ShipmentId', 'Shipment ID', 'shipment_id', 'shipmentId'], 
-      HUB_NAME: ['Hub Name', 'PH Name', 'hub_name', 'hubName'], 
-      SELLER_NAME: ['seller_name', 'Seller name', 'SellerName'], 
-      SELLER_ID: ['seller id', 'SellerId'],
-      STATUS: ['Status', 'Shipment Status', 'status'], 
-      ZONE: ['Zone', 'zone'], 
-      LIB: ['Line_of_Business', 'LIB', 'LOB', 'lob'], 
-      CASPER_ID: ['Casper_id', 'Casper id', 'casper_id', 'casper id', 'CasperId', 'casperId'],
-      PARTNER_NAME: ['Partner Name', 'partner_name', 'Partner', 'partner', '3pl', 'vendor'],
-      WM: ['FE_Name', 'WM name', 'WM', 'FE Name', 'wm_name'], 
-      MH: ['MH Name', 'MH', 'mh_name'], 
-      RCA: ['RCA'],
-      PH_NAME: ['PH Name', 'Hub Name'],
-      BAG_ID: ['BagId', 'Bag Id', 'bag_id', 'bagId', 'Bag ID'],
-      GM: ['GM', 'gm'],
-      RM: ['RM', 'rm'],
-      AM: ['AM', 'am'],
-      DISPATCH_TO_MH: ['Dispatched_to_TC', 'Dispatch to MH'],
-      RECEIVED_AT_MH: ['Received_to_TC', 'Received at MH'],
-      DIFF: ['diff', 'Diff']
-    };
-
-    function getColVal(row, colKeyList) {
-      for (let i = 0; i < colKeyList.length; i++) {
-        const val = row[colKeyList[i]];
-        if (val !== undefined && val !== null && String(val).trim() !== '') {
-          return String(val).trim();
+    // Prioritized exact column candidate extraction with fuzzy key fallback
+    function getColVal(row, candidates) {
+      if (!row || typeof row !== 'object') return '';
+      
+      // 1. Direct key lookups (strict order)
+      for (let i = 0; i < candidates.length; i++) {
+        const key = candidates[i];
+        if (row[key] !== undefined && row[key] !== null) {
+          const str = String(row[key]).trim();
+          if (str !== '') return str;
         }
       }
+
+      // 2. Case-insensitive and whitespace/underscore-stripped key scanning
+      const rowKeys = Object.keys(row);
+      const normalizedCandidates = candidates.map(c => String(c).toLowerCase().replace(/[\s_-]+/g, ''));
+
+      for (let i = 0; i < rowKeys.length; i++) {
+        const rKey = rowKeys[i];
+        const normRKey = rKey.toLowerCase().replace(/[\s_-]+/g, '');
+        if (normalizedCandidates.includes(normRKey)) {
+          const val = row[rKey];
+          if (val !== undefined && val !== null) {
+            const str = String(val).trim();
+            if (str !== '') return str;
+          }
+        }
+      }
+
       return '';
     }
+
+    const COLS = { 
+      DATE: ['Date', 'date', 'ShipmentDate', 'shipment_date'], 
+      SHIPMENT_ID: ['ShipmentId', 'Shipment ID', 'shipment_id', 'shipmentId', 'tracking_id', 'trackingid'], 
+      HUB_NAME: ['Hub Name', 'HubName', 'hub_name', 'PH Name', 'PH_Name', 'ph_name', 'PHName', 'DeliveryHub', 'pickup_hub'], 
+      SELLER_NAME: ['seller_name', 'Seller name', 'SellerName', 'seller', 'merchant_name'], 
+      SELLER_ID: ['seller id', 'SellerId', 'seller_id'],
+      STATUS: ['Status', 'Shipment Status', 'status', 'shipment_status'], 
+      ZONE: ['Zone', 'zone', 'region'], 
+      LIB: ['Line_of_Business', 'LIB', 'LOB', 'lob', 'line_of_business'], 
+      CASPER_ID: ['Casper_id', 'Casper id', 'casper_id', 'casper id', 'CasperId', 'casperId'],
+      PARTNER_NAME: ['Partner Name', 'PartnerName', 'partner_name', 'Partner', 'partner', '3pl', '3pl_name', 'vendor', 'vendor_name', 'carrier', 'courier_partner'],
+      WM: ['FE_Name', 'WM name', 'WM', 'FE Name', 'wm_name', 'WMName', 'FEName', 'fe_name', 'wishmaster'], 
+      MH: ['MH Name', 'MH', 'mh_name', 'MHName', 'MotherHub', 'mother_hub'], 
+      RCA: ['RCA', 'rca'],
+      BAG_ID: ['BagId', 'Bag Id', 'bag_id', 'bagId', 'Bag ID', 'BagName', 'bag_name'],
+      GM: ['GM', 'gm', 'general_manager', 'GeneralManager'],
+      RM: ['RM', 'rm', 'regional_manager'],
+      AM: ['AM', 'am', 'area_manager'],
+      DISPATCH_TO_MH: ['Dispatched_to_TC', 'Dispatch to MH', 'dispatched_to_mh'],
+      RECEIVED_AT_MH: ['Received_to_TC', 'Received at MH', 'received_at_mh'],
+      DIFF: ['diff', 'Diff']
+    };
 
     // Normalizes exact variations of EKART, ekart, or Ekart strictly to 'Ekart'
     function normalizePartnerName(raw) {
@@ -824,27 +846,26 @@
         return 'Greenteck Logistics';
       }
 
-      // Preserve clean original string casing for other partners (e.g. e-kart, ekartlogistics)
       return clean;
     }
 
     const selectedFilters = {
       'filter-week': [], 'filter-month': [], 'filter-gm': [], 'filter-seller': [],
-      'filter-mh': [], 'filter-hub': [], 'filter-wm': [], 'filter-status': [],
+      'filter-mh': [], 'filter-hub': [], 'filter-wm': [], 'filter-bagid': [],
       'filter-zone': [], 'filter-rm': [], 'filter-am': []
     };
 
     const filterLabels = {
       'filter-week': 'All Weeks', 'filter-month': 'All Months', 'filter-gm': 'All GMs',
-      'filter-seller': 'All Sellers', 'filter-mh': 'All MH / MH Names', 'filter-hub': 'All Hubs / PH Names',
-      'filter-wm': 'All WMs / FEs', 'filter-status': 'All Status', 'filter-zone': 'All Zones',
+      'filter-seller': 'All Sellers', 'filter-mh': 'All MH / MH Names', 'filter-hub': 'All Hubs',
+      'filter-wm': 'All WMs / FEs', 'filter-bagid': 'All Bag IDs', 'filter-zone': 'All Zones',
       'filter-rm': 'All RMs', 'filter-am': 'All AMs'
     };
 
     const filterFriendlyNames = {
       'filter-week': 'Week', 'filter-month': 'Month', 'filter-gm': 'GM', 'filter-seller': 'Seller',
-      'filter-mh': 'MH / MH Name', 'filter-hub': 'Hub / PH Name', 'filter-wm': 'WM / FE',
-      'filter-status': 'Status', 'filter-zone': 'Zone', 'filter-rm': 'RM', 'filter-am': 'AM'
+      'filter-mh': 'MH / MH Name', 'filter-hub': 'Hub Name', 'filter-wm': 'WM / FE',
+      'filter-bagid': 'Bag ID', 'filter-zone': 'Zone', 'filter-rm': 'RM', 'filter-am': 'AM'
     };
 
     const expandedZones = new Set();
@@ -1073,7 +1094,9 @@
         globalGmShipments = gmShip;
 
         months.forEach(m => (m.records || []).forEach(rec => {
-          const pd = parseDateStrFast(getColVal(rec, COLS.DATE));
+          const rawDate = getColVal(rec, COLS.DATE);
+          const pd = parseDateStrFast(rawDate);
+          rec.Date = rawDate;
           rec.ParsedDate = pd;
           rec.ts = pd ? pd.getTime() : 0;
           rec.Month = pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null;
@@ -1084,17 +1107,29 @@
           rec.BagId = getColVal(rec, COLS.BAG_ID);
           rec.Status = getColVal(rec, COLS.STATUS);
           rec.Zone = getColVal(rec, COLS.ZONE);
-          rec.HubName = getColVal(rec, COLS.HUB_NAME);
-          rec.MH = getColVal(rec, COLS.MH);
-          rec.GM = getColVal(rec, COLS.GM);
-          rec.WM = getColVal(rec, COLS.WM);
-          rec.SellerName = getColVal(rec, COLS.SELLER_NAME);
-          rec.LOB = getColVal(rec, COLS.LIB);
+          
+          // Specific binding for Hub Name
+          const rawHub = rec['Hub Name'] !== undefined && rec['Hub Name'] !== null && String(rec['Hub Name']).trim() !== '' 
+            ? String(rec['Hub Name']).trim() 
+            : getColVal(rec, COLS.HUB_NAME);
+          rec.HubName = cleanVal(rawHub, 'Unassigned Hub');
 
-          if (rec.GM && rec.GM.toLowerCase() === 'somnath g') rec.GM = 'Somnath Ghosh';
+          rec.MH = cleanVal(getColVal(rec, COLS.MH), 'Unassigned MH');
+          
+          let gm = getColVal(rec, COLS.GM);
+          if (gm && gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
+          rec.GM = cleanVal(gm, 'Unassigned GM');
 
-          // Extract and normalize Partner Name strictly for case variations of ekart
-          const rawPartner = getColVal(rec, COLS.PARTNER_NAME);
+          rec.WM = cleanVal(getColVal(rec, COLS.WM), 'Unassigned WM / FE');
+          rec.SellerName = cleanVal(getColVal(rec, COLS.SELLER_NAME), 'Unassigned Seller');
+          rec.LOB = cleanVal(getColVal(rec, COLS.LIB), 'ALL');
+          rec.RM = cleanVal(getColVal(rec, COLS.RM), 'Unassigned RM');
+          rec.AM = cleanVal(getColVal(rec, COLS.AM), 'Unassigned AM');
+
+          // Specific binding for Partner Name
+          const rawPartner = rec['Partner Name'] !== undefined && rec['Partner Name'] !== null && String(rec['Partner Name']).trim() !== ''
+            ? String(rec['Partner Name']).trim()
+            : getColVal(rec, COLS.PARTNER_NAME);
           rec.PartnerName = normalizePartnerName(rawPartner);
 
           masterData.push(rec);
@@ -1262,7 +1297,7 @@
         { id: 'filter-week', field: 'Week' }, { id: 'filter-month', field: 'Month' },
         { id: 'filter-gm', field: 'GM' }, { id: 'filter-seller', field: 'SellerName' },
         { id: 'filter-mh', field: 'MH' }, { id: 'filter-hub', field: 'HubName' },
-        { id: 'filter-wm', field: 'WM' }, { id: 'filter-status', field: 'Status' },
+        { id: 'filter-wm', field: 'WM' }, { id: 'filter-bagid', field: 'BagId' },
         { id: 'filter-zone', field: 'Zone' }, { id: 'filter-rm', field: 'RM' }, { id: 'filter-am', field: 'AM' }
       ];
 
@@ -1272,7 +1307,6 @@
         for (let i = 0; i < scopedDataset.length; i++) {
           const val = scopedDataset[i][config.field];
           if (!isInvalid(val)) {
-            if (config.id === 'filter-status' && IGNORED_STATUSES.includes(val)) continue;
             availableSet.add(val);
           }
         }
@@ -1295,12 +1329,11 @@
       const selMh = excludedFilterId === 'filter-mh' ? [] : selectedFilters['filter-mh'];
       const selHub = excludedFilterId === 'filter-hub' ? [] : selectedFilters['filter-hub'];
       const selWm = excludedFilterId === 'filter-wm' ? [] : selectedFilters['filter-wm'];
-      const selStatus = excludedFilterId === 'filter-status' ? [] : selectedFilters['filter-status'];
+      const selBagId = excludedFilterId === 'filter-bagid' ? [] : selectedFilters['filter-bagid'];
       const selZone = excludedFilterId === 'filter-zone' ? [] : selectedFilters['filter-zone'];
       const selRm = excludedFilterId === 'filter-rm' ? [] : selectedFilters['filter-rm'];
       const selAm = excludedFilterId === 'filter-am' ? [] : selectedFilters['filter-am'];
 
-      const targetStatuses = selStatus.length > 0 ? selStatus : ALLOWED_STATUSES;
       const res = [];
 
       for (let i = 0; i < masterData.length; i++) {
@@ -1310,10 +1343,11 @@
         if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
         if (selHub.length > 0 && !selHub.includes(r.HubName)) continue;
         if (selWm.length > 0 && !selWm.includes(r.WM)) continue;
+        if (selBagId.length > 0 && !selBagId.includes(r.BagId)) continue;
         if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
         if (selRm.length > 0 && !selRm.includes(r.RM)) continue;
         if (selAm.length > 0 && !selAm.includes(r.AM)) continue;
-        if (!targetStatuses.includes(r.Status)) continue;
+        if (!ALLOWED_STATUSES.includes(r.Status)) continue;
 
         if (selectedLobFilter !== 'ALL') {
           const rLob = (r.LOB || '').toLowerCase();
@@ -1335,6 +1369,8 @@
             !(r.CasperId || '').toLowerCase().includes(search) && 
             !(r.BagId || '').toLowerCase().includes(search) && 
             !r.WM.toLowerCase().includes(search) && 
+            !r.HubName.toLowerCase().includes(search) &&
+            !r.PartnerName.toLowerCase().includes(search) &&
             !r.SellerName.toLowerCase().includes(search)) {
           continue;
         }
@@ -1512,8 +1548,7 @@
       const partnerMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
-        const raw = r.PartnerName || r['Partner Name'] || r.partner_name || r.Partner || r.partner;
-        const norm = normalizePartnerName(raw);
+        const norm = r.PartnerName || 'Direct / In-house';
         partnerMap[norm] = (partnerMap[norm] || 0) + 1;
       }
 
