@@ -60,7 +60,7 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col transition-colors duration-300">
 
-  <!-- FIXED STICKY TOP CONTAINER (HEADER + MODE SWITCHER STRIP) -->
+  <!-- FIXED STICKY TOP CONTAINER (HEADER ONLY) -->
   <div class="sticky top-0 z-50 shadow-md">
     <!-- TOP HEADER / NAVBAR -->
     <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 transition-colors duration-300">
@@ -91,7 +91,7 @@
             <div class="text-left leading-tight">
               <span>Developed by </span>
               <div class="inline-flex flex-col align-top">
-                <span class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                <span class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Vidya Shankar G P <span class="text-xs transform group-hover:scale-125 inline-block transition-transform duration-200">💻</span>
                 </span>
                 <span class="text-[10px] text-indigo-500 dark:text-indigo-400 font-normal leading-tight">- FM Central</span>
@@ -101,35 +101,9 @@
         </div>
       </div>
     </header>
-
-    <!-- TOP-LEVEL DASHBOARD MODE SWITCHER STRIP -->
-    <section class="bg-slate-100 dark:bg-slate-800/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 py-2.5">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center sm:justify-start">
-        <div class="inline-flex p-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-x-1 text-xs font-bold">
-          <button onclick="switchMode('past')" id="btn-mode-past" class="px-4 py-1.5 rounded-lg bg-indigo-600 text-white shadow transition-all hover:ring-2 hover:ring-indigo-400 flex items-center space-x-1.5">
-            <i data-lucide="history" class="w-3.5 h-3.5"></i><span>Past BRSNR Analytics</span>
-          </button>
-          <button onclick="switchMode('realtime')" id="btn-mode-realtime" class="px-4 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all hover:ring-2 hover:ring-indigo-400 flex items-center space-x-1.5">
-            <i data-lucide="activity" class="w-3.5 h-3.5"></i><span>Real-time WM Tracking</span>
-          </button>
-        </div>
-      </div>
-    </section>
   </div>
 
-  <!-- REAL-TIME TRACKING VIEW -->
-  <div id="view-realtime-wm" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center justify-center text-center">
-    <div class="p-6 bg-indigo-50 dark:bg-slate-800 border border-indigo-100 dark:border-slate-700 rounded-3xl shadow-xl max-w-md w-full space-y-4">
-      <div class="w-16 h-16 bg-indigo-600/10 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mx-auto ring-4 ring-indigo-500/20">
-        <i data-lucide="construction" class="w-8 h-8 animate-bounce"></i>
-      </div>
-      <h2 class="text-xl font-bold text-slate-900 dark:text-white">Real-time WM Tracking</h2>
-      <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Development under progress. Live Wish Master dispatch telemetry, route optimization, and real-time GPS tracking will be available soon.</p>
-      <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 rounded-full text-[11px] font-semibold border border-amber-200 dark:border-amber-800">Coming Soon</span>
-    </div>
-  </div>
-
-  <!-- MAIN CONTAINER (PAST BRSNR ANALYTICS VIEW) -->
+  <!-- MAIN CONTAINER -->
   <main id="view-past-analytics" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
     <!-- STATUS BANNER -->
@@ -173,7 +147,7 @@
         <div class="col-span-1 sm:col-span-2 lg:col-span-1">
           <label class="block font-medium text-slate-600 dark:text-slate-400 mb-1">Search Keyword</label>
           <div class="relative">
-            <input type="text" id="filter-search" oninput="debouncedApplyFilters()" placeholder="Shipment ID, Bag ID, etc..." class="w-full pl-8 pr-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
+            <input type="text" id="filter-search" oninput="debouncedApplyFilters()" placeholder="Shipment ID, Bag ID, Casper ID, etc..." class="w-full pl-8 pr-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 dark:bg-slate-900 transition hover:border-indigo-400">
             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-2.5 top-2"></i>
           </div>
         </div>
@@ -333,7 +307,7 @@
           </div>
           <div class="relative">
             <input type="text" onfocus="openMultiSelect('filter-rm')" oninput="filterDropdownOptions('filter-rm', this.value)" placeholder="Search RMs..." class="w-full pl-7 pr-2 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-xs dark:bg-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500">
-            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2 top-1.5"></i>
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1.5"></i>
           </div>
           <div id="dropdown-filter-rm" class="hidden absolute left-0 right-0 top-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl z-50 p-2 space-y-1">
             <div id="options-filter-rm" class="max-h-48 overflow-y-auto space-y-1"></div>
@@ -578,6 +552,22 @@
           <div class="min-w-[800px] h-72 relative"><canvas id="chart-partner-column"></canvas></div>
         </div>
       </div>
+
+      <!-- BAG ID WISE VOLUME VISUAL (WITH WM AND HUB ON HOVER) -->
+      <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+              <i data-lucide="package" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i><span>Bag ID Wise Volume Distribution</span>
+            </h3>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Hover on any Bag ID bar to view corresponding WM Name and Hub Name</p>
+          </div>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Top Bag IDs (Descending)</span>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-[420px]">
+          <div class="min-w-[800px] h-72 relative"><canvas id="chart-bagid-column"></canvas></div>
+        </div>
+      </div>
     </section>
 
     <!-- GM VIEW TAB -->
@@ -696,7 +686,7 @@
       </div>
     </section>
 
-    <!-- SHIPMENTS TABLE TAB -->
+    <!-- SHIPMENTS TABLE TAB (WITH CASPER ID AND BAG ID) -->
     <section id="tab-table" class="hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-3">
         <div>
@@ -713,6 +703,8 @@
             <tr>
               <th class="p-3">Date</th>
               <th class="p-3">Shipment ID</th>
+              <th class="p-3">Casper ID</th>
+              <th class="p-3">Bag ID</th>
               <th class="p-3">Status</th>
               <th class="p-3">Zone</th>
               <th class="p-3">Hub Name</th>
@@ -752,27 +744,7 @@
     let masterData = [], globalGmShipments = {}, filteredData = [], chartInstances = {}, currentPage = 1, pageSize = 50;
     let debounceTimer = null;
     let selectedLobFilter = 'ALL';
-    let selectedCategory = 'BRSNR';
     let currentTab = 'matrix';
-
-    const MIXBAGGING_RCAS = ['FMMISSORT', 'MISSORT', 'FMMIXBAGGING', 'MIXBAGGING'];
-    function getCategory(r) {
-      const v = String(r.RCA || '').toUpperCase().replace(/[\s_-]+/g, '');
-      return MIXBAGGING_RCAS.includes(v) ? 'Mixbagging' : 'BRSNR';
-    }
-
-    function setCategory(cat) {
-      selectedCategory = cat;
-      ['BRSNR', 'Mixbagging'].forEach(c => {
-        const btn = document.getElementById(`cat-btn-${c}`);
-        if (btn) {
-          btn.className = c === cat
-            ? 'px-3 py-1 rounded-md bg-indigo-600 text-white shadow transition'
-            : 'px-3 py-1 rounded-md text-slate-600 dark:text-slate-300 transition';
-        }
-      });
-      applyFilters(true);
-    }
 
     const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh', 'received_to_tc', 'dispatched_to_tc'];
     const IGNORED_STATUSES = ['received_at_ph', 'received_at_seller'];
@@ -782,23 +754,23 @@
 
     const COLS = { 
       DATE: ['Date', 'date'], 
-      SHIPMENT_ID: ['ShipmentId', 'Shipment ID'], 
-      HUB_NAME: ['Hub Name', 'PH Name'], 
-      SELLER_NAME: ['seller_name', 'Seller name'], 
+      SHIPMENT_ID: ['ShipmentId', 'Shipment ID', 'shipment_id', 'shipmentId'], 
+      HUB_NAME: ['Hub Name', 'PH Name', 'hub_name', 'hubName'], 
+      SELLER_NAME: ['seller_name', 'Seller name', 'SellerName'], 
       SELLER_ID: ['seller id', 'SellerId'],
-      STATUS: ['Status', 'Shipment Status'], 
-      ZONE: ['Zone'], 
-      LIB: ['Line_of_Business', 'LIB'], 
-      CASPER_ID: ['Casper_id', 'Casper id', 'casper_id', 'casper id', 'CasperId'],
+      STATUS: ['Status', 'Shipment Status', 'status'], 
+      ZONE: ['Zone', 'zone'], 
+      LIB: ['Line_of_Business', 'LIB', 'LOB', 'lob'], 
+      CASPER_ID: ['Casper_id', 'Casper id', 'casper_id', 'casper id', 'CasperId', 'casperId'],
       PARTNER_NAME: ['Partner Name', 'partner_name', 'Partner', 'partner', '3pl', 'vendor'],
-      WM: ['FE_Name', 'WM name'], 
-      MH: ['MH Name', 'MH'], 
+      WM: ['FE_Name', 'WM name', 'WM', 'FE Name', 'wm_name'], 
+      MH: ['MH Name', 'MH', 'mh_name'], 
       RCA: ['RCA'],
       PH_NAME: ['PH Name', 'Hub Name'],
-      BAG_ID: ['BagId'],
-      GM: ['GM'],
-      RM: ['RM'],
-      AM: ['AM'],
+      BAG_ID: ['BagId', 'Bag Id', 'bag_id', 'bagId', 'Bag ID'],
+      GM: ['GM', 'gm'],
+      RM: ['RM', 'rm'],
+      AM: ['AM', 'am'],
       DISPATCH_TO_MH: ['Dispatched_to_TC', 'Dispatch to MH'],
       RECEIVED_AT_MH: ['Received_to_TC', 'Received at MH'],
       DIFF: ['diff', 'Diff']
@@ -808,47 +780,51 @@
       for (let i = 0; i < colKeyList.length; i++) {
         const val = row[colKeyList[i]];
         if (val !== undefined && val !== null && String(val).trim() !== '') {
-          return val;
+          return String(val).trim();
         }
       }
       return '';
     }
 
-    // Normalizes variations in casing and common typos (e.g., TRUEFLEX, trueflex, Truueflex, EKART, ekart)
+    // Normalizes exact variations of EKART, ekart, or Ekart strictly to 'Ekart'
     function normalizePartnerName(raw) {
       if (!raw || isInvalid(raw)) return 'Direct / In-house';
       const clean = String(raw).trim();
-      const lower = clean.toLowerCase().replace(/[\s_-]+/g, '');
+      const lower = clean.toLowerCase();
       
       if (!lower || lower === 'none' || lower === 'null' || lower === 'unassigned' || lower === 'direct/inhouse') {
         return 'Direct / In-house';
       }
-      if (lower === 'ekart' || lower === 'e-kart' || lower === 'ekartlogistics') {
+
+      // Exact case-insensitive match only for 'ekart' (EKART, ekart, Ekart)
+      if (lower === 'ekart') {
         return 'Ekart';
       }
-      if (lower === 'trueflex' || lower === 'truueflex' || lower === 'true-flex') {
+
+      const stripped = lower.replace(/[\s_-]+/g, '');
+      if (stripped === 'trueflex' || stripped === 'truueflex') {
         return 'Trueflex';
       }
-      if (lower.startsWith('wercatalyst')) {
+      if (stripped.startsWith('wercatalyst')) {
         return 'Wercatalyst Ventures';
       }
-      if (lower === 'loadshare') {
+      if (stripped === 'loadshare') {
         return 'Loadshare';
       }
-      if (lower === 'vxpress') {
+      if (stripped === 'vxpress') {
         return 'Vxpress';
       }
-      if (lower === 'wheeley') {
+      if (stripped === 'wheeley') {
         return 'Wheeley';
       }
-      if (lower.startsWith('princyen')) {
+      if (stripped.startsWith('princyen')) {
         return 'Princy Enterprise';
       }
-      if (lower.startsWith('greenteck')) {
+      if (stripped.startsWith('greenteck')) {
         return 'Greenteck Logistics';
       }
 
-      // Preserve clean original string casing for other partners
+      // Preserve clean original string casing for other partners (e.g. e-kart, ekartlogistics)
       return clean;
     }
 
@@ -884,25 +860,6 @@
         }
       });
     });
-
-    function switchMode(mode) {
-      const pastView = document.getElementById('view-past-analytics');
-      const realtimeView = document.getElementById('view-realtime-wm');
-      const btnPast = document.getElementById('btn-mode-past');
-      const btnRealtime = document.getElementById('btn-mode-realtime');
-
-      if (mode === 'past') {
-        pastView.classList.remove('hidden');
-        realtimeView.classList.add('hidden');
-        btnPast.className = 'px-4 py-1.5 rounded-lg bg-indigo-600 text-white shadow transition-all hover:ring-2 hover:ring-indigo-400 flex items-center space-x-1.5';
-        btnRealtime.className = 'px-4 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all hover:ring-2 hover:ring-indigo-400 flex items-center space-x-1.5';
-      } else {
-        pastView.classList.add('hidden');
-        realtimeView.classList.remove('hidden');
-        btnRealtime.className = 'px-4 py-1.5 rounded-lg bg-indigo-600 text-white shadow transition-all hover:ring-2 hover:ring-indigo-400 flex items-center space-x-1.5';
-        btnPast.className = 'px-4 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all hover:ring-2 hover:ring-indigo-400 flex items-center space-x-1.5';
-      }
-    }
 
     function toggleTheme() {
       document.documentElement.classList.toggle('dark');
@@ -1115,16 +1072,29 @@
         ]);
         globalGmShipments = gmShip;
 
-        months.forEach(m => m.records.forEach(rec => {
-          const pd = parseDateStrFast(rec.Date);
+        months.forEach(m => (m.records || []).forEach(rec => {
+          const pd = parseDateStrFast(getColVal(rec, COLS.DATE));
           rec.ParsedDate = pd;
           rec.ts = pd ? pd.getTime() : 0;
           rec.Month = pd ? pd.toLocaleString('default', { month: 'long', year: 'numeric' }) : null;
           rec.Week = pd ? getWeekIdentifier(pd) : null;
+          
+          rec.ShipmentId = getColVal(rec, COLS.SHIPMENT_ID);
+          rec.CasperId = getColVal(rec, COLS.CASPER_ID);
+          rec.BagId = getColVal(rec, COLS.BAG_ID);
+          rec.Status = getColVal(rec, COLS.STATUS);
+          rec.Zone = getColVal(rec, COLS.ZONE);
+          rec.HubName = getColVal(rec, COLS.HUB_NAME);
+          rec.MH = getColVal(rec, COLS.MH);
+          rec.GM = getColVal(rec, COLS.GM);
+          rec.WM = getColVal(rec, COLS.WM);
+          rec.SellerName = getColVal(rec, COLS.SELLER_NAME);
+          rec.LOB = getColVal(rec, COLS.LIB);
+
           if (rec.GM && rec.GM.toLowerCase() === 'somnath g') rec.GM = 'Somnath Ghosh';
 
-          // Extract and normalize Partner Name to merge casing/typos
-          const rawPartner = rec.PartnerName || rec['Partner Name'] || rec.partner_name || rec.Partner || rec.partner || rec['3pl'] || rec.vendor;
+          // Extract and normalize Partner Name strictly for case variations of ekart
+          const rawPartner = getColVal(rec, COLS.PARTNER_NAME);
           rec.PartnerName = normalizePartnerName(rawPartner);
 
           masterData.push(rec);
@@ -1219,7 +1189,6 @@
       masterData.forEach(r => {
         let gm = r.GM;
         if (isInvalid(gm) || !r.Date) return;
-        if (getCategory(r) !== 'BRSNR') return;
         if (gm.toLowerCase() === 'somnath g') gm = 'Somnath Ghosh';
         const c = gmBrsnrCounts[gm] || (gmBrsnrCounts[gm] = {});
         c[r.Date] = (c[r.Date] || 0) + 1;
@@ -1312,7 +1281,7 @@
       });
     }
 
-    function getFilteredDataExcluding(excludedFilterId, ignoreCategory = false) {
+    function getFilteredDataExcluding(excludedFilterId) {
       const searchInput = document.getElementById('filter-search');
       const search = searchInput ? searchInput.value.toLowerCase().trim() : '';
       const df = document.getElementById('filter-date-from').value ? parseDateStrFast(document.getElementById('filter-date-from').value) : null;
@@ -1345,7 +1314,6 @@
         if (selRm.length > 0 && !selRm.includes(r.RM)) continue;
         if (selAm.length > 0 && !selAm.includes(r.AM)) continue;
         if (!targetStatuses.includes(r.Status)) continue;
-        if (!ignoreCategory && getCategory(r) !== selectedCategory) continue;
 
         if (selectedLobFilter !== 'ALL') {
           const rLob = (r.LOB || '').toLowerCase();
@@ -1362,7 +1330,14 @@
           if (dt && rd > dt) continue;
         } else if (selWk.length > 0 || selMo.length > 0 || df || dt) continue;
 
-        if (search && !r.ShipmentId.toLowerCase().includes(search) && !r.WM.toLowerCase().includes(search) && !r.SellerName.toLowerCase().includes(search) && !r.BagId.toLowerCase().includes(search)) continue;
+        if (search && 
+            !r.ShipmentId.toLowerCase().includes(search) && 
+            !(r.CasperId || '').toLowerCase().includes(search) && 
+            !(r.BagId || '').toLowerCase().includes(search) && 
+            !r.WM.toLowerCase().includes(search) && 
+            !r.SellerName.toLowerCase().includes(search)) {
+          continue;
+        }
 
         res.push(r);
       }
@@ -1371,7 +1346,7 @@
 
     function getAllDatesDesc() {
       const set = new Set();
-      getFilteredDataExcluding(null, true).forEach(r => { if (r.Date) set.add(r.Date); });
+      getFilteredDataExcluding(null).forEach(r => { if (r.Date) set.add(r.Date); });
       return Array.from(set).sort((a, b) => (parseDateStrFast(b) || 0) - (parseDateStrFast(a) || 0));
     }
 
@@ -1554,6 +1529,66 @@
           datasets: [{ label: 'Volume', data: topPartners.map(i => i[1]), backgroundColor: '#14b8a6', borderRadius: 6 }]
         }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor }, beginAtZero: true } } });
       }
+
+      // Bag ID Wise Volume Visual with WM Name and Hub Name mapped
+      const bagMap = {};
+      for (let i = 0; i < filteredData.length; i++) {
+        const r = filteredData[i];
+        const bag = r.BagId || 'No Bag ID';
+        if (isInvalid(bag)) continue;
+        if (!bagMap[bag]) {
+          bagMap[bag] = { count: 0, wms: new Set(), hubs: new Set() };
+        }
+        bagMap[bag].count++;
+        if (r.WM && !isInvalid(r.WM)) bagMap[bag].wms.add(r.WM);
+        if (r.HubName && !isInvalid(r.HubName)) bagMap[bag].hubs.add(r.HubName);
+      }
+
+      let topBags = Object.entries(bagMap).sort((a, b) => b[1].count - a[1].count).slice(0, 12);
+      const bagEl = document.getElementById('chart-bagid-column');
+      if (bagEl) {
+        if (topBags.length === 0) {
+          topBags = [['No Bag ID Data', { count: 0, wms: new Set(['-']), hubs: new Set(['-']) }]];
+        }
+        bagEl.parentElement.style.minWidth = Math.max(800, topBags.length * 80) + 'px';
+        
+        const bagMetaLookup = {};
+        topBags.forEach(([bId, info]) => {
+          bagMetaLookup[bId] = {
+            wm: Array.from(info.wms).join(', ') || 'Unassigned WM',
+            hub: Array.from(info.hubs).join(', ') || 'Unassigned Hub'
+          };
+        });
+
+        createChart('chart-bagid-column', 'bar', {
+          labels: topBags.map(i => i[0].length > 18 ? i[0].substring(0, 18) + '...' : i[0]),
+          datasets: [{
+            label: 'Shipment Volume',
+            data: topBags.map(i => i[1].count),
+            backgroundColor: '#f59e0b',
+            borderRadius: 6
+          }]
+        }, {
+          scales: {
+            x: { ticks: { color: textColor } },
+            y: { ticks: { color: textColor }, beginAtZero: true }
+          },
+          plugins: {
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                title: (context) => `Bag ID: ${topBags[context[0].dataIndex][0]}`,
+                label: (context) => `Volume: ${context.raw.toLocaleString()} shipments`,
+                afterLabel: (context) => {
+                  const bId = topBags[context.dataIndex][0];
+                  const meta = bagMetaLookup[bId] || { wm: '-', hub: '-' };
+                  return [`WM / FE: ${meta.wm}`, `Hub Name: ${meta.hub}`];
+                }
+              }
+            }
+          }
+        });
+      }
     }
 
     function createChart(id, type, data, options = {}) {
@@ -1696,7 +1731,9 @@
         const r = filteredData[i];
         html += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700">
           <td class="p-3">${r.Date}</td>
-          <td class="p-3 font-mono text-indigo-600 font-semibold">${r.ShipmentId}</td>
+          <td class="p-3 font-mono text-indigo-600 font-semibold">${r.ShipmentId || '-'}</td>
+          <td class="p-3 font-mono text-slate-700 dark:text-slate-300 font-medium">${r.CasperId || '-'}</td>
+          <td class="p-3 font-mono text-amber-600 dark:text-amber-400 font-semibold">${r.BagId || '-'}</td>
           <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.Status.toLowerCase().includes('received') ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${r.Status}</span></td>
           <td class="p-3">${r.Zone}</td>
           <td class="p-3">${r.HubName}</td>
@@ -1742,7 +1779,7 @@
       setPresetDate('all');
     }
 
-    function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `${selectedCategory}_Export_${new Date().toISOString().split('T')[0]}.csv`); }
+    function exportFilteredCSV() { downloadBlob(Papa.unparse(filteredData), `BRSNR_Export_${new Date().toISOString().split('T')[0]}.csv`); }
 
     function exportHierarchicalAgingCSV(tableId, filenamePrefix) {
       const hierarchy = {};
