@@ -743,7 +743,19 @@
     let selectedLobFilter = 'ALL';
     let currentTab = 'matrix';
 
-    const ALLOWED_STATUSES = ['received_at_mh', 'dispatched_to_mh', 'received_to_tc', 'dispatched_to_tc'];
+    // Allowed statuses strictly restricted to dispatched_to_mh and received_at_mh
+    const ALLOWED_STATUSES = ['dispatched_to_mh', 'received_at_mh'];
+
+    function isStatusAllowed(rawStatus) {
+      if (!rawStatus) return false;
+      const clean = String(rawStatus).trim().toLowerCase().replace(/[\s-]+/g, '_');
+      return ALLOWED_STATUSES.includes(clean);
+    }
+
+    function isMhGmh(rawMh) {
+      if (!rawMh) return false;
+      return String(rawMh).toUpperCase().includes('GMH');
+    }
 
     // No GMs excluded
     const EXCLUDED_GMS = [];
@@ -1089,6 +1101,14 @@
         globalGmShipments = gmShip;
 
         months.forEach(m => (m.records || []).forEach(rec => {
+          const rawMh = getColVal(rec, COLS.MH);
+          // Strictly exclude any mother hub containing GMH
+          if (isMhGmh(rawMh)) return;
+
+          const rawStatus = getColVal(rec, COLS.STATUS);
+          // Strictly exclude statuses except dispatched_to_mh and received_at_mh
+          if (!isStatusAllowed(rawStatus)) return;
+
           const rawDate = getColVal(rec, COLS.DATE);
           const pd = parseDateStrFast(rawDate);
           
@@ -1111,11 +1131,11 @@
             ShipmentId: getColVal(rec, COLS.SHIPMENT_ID),
             CasperId: getColVal(rec, COLS.CASPER_ID),
             BagId: cleanVal(getColVal(rec, COLS.BAG_ID), 'No Bag ID'),
-            Status: getColVal(rec, COLS.STATUS),
+            Status: rawStatus,
             Zone: cleanVal(getColVal(rec, COLS.ZONE), 'Unassigned Zone'),
             'Hub Name': hubResolved,
             HubName: hubResolved,
-            MH: cleanVal(getColVal(rec, COLS.MH), 'Unassigned MH'),
+            MH: cleanVal(rawMh, 'Unassigned MH'),
             GM: cleanVal(gm, 'Unassigned GM'),
             WM: cleanVal(getColVal(rec, COLS.WM), 'Unassigned WM / FE'),
             SellerName: cleanVal(getColVal(rec, COLS.SELLER_NAME), 'Unassigned Seller'),
@@ -1331,6 +1351,13 @@
 
       for (let i = 0; i < masterData.length; i++) {
         const r = masterData[i];
+
+        // Guard against any GMH mother hub entry
+        if (isMhGmh(r.MH)) continue;
+
+        // Guard against any status outside dispatched_to_mh and received_at_mh
+        if (!isStatusAllowed(r.Status)) continue;
+
         if (selGm.length > 0 && !selGm.includes(r.GM)) continue;
         if (selSeller.length > 0 && !selSeller.includes(r.SellerName)) continue;
         if (selMh.length > 0 && !selMh.includes(r.MH)) continue;
@@ -1340,7 +1367,6 @@
         if (selZone.length > 0 && !selZone.includes(r.Zone)) continue;
         if (selRm.length > 0 && !selRm.includes(r.RM)) continue;
         if (selAm.length > 0 && !selAm.includes(r.AM)) continue;
-        if (r.Status && !ALLOWED_STATUSES.includes(r.Status.toLowerCase())) continue;
 
         if (selectedLobFilter !== 'ALL') {
           const rLob = (r.LOB || '').toLowerCase();
@@ -1533,11 +1559,11 @@
         datasets: [{ label: 'Volume', data: topPHs.map(i => i[1]), backgroundColor: '#8b5cf6', borderRadius: 6 }]
       }, { scales: { x: { ticks: { color: textColor } }, y: { ticks: { color: textColor } } } });
 
-      // 6. Top Mother Hubs (MH)
+      // 6. Top Mother Hubs (MH) (GMH automatically excluded)
       const mhMap = {};
       for (let i = 0; i < filteredData.length; i++) {
         const r = filteredData[i];
-        if (!isInvalid(r.MH)) mhMap[r.MH] = (mhMap[r.MH] || 0) + 1;
+        if (!isInvalid(r.MH) && !isMhGmh(r.MH)) mhMap[r.MH] = (mhMap[r.MH] || 0) + 1;
       }
       const topMH = Object.entries(mhMap).sort((a, b) => b[1] - a[1]).slice(0, 8);
       createChart('chart-top-mh', 'bar', {
@@ -1708,7 +1734,7 @@
 
         if (!hierarchy[z].phs[ph].wms[wm]) hierarchy[z].phs[ph].wms[wm] = { grandTotal: 0, dates: {} };
         hierarchy[z].phs[ph].wms[wm].grandTotal++;
-        hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].wms[wm].dates[d] || 0) + 1;
+        hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].dates[d] || 0) + 1;
       }
 
       const dates = getAllDatesDesc();
@@ -1843,7 +1869,7 @@
         if (!hierarchy[z].phs[ph]) hierarchy[z].phs[ph] = { wms: {} };
         if (!hierarchy[z].phs[ph].wms[wm]) hierarchy[z].phs[ph].wms[wm] = { grandTotal: 0, dates: {} };
         hierarchy[z].phs[ph].wms[wm].grandTotal++;
-        hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].wms[wm].dates[d] || 0) + 1;
+        hierarchy[z].phs[ph].wms[wm].dates[d] = (hierarchy[z].phs[ph].dates[d] || 0) + 1;
       });
 
       const dates = getAllDatesDesc();
